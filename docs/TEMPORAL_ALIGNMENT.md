@@ -162,6 +162,62 @@ The positive Temporal Alignment interaction **did not replicate** in CogBeacon.
 
 This matters for interpretation: target smoothing is not, by itself, a universal mechanism that makes longer sensing histories more useful. The Massoz/PVT crossover is a real within-dataset interaction, but its generality remains open.
 
+## Independent PVT replication
+
+MARTIN-PVT-TARGET-ALIGNMENT-001 preserved the PVT target family while changing the participants and ocular measurement system.
+
+The public Martin et al. Experiment 2 dataset provided 25 participants, 250 Hz EyeLink pupil area, three PVT blocks per participant, and 2,330 common Block 2/3 anchors after the frozen quality rules.
+
+The preregistered long-history advantage was
+
+\[
+D(H0)=+0.0077,
+\qquad
+D(H60)=-0.0187.
+\]
+
+Therefore
+
+\[
+\Delta=D(H60)-D(H0)=-0.0264,
+\]
+
+with paired participant-bootstrap 95% interval
+
+\[
+[-0.0815,+0.0281].
+\]
+
+The positive interaction did **not** replicate even when the behavioral task remained PVT.
+
+This rules out a simple claim that target smoothing alone determines the preferred ocular history across PVT datasets.
+
+## Time-on-task nuisance audit
+
+A failed independent replication raises a second question: was the original Massoz crossover only a slow time-on-task artifact?
+
+MTS-TEMPORAL-ALIGNMENT-NUISANCE-001 froze an explicit nuisance model before recomputing the interaction. Every sensor-duration model received the same:
+
+- normalized time-on-task;
+- squared normalized time-on-task;
+- PVT2/PVT3 session indicator.
+
+The adjusted interaction remained strongly positive:
+
+\[
+\Delta_{adjusted}=+0.2056,
+\]
+
+with 95% paired subject-bootstrap interval
+
+\[
+[+0.1328,+0.2749].
+\]
+
+Thus the Massoz crossover is not explained solely by that predeclared low-frequency nuisance model.
+
+The combined evidence is therefore not "the effect disappeared" and not "the effect is universal." It is a robust result in one measurement/task system that failed two independent generalization tests.
+
 ## A target-weighted model
 
 Let \(S(t)\) be a latent physiological / cognitive process and let an ocular sensor observe
@@ -290,8 +346,8 @@ A research system that discovers that boundary honestly is more useful than one 
 
 The Temporal Alignment Principle predicts:
 
-1. **target dependence:** different behavioral targets can prefer different ocular history lengths;
-2. **target smoothing under compatible dynamics:** broadening an immediate behavioral target can shift the useful sensor horizon, but COGBEACON-TARGET-ALIGNMENT-001 shows that this is not guaranteed across tasks;
+1. **signal-target dependence:** the preferred history can change when either the observable or behavioral target changes;
+2. **target smoothing under compatible dynamics:** broadening an immediate behavioral target can shift the useful sensor horizon in some systems, but both CogBeacon and Martin PVT show that this is not guaranteed;
 3. **active compression:** a well-designed perturbation should increase information density and allow a shorter window than passive observation for the same target;
 4. **personalization interaction:** removing stable nuisance with longitudinal history should reduce the observation duration required to reach a fixed target-information level;
 5. **task-boundary sensitivity:** when a target depends on a bounded task episode, ocular samples from inside that episode should carry more useful information than equally old samples outside it.
@@ -300,8 +356,18 @@ Each prediction can fail independently.
 
 ## Claim boundary
 
-Current evidence includes one strong preregistered within-dataset crossover in the Massoz/PVT data, plus a preregistered failed interaction replication in CogBeacon. Separately, ADHD-REALDATA-001 and COGBEACON-REALDATA-001 show that an ultra-short optimum does not generalize unchanged across tasks.
+Current evidence contains:
 
-The defensible result is therefore narrower: **predictor-history length and behavioral target horizon are distinct design axes, and their interaction can be large enough to reverse the preferred sensing window in at least one public human dataset.** Whether that interaction generalizes within vigilance/PVT paradigms is the next replication target.
+- one strong preregistered crossover in the Massoz/PVT eyelid data;
+- the same crossover surviving a preregistered time-on-task/session nuisance adjustment;
+- a preregistered failed interaction replication in an independent Martin PVT/pupil cohort;
+- a preregistered failed interaction replication in CogBeacon;
+- separate ADHD and CogBeacon duration tests showing that an ultra-short optimum does not generalize unchanged.
 
-See [TEMPORAL_ALIGNMENT_RELATED_WORK.md](TEMPORAL_ALIGNMENT_RELATED_WORK.md) for the prior-art and novelty boundary.
+The defensible result is therefore narrower:
+
+> **predictor-history length and behavioral target horizon are distinct design axes, and their interaction can be large enough to reverse the preferred sensing window in a specific signal × target × protocol system. The sign of that interaction is not universal.**
+
+This framing also aligns with recent theory showing that label function and latent temporal dynamics jointly determine the effective observation span.
+
+See [TEMPORAL_ALIGNMENT_RELATED_WORK.md](TEMPORAL_ALIGNMENT_RELATED_WORK.md) for the prior-art and novelty boundary and [TEMPORAL_SCALE_AUDIT_001](../results/TEMPORAL_SCALE_AUDIT_001.md) for the replication matrix.
