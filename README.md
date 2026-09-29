@@ -223,6 +223,10 @@ Related-work boundary: [docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md](docs/TEMPORAL_A
 
 Passive five-second face-video drowsiness inference is already prior art. Smartphone pupillometry is prior art. Controlled screen-evoked pupil responses are prior art. Active ocular probing is also prior art.
 
+The broader idea that a **structured active perturbation can make wearable physiology more informative** is also prior art: Truslow et al. (2026) reported that a one-minute Apple Watch mindful-breathing perturbation improved HRV discrimination across seven cardiometabolic targets while passive timing/sleep contexts did not.
+
+Lucent therefore does not claim novelty for active perturbation as a general principle.
+
 The specific open gap Lucent targets is the **combination**:
 
 1. ordinary smartphone;
