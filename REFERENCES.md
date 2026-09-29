@@ -1,63 +1,82 @@
-# Literature and Benchmark Map
+# Literature and Novelty Map
 
-This is a working map of the literature that motivates Lucent's measurement and validation choices. Inclusion does not imply that Lucent reproduces or endorses every result.
+This is a working map of the literature that bounds Lucent / APST-5. Inclusion does not imply that Lucent reproduces or endorses every result.
 
-## Reference measurements
+## Active probing and experiment design
 
-### Psychomotor vigilance
+### Salti, Be'ery & Aluf (2022)
+*An active approach towards monitoring and enhancing drivers' capabilities — the ADAM cogtec solution.*  
+https://doi.org/10.48550/arXiv.2204.10853
 
-**Dinges, D. F. & Powell, J. W. (1985).**  
-*Microcomputer analyses of performance on a portable, simple visual RT task during sustained operations.*  
-Behavior Research Methods, Instruments, & Computers, 17(6), 652-655.  
-https://doi.org/10.3758/BF03200977
+Why it matters: active ocular probing for transient impairment already exists. Lucent therefore cannot claim novelty for "active probing" itself. The gap is ultra-short smartphone execution plus explicit probe optimization and longitudinal state inference.
 
-Why it matters: reaction-time / vigilance measures provide an objective behavioral target sensitive to sleep loss and sustained-performance degradation.
+### Lewi, Butera & Paninski (2006)
+*Real-time adaptive information-theoretic optimization of neurophysiology experiments.*  
+https://doi.org/10.7551/mitpress/7503.003.0112
 
-### State sleepiness
+Why it matters: information-theoretic stimulus selection is established methodology. APST-5 applies that logic to a constrained smartphone human-state probe.
 
-**Kaida, K. et al. (2006).**  
-*Validation of the Karolinska sleepiness scale against performance and EEG variables.*  
-Clinical Neurophysiology, 117(7), 1574-1581.  
-https://doi.org/10.1016/j.clinph.2006.03.011
+## Pupil system identification
 
-Why it matters: subjective state sleepiness should be treated as a useful target, but not as interchangeable with behavioral performance.
+### Zénon (2017)
+*Time-domain analysis for extracting fast-paced pupil responses.*  
+https://doi.org/10.1038/srep41484
 
-## Visual fatigue / drowsiness signals
+Why it matters: demonstrates ARX system identification for rapid pupil responses and strong subject-specific differences in response amplitude and latency.
 
-### PERCLOS
+### Korn & Bach (2016)
+*A solid frame for the window on cognition: Modelling event-related pupil responses.*  
+https://doi.org/10.1167/16.3.28
 
-**Wierwille and colleagues / U.S. DOT evaluation work.**  
-PERCLOS measures the percentage of time the eyes are substantially closed and became a classic ocular alertness measure.  
-https://rosap.ntl.bts.gov/view/dot/113
+Why it matters: provides a forward dynamical view of luminance and non-luminance pupil responses.
 
-Why it matters: ocular dynamics are a strong historical reason to test temporal eye-region information, while avoiding the assumption that one feature fully captures cognitive state.
+## Screen-driven pupil response and state sensitivity
 
-## Public datasets
+### Wang et al. (2018)
+*Pupil light reflex evoked by light-emitting diode and computer screen: Methodology and association with need for recovery in daily life.*  
+https://doi.org/10.1371/journal.pone.0197739
 
-### DROZY
+Why it matters: establishes that a display can drive measurable pupil-light-reflex dynamics and reports associations with need for recovery.
 
-**Massoz, Q., Langohr, T., François, C. et al. (2016).**  
-*The ULg Multimodality Drowsiness Database (called DROZY) and examples of use.*  
-IEEE Winter Conference on Applications of Computer Vision.  
-https://doi.org/10.1109/WACV.2016.7477715
+### Pan et al. (2022)
+*Arousal-based pupil modulation is dictated by luminance.*  
+https://doi.org/10.1038/s41598-022-05280-1
 
-DROZY includes video alongside physiological and drowsiness-related measurements and is useful for pipeline prototyping and multimodal comparison.
+Why it matters: state sensitivity changes with luminance, motivating stimulus design rather than simply maximizing screen brightness.
 
-Dataset: https://www.drozy.uliege.be/
+### Podolak et al. (2019)
+*The utility of pupillary light reflex as an objective biomarker of acute concussion in the adolescent athlete.*  
+https://doi.org/10.1177/2325967119S00155
 
-### UTA Real-Life Drowsiness Dataset (RLDD)
+Why it matters: a 0.8-second light input with a 5-second recording window demonstrates that clinically meaningful PLR dynamics can fit inside the same overall time budget, although the target and hardware differ from Lucent.
 
-**Ghoddoosian, R., Galib, M. & Athitsos, V. (2019).**  
-*A Realistic Dataset and Baseline Temporal Model for Early Drowsiness Detection.*  
-CVPR Workshops.
+## Five-second passive baseline
 
-Paper: https://openaccess.thecvf.com/content_CVPRW_2019/html/AMFG/Ghoddoosian_A_Realistic_Dataset_and_Baseline_Temporal_Model_for_Early_Drowsiness_CVPRW_2019_paper.html  
-Dataset: https://sites.google.com/view/utarldd/home
+### Massoz, Verly & Van Droogenbroeck (2018)
+*Multi-Timescale Drowsiness Characterization Based on a Video of a Driver's Face.*  
+https://doi.org/10.3390/s18092801
 
-Why it matters: RGB video recorded across participants and natural variation is useful for representation and robustness experiments, though class labels are not a substitute for Lucent's intended paired behavioral targets.
+Why it matters: five-second passive face video is already a serious baseline. Their five-second branch achieved lower performance than longer windows, creating the temporal-compression problem APST-5 tries to attack with active measurement.
 
-## Important distinction
+## Smartphone pupillometry
 
-Driver-drowsiness classification and Lucent's target are not the same problem.
+### Barry et al. (2022)
+*At-Home Pupillometry using Smartphone Facial Identification Cameras.*  
+https://doi.org/10.1145/3491102.3502493
 
-Lucent is interested in whether **brief commodity video can recover a continuous or person-relative state signal that predicts contemporaneous cognitive performance**, under participant-held-out evaluation. Existing drowsiness datasets are useful as supporting benchmarks, not definitive validation of that thesis.
+Why it matters: validates smartphone-based pupil tracking and a phone-driven pupil-light-reflex test, while also exposing camera, eye-color, movement, and sensor limitations relevant to APST-5.
+
+## Novelty statement
+
+Two literature searches conducted for Lucent did **not** locate a study jointly combining:
+
+- an ordinary smartphone;
+- a strict approximately five-second active scan;
+- display-controlled stimulus design;
+- synchronized ocular / facial camera response;
+- explicit Fisher-information or mutual-information optimization of the probe;
+- personal longitudinal priors;
+- paired behavioral state targets;
+- unseen-participant and unseen-device validation.
+
+This is the current defensible novelty gap. It should be treated as a search result, not as proof of universal priority.

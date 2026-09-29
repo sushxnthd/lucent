@@ -1,118 +1,146 @@
 # Lucent
 
-> **Can five seconds of ordinary front-camera video reveal anything real about fatigue and cognitive performance?**
+> **Can a phone actively probe your state in five seconds instead of passively staring at your face?**
 
 [![CI](https://github.com/sushxnthd/lucent/actions/workflows/ci.yml/badge.svg)](https://github.com/sushxnthd/lucent/actions/workflows/ci.yml)
 
-Lucent is a research program investigating whether brief, commodity RGB video contains a **generalizable state signal** for fatigue and cognitive performance.
+Lucent is a research program for **ultra-short active human-state sensing** with hardware people already own.
 
-The project grew out of [Somno](https://sushxnthd.github.io/somno/), a sleep-debt system that combined reaction-time testing, facial fatigue signals, subjective sleepiness, and longitudinal sleep history. Somno exposed a practical bottleneck: repeated explicit measurement creates friction. Lucent asks how much of that measurement stack can disappear.
+The current research direction is **APST-5: Active Personalized State Tomography in Five Seconds**.
 
-This repository contains the research only. There is no product UI here.
+Instead of treating the front camera as a passive observer, the phone display becomes a controlled experimental input. During an approximately five-second scan, the screen emits a known luminance / visual sequence while the front camera records ocular and facial dynamics. The response is analyzed relative to a person's baseline and paired behavioral measurements.
 
-## The five-second hypothesis
+Lucent grew out of [Somno](https://sushxnthd.github.io/somno/), which made the original product problem obvious: useful measurement loses value when people have to repeatedly stop, wear something, or perform a long explicit test.
 
-The working hypothesis is deliberately narrow:
+This repository contains the research program, simulation code, validation rules, and results. It intentionally contains no app UI.
 
-> A short front-camera clip may contain enough temporal information to predict part of a person's **current deviation from their own alert baseline**, beyond what can be explained by identity, time of day, sleep history, device, or environment alone.
+## APST-5
 
-That is a hypothesis, not a claim.
+Let latent state be \(x_t\), display input \(u_t\), camera observations \(y_t\), personal history \(h_i\), and device/environment nuisance \(d_i\):
 
-The hard problem is not training a model that looks accurate. The hard problem is proving that it learned **state instead of shortcuts**.
+\`\`\`text
+display probe u(t) ──> pupil / eye / facial dynamics ──> camera y(t)
+        │                                               │
+        └──────────── known perturbation ───────────────┘
+                              │
+                              v
+               subject-relative state inference
+\`\`\`
 
-## Why this is difficult
+The research objective is not simply to fit a predictor. It is to choose the **probe itself** so that a strict time budget reveals as much identifiable state information as possible.
 
-A facial-video model can appear impressive while learning the wrong thing:
+A generic design objective is:
 
-- who the person is;
-- which device recorded them;
-- where or when a session was recorded;
-- lighting, exposure, pose, or background;
-- stable facial morphology;
-- collection-order artifacts;
-- label leakage from the experimental procedure.
+\[
+u^* = \arg\max_u \; \mathbb{E}[I(X;Y \mid U=u,H_i)] - \lambda C(u)
+\]
 
-A random clip split can therefore produce a strong score and still tell us almost nothing about whether Lucent works.
+where \(C(u)\) represents display-energy, comfort, and transition constraints.
 
-Lucent treats leakage resistance as part of the research question, not an afterthought.
+See [APST5.md](APST5.md).
 
-## Research loop
+## First computational result
 
-```mermaid
-flowchart LR
-    A["~5 s RGB video"] --> B["quality + face/temporal representation"]
-    H["sleep history / time / metadata"] --> C["non-visual baselines"]
-    B --> D["state model"]
-    C --> E["leakage-resistant evaluation"]
-    D --> E
-    E --> F{"survives unseen people?"}
-    F -- no --> G["find shortcut / revise hypothesis"]
-    F -- yes --> H2{"survives session, device, environment shifts?"}
-    H2 -- no --> G
-    H2 -- yes --> I["fresh-cohort replication"]
-    I --> J["only then: productization"]
-```
+We implemented a literature-inspired delayed, asymmetric pupil-response surrogate and asked a deliberately constrained question:
 
-## What would actually convince us?
+> With the same five-second window and the same total high-luminance exposure, does **when** the phone perturbs the visual system change how much we can identify about its dynamics?
 
-A headline validation score is not enough. The core thesis becomes interesting only if a short-video model:
+The design space contained 84 equal-exposure probes. Probe selection was performed on one synthetic parameter population and evaluated on **500 fresh held-out parameter draws**.
 
-1. beats trivial, sleep-history-only, and static-frame baselines;
-2. retains useful performance on **participants never seen during training**;
-3. adds information beyond identity and collection artifacts;
-4. survives session, device, lighting, and environment shifts;
-5. produces calibrated uncertainty rather than confident nonsense;
-6. reproduces on a fresh collection.
+| Five-second probe | Held-out expected information gain |
+| --- | ---: |
+| optimized equal-exposure probe | **11.99 nats** |
+| best contiguous pulse | 11.69 nats |
+| evenly spaced pulses | 10.65 nats |
 
-Until then, the correct status is **research in progress**.
+The optimized probe used two early high-luminance blocks and one late block:
 
-## Current status
+\`\`\`text
+time (s)     0    .5   1.0  1.5  2.0  2.5  3.0  3.5  4.0  4.5
+display      low  HIGH HIGH low  low  low  low  low  HIGH low
+\`\`\`
 
-**Phase 0: validation architecture is locked.**
+Under the surrogate model, that design produced:
 
-The repository now contains the falsifiable thesis, anti-leakage protocol, evaluation code, synthetic leakage demonstration, data contract, and preregistration template. No headline performance result is published before the participant-held-out protocol is satisfied.
+- **+2.57% expected information gain** over the best contiguous equal-exposure pulse;
+- **+12.60%** over an evenly spaced equal-exposure probe;
+- an approximately **1.82x reduction in posterior uncertainty volume** relative to the best contiguous pulse.
 
-## Repository map
+This is an **in-silico experimental-design result, not human validation**. Its value is that it gives APST-5 a falsifiable first prediction: stimulus timing should matter even when duration and exposure are held fixed.
+
+Reproduce it with:
+
+\`\`\`bash
+pip install -e ".[dev]"
+python experiments/active_probe_design.py
+\`\`\`
+
+Full result: [results/APST5_SIMULATION_001.md](results/APST5_SIMULATION_001.md)
+
+## Why active probing is different
+
+Passive five-second face-video drowsiness inference is already prior art. Smartphone pupillometry is prior art. Controlled screen-evoked pupil responses are prior art. Active ocular probing is also prior art.
+
+The specific open gap Lucent targets is the **combination**:
+
+1. ordinary smartphone;
+2. approximately five seconds;
+3. display-controlled perturbation;
+4. synchronized camera response;
+5. information-optimized probe design;
+6. subject-relative / longitudinal priors;
+7. state inference evaluated against behavioral targets;
+8. strict unseen-participant and unseen-device testing.
+
+Our literature search has not located a paper that establishes that full combination. That is a novelty hypothesis, not a patentability or priority claim.
+
+## What would count as a real breakthrough?
+
+Not a simulation score.
+
+The strong version of the claim survives only if active five-second probing:
+
+1. beats passive five seconds;
+2. beats a conventional fixed active probe under matched exposure;
+3. predicts paired behavioral state on participants never seen during training;
+4. survives device and environment shifts;
+5. benefits from personalization without requiring constant new labels;
+6. reproduces on a fresh cohort.
+
+The repo is structured to make those claims harder to fake.
+
+## Research map
 
 | Path | Purpose |
 | --- | --- |
-| [RESEARCH.md](RESEARCH.md) | thesis, hypotheses, confounds, falsification criteria |
-| [EXPERIMENTS.md](EXPERIMENTS.md) | experimental program and evaluation logic |
-| [ROADMAP.md](ROADMAP.md) | staged path from pilot to fresh-cohort replication |
-| [REFERENCES.md](REFERENCES.md) | literature and benchmark map |
-| [docs/PREREGISTRATION_TEMPLATE.md](docs/PREREGISTRATION_TEMPLATE.md) | lock hypotheses and analysis before looking at outcomes |
-| [docs/FAILURE_MODES.md](docs/FAILURE_MODES.md) | ways a convincing result can still be wrong |\n| [docs/POSITIONING.md](docs/POSITIONING.md) | how Lucent differs from ordinary drowsiness classification |\n| [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | ordered research questions that can kill or narrow the thesis |
-| [data/README.md](data/README.md) | proposed data contract, privacy, and collection rules |
-| [results/README.md](results/README.md) | publication rules for positive and negative results |
-| [src/lucent/](src/lucent/) | split and evaluation utilities |
-| [experiments/synthetic_identity_leakage.py](experiments/synthetic_identity_leakage.py) | executable demonstration of why random splits are dangerous |
-
-## Reproduce the leakage demo
-
-```bash
-git clone https://github.com/sushxnthd/lucent.git
-cd lucent
-python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
-pip install -e ".[dev]"
-python experiments/synthetic_identity_leakage.py
-pytest -q
-```
-
-The synthetic experiment deliberately creates repeated observations from the same people. A random split lets a flexible model exploit identity. A participant-held-out split removes that shortcut and exposes the apparent performance inflation.
+| [APST5.md](APST5.md) | active-probing thesis and breakthrough test |
+| [RESEARCH.md](RESEARCH.md) | hypotheses, state targets, falsification criteria |
+| [EXPERIMENTS.md](EXPERIMENTS.md) | leakage-resistant human validation program |
+| [ROADMAP.md](ROADMAP.md) | staged path from simulation to fresh-cohort replication |
+| [REFERENCES.md](REFERENCES.md) | closest prior art and measurement literature |
+| [docs/PREREGISTRATION_TEMPLATE.md](docs/PREREGISTRATION_TEMPLATE.md) | freeze confirmatory analyses before final holdout |
+| [docs/FAILURE_MODES.md](docs/FAILURE_MODES.md) | shortcut and false-positive threat model |
+| [docs/POSITIONING.md](docs/POSITIONING.md) | boundary versus ordinary drowsiness classification |
+| [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | questions that can kill or narrow the thesis |
+| [src/lucent/active_probe.py](src/lucent/active_probe.py) | pupil surrogate + information-design utilities |
+| [experiments/active_probe_design.py](experiments/active_probe_design.py) | reproducible APST-5 design experiment |
+| [results/APST5_SIMULATION_001.md](results/APST5_SIMULATION_001.md) | first held-out in-silico result |
 
 ## Research principles
 
-- **Falsifiable before flashy.**
-- **Split by person before reporting performance.**
+- **Perturb, don't merely observe.**
+- **Match exposure before comparing probes.**
+- **Optimize on one population, report on another.**
+- **Split by person before reporting human performance.**
 - **Baselines before bigger models.**
 - **Ablations before explanations.**
 - **Negative results are results.**
-- **Product claims come after replication, not before it.**
+- **Product claims come after replication.**
 
-## Scope
+## Status
 
-Lucent is research into low-friction measurement of fatigue and cognitive-performance state from ordinary sensors. It is not presented here as a diagnostic system and it does not assume that a universal "fatigue score" exists.
+**Breakthrough candidate identified; biological validation pending.**
 
-The immediate objective is simpler: determine exactly **which measurable state variables survive rigorous out-of-sample testing from a few seconds of video**.
+The current result supports the research strategy that an actively designed five-second scan may be more informative than a conventional fixed probe under the same time and exposure budget. It does **not** yet establish that Lucent can estimate fatigue or cognitive performance in humans.
+
+That is the next experiment.

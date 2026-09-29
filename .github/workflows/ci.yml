@@ -2,7 +2,7 @@ name: research-ci
 
 on:
   push:
-    branches: ["main", "research-foundation"]
+    branches: ["main", "research-foundation", "apst5-breakthrough"]
   pull_request:
 
 jobs:
@@ -26,3 +26,5 @@ jobs:
         run: pytest
       - name: Synthetic leakage smoke test
         run: python experiments/synthetic_identity_leakage.py
+      - name: APST-5 active-probe reproduction
+        run: python experiments/active_probe_design.py
