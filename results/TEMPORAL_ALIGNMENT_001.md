@@ -1,14 +1,23 @@
-# TEMPORAL-ALIGNMENT-001: Target Timescale Determines Useful Ocular History
+# TEMPORAL-ALIGNMENT-001: Controlled Target-History Crossover
 
-**Status:** preregistered public-human-data result with two independent boundary datasets.
+**Status:** preregistered positive result, nuisance-audited, with two preregistered failed interaction replications.
 
 ## Result in one sentence
 
-Within the same 28-subject eyelid/PVT dataset, experimentally broadening the behavioral target from one immediate reaction to a 60-second performance summary reversed the relative value of short versus long ocular history: the 2-second window was strongest for the immediate target, while the 60-second window was strongest for the 60-second target.
+In the Massoz PVT/eyelid dataset, changing only the behavioral target horizon produced a large reversal in which ocular history length was most predictive; that crossover survived an explicit time-on-task/session nuisance audit, but the same directional interaction did not replicate in either an independent PVT/pupil cohort or CogBeacon.
 
-## Preregistered direct test
+## Primary Massoz result
 
-MTS-TARGET-SMOOTHING-001 held the participants, raw ocular signal, feature map, Ridge model, LOSO protocol, and event intersection fixed. Only the temporal support of the target was changed.
+MTS-TARGET-SMOOTHING-001 held fixed:
+
+- participants;
+- public ocular data;
+- feature family;
+- Ridge model;
+- leave-one-subject-out evaluation;
+- common event intersection.
+
+Only target temporal support was changed.
 
 | Target support | 2 s sensor | 5 s | 15 s | 30 s | 60 s |
 | ---: | ---: | ---: | ---: | ---: | ---: |
@@ -17,101 +26,183 @@ MTS-TARGET-SMOOTHING-001 held the participants, raw ocular signal, feature map, 
 | 30 s | **0.1678** | 0.1522 | 0.1547 | 0.1561 | 0.1592 |
 | 60 s | 0.1559 | 0.1607 | 0.1712 | 0.1953 | **0.2042** |
 
-Define the long-versus-short sensing advantage at target horizon H as:
+Define
 
-    D(H) = r(60 s sensor, H) - r(2 s sensor, H)
+[
+D(H)=r_{60s,H}-r_{2s,H}.
+]
 
-The preregistered interaction was:
+The preregistered interaction was
 
-    Delta = D(60 s) - D(0 s)
+[
+Delta=D(60)-D(0)=+0.2439,
+]
 
-Observed:
+with paired-subject bootstrap 95% CI
 
-- D(0 s) = **-0.1956**
-- D(60 s) = **+0.0483**
-- Delta = **+0.2439**
-- paired subject-bootstrap 95% CI = **[+0.1647, +0.3191]**
-- paired subjects = **28**
+[
+[+0.1647,+0.3191].
+]
 
-The entire interval is positive, satisfying the preregistered criterion.
+N = 28 paired subjects.
 
-## Why this matters
+## Nuisance audit
 
-This result rejects a simplistic rule such as 'shorter ocular windows are always better.' Instead, the useful sensing horizon depends on the timescale of the functional target.
+MTS-TEMPORAL-ALIGNMENT-NUISANCE-001 was frozen after the independent replication failures but before recomputing the adjusted outcome.
 
-For an imminent PVT response, old ocular history behaves like stale state and dilutes predictive information. When the target itself is broadened to summarize performance over the next minute, longer ocular history becomes relatively more informative and ultimately overtakes the shortest window.
+Every duration model received the same explicit nuisance variables:
 
-That converts Temporal Alignment from a post-hoc interpretation of different datasets into a directly manipulated, preregistered within-dataset result.
+- normalized time-on-task;
+- squared time-on-task;
+- PVT2/PVT3 session identity.
 
-## Independent boundary evidence
+The adjusted matrix still crossed:
 
-### ADHD-REALDATA-001
+| Target support | 2 s | 60 s | nuisance only |
+| ---: | ---: | ---: | ---: |
+| 0 s | **0.2672** | 0.0892 | 0.0645 |
+| 60 s | 0.2236 | **0.2513** | 0.2177 |
 
-On an independent EyeLink working-memory dataset with 50 participants and 5,973 common trials, the preregistered 2-second versus 5-second hypothesis reversed:
+Adjusted interaction:
 
-- 2 s macro-r = 0.0350
-- 5 s macro-r = **0.0749**
-- difference = **-0.0400**
-- 95% CI = **[-0.0717, -0.0061]**
+[
+Delta_{adjusted}=+0.2056,
+]
 
-This falsified the idea that 2 seconds is a universal optimum.
+95% CI
 
-### COGBEACON-REALDATA-001
+[
+[+0.1328,+0.2749].
+]
 
-On an independent WCST-like cognitive-fatigue dataset with 20 people, 77 sessions, and 1,892 eligible rounds:
+Thus the original crossover is not explained solely by this frozen low-frequency time/session nuisance model.
 
-- 2 s macro-r = 0.1197
-- 5 s macro-r = **0.1665**
-- 2 s - 5 s = -0.0468, 95% CI [-0.1046, +0.0101]
-- 3 s - 5 s = **-0.0796**, 95% CI **[-0.1375, -0.0210]**
+## Independent interaction replications
 
-Again, a universal ultra-short optimum was not supported.
+### Martin PVT / pupil area
 
-## Temporal Alignment Principle
+MARTIN-PVT-TARGET-ALIGNMENT-001 preserved the psychomotor-vigilance target family while changing cohort and ocular measurement.
 
-Lucent should not optimize scan duration independently of the target.
+- 25/25 participants passed frozen participant-level QC;
+- 2,330 common Block 2/3 anchors;
+- 250 Hz EyeLink pupil area;
+- strict leave-one-participant-out evaluation;
+- Block 1 used only for participant-specific target normalization.
 
-A more precise design objective is:
+| Target | 2 s pupil | 5 s pupil | D(H)=5 s - 2 s |
+| --- | ---: | ---: | ---: |
+| H0 | 0.0892 | 0.0968 | +0.0077 |
+| H15 | 0.1367 | 0.1202 | -0.0165 |
+| H30 | 0.1753 | 0.1498 | -0.0255 |
+| H60 | 0.1995 | 0.1808 | -0.0187 |
 
-    choose sensing duration and active probe jointly to maximize
-    target-specific information density minus time/comfort cost.
+Primary interaction:
 
-In practical terms:
+[
+Delta=-0.0264,
+]
 
-1. define the functional target first;
-2. estimate the target's temporal support;
-3. condition on personal history to remove stable nuisance;
-4. concentrate active sensing inside the target-relevant horizon;
-5. stop when additional history contributes less target information than its interaction cost.
+95% CI
 
-## What is actually established
+[
+[-0.0815,+0.0281].
+]
 
-The strongest defensible claim is:
+**Not supported.**
 
-> In a preregistered public-human-data experiment, changing only the temporal support of the behavioral target significantly changed the relative value of short versus long ocular sensing history.
+The nuisance-only model using foreperiod and block progress outperformed the pupil model at every horizon and reached macro-r 0.2959 at H60.
 
-This is an empirical measurement-design result.
+### CogBeacon / facial landmarks
 
-## What is not established
+COGBEACON-TARGET-ALIGNMENT-001 used:
 
-This does not yet show that:
+- 20 people;
+- 77 sessions;
+- 1,786 common anchors;
+- 2 s and 5 s facial-landmark histories;
+- strict leave-one-person-out evaluation.
 
-- APST-5 active probing works in humans;
-- a smartphone can recover the needed pupil/gaze dynamics;
-- any fixed 2-, 3-, or 5-second window is universally optimal;
-- Lucent diagnoses fatigue or any medical condition;
-- the mechanism is specifically neural state dilution rather than another temporal statistical effect.
+Primary interaction:
 
-Those remain separate falsification targets.
+[
+Delta=-0.0645,
+]
+
+95% CI
+
+[
+[-0.1665,+0.0313].
+]
+
+**Not supported.**
+
+## Current scientific interpretation
+
+The data reject two simple stories:
+
+1. **shorter history is universally better** — false across the independent duration tests;
+2. **broadening the target generally makes longer history better** — not replicated.
+
+The strongest defensible empirical statement is:
+
+> **sensor-history length and target aggregation horizon are separate design axes. Their interaction can be large enough to reverse the preferred sensing window in a specific signal × target × protocol system, but the sign of that interaction is not universal.**
+
+That interpretation is also more consistent with recent theory in which label construction and latent temporal dynamics jointly determine the effective observation span.
+
+## Relation to prior work
+
+Massoz et al. (2018) already established multi-timescale drowsiness modeling and an accuracy-responsiveness trade-off using matched 5/15/30/60-second sensor/ground-truth branches.
+
+Lucent's narrower empirical extension is:
+
+- crossing sensor-history duration and target horizon **orthogonally**;
+- holding the remaining analysis pipeline fixed;
+- preregistering the interaction statistic;
+- stress-testing it with independent datasets and a nuisance audit;
+- retaining failed replications.
+
+See [docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md](../docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md).
+
+## Consequence for APST-5
+
+The passive-data evidence does not justify choosing a universal 2-, 3-, 5-, or 60-second scan.
+
+APST-5 should instead be evaluated target-by-target:
+
+1. establish incremental observable information beyond trivial temporal/task context;
+2. identify the relevant history under that target and measurement channel;
+3. test whether a controlled active perturbation increases information density;
+4. validate the result prospectively on unseen people/devices;
+5. replicate before product claims.
+
+## Claim boundary
+
+None of these passive-data analyses validates:
+
+- active phone-display probing;
+- smartphone pupillometry;
+- fatigue diagnosis;
+- a universal temporal-alignment law;
+- a specific physiological mechanism.
+
+The next non-substitutable evidence is prospective synchronized phone data under the frozen E002 matched-exposure protocol.
 
 ## Reproduction
 
+Primary crossover:
+
     python experiments/mts_target_smoothing.py
+
+Nuisance audit:
+
+    python experiments/mts_temporal_alignment_nuisance.py
+
+Independent Martin PVT replication is reproducible through its committed GitHub workflow because it downloads the public Figshare raw-data archive.
 
 See also:
 
 - results/MTS_TARGET_SMOOTHING_001.md
-- results/MTS_REALDATA_001.md
-- results/ADHD_REALDATA_001.md
-- results/COGBEACON_REALDATA_001.md
-- docs/TEMPORAL_ALIGNMENT.md
+- results/MTS_TEMPORAL_ALIGNMENT_NUISANCE_001.md
+- results/MARTIN_PVT_TARGET_ALIGNMENT_001.md
+- results/COGBEACON_TARGET_ALIGNMENT_001.md
+- results/TEMPORAL_SCALE_AUDIT_001.md
