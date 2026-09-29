@@ -1,182 +1,223 @@
 # Lucent
 
-> **Can a phone actively probe your state in five seconds instead of passively staring at your face?**
+> **Ultra-short active sensing of fatigue and cognitive-performance state with ordinary phone hardware.**
 
-[![CI](https://github.com/sushxnthd/lucent/actions/workflows/ci.yml/badge.svg)](https://github.com/sushxnthd/lucent/actions/workflows/ci.yml)
+[![research-ci](https://github.com/sushxnthd/lucent/actions/workflows/ci.yml/badge.svg)](https://github.com/sushxnthd/lucent/actions/workflows/ci.yml)
+[![public-realdata](https://github.com/sushxnthd/lucent/actions/workflows/realdata.yml/badge.svg)](https://github.com/sushxnthd/lucent/actions/workflows/realdata.yml)
 
-Lucent is a research program for **ultra-short active human-state sensing** with hardware people already own.
+Lucent is a research program asking a narrow question:
 
-The current research direction is **APST-5: Active Personalized State Tomography in Five Seconds**.
+> **How much state information can a phone recover in roughly 2–5 seconds if it actively designs the measurement instead of merely watching a face?**
 
-Instead of treating the front camera as a passive observer, the phone display becomes a controlled experimental input. During an approximately five-second scan, the screen emits a known luminance / visual sequence while the front camera records ocular and facial dynamics. The response is analyzed relative to a person's baseline and paired behavioral measurements.
+The display is treated as a controlled experimental input. The front camera is the response sensor. Longitudinal history is treated as prior information about the person rather than forcing every scan to start from zero.
 
-Lucent grew out of [Somno](https://sushxnthd.github.io/somno/), which made the original product problem obvious: useful measurement loses value when people have to repeatedly stop, wear something, or perform a long explicit test.
+Lucent grew out of [Somno](https://sushxnthd.github.io/somno/), where repeated explicit tests exposed the central product problem: a measurement can be scientifically useful and still fail in practice if people have to stop and perform it every day.
 
-This repository contains the research program, simulation code, validation rules, and results. It intentionally contains no app UI.
+This repository is intentionally **research-only**. It contains hypotheses, mathematical models, public-data analyses, simulation experiments, failure criteria, preregistrations, and reproducible code. It contains no product UI.
 
-## APST-5
+## Evidence ledger
 
-Let latent state be \(x_t\), display input \(u_t\), camera observations \(y_t\), personal history \(h_i\), and device/environment nuisance \(d_i\):
+| ID | Evidence layer | Main result | Status |
+| --- | --- | --- | --- |
+| [APST5-SIM-001](results/APST5_SIMULATION_001.md) | in-silico experimental design | equal-exposure stimulus timing improved pupil-system identifiability; optimized probe +2.57% vs best contiguous pulse | **reproduced** |
+| [APST5-SIM-002](results/APST5_SIMULATION_002.md) | in-silico state design | 2 s + tighter nuisance prior exceeded 5 s population measurement in 10/10 held-out synthetic replications | **reproduced** |
+| [APST5-SIM-003](results/APST5_SIMULATION_003.md) | multimodal sensitivity analysis | 3 s concurrent pupil+pursuit beat 5 s pupil-only in 72/80 uncertainty-grid cells; median 1.238x | **reproduced** |
+| [APST5-SIM-004](results/APST5_SIMULATION_004.md) | redundancy stress test | at only 25% incremental weaker-channel information, 3 s still beat 5 s in 55/80 cells; median 1.048x | **reproduced** |
+| [MTS-REALDATA-001](results/MTS_REALDATA_001.md) | public human ocular + PVT data | 2 s pre-stimulus eyelid features were stronger than 5–60 s for the same immediate RT target; personalization primary was null | **mixed / exploratory positive** |
 
-\`\`\`text
-display probe u(t) ──> pupil / eye / facial dynamics ──> camera y(t)
-        │                                               │
-        └──────────── known perturbation ───────────────┘
-                              │
-                              v
-               subject-relative state inference
-\`\`\`
+The important distinction is deliberate:
 
-The research objective is not simply to fit a predictor. It is to choose the **probe itself** so that a strict time budget reveals as much identifiable state information as possible.
+**The computational active-sensing results are not human validation.**
 
-A generic design objective is:
+The public human-data result is real-data evidence for **temporal locality of passive ocular state**, not evidence that APST-5 active probing already works in people.
 
-\[
-u^* = \arg\max_u \; \mathbb{E}[I(X;Y \mid U=u,H_i)] - \lambda C(u)
-\]
+See [CLAIM_LEDGER.md](docs/CLAIM_LEDGER.md) for the exact claim boundary.
 
-where \(C(u)\) represents display-energy, comfort, and transition constraints.
+## The current architecture: APST-5
 
-See [APST5.md](APST5.md).
+**APST-5 = Active Personalized State Tomography in Five Seconds.**
 
-## First computational result
+Let:
 
-We implemented a literature-inspired delayed, asymmetric pupil-response surrogate and asked a deliberately constrained question:
+- x(t): latent physiological / functional state;
+- u(t): known screen stimulus;
+- y(t): camera-visible ocular / facial response;
+- h(i): longitudinal history for person i;
+- d(i): device and environment nuisance.
 
-> With the same five-second window and the same total high-luminance exposure, does **when** the phone perturbs the visual system change how much we can identify about its dynamics?
+The measurement problem is:
 
-The design space contained 84 equal-exposure probes. Probe selection was performed on one synthetic parameter population and evaluated on **500 fresh held-out parameter draws**.
+[
+p(x_T \mid y_{0:T}, u_{0:T}, h_i)
+]
 
-| Five-second probe | Held-out expected information gain |
-| --- | ---: |
-| optimized equal-exposure probe | **11.99 nats** |
-| best contiguous pulse | 11.69 nats |
-| evenly spaced pulses | 10.65 nats |
+and the probe itself is a design variable:
 
-The optimized probe used two early high-luminance blocks and one late block:
+[
+u^*
+=
+\arg\max_u
+\mathbb{E}[I(X;Y\mid U=u,H_i)]
+-
+\lambda C(u).
+]
 
-\`\`\`text
-time (s)     0    .5   1.0  1.5  2.0  2.5  3.0  3.5  4.0  4.5
-display      low  HIGH HIGH low  low  low  low  low  HIGH low
-\`\`\`
+C(u) represents duration, exposure, transition, comfort, and hardware constraints.
 
-Under the surrogate model, that design produced:
+The current direction is **concurrent multimodal probing**: use the same few seconds to elicit pupil dynamics and controlled gaze/pursuit dynamics rather than running those tests serially.
 
-- **+2.57% expected information gain** over the best contiguous equal-exposure pulse;
-- **+12.60%** over an evenly spaced equal-exposure probe;
-- an approximately **1.82x reduction in posterior uncertainty volume** relative to the best contiguous pulse.
+## The strongest real-data observation so far
 
-This is an **in-silico experimental-design result, not human validation**. Its value is that it gives APST-5 a falsifiable first prediction: stimulus timing should matter even when duration and exposure are held fixed.
+[MTS-REALDATA-001](results/MTS_REALDATA_001.md) re-analyzed public eyelid-distance + Psychomotor Vigilance Test data from 28 usable subjects under strict leave-one-subject-out evaluation.
 
-Reproduce it with:
+The target was kept fixed: **the immediate next within-person PVT reaction-speed deviation**.
 
-\`\`\`bash
+| Pre-stimulus window | Population macro-r | Personalized macro-r |
+| ---: | ---: | ---: |
+| **2 s** | **0.2742** | **0.2841** |
+| 5 s | 0.2033 | 0.2097 |
+| 15 s | 0.1399 | 0.1511 |
+| 30 s | 0.1177 | 0.1199 |
+| 60 s | 0.0909 | 0.1224 |
+
+The preregistered personalization comparison at 5 s was **null**:
+
+[
+\Delta r = +0.0064,qquad
+95\%\ CI=[-0.0169,+0.0295].
+]
+
+After that primary result was observed, explicitly post-hoc paired duration contrasts found:
+
+[
+r_{2s}-r_{5s}=+0.0709,
+qquad
+95\%\ CI=[+0.0424,+0.1010]
+]
+
+in the population-normalized condition, with the 2 s advantage also present against 15, 30, and 60 s.
+
+That is an exploratory result requiring independent replication. It nevertheless gives Lucent a concrete empirical design clue: **for an immediate functional target, stale history can dilute state-proximal ocular information.**
+
+See [Temporal Locality Principle](docs/TEMPORAL_LOCALITY.md).
+
+## Why 3 seconds is now the stronger active target
+
+APST5-SIM-003 and APST5-SIM-004 ask whether pupil and smooth-pursuit information can be acquired **concurrently**.
+
+Five-second pupil-only comparator:
+
+[
+IG=0.392970	ext{ nats}.
+]
+
+For a 3 s concurrent scan:
+
+- additive envelope: **72/80** grid cells beat the 5 s comparator; median **1.238x**;
+- 50% incremental weaker-channel information: **63/80** wins; median **1.112x**;
+- 25% incremental weaker-channel information: **55/80** wins; median **1.048x**.
+
+So the present model family no longer points to “five seconds” as sacred. It points to a more general target:
+
+> **maximize state information density per second.**
+
+Three seconds is currently the most defensible next empirical active-probe duration because its modeled advantage survives substantial cross-channel redundancy.
+
+## Research progression
+
+~~~text
+Somno
+  |
+  | explicit testing exposes friction
+  v
+passive ultra-short sensing
+  |
+  | MTS-REALDATA-001: recent 2 s > longer passive history
+  v
+APST-5 active probing
+  |
+  +--> SIM-001: optimize stimulus timing
+  |
+  +--> SIM-002: use personal history to cancel stable nuisance
+  |
+  +--> SIM-003: probe pupil + pursuit concurrently
+  |
+  +--> SIM-004: stress-test cross-channel redundancy
+  v
+commodity-phone observability
+  v
+preregistered paired human study
+  v
+unseen-person + unseen-device replication
+~~~
+
+## What would count as the breakthrough?
+
+A strong empirical claim requires all of the following:
+
+1. an ordinary phone executes the active probe with usable timing fidelity;
+2. concurrent active 2–5 s sensing beats passive sensing at the same duration;
+3. optimized active probing beats a matched fixed active probe;
+4. the signal predicts a paired behavioral target on unseen people;
+5. the gain survives device/environment shifts;
+6. the result reproduces on a fresh cohort with a frozen analysis.
+
+Until then, Lucent is a **breakthrough candidate with converging design evidence**, not a validated two-second fatigue detector.
+
+## Reproduce
+
+Install:
+
+~~~bash
+git clone https://github.com/sushxnthd/lucent.git
+cd lucent
+python -m venv .venv
 pip install -e ".[dev]"
+pytest
+~~~
+
+Core computational results:
+
+~~~bash
 python experiments/active_probe_design.py
-\`\`\`
+python experiments/personalization_compression.py
+python experiments/multimodal_compression.py
+python experiments/multimodal_redundancy.py
+~~~
 
-Full result: [results/APST5_SIMULATION_001.md](results/APST5_SIMULATION_001.md)
+Public human-data result:
 
+~~~bash
+python experiments/inspect_mts_data.py
+python experiments/mts_realdata_baseline_compression.py
+~~~
 
-## Second computational result: personalization buys sensing time
-
-APST5-SIM-002 changes the design question from "how much can five seconds see?" to:
-
-> **how short can the scan become once Lucent already knows the stable person-specific nuisance dynamics?**
-
-Using nuisance-projected Fisher information, the experiment separates transient state information from stable person/device parameters. A longitudinal personal baseline enters as nuisance prior precision.
-
-In the held-out surrogate experiment:
-
-| Condition | Held-out state information |
-| --- | ---: |
-| optimized 5 s, population nuisance prior | **0.3402 nats** |
-| optimized 2 s, population prior | 0.2745 |
-| optimized 2 s, nuisance SD reduced 15% | **0.3424** |
-| optimized 2 s, nuisance SD reduced 25% | **0.4023** |
-| optimized 2 s, nuisance SD reduced 50% | **0.6405** |
-
-The 25%-tighter baseline case was then frozen and evaluated over **10 additional held-out synthetic populations**. The 2-second condition beat the 5-second population condition in **10/10 replications**, with a mean information ratio of **1.175x**.
-
-This suggests a stronger Lucent architecture:
-
-\[
-\text{short active response} + \text{longitudinal personal prior}
-\rightarrow
-\text{state deviation}
-\]
-
-rather than re-estimating a person from scratch on every scan.
-
-See [APST5-SIM-002](results/APST5_SIMULATION_002.md) and the [baseline compression derivation](docs/BASELINE_COMPRESSION.md).
-
-## Why active probing is different
-
-Passive five-second face-video drowsiness inference is already prior art. Smartphone pupillometry is prior art. Controlled screen-evoked pupil responses are prior art. Active ocular probing is also prior art.
-
-The specific open gap Lucent targets is the **combination**:
-
-1. ordinary smartphone;
-2. approximately five seconds;
-3. display-controlled perturbation;
-4. synchronized camera response;
-5. information-optimized probe design;
-6. subject-relative / longitudinal priors;
-7. state inference evaluated against behavioral targets;
-8. strict unseen-participant and unseen-device testing.
-
-Our literature search has not located a paper that establishes that full combination. That is a novelty hypothesis, not a patentability or priority claim.
-
-## What would count as a real breakthrough?
-
-Not a simulation score.
-
-The strong version of the claim survives only if active five-second probing:
-
-1. beats passive five seconds;
-2. beats a conventional fixed active probe under matched exposure;
-3. predicts paired behavioral state on participants never seen during training;
-4. survives device and environment shifts;
-5. benefits from personalization without requiring constant new labels;
-6. reproduces on a fresh cohort.
-
-The repo is structured to make those claims harder to fake.
+The public-data workflow downloads the source data from the original Massoz et al. repository at run time; participant data are not copied into Lucent.
 
 ## Research map
 
 | Path | Purpose |
 | --- | --- |
-| [APST5.md](APST5.md) | active-probing thesis and breakthrough test |
-| [RESEARCH.md](RESEARCH.md) | hypotheses, state targets, falsification criteria |
-| [EXPERIMENTS.md](EXPERIMENTS.md) | leakage-resistant human validation program |
-| [ROADMAP.md](ROADMAP.md) | staged path from simulation to fresh-cohort replication |
-| [REFERENCES.md](REFERENCES.md) | closest prior art and measurement literature |
-| [docs/PREREGISTRATION_TEMPLATE.md](docs/PREREGISTRATION_TEMPLATE.md) | freeze confirmatory analyses before final holdout |
-| [docs/FAILURE_MODES.md](docs/FAILURE_MODES.md) | shortcut and false-positive threat model |
-| [docs/POSITIONING.md](docs/POSITIONING.md) | boundary versus ordinary drowsiness classification |
-| [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | questions that can kill or narrow the thesis |
-| [src/lucent/active_probe.py](src/lucent/active_probe.py) | pupil surrogate + information-design utilities |
-| [experiments/active_probe_design.py](experiments/active_probe_design.py) | reproducible APST-5 design experiment |
-| [results/APST5_SIMULATION_001.md](results/APST5_SIMULATION_001.md) | equal-exposure active-probe result |
-| [results/APST5_SIMULATION_002.md](results/APST5_SIMULATION_002.md) | personalization / temporal-compression result |
-| [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md) | nuisance-projection derivation and design principle |
-| [docs/MULTIMODAL_COMPRESSION.md](docs/MULTIMODAL_COMPRESSION.md) | closest 30–45 s ocular screens and the open ~5 s compression target |
+| [APST5.md](APST5.md) | active-probing thesis |
+| [RESEARCH.md](RESEARCH.md) | hypotheses and evidence ladder |
+| [ROADMAP.md](ROADMAP.md) | remaining empirical gates |
+| [REFERENCES.md](REFERENCES.md) | closest prior art |
+| [docs/CLAIM_LEDGER.md](docs/CLAIM_LEDGER.md) | exact supported / unsupported claims |
+| [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md) | personalization-as-sensing-time derivation |
+| [docs/MULTIMODAL_INFORMATION.md](docs/MULTIMODAL_INFORMATION.md) | concurrent-channel information model |
+| [docs/MULTIMODAL_COMPRESSION.md](docs/MULTIMODAL_COMPRESSION.md) | prior-art boundary for short combined ocular screens |
+| [docs/TEMPORAL_LOCALITY.md](docs/TEMPORAL_LOCALITY.md) | why more historical sensor data can hurt an immediate target |
+| [docs/FAILURE_MODES.md](docs/FAILURE_MODES.md) | shortcut / leakage threat model |
+| [experiments/registrations/MTS_REALDATA_001.md](experiments/registrations/MTS_REALDATA_001.md) | frozen public-data preregistration |
+| [results/](results/) | complete positive and null results |
 
-## Research principles
+## Research rules
 
-- **Perturb, don't merely observe.**
-- **Match exposure before comparing probes.**
-- **Optimize on one population, report on another.**
-- **Split by person before reporting human performance.**
-- **Baselines before bigger models.**
-- **Ablations before explanations.**
-- **Negative results are results.**
-- **Product claims come after replication.**
-
-## Status
-
-**Two converging computational results; biological validation pending.**
-
-The current result supports the research strategy that an actively designed five-second scan may be more informative than a conventional fixed probe under the same time and exposure budget. It does **not** yet establish that Lucent can estimate fatigue or cognitive performance in humans.
-
-That is the next experiment.
+- **Perturb, do not merely observe.**
+- **Keep the target fixed when comparing measurement durations.**
+- **Match exposure before comparing active probes.**
+- **Split by person before reporting generalization.**
+- **Optimize on one population, evaluate on another.**
+- **Treat personal history as prior information, never future leakage.**
+- **Publish null results.**
+- **Do not turn a simulation into a biological claim.**
