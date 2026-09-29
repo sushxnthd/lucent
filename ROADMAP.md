@@ -77,6 +77,20 @@ This is a **measurement-design prediction**, not a validated human duration clai
 
 Full audit: [TEMPORAL-SCALE-AUDIT-001](results/TEMPORAL_SCALE_AUDIT_001.md)
 
+## Phase 0.95: camera-robust observability simulation
+
+**Status: complete**
+
+- [x] freeze a phone-camera stress model before held-out evaluation;
+- [x] search all 84 equal-exposure timing patterns by P10 separation;
+- [x] evaluate on 500 fresh synthetic people;
+- [x] stress 60/30/24 FPS, jitter, frame drops, and observation noise;
+- [x] test the already frozen E002 sequence without changing the human protocol.
+
+**Result:** the robust search selected (1,2,9), but the frozen E002 sequence (1,2,8) independently passed the same model-robust criterion with held-out P10 S **11.272** and **100%** of person × camera cells above S=1.25.
+
+This only reduces a model-level camera-sampling risk. E002 still requires real captures.
+
 ## Phase 1: phone observability pilot
 
 **Status: instrument implemented; real captures pending**
