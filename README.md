@@ -77,6 +77,39 @@ python experiments/active_probe_design.py
 
 Full result: [results/APST5_SIMULATION_001.md](results/APST5_SIMULATION_001.md)
 
+
+## Second computational result: personalization buys sensing time
+
+APST5-SIM-002 changes the design question from "how much can five seconds see?" to:
+
+> **how short can the scan become once Lucent already knows the stable person-specific nuisance dynamics?**
+
+Using nuisance-projected Fisher information, the experiment separates transient state information from stable person/device parameters. A longitudinal personal baseline enters as nuisance prior precision.
+
+In the held-out surrogate experiment:
+
+| Condition | Held-out state information |
+| --- | ---: |
+| optimized 5 s, population nuisance prior | **0.3402 nats** |
+| optimized 2 s, population prior | 0.2745 |
+| optimized 2 s, nuisance SD reduced 15% | **0.3424** |
+| optimized 2 s, nuisance SD reduced 25% | **0.4023** |
+| optimized 2 s, nuisance SD reduced 50% | **0.6405** |
+
+The 25%-tighter baseline case was then frozen and evaluated over **10 additional held-out synthetic populations**. The 2-second condition beat the 5-second population condition in **10/10 replications**, with a mean information ratio of **1.175x**.
+
+This suggests a stronger Lucent architecture:
+
+\[
+\text{short active response} + \text{longitudinal personal prior}
+\rightarrow
+\text{state deviation}
+\]
+
+rather than re-estimating a person from scratch on every scan.
+
+See [APST5-SIM-002](results/APST5_SIMULATION_002.md) and the [baseline compression derivation](docs/BASELINE_COMPRESSION.md).
+
 ## Why active probing is different
 
 Passive five-second face-video drowsiness inference is already prior art. Smartphone pupillometry is prior art. Controlled screen-evoked pupil responses are prior art. Active ocular probing is also prior art.
@@ -124,7 +157,9 @@ The repo is structured to make those claims harder to fake.
 | [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | questions that can kill or narrow the thesis |
 | [src/lucent/active_probe.py](src/lucent/active_probe.py) | pupil surrogate + information-design utilities |
 | [experiments/active_probe_design.py](experiments/active_probe_design.py) | reproducible APST-5 design experiment |
-| [results/APST5_SIMULATION_001.md](results/APST5_SIMULATION_001.md) | first held-out in-silico result |
+| [results/APST5_SIMULATION_001.md](results/APST5_SIMULATION_001.md) | equal-exposure active-probe result |
+| [results/APST5_SIMULATION_002.md](results/APST5_SIMULATION_002.md) | personalization / temporal-compression result |
+| [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md) | nuisance-projection derivation and design principle |
 
 ## Research principles
 
@@ -139,7 +174,7 @@ The repo is structured to make those claims harder to fake.
 
 ## Status
 
-**Breakthrough candidate identified; biological validation pending.**
+**Two converging computational results; biological validation pending.**
 
 The current result supports the research strategy that an actively designed five-second scan may be more informative than a conventional fixed probe under the same time and exposure budget. It does **not** yet establish that Lucent can estimate fatigue or cognitive performance in humans.
 
