@@ -1,0 +1,4 @@
+<stdin>:25: RuntimeWarning: Mean of empty slice
+Traceback (most recent call last):
+  File "<stdin>", line 36, in <module>
+AttributeError: module 'mediapipe' has no attribute 'solutions'
