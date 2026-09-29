@@ -37,18 +37,24 @@ A session is included if:
 Reaction time must satisfy:
 
 \[
-100 \le RT \le 5000\text{ ms}.
+100 \le RT \le 1500\text{ ms}.
 \]
+
+The 1500 ms upper bound is fixed from the published task protocol: the probe is displayed for 1.5 s and responses occur within that interval.
 
 Incorrect trials are excluded from the continuous RT primary analysis but retained for descriptive reporting.
 
 ## Anchor rule
 
-The analysis will inspect documented task-event timing and use the latest event that occurs **before the behavioral response and is common to every trial** (preferably probe onset).
+The published data descriptor fixes the anchor before outcome analysis:
 
-No temporal offset may be selected by maximizing reaction-time correlation.
+- Event 7 = probe-array onset;
+- each Task_epoch pupil vector spans approximately -5 s to +3 s relative to probe onset;
+- the behavioral response occurs during the following 1.5 s probe interval.
 
-If a leakage-free anchor cannot be established from the documented event structure, the confirmatory analysis will be marked non-executable.
+Therefore all predictor windows end immediately **before probe onset (t=0)**.
+
+No post-probe sample and no response-locked data are used. No temporal offset may be selected by maximizing reaction-time correlation.
 
 ## Windows
 
@@ -78,13 +84,24 @@ Reciprocal reaction speed:
 v=1000/RT_{ms}.
 \]
 
-Within each session, standardize:
+The working-memory load and distractor class are experimentally manipulated and can affect both the pre-probe pupil trace and reaction time. To prevent the model from receiving credit merely for decoding those task conditions, first remove their session-specific mean effect from the target.
+
+Within each session, fit the fixed nuisance model
 
 \[
-z=(v-\mu_s)/\sigma_s.
+v_t = \beta_0 + \beta_{\mathrm{load}(t)}
+      + \beta_{\mathrm{distractor}(t)} + \epsilon_t
 \]
 
-The task is therefore trial-to-trial deviation rather than stable between-person speed.
+using one-hot load and distractor indicators only. The prediction target is the standardized residual
+
+\[
+z_t = (\epsilon_t-\bar\epsilon_s)/\sigma_{\epsilon,s}.
+\]
+
+This target residualization is applied only to the **outcome variable**; load and distractor labels are never model inputs.
+
+The task is therefore trial-to-trial performance deviation beyond the experimentally imposed load/distractor condition and stable between-person speed.
 
 ## Features
 
@@ -160,3 +177,14 @@ It would not prove:
 - smartphone observability;
 - active-probe superiority;
 - clinical utility.
+
+
+## Pre-outcome protocol amendment
+
+Before the first duration-performance analysis was run, the published data descriptor was read in full to resolve two design details that had been left conditional in the initial preregistration:
+
+1. Event 7 / probe onset is now fixed as the leakage-free anchor because the Task_epoch pupil vector is documented as -5 s to +3 s around that event.
+2. The RT upper bound is 1500 ms, matching the 1.5 s probe-response interval.
+3. Load and distractor main effects are residualized from the target before standardization so that decoding the experimentally imposed condition cannot by itself count as predicting trial-to-trial performance.
+
+These changes were committed before inspecting any duration-performance correlation from this dataset.
