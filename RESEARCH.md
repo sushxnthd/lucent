@@ -1,69 +1,138 @@
 # Lucent Research Thesis
 
-## 1. Problem
+## 1. Core question
 
-Most fatigue and cognitive-state measurements impose some explicit burden on the user: reaction-time tasks, questionnaires, wearables, or repeated manual logging. Lucent investigates whether a very short front-camera observation contains enough information to recover part of that signal.
+Given approximately five seconds of ordinary front-camera RGB video, how much information about short-term fatigue and cognitive-performance state can be recovered under strict out-of-sample evaluation?
 
-The difficult part is not fitting a model to faces. It is demonstrating that any measured signal reflects **state** rather than person identity, device characteristics, lighting, pose, or other shortcuts.
+The project is intentionally framed as an empirical question. The answer may be "less than expected."
 
-## 2. Primary question
+## 2. Why this question matters
 
-Given approximately five seconds of ordinary front-camera video, how much information about short-term fatigue and cognitive-performance state can be recovered under strict out-of-sample evaluation?
+Current low-friction sleep and fatigue products often depend on one of two compromises:
 
-## 3. Working hypotheses
+1. **explicit effort**, such as reaction-time tasks, questionnaires, or repeated logging; or
+2. **dedicated hardware**, such as watches, rings, headbands, or other sensors.
 
-### H1 — State signal exists
-Short facial video contains measurable temporal information associated with changes in fatigue or psychomotor performance.
+Lucent investigates a third direction: whether hardware people already have can recover a useful subset of state information with almost no interaction burden.
 
-### H2 — Temporal information matters
-Video should outperform equally sized static-frame baselines if useful cues are carried by blink dynamics, eyelid motion, gaze stability, micro-movements, or other temporal structure.
+The scientific challenge is to distinguish a true transient state signal from stable identity and collection artifacts.
 
-### H3 — Personal baselines matter
-Predicting deviation from an individual's baseline may be more reliable than estimating a universal absolute score.
+## 3. Operational targets
 
-### H4 — Generalization is the real test
-Performance that disappears under subject-held-out, device-held-out, or session-held-out evaluation is not sufficient evidence for the core thesis.
+Lucent does not treat "fatigue" as one perfectly observed ground-truth variable.
 
-## 4. Reference measurements
+Candidate targets include:
 
-The research program pairs video with reference variables that can be independently measured, including:
-
-- psychomotor reaction-time performance;
-- subjective sleepiness ratings;
+- psychomotor vigilance / reaction-time outcomes;
+- lapse counts or slow-response tails where the task supports them;
+- subjective state sleepiness;
 - recent sleep duration and timing;
-- repeated measurements over time for within-person analysis.
+- within-person deviation from a repeated personal baseline.
 
-No single proxy is treated as ground truth for the entire construct. Agreement and disagreement between targets are part of the analysis.
+Each target is analyzed separately before any composite score is considered.
 
-## 5. Confounds to actively attack
+## 4. Working hypotheses
 
-Lucent should be assumed vulnerable to shortcut learning until shown otherwise. Key confounds include:
+### H1: brief visual state signal exists
 
+Short facial video contains measurable information associated with contemporaneous fatigue or psychomotor performance.
+
+### H2: temporal structure adds information
+
+A short video representation should outperform matched static-frame baselines if useful signal is carried by temporal phenomena such as eyelid dynamics, blink timing, gaze stability, or head micro-movement.
+
+### H3: personal deviation is easier than universal ranking
+
+Predicting how a person differs from their own baseline may generalize better than assigning an absolute cross-person "fatigue score."
+
+### H4: video must add signal beyond context
+
+A useful video model should add predictive information beyond sleep history, time of day, and other non-visual metadata.
+
+### H5: identity is a major shortcut
+
+Performance from random clip-level splits will overestimate real generalization whenever repeated observations from the same participant appear in both train and test sets.
+
+### H6: uncertainty should rise under distribution shift
+
+If the system sees a participant, device, or recording condition outside its training distribution, uncertainty should increase rather than remain spuriously confident.
+
+## 5. Candidate visual signals
+
+The project may investigate:
+
+- eyelid aperture and closure dynamics;
+- blink timing and duration;
+- gaze stability;
+- head-motion dynamics;
+- facial action / expression dynamics;
+- temporal texture representations learned directly from video.
+
+These are candidate measurements, not assumed causal mechanisms.
+
+## 6. Confounds to attack explicitly
+
+Lucent should be assumed vulnerable to shortcut learning until demonstrated otherwise.
+
+### Person-level
 - participant identity;
 - age and stable facial morphology;
-- camera/device model;
-- lighting and exposure;
-- background and location;
-- head pose and viewing distance;
-- glasses and occlusion;
+- habitual expression;
+- glasses and stable appearance.
+
+### Recording-level
+- device / camera model;
+- resolution and frame rate;
+- exposure and white balance;
+- compression;
+- background;
+- viewing distance and head pose.
+
+### Protocol-level
 - time of day;
 - session order;
-- label leakage through collection procedure.
+- sleep schedule;
+- test administrator effects;
+- labels encoded indirectly by collection conditions;
+- multiple clips derived from one recording crossing a split boundary.
 
-## 6. Validation standard
+## 7. Falsification criteria
 
-A result becomes interesting only if it survives:
+The current hypothesis should be weakened or rejected if:
 
-1. participant-held-out evaluation;
-2. temporal/session holdouts;
-3. device/environment stress tests;
-4. comparison with trivial baselines;
-5. static-frame versus temporal ablations;
-6. uncertainty and calibration analysis;
-7. replication on a fresh collection.
+- performance collapses under participant-held-out evaluation;
+- a static frame performs as well as the full clip despite a temporal-mechanism claim;
+- time-of-day or sleep-history baselines explain nearly all apparent signal;
+- identity or device information explains the prediction;
+- effects fail to replicate on a fresh collection;
+- uncertainty remains badly calibrated under known distribution shift.
 
-The central metric is not just raw predictive performance. It is **how much performance remains when obvious shortcuts are removed**.
+A negative result that identifies one of these failure modes is considered useful research.
 
-## 7. Research direction
+## 8. Evidence ladder
 
-If reliable signal survives these tests, the next question is to determine the narrowest state variable that can be measured well enough to support a low-friction real-world system. If it does not, the failure itself should localize which assumptions about passive visual measurement were wrong.
+### Level 0: pipeline sanity
+The model can overfit a small controlled subset and all labels, timestamps, and splits pass integrity checks.
+
+### Level 1: within-person association
+Video features track repeated changes within the same individuals.
+
+### Level 2: unseen-person generalization
+The signal survives participant-held-out evaluation.
+
+### Level 3: nuisance robustness
+Performance remains useful across sessions, devices, lighting, pose, and environment changes.
+
+### Level 4: incremental value
+Video adds information beyond sleep history, time of day, and static visual baselines.
+
+### Level 5: fresh-cohort replication
+A frozen analysis plan reproduces on newly collected participants.
+
+Only Levels 4-5 would support strong product claims.
+
+## 9. Research direction
+
+If a robust signal survives, the next step is not to predict everything. It is to identify the **narrowest state variable that can be measured reliably enough to matter**.
+
+If the signal does not survive, the goal is to make the failure informative enough to show which assumptions about brief passive visual measurement were wrong.
