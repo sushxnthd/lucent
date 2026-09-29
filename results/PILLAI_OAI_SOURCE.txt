@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?><?xml-stylesheet type="text/xsl" href="/oai-pmh-repository/static/oai2.xsl"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+    <responseDate>2026-09-29T17:27:55Z</responseDate>
+    <request verb="GetRecord" identifier="oai:data.mendeley.com:dp8g983t38/1" metadataPrefix="oai_datacite">https://data.mendeley.com/oai</request>
+    <error code="idDoesNotExist">The value of the identifier argument is unknown or illegal in this repository</error>
+</OAI-PMH>
