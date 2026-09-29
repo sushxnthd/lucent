@@ -1,0 +1,45 @@
+name: martin-pvt-target-alignment
+
+on:
+  push:
+    branches: ['martin-pvt-replication']
+
+permissions:
+  contents: write
+
+jobs:
+  replicate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: martin-pvt-replication
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install analysis dependencies
+        run: python -m pip install numpy scikit-learn
+
+      - name: Download public Martin PVT archive
+        run: |
+          curl -L --fail --retry 3 -o /tmp/martin_pvt.zip https://ndownloader.figshare.com/files/31982387
+          mkdir -p /tmp/martin
+          unzip -q /tmp/martin_pvt.zip 'data/sub*/sub*_events.asc' 'data/sub*/sub*_samples.asc' -d /tmp/martin
+          find /tmp/martin/data -maxdepth 2 -type f | sort | head -20
+
+      - name: Run frozen independent PVT replication
+        run: |
+          python experiments/martin_pvt_target_alignment.py --data-root /tmp/martin/data --output results/MARTIN_PVT_TARGET_ALIGNMENT_001.md
+
+      - name: Commit frozen result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/MARTIN_PVT_TARGET_ALIGNMENT_001.md
+          git commit -m "MARTIN-PVT-TARGET-ALIGNMENT-001: frozen replication result [skip ci]" || exit 0
+          git push origin HEAD:martin-pvt-replication
