@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install
-        run: python -m pip install requests
+        run: python -m pip install requests numpy pandas
       - name: Crawl public OSF project
         run: |
           python - <<'PY'
@@ -98,10 +98,66 @@ jobs:
           Path('results/MAKOWSKI_OSF_MANIFEST.json').write_text(json.dumps(rows,indent=2),encoding='utf-8')
           print('\n'.join(lines[:300]))
           PY
+      - name: Inspect Makowski metadata and labels
+        run: |
+          python - <<'PY'
+          import io, json, urllib.request
+          from pathlib import Path
+          import numpy as np
+          import pandas as pd
+
+          urls={
+              'README.txt':'https://osf.io/download/nqywk/',
+              'data_format.json':'https://osf.io/download/ak5rt/',
+              'label_format.json':'https://osf.io/download/e2mda/',
+              'human_readable_featurenames.csv':'https://osf.io/download/pjn8b/',
+              'label.npy':'https://osf.io/download/3zasd/',
+              'session_type.npy':'https://osf.io/download/mq28f/',
+              'sub_id.npy':'https://osf.io/download/67mux/',
+          }
+
+          blobs={}
+          for name,url in urls.items():
+              with urllib.request.urlopen(url,timeout=120) as response:
+                  blobs[name]=response.read()
+
+          readme=blobs['README.txt'].decode('utf-8','replace')
+          data_format=json.loads(blobs['data_format.json'])
+          label_format=json.loads(blobs['label_format.json'])
+          features=pd.read_csv(io.BytesIO(blobs['human_readable_featurenames.csv']))
+          labels=np.load(io.BytesIO(blobs['label.npy']),allow_pickle=False)
+          session=np.load(io.BytesIO(blobs['session_type.npy']),allow_pickle=False)
+          sub=np.load(io.BytesIO(blobs['sub_id.npy']),allow_pickle=False)
+
+          lines=['# Makowski drowsiness metadata schema','']
+          lines += ['## README','', '~~~text', readme, '~~~','']
+          lines += ['## data_format.json','', '~~~json', json.dumps(data_format,indent=2), '~~~','']
+          lines += ['## label_format.json','', '~~~json', json.dumps(label_format,indent=2), '~~~','']
+          lines += ['## array shapes','','| array | shape | dtype | unique/sample |','| --- | --- | --- | --- |']
+          def sample(a):
+              flat=np.asarray(a).reshape(-1)
+              vals=np.unique(flat[:min(len(flat),100000)])
+              return str(vals[:30].tolist())
+          lines.append(f'| label.npy | {labels.shape} | {labels.dtype} | {sample(labels)} |')
+          lines.append(f'| session_type.npy | {session.shape} | {session.dtype} | {sample(session)} |')
+          lines.append(f'| sub_id.npy | {sub.shape} | {sub.dtype} | {sample(sub)} |')
+          lines += ['','## label preview','','    '+np.array2string(labels[:8],threshold=2000).replace('\n','\n    ')]
+          lines += ['','## session/sub preview','','    session='+np.array2string(session[:40])+'','    sub='+np.array2string(sub[:40])+'']
+          lines += ['','## human-readable feature names','','columns: '+', '.join(map(str,features.columns)),'','    '+features.head(80).to_csv(index=False).replace('\n','\n    ')]
+          lines += ['','## participant/session counts','']
+          lines.append(f'unique subjects: **{len(np.unique(sub))}**')
+          lines.append(f'unique session types: **{np.unique(session).tolist()}**')
+          pairs=set(zip(np.asarray(sub).reshape(-1).tolist(),np.asarray(session).reshape(-1).tolist()))
+          lines.append(f'unique subject/session pairs: **{len(pairs)}**')
+
+          Path('results/MAKOWSKI_SCHEMA.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:320]))
+          PY
+
       - name: Commit manifest
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add results/MAKOWSKI_OSF_MANIFEST.md results/MAKOWSKI_OSF_MANIFEST.json results/MAKOWSKI_OSF_PROVIDERS.json
+          git add results/MAKOWSKI_OSF_MANIFEST.md results/MAKOWSKI_OSF_MANIFEST.json results/MAKOWSKI_OSF_PROVIDERS.json results/MAKOWSKI_SCHEMA.md
           git commit -m "Inspect public Makowski drowsiness OSF dataset [skip ci]" || exit 0
           git push origin HEAD:makowski-drowsiness-validation
