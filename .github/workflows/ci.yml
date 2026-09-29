@@ -1,5 +1,9 @@
 name: research-ci
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches: ["main", "research-foundation", "apst5-breakthrough", "state-compression-breakthrough", "multimodal-compression", "correlated-multimodal", "adhd-temporal-locality"]
