@@ -28,8 +28,9 @@ jobs:
           unzip -q /tmp/S01.zip 'Sess01/MI011_phantom.avi' 'Sess01/MI011_sync.csv' 'Sess01/MI011_tobii.csv' -d /tmp/eye_bci
           ls -lh /tmp/eye_bci/Sess01/
       - name: Run sparse video-vs-Tobii pupil diagnostic
+        continue-on-error: true
         run: |
-          python - <<'PY'
+          python - <<'PY' > results/EYE_BCI_S01_DIAGNOSTIC_LOG.txt 2>&1
           import sys, json
           from pathlib import Path
           import cv2, mediapipe as mp, numpy as np, pandas as pd
@@ -141,6 +142,7 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add results/EYE_BCI_S01_PUPIL_DIAGNOSTIC.md
+          git add results/EYE_BCI_S01_DIAGNOSTIC_LOG.txt
+          test ! -f results/EYE_BCI_S01_PUPIL_DIAGNOSTIC.md || git add results/EYE_BCI_S01_PUPIL_DIAGNOSTIC.md
           git commit -m "EYE-BCI-S01: pupil extractor development diagnostic [skip ci]" || exit 0
           git push origin HEAD:eye-bci-extractor-validation
