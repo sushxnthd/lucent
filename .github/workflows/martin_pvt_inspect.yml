@@ -48,16 +48,61 @@ jobs:
           lines.append('')
           lines.append('## Description')
           lines.append('')
-          lines.append(article.get('description','').replace('<p>','').replace('</p>','\n').replace('<br>','\n').replace('<br/>','\n'))
+          lines.append(article.get('description',''))
 
           Path('results/MARTIN_PVT_DATA_MANIFEST.md').write_text('\n'.join(lines), encoding='utf-8')
-          print('\n'.join(lines[:80]))
           PY
 
-      - name: Commit manifest
+      - name: Download and inspect PVT archive
+        run: |
+          curl -L --fail --retry 3 -o /tmp/martin_pvt.zip https://ndownloader.figshare.com/files/31982387
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+
+          zpath=Path('/tmp/martin_pvt.zip')
+          with zipfile.ZipFile(zpath) as z:
+              infos=z.infolist()
+              names=[i.filename for i in infos]
+              asc=[n for n in names if n.lower().endswith('.asc')]
+              edf=[n for n in names if n.lower().endswith('.edf')]
+              csv=[n for n in names if n.lower().endswith('.csv')]
+              txt=[n for n in names if n.lower().endswith('.txt')]
+
+              lines=[]
+              lines.append('# Martin PVT archive structure')
+              lines.append('')
+              lines.append(f'Archive bytes: {zpath.stat().st_size:,}')
+              lines.append(f'Files: {len(infos)}')
+              lines.append(f'ASC files: {len(asc)}')
+              lines.append(f'EDF files: {len(edf)}')
+              lines.append(f'CSV files: {len(csv)}')
+              lines.append(f'TXT files: {len(txt)}')
+              lines.append('')
+              lines.append('## First 250 paths')
+              lines.append('')
+              for info in infos[:250]:
+                  lines.append(f'- {info.filename} ({info.file_size:,} bytes)')
+
+              sample = asc[0] if asc else (txt[0] if txt else None)
+              if sample:
+                  lines.append('')
+                  lines.append(f'## Sample text from {sample}')
+                  lines.append('')
+                  lines.append('```text')
+                  with z.open(sample) as fh:
+                      raw=fh.read(30000).decode('utf-8', errors='replace')
+                  lines.extend(raw.splitlines()[:160])
+                  lines.append('```')
+
+              Path('results/MARTIN_PVT_STRUCTURE.md').write_text('\n'.join(lines), encoding='utf-8')
+              print('\n'.join(lines[:220]))
+          PY
+
+      - name: Commit inspection
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add results/MARTIN_PVT_DATA_MANIFEST.md
-          git commit -m "Inspect Martin 2022 open PVT/pupil data [skip ci]" || exit 0
+          git add results/MARTIN_PVT_DATA_MANIFEST.md results/MARTIN_PVT_STRUCTURE.md
+          git commit -m "Inspect Martin 2022 PVT archive structure [skip ci]" || exit 0
           git push origin HEAD:martin-pvt-replication
