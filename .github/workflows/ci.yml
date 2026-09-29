@@ -26,18 +26,18 @@ jobs:
         run: pytest
       - name: Synthetic leakage smoke test
         run: python experiments/synthetic_identity_leakage.py
-      - name: APST-5 active-probe reproduction
-        run: python experiments/active_probe_design.py
-      - name: APST-5 personalization-compression reproduction
-        if: matrix.python-version == '3.12'
-        run: python experiments/personalization_compression.py
-      - name: APST-5 multimodal-compression reproduction
-        if: matrix.python-version == '3.12'
-        run: python experiments/multimodal_compression.py
-      - name: APST-5 multimodal redundancy reproduction
-        if: matrix.python-version == '3.12'
-        run: python experiments/multimodal_redundancy.py
-
       - name: Inspect independent Windsor dataset
         if: matrix.python-version == '3.12' && github.ref == 'refs/heads/wind-realdata-replication'
         run: python experiments/inspect_windsor_data.py
+      - name: APST-5 active-probe reproduction
+        if: github.ref != 'refs/heads/wind-realdata-replication'
+        run: python experiments/active_probe_design.py
+      - name: APST-5 personalization-compression reproduction
+        if: matrix.python-version == '3.12' && github.ref != 'refs/heads/wind-realdata-replication'
+        run: python experiments/personalization_compression.py
+      - name: APST-5 multimodal-compression reproduction
+        if: matrix.python-version == '3.12' && github.ref != 'refs/heads/wind-realdata-replication'
+        run: python experiments/multimodal_compression.py
+      - name: APST-5 multimodal redundancy reproduction
+        if: matrix.python-version == '3.12' && github.ref != 'refs/heads/wind-realdata-replication'
+        run: python experiments/multimodal_redundancy.py
