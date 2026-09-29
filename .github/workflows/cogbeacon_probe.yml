@@ -57,10 +57,54 @@ jobs:
           mkdir -p results
           cp /tmp/cogbeacon_inspection.md results/COGBEACON_INSPECTION.md
 
+      - name: Inspect schemas
+        run: |
+          python - <<'PY' > /tmp/cogbeacon_schema.md
+          from pathlib import Path
+          import numpy as np
+          root=Path('external/cogbeacon/extracted')
+          print('# CogBeacon schema\n')
+
+          print('## Performance files\n')
+          perf=sorted((root/'user_performance').glob('*.csv'))
+          print(f'count: {len(perf)}\n')
+          for p in perf[:12]:
+              lines=p.read_text(errors='replace').splitlines()
+              print(f'### {p.name}')
+              for line in lines[:8]:
+                  print('    '+line[:1800])
+
+          print('\n## Self-report files\n')
+          sr=sorted((root/'fatigue_self_report').glob('*.csv'))
+          print(f'count: {len(sr)}\n')
+          for p in sr[:8]:
+              vals=p.read_text(errors='replace').splitlines()
+              ints=[]
+              for v in vals:
+                  try: ints.append(int(v.strip()))
+                  except: pass
+              print(f'- {p.name}: rows={len(vals)}, final={vals[-1] if vals else "NA"}, max={max(ints) if ints else "NA"}')
+
+          print('\n## Face-keypoint NPZ examples\n')
+          sessions=sorted([p for p in (root/'face_keypoints').iterdir() if p.is_dir()])
+          print(f'sessions: {len(sessions)}\n')
+          for s in sessions[:4]:
+              files=sorted(s.glob('*.npz'))[:3]
+              print(f'### {s.name}')
+              for p in files:
+                  z=np.load(p, allow_pickle=True)
+                  print(f'- {p.name}: keys={list(z.keys())}')
+                  for k in z.keys():
+                      a=z[k]
+                      flat=np.asarray(a).reshape(-1)
+                      print(f'  {k}: shape={getattr(a,"shape",None)}, dtype={getattr(a,"dtype",None)}, sample={flat[:10].tolist()}')
+          PY
+          cp /tmp/cogbeacon_schema.md results/COGBEACON_SCHEMA.md
+
       - name: Commit inspection
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add results/COGBEACON_INSPECTION.md
+          git add results/COGBEACON_INSPECTION.md results/COGBEACON_SCHEMA.md
           git commit -m "Record CogBeacon inspection [skip ci]" || exit 0
           git push origin HEAD:cogbeacon-replication
