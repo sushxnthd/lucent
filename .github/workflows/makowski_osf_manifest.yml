@@ -1,0 +1,102 @@
+name: makowski-osf-manifest
+
+on:
+  push:
+    branches: ['makowski-drowsiness-validation']
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: makowski-drowsiness-validation
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: python -m pip install requests
+      - name: Crawl public OSF project
+        run: |
+          python - <<'PY'
+          import json, requests
+          from collections import Counter, deque
+          from pathlib import Path
+
+          node='hmyc4'
+          session=requests.Session()
+          session.headers.update({'User-Agent':'lucent-research/1.0'})
+
+          providers=session.get(f'https://api.osf.io/v2/nodes/{node}/files/',timeout=60).json()
+          rows=[]
+          queue=deque()
+
+          for item in providers.get('data',[]):
+              attr=item.get('attributes') or {}
+              links=item.get('links') or {}
+              rel=links.get('related')
+              if isinstance(rel,dict): rel=rel.get('href')
+              if rel:
+                  queue.append((attr.get('name') or item.get('id'), rel))
+
+          seen=set()
+          while queue:
+              provider,url=queue.popleft()
+              if url in seen: continue
+              seen.add(url)
+              while url:
+                  data=session.get(url,timeout=60).json()
+                  for item in data.get('data',[]):
+                      attr=item.get('attributes') or {}
+                      links=item.get('links') or {}
+                      kind=attr.get('kind')
+                      row={
+                          'provider':provider,
+                          'id':item.get('id'),
+                          'name':attr.get('name'),
+                          'kind':kind,
+                          'path':attr.get('materialized_path'),
+                          'size':attr.get('size'),
+                          'date_modified':attr.get('date_modified'),
+                          'download':links.get('download'),
+                      }
+                      rows.append(row)
+                      if kind=='folder':
+                          rel=links.get('related')
+                          if isinstance(rel,dict): rel=rel.get('href')
+                          if rel: queue.append((provider,rel))
+                  nxt=(data.get('links') or {}).get('next')
+                  if isinstance(nxt,dict): nxt=nxt.get('href')
+                  url=nxt
+
+          files=[r for r in rows if r['kind']=='file']
+          counts=Counter()
+          for r in files:
+              name=(r.get('name') or '').lower()
+              suffix='.'+name.rsplit('.',1)[-1] if '.' in name else '<none>'
+              counts[suffix]+=1
+
+          lines=['# Makowski drowsiness OSF manifest','',f'OSF node: {node}',f'Resources: **{len(rows)}**',f'Files: **{len(files)}**',f'Listed bytes: **{sum(int(r.get("size") or 0) for r in files):,}**','']
+          lines += ['## File types','','| suffix | count |','| --- | ---: |']
+          for suffix,count in counts.most_common():
+              lines.append(f'| {suffix} | {count} |')
+          lines += ['','## Files','','| path | bytes | provider |','| --- | ---: | --- |']
+          for r in sorted(files,key=lambda x:(x.get('path') or '',x.get('name') or ''))[:1000]:
+              lines.append(f"| {r.get('path') or r.get('name')} | {int(r.get('size') or 0):,} | {r.get('provider')} |")
+
+          Path('results/MAKOWSKI_OSF_MANIFEST.md').write_text('\n'.join(lines),encoding='utf-8')
+          Path('results/MAKOWSKI_OSF_MANIFEST.json').write_text(json.dumps(rows,indent=2),encoding='utf-8')
+          print('\n'.join(lines[:300]))
+          PY
+      - name: Commit manifest
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/MAKOWSKI_OSF_MANIFEST.md results/MAKOWSKI_OSF_MANIFEST.json
+          git commit -m "Inspect public Makowski drowsiness OSF dataset [skip ci]" || exit 0
+          git push origin HEAD:makowski-drowsiness-validation
