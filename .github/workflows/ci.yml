@@ -2,7 +2,7 @@ name: research-ci
 
 on:
   push:
-    branches: ["main", "research-foundation", "apst5-breakthrough", "state-compression-breakthrough", "multimodal-compression", "correlated-multimodal"]
+    branches: ["main", "research-foundation", "apst5-breakthrough", "state-compression-breakthrough", "multimodal-compression", "correlated-multimodal", "adhd-temporal-locality"]
   pull_request:
 
 jobs:
@@ -26,14 +26,18 @@ jobs:
         run: pytest
       - name: Synthetic leakage smoke test
         run: python experiments/synthetic_identity_leakage.py
+      - name: Inspect independent ADHD pupil dataset
+        if: matrix.python-version == '3.12' && github.ref == 'refs/heads/adhd-temporal-locality'
+        run: python experiments/inspect_adhd_pupil_data.py
       - name: APST-5 active-probe reproduction
+        if: github.ref != 'refs/heads/adhd-temporal-locality'
         run: python experiments/active_probe_design.py
       - name: APST-5 personalization-compression reproduction
-        if: matrix.python-version == '3.12'
+        if: matrix.python-version == '3.12' && github.ref != 'refs/heads/adhd-temporal-locality'
         run: python experiments/personalization_compression.py
       - name: APST-5 multimodal-compression reproduction
-        if: matrix.python-version == '3.12'
+        if: matrix.python-version == '3.12' && github.ref != 'refs/heads/adhd-temporal-locality'
         run: python experiments/multimodal_compression.py
       - name: APST-5 multimodal redundancy reproduction
-        if: matrix.python-version == '3.12'
+        if: matrix.python-version == '3.12' && github.ref != 'refs/heads/adhd-temporal-locality'
         run: python experiments/multimodal_redundancy.py
