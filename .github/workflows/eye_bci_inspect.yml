@@ -1,0 +1,72 @@
+name: eye-bci-inspect
+
+on:
+  push:
+    branches: ['eye-bci-extractor-validation']
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: eye-bci-extractor-validation
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install remote zip tools
+        run: python -m pip install requests remotezip
+      - name: Inspect Zenodo S01 archive without full download
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import requests
+          from remotezip import RemoteZip
+
+          record_id='18970793'
+          meta=requests.get(f'https://zenodo.org/api/records/{record_id}',timeout=60).json()
+          files=meta.get('files',[])
+          target=next((f for f in files if f.get('key')=='S01.zip'),None)
+          if not target:
+              raise RuntimeError('S01.zip not found in Zenodo record')
+          url=(target.get('links') or {}).get('self') or (target.get('links') or {}).get('content')
+          if not url:
+              raise RuntimeError('No download URL for S01.zip')
+
+          lines=['# Eye-BCI S01 remote ZIP manifest','',f'Record: {record_id}',f'Archive bytes: {target.get("size")}',f'Download: {url}','']
+          with RemoteZip(url) as z:
+              infos=z.infolist()
+              lines.append(f'Entries: **{len(infos)}**')
+              lines.append('')
+              lines.append('## File type counts')
+              counts={}
+              for info in infos:
+                  name=info.filename.lower()
+                  suffix='.'+name.rsplit('.',1)[-1] if '.' in name else '<none>'
+                  counts[suffix]=counts.get(suffix,0)+1
+              lines.append('| suffix | count |')
+              lines.append('| --- | ---: |')
+              for suffix,count in sorted(counts.items(), key=lambda kv:(-kv[1],kv[0])):
+                  lines.append(f'| {suffix} | {count} |')
+              lines.append('')
+              lines.append('## Paths')
+              lines.append('')
+              for info in infos[:500]:
+                  lines.append(f'- {info.filename} ({info.file_size:,} bytes)')
+
+          Path('results/EYE_BCI_S01_MANIFEST.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:240]))
+          PY
+      - name: Commit manifest
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/EYE_BCI_S01_MANIFEST.md
+          git commit -m "Inspect Eye-BCI S01 remote archive [skip ci]" || exit 0
+          git push origin HEAD:eye-bci-extractor-validation
