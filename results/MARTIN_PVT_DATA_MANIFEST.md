@@ -17,8 +17,4 @@ Total bytes: 687942922
 
 ## Description
 
-<div>Raw eye tracking and pupillometry data (edf, ascii) for manuscript titled "Pupillometry and the vigilance decrement: Task-evoked but not baseline pupil measures reflect declining performance in visual vigilance tasks"</div><div>
-</div><div>vigilance_data.zip - raw data for experiment 1</div><div>
-</div><div>psychomotor_vigilance_data.zip - raw data for experiment 2</div><div>
-</div><div>Analysis scripts and second level data can by accessed via the Open Science Framework at <u><a href="http://doi.org/10.17605/OSF.IO/YUJW6">http://doi.org/10.17605/OSF.IO/YUJW6</a></u>
-</div>
+<div>Raw eye tracking and pupillometry data (edf, ascii) for manuscript titled "Pupillometry and the vigilance decrement: Task-evoked but not baseline pupil measures reflect declining performance in visual vigilance tasks"</div><div><br></div><div>vigilance_data.zip - raw data for experiment 1</div><div><br></div><div>psychomotor_vigilance_data.zip - raw data for experiment 2</div><div><br></div><div>Analysis scripts and second level data can by accessed via the Open Science Framework at <u><a href="http://doi.org/10.17605/OSF.IO/YUJW6">http://doi.org/10.17605/OSF.IO/YUJW6</a></u><br></div>
