@@ -74,6 +74,60 @@ with 95% paired participant-bootstrap interval
 
 Thus the earlier "2 seconds is better" observation does not generalize as a universal duration rule.
 
+## Direct preregistered manipulation
+
+Cross-dataset disagreement alone cannot establish why the useful duration changes.
+
+MTS-TARGET-SMOOTHING-001 therefore manipulated target timescale **inside the same Massoz dataset** while holding the participants, ocular data, feature map, model family, LOSO evaluation, and common event set fixed.
+
+For the immediate target:
+
+\[
+r_{2s}=0.2700,\qquad r_{60s}=0.0744.
+\]
+
+For a target defined as mean reciprocal PVT speed over the next 60 seconds:
+
+\[
+r_{2s}=0.1559,\qquad r_{60s}=0.2042.
+\]
+
+Define
+
+\[
+D(H)=r_{60s,H}-r_{2s,H}.
+\]
+
+The preregistered interaction was
+
+\[
+\Delta=D(60s)-D(0s)=+0.2439,
+\]
+
+with paired subject-bootstrap 95% interval
+
+\[
+[+0.1647,+0.3191]
+\]
+
+across 28 subjects.
+
+The interval lies entirely above zero. This directly supports the prediction that broadening target temporal support increases the relative usefulness of longer sensing history.
+
+## Second independent boundary dataset
+
+COGBEACON-REALDATA-001 tested the earlier 2-second hypothesis on a separate WCST-like cognitive-fatigue dataset using 68-point facial landmarks and strict leave-one-person-out evaluation.
+
+Macro correlations were:
+
+\[
+r_{2s}=0.1197,\qquad r_{5s}=0.1665.
+\]
+
+The 2 s - 5 s contrast was -0.0468 with 95% CI [-0.1046,+0.0101], while the secondary 3 s - 5 s contrast was -0.0796 with 95% CI [-0.1375,-0.0210].
+
+This is again inconsistent with a universal ultra-short optimum.
+
 ## A target-weighted model
 
 Let \(S(t)\) be a latent physiological / cognitive process and let an ocular sensor observe
@@ -212,10 +266,6 @@ Each prediction can fail independently.
 
 ## Claim boundary
 
-Current data support only the first observation at a preliminary level:
+Current evidence now includes a preregistered within-dataset manipulation: broadening the PVT target horizon produced the predicted positive long-versus-short sensing interaction. Two independent datasets also show that the ultra-short optimum does not generalize unchanged across tasks.
 
-> two independent datasets show materially different duration-performance curves.
-
-The causal explanation in terms of target temporal support remains a hypothesis.
-
-The next decisive experiments must manipulate or compare target timescale directly rather than infer it after the fact.
+The remaining causal and deployment questions are whether active perturbation can further compress the target-matched sensing horizon, whether the effect survives prospective data collection, and whether commodity phones can measure the required ocular dynamics reliably.
