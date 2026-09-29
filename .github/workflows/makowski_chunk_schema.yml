@@ -20,7 +20,10 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install
-        run: python -m pip install numpy
+        run: |
+          python -m pip install numpy
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
       - name: Download first chunk and source code
         run: |
           mkdir -p /tmp/makowski
@@ -31,8 +34,8 @@ jobs:
           ls -lh /tmp/makowski/
       - name: Inspect
         run: |
+          7z e -y /tmp/makowski/data_down_5_0.zip -o/tmp/makowski data_down_5_0.npy
           python - <<'PY'
-          import shutil, zipfile
           from pathlib import Path
           import numpy as np
 
@@ -43,21 +46,17 @@ jobs:
               lines += [f'## {name}','', '~~~python', text[:30000], '~~~','']
 
           zpath=root/'data_down_5_0.zip'
-          lines += ['## first ZIP','','archive bytes: **'+f'{zpath.stat().st_size:,}'+'**','']
-          with zipfile.ZipFile(zpath) as z:
-              infos=z.infolist()
-              lines.append('members:')
-              for info in infos:
-                  lines.append(f'- {info.filename}: compressed={info.compress_size:,}; uncompressed={info.file_size:,}')
-              target=next((i for i in infos if i.filename.lower().endswith('.npy')),None)
-              if target is None:
-                  raise RuntimeError('No NPY in chunk ZIP; members='+str([i.filename for i in infos]))
-              out=root/'chunk.npy'
-              with z.open(target) as src, out.open('wb') as dst:
-                  shutil.copyfileobj(src,dst,length=16*1024*1024)
-
-          arr=np.load(root/'chunk.npy',mmap_mode='r')
-          lines += ['','## NPY','','shape: **'+str(arr.shape)+'**','dtype: **'+str(arr.dtype)+'**','C contiguous: **'+str(arr.flags.c_contiguous)+'**','']
+          arr=np.load(root/'data_down_5_0.npy',mmap_mode='r')
+          lines += [
+              '## first ZIP / NPY',
+              '',
+              f'archive bytes: **{zpath.stat().st_size:,}**',
+              f'NPY bytes: **{(root/"data_down_5_0.npy").stat().st_size:,}**',
+              f'shape: **{arr.shape}**',
+              f'dtype: **{arr.dtype}**',
+              f'C contiguous: **{arr.flags.c_contiguous}**',
+              '',
+          ]
           lines += ['first sample, first two time steps:','','    '+np.array2string(np.asarray(arr[0,:2,:]),precision=4,threshold=2000).replace('\n','\n    '),'']
           lines += ['first sample, last two time steps:','','    '+np.array2string(np.asarray(arr[0,-2:,:]),precision=4,threshold=2000).replace('\n','\n    '),'']
           for duration in [2,3,5,15,60]:
@@ -66,7 +65,7 @@ jobs:
               lines.append(f'{duration}s tail: shape={tail.shape}, finite={np.isfinite(tail).mean():.4%}, mean={np.nanmean(tail):.6g}, sd={np.nanstd(tail):.6g}')
 
           Path('results/MAKOWSKI_CHUNK_SCHEMA.md').write_text('\n'.join(lines),encoding='utf-8')
-          print('\n'.join(lines[-100:]))
+          print('\n'.join(lines[-120:]))
           PY
       - name: Commit
         if: always()
