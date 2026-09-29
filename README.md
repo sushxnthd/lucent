@@ -176,39 +176,46 @@ This makes **3 seconds** the more robust empirical target under the current mode
 
 Full result: [results/APST5_SIMULATION_004.md](results/APST5_SIMULATION_004.md)
 
-## Empirical result: Temporal Alignment
+## Empirical result: temporal-scale audit
 
-The strongest Lucent result is now no longer a simulation.
+Lucent's strongest public-human-data result is a **preregistered target-history crossover with explicit failed replications**, not a universal duration rule.
 
-**MTS-TARGET-SMOOTHING-001** directly manipulated the timescale of the behavioral target while holding the human dataset, ocular signal, feature family, model, LOSO evaluation, and event intersection fixed.
-
-For the immediate PVT target, the 2-second ocular window was strongest:
+In **MTS-TARGET-SMOOTHING-001**, the human dataset, ocular signal, feature family, Ridge model, LOSO protocol, and event intersection were held fixed while only the behavioral target horizon was changed.
 
 | Target support | 2 s sensor | 5 s | 15 s | 30 s | 60 s |
 | ---: | ---: | ---: | ---: | ---: | ---: |
 | 0 s | **0.2700** | 0.1975 | 0.1199 | 0.0968 | 0.0744 |
 | 60 s | 0.1559 | 0.1607 | 0.1712 | 0.1953 | **0.2042** |
 
-When the target was broadened to 60 seconds, the ordering reversed.
-
 The preregistered long-vs-short interaction was **+0.2439**, with paired-subject bootstrap 95% CI **[+0.1647,+0.3191]** across 28 subjects.
 
-This establishes a **dataset-specific Temporal Alignment interaction**: predictor-history length and target horizon cannot be treated as the same design choice.
+A separate preregistered nuisance audit gave every duration model the same time-on-task, squared time-on-task, and session-identity covariates. The crossover remained significant:
 
-A preregistered independent interaction replication on CogBeacon did **not** reproduce the positive shift:
+- adjusted interaction: **+0.2056**
+- 95% CI: **[+0.1328,+0.2749]**
 
-- D(H1) = +0.0358
-- D(H5) = -0.0288
-- interaction = -0.0645
-- paired-person bootstrap 95% CI = [-0.1665,+0.0313]
+But the directional interaction failed to replicate twice:
 
-So the current result is deliberately narrower than a universal law. In the Massoz/PVT dataset, broadening target support reversed the preferred ocular history. That mechanism did not generalize automatically to a WCST-like facial-landmark dataset.
+| Replication | Interaction | 95% CI | Decision |
+| --- | ---: | ---: | --- |
+| Martin independent PVT / pupil cohort | **-0.0264** | [-0.0815,+0.0281] | not supported |
+| CogBeacon / facial landmarks | **-0.0645** | [-0.1665,+0.0313] | not supported |
 
-The literature search also found close multi-timescale precedents, especially Massoz et al. (2018). Lucent's specific extension is the **orthogonal factorization of sensor-history length and target aggregation horizon** and a preregistered interaction test, not the generic idea that temporal scale matters.
+The current conclusion is intentionally narrower:
 
-Full synthesis: [TEMPORAL-ALIGNMENT-001](results/TEMPORAL_ALIGNMENT_001.md)
+> **sensor-history length and behavioral target horizon are separate design axes, and their interaction can reverse the preferred sensing window in a specific signal × target × protocol system. The sign is not universal.**
 
-Independent interaction replication: [COGBEACON-TARGET-ALIGNMENT-001](results/COGBEACON_TARGET_ALIGNMENT_001.md)
+This is consistent with recent theory arguing that label construction and latent temporal dynamics jointly determine the useful observation span. Lucent's contribution is the controlled empirical factorization, preregistration, nuisance audit, and retained replication failures—not the generic claim that temporal scale matters.
+
+Replication/falsification synthesis: [TEMPORAL-SCALE-AUDIT-001](results/TEMPORAL_SCALE_AUDIT_001.md)
+
+Original crossover: [MTS-TARGET-SMOOTHING-001](results/MTS_TARGET_SMOOTHING_001.md)
+
+Nuisance audit: [MTS-TEMPORAL-ALIGNMENT-NUISANCE-001](results/MTS_TEMPORAL_ALIGNMENT_NUISANCE_001.md)
+
+Independent PVT replication: [MARTIN-PVT-TARGET-ALIGNMENT-001](results/MARTIN_PVT_TARGET_ALIGNMENT_001.md)
+
+CogBeacon interaction replication: [COGBEACON-TARGET-ALIGNMENT-001](results/COGBEACON_TARGET_ALIGNMENT_001.md)
 
 Related-work boundary: [docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md](docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md)
 
@@ -267,7 +274,10 @@ The repo is structured to make those claims harder to fake.
 | [results/MTS_TARGET_SMOOTHING_001.md](results/MTS_TARGET_SMOOTHING_001.md) | preregistered direct Temporal Alignment test |
 | [results/TEMPORAL_ALIGNMENT_001.md](results/TEMPORAL_ALIGNMENT_001.md) | synthesis across direct manipulation + independent boundary datasets |
 | [results/ADHD_REALDATA_001.md](results/ADHD_REALDATA_001.md) | preregistered independent duration reversal |
-| [results/COGBEACON_TARGET_ALIGNMENT_001.md](results/COGBEACON_TARGET_ALIGNMENT_001.md) | preregistered failed independent interaction replication |
+| [results/COGBEACON_TARGET_ALIGNMENT_001.md](results/COGBEACON_TARGET_ALIGNMENT_001.md) | preregistered failed cross-task interaction replication |
+| [results/MARTIN_PVT_TARGET_ALIGNMENT_001.md](results/MARTIN_PVT_TARGET_ALIGNMENT_001.md) | preregistered failed independent PVT interaction replication |
+| [results/MTS_TEMPORAL_ALIGNMENT_NUISANCE_001.md](results/MTS_TEMPORAL_ALIGNMENT_NUISANCE_001.md) | preregistered time-on-task/session nuisance audit |
+| [results/TEMPORAL_SCALE_AUDIT_001.md](results/TEMPORAL_SCALE_AUDIT_001.md) | replication and falsification synthesis |
 | [docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md](docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md) | closest prior art and conservative novelty boundary |
 | [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md) | nuisance-projection derivation and design principle |
 | [docs/MULTIMODAL_COMPRESSION.md](docs/MULTIMODAL_COMPRESSION.md) | closest 30–45 s ocular screens and the open ~5 s compression target |
@@ -285,6 +295,6 @@ The repo is structured to make those claims harder to fake.
 
 ## Status
 
-**Four reproduced computational results plus one preregistered public-human-data Temporal Alignment crossover and one preregistered failed cross-task interaction replication; prospective active-smartphone validation pending.**
+**Four reproduced computational results, one preregistered public-human-data temporal crossover that survives a nuisance audit, and two preregistered failed interaction replications; prospective active-smartphone validation pending.**
 
 The current evidence supports a sharper target: a **3-second concurrent active ocular probe** is the most robust model-based candidate, while public human data independently suggest that the most recent ~2 seconds of passive ocular behavior can be more informative about the next vigilance response than longer history under a fixed immediate target. Neither result yet establishes a prospective smartphone fatigue measurement system. The next decisive step is an independent, synchronized phone study comparing passive, single-channel active, and concurrent active probes on held-out people and sessions.
