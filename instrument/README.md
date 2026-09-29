@@ -61,3 +61,26 @@ The analyzer checks timing, frame cadence, blur, face visibility, and eye-region
 The instrument only clears E002 when repeated real captures show that camera/stimulus timing is stable, face/eye regions remain measurable, repeated ocular-response features are reproducible, and split versus contiguous probes create distinguishable response dynamics under matched exposure.
 
 Until actual captures exist, E002 remains open.
+## Pupil dynamics extraction
+
+For visible-light exploratory pupil traces:
+
+    pip install opencv-python-headless mediapipe
+
+    python instrument/extract_pupil_dynamics.py capture.webm capture.json --output capture.pupil.json --trace-output capture.trace.csv
+
+The extractor uses refined face/iris landmarks only to localize the eye, then estimates a dark central pupil region relative to iris diameter. It is heuristic and quality-gated; inspect failures rather than treating every output as a valid measurement.
+
+## Aggregate E002 decision
+
+Use a consistent file stem for each capture:
+
+- stem.quality.json
+- stem.pupil.json
+- stem.trace.csv
+
+Then evaluate the frozen engineering gates:
+
+    python experiments/e002_observability_analysis.py path/to/captures --output e002_result.json
+
+The exact gates and exit rule are frozen in experiments/registrations/E002_PHONE_OBSERVABILITY.md.
