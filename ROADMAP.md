@@ -47,31 +47,45 @@ The current surrogate predicts that a 25% reduction in stable nuisance uncertain
 
 This is a **measurement-design prediction**, not a validated human duration claim.
 
-## Phase 0.9: empirical Temporal Alignment
+## Phase 0.9: empirical temporal-scale audit
 
-**Status: preregistered public-data result complete**
+**Status: replication/falsification cycle complete**
 
 - [x] retain the original MTS 2-second exploratory temporal-locality observation;
 - [x] run an independent preregistered EyeLink duration test and retain the reversed result;
 - [x] run an independent CogBeacon duration test and retain the null/reversed result;
-- [x] preregister a within-dataset target-timescale manipulation before outcome analysis;
-- [x] broaden PVT target support from immediate to 15/30/60 seconds while holding the sensing pipeline fixed;
-- [x] confirm the predicted long-vs-short sensing interaction.
+- [x] preregister a within-dataset Massoz target-timescale manipulation;
+- [x] observe the Massoz target-history crossover;
+- [x] preregister and run a CogBeacon interaction replication;
+- [x] retain the failed CogBeacon interaction replication;
+- [x] preregister and run an independent Martin PVT/pupil interaction replication;
+- [x] retain the failed Martin PVT interaction replication;
+- [x] preregister a time-on-task/session nuisance audit of the original Massoz crossover;
+- [x] confirm that the Massoz crossover survives that frozen nuisance model;
+- [x] perform a literature audit and narrow the novelty claim.
 
-**Primary result:**
+**Evidence summary:**
 
-\[
-\Delta=[r_{60s,60H}-r_{2s,60H}]-[r_{60s,0H}-r_{2s,0H}]
-=+0.2439,
-\]
+| Test | Interaction | 95% CI |
+| --- | ---: | ---: |
+| Massoz original | **+0.2439** | **[+0.1647,+0.3191]** |
+| Massoz + time/session nuisance | **+0.2056** | **[+0.1328,+0.2749]** |
+| Martin independent PVT/pupil | -0.0264 | [-0.0815,+0.0281] |
+| CogBeacon | -0.0645 | [-0.1665,+0.0313] |
 
-paired-subject bootstrap 95% CI **[+0.1647,+0.3191]**, N=28.
+**Conclusion:** the target-history crossover is robust inside the Massoz analysis but not general across datasets. The working design principle is now signal × target × protocol alignment, not a universal duration rule.
 
-This supports a target-dependent sensing horizon. It does not validate active smartphone sensing.
+Full audit: [TEMPORAL-SCALE-AUDIT-001](results/TEMPORAL_SCALE_AUDIT_001.md)
 
 ## Phase 1: phone observability pilot
 
-Build the smallest instrument that can:
+**Status: instrument implemented; real captures pending**
+
+The synchronized E002 instrument, fixed probe protocol, offline capture-quality gate, visible-light pupil extractor, and aggregate engineering decision rule are implemented and merged.
+
+The remaining step cannot be substituted with public-data analysis: collect repeated real captures on commodity phone hardware under the frozen protocol.
+
+The instrument can:
 
 - drive a precisely timed display sequence;
 - record synchronized front-camera video;
@@ -80,6 +94,8 @@ Build the smallest instrument that can:
 - preserve raw timing metadata.
 
 Primary question: can the response features required by APST-5 be measured repeatably on commodity hardware?
+
+**Exit rule:** timing + observability must pass, plus either repeatability or matched-exposure temporal distinguishability under the frozen E002 gates.
 
 **Kill condition:** signal quality is too inconsistent across ordinary phones to support dynamic inference.
 

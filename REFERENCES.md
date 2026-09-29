@@ -66,9 +66,51 @@ https://doi.org/10.1145/3491102.3502493
 
 Why it matters: validates smartphone-based pupil tracking and a phone-driven pupil-light-reflex test, while also exposing camera, eye-color, movement, and sensor limitations relevant to APST-5.
 
+## Temporal representation and protocol limits
+
+### Zhang (2026)
+*The Label Defines the Timescale: Trait-State Limits of Temporal-Aggregate Learning.*  
+https://arxiv.org/abs/2608.01587
+
+Why it matters: derives protocol-conditioned Bayes-risk limits showing that label construction and latent temporal dynamics jointly determine the useful observation span. This precludes a broad novelty claim that Lucent originated the idea that "the label defines the timescale." Lucent's narrower contribution is the controlled empirical target-history interaction and its replication/falsification record.
+
+### Gagnon et al. (2016)
+*A Systematic Assessment of Operational Metrics for Modeling Operator Functional State.*  
+https://doi.org/10.5220/0005921600150023
+
+Why it matters: shows that the smoothing window used to construct performance labels materially affects physiological-model performance.
+
+### Smith, Clark & Endsley (2025)
+*Balancing temporal dynamics with measurement noise in real-time situation awareness prediction.*  
+https://doi.org/10.1080/00140139.2025.2558703
+
+Why it matters: demonstrates that short moving-average behavioral targets can reduce measurement noise and become more predictable from physiological signals.
+
+### Yamashita et al. (2021)
+*Pupillary fluctuation amplitude before target presentation reflects short-term vigilance level in Psychomotor Vigilance Tasks.*  
+https://doi.org/10.1371/journal.pone.0256953
+
+Why it matters: reports that approximately one-to-two seconds of pre-target pupil fluctuation is informative about trial-level PVT reaction time, providing a close precedent for ultra-short passive vigilance sensing.
+
+### Martin, Whittaker & Johnston (2022)
+*Pupillometry and the vigilance decrement: Task-evoked but not baseline pupil measures reflect declining performance in visual vigilance tasks.*  
+https://doi.org/10.1111/ejn.15585
+
+Raw Experiment 2 data: https://doi.org/10.6084/m9.figshare.17317886.v1
+
+Why it matters: provides an independent 25-participant, 250 Hz EyeLink PVT dataset used for MARTIN-PVT-TARGET-ALIGNMENT-001.
+
+## Active perturbation as a general measurement principle
+
+### Truslow et al. (2026)
+*External conditioning of data collection enhances the information content from wearable sensors.*  
+https://doi.org/10.1038/s44325-026-00144-3
+
+Why it matters: a one-minute Apple Watch mindful-breathing perturbation increased the discriminative information in HRV for seven cardiometabolic disease targets, whereas passive timing/sleep contexts did not. This is strong prior art for the **general principle** that structured active perturbations can make wearable physiology more informative. Lucent therefore cannot claim novelty for active perturbation itself; the open gap is the specific ultra-short display-controlled ocular system-identification setting.
+
 ## Novelty statement
 
-Two literature searches conducted for Lucent did **not** locate a study jointly combining:
+Multiple literature searches conducted for Lucent did **not** locate a study jointly combining:
 
 - an ordinary smartphone;
 - a strict approximately five-second active scan;
