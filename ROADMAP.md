@@ -1,81 +1,108 @@
 # Research Roadmap
 
-Lucent is staged so that each phase can kill or narrow the hypothesis before more complexity is added.
+Lucent is staged so that each phase can kill the hypothesis before more complexity is added.
 
-## Phase 0: validation architecture
+## Phase 0: research architecture
 
-**Status: active / foundation complete**
+**Status: complete**
 
-- [x] define falsifiable thesis;
 - [x] define participant-held-out evaluation as primary;
-- [x] define baseline ladder;
 - [x] define leakage / shortcut threat model;
 - [x] add reproducible split utilities;
-- [x] add synthetic leakage demonstration;
 - [x] add preregistration template;
-- [ ] lock first paired-data protocol.
+- [x] establish prior-art boundary;
+- [x] formulate APST-5 active-sensing hypothesis.
 
-**Exit criterion:** a study can be run without making analysis decisions after seeing the final holdout.
+## Phase 0.5: active-probe identifiability
 
-## Phase 1: paired pilot
+**Status: first result complete**
 
-Collect repeated short video + reference measurements from a small cohort.
+- [x] implement a delayed asymmetric pupil-response surrogate;
+- [x] formulate Bayesian information-gain objective;
+- [x] constrain probe duration and total high-luminance exposure;
+- [x] enumerate all 84 equal-exposure binary probes;
+- [x] optimize on one synthetic parameter population;
+- [x] evaluate on 500 fresh parameter draws;
+- [x] identify a nontrivial split-pulse design that beats contiguous and evenly spaced controls.
+
+**Result:** [APST5-SIM-001](results/APST5_SIMULATION_001.md)
+
+**Important:** this is a model-based design result, not evidence that fatigue can already be inferred from people.
+
+## Phase 1: phone observability pilot
+
+Build the smallest instrument that can:
+
+- drive a precisely timed display sequence;
+- record synchronized front-camera video;
+- log actual device brightness / display setting;
+- estimate pupil / eye quality per frame;
+- preserve raw timing metadata.
+
+Primary question: can the response features required by APST-5 be measured repeatably on commodity hardware?
+
+**Kill condition:** signal quality is too inconsistent across ordinary phones to support dynamic inference.
+
+## Phase 2: paired human pilot
+
+Collect repeated active scans paired with:
+
+- psychomotor vigilance / reaction-time reference;
+- state sleepiness;
+- recent sleep context.
+
+Use the preregistration template before evaluating the final holdout.
 
 Primary questions:
 
-- Are labels and capture timings reliable?
-- Is there measurable within-person variation?
-- Do simple features move with the targets at all?
-- Which confounds dominate?
+- does active five seconds beat passive five seconds?
+- does optimized timing beat fixed timing under matched exposure?
+- which target moves first?
 
-**Exit criterion:** pipeline integrity and at least one target worth carrying forward.
+## Phase 3: unseen-person test
 
-## Phase 2: unseen-person test
-
-Scale collection enough to make participant-held-out evaluation meaningful.
+Scale collection enough for meaningful participant-held-out evaluation.
 
 Primary questions:
 
-- Does video add signal beyond time and sleep history?
-- How large is the random-split inflation?
-- Does temporal information beat a matched static frame?
+- does the active advantage survive unseen people?
+- does personalization help after a small baseline set?
+- can identity be decoded from the representation more easily than state?
 
-**Kill condition:** no useful signal after participant holdout and baseline control.
+## Phase 4: device and environment robustness
 
-## Phase 3: robustness
+Stress:
 
-Stress the surviving signal across:
+- device family;
+- camera frame rate;
+- brightness calibration;
+- ambient illumination;
+- pose;
+- distance;
+- glasses / occlusion.
 
-- sessions;
-- devices;
-- lighting;
-- viewing distance;
-- glasses / occlusion;
-- compression.
+The optimizer may need to become **device-aware** while remaining state-general.
 
-**Exit criterion:** identify a clearly bounded operating regime where the signal remains useful.
-
-## Phase 4: fresh-cohort replication
+## Phase 5: fresh-cohort replication
 
 Freeze:
 
+- display probe;
 - preprocessing;
+- target;
 - model-selection rule;
-- primary target;
 - primary metric;
-- exclusion rules.
+- exclusions.
 
 Then collect a new cohort and evaluate once.
 
-**Exit criterion:** independent replication of the central effect.
-
-## Phase 5: productization
+## Phase 6: productization
 
 Only after replication:
 
 - choose the narrowest reliable state variable;
-- design the minimum-friction interaction around it;
-- determine whether personalization materially improves value;
-- validate real-world usefulness separately from model accuracy.
+- minimize interaction further;
+- determine whether longitudinal personalization adds practical value;
+- test whether the measurement changes user decisions or outcomes.
 
-Lucent does not need to predict "everything." A narrow, robust signal is more valuable than a broad, fragile one.
+Lucent does not need to infer everything. One robust, high-frequency state measurement would be more valuable than a broad set of fragile estimates.
