@@ -1,126 +1,148 @@
 # Research Roadmap
 
-Lucent is staged so that each phase can kill the hypothesis before more complexity is added.
+Lucent is staged so that each step can kill the hypothesis before more complexity is added.
 
 ## Phase 0: research architecture
 
 **Status: complete**
 
-- [x] define participant-held-out evaluation as primary;
-- [x] define leakage / shortcut threat model;
-- [x] add reproducible split utilities;
-- [x] add preregistration template;
-- [x] establish prior-art boundary;
-- [x] formulate APST-5 active-sensing hypothesis.
+- [x] falsifiable thesis;
+- [x] participant-held-out evaluation standard;
+- [x] leakage / shortcut threat model;
+- [x] preregistration template;
+- [x] prior-art boundary;
+- [x] reproducible CI.
 
-## Phase 0.5: active-probe identifiability
+## Phase 0.5: active-probe timing
 
-**Status: first result complete**
+**Status: complete computational result**
 
-- [x] implement a delayed asymmetric pupil-response surrogate;
-- [x] formulate Bayesian information-gain objective;
-- [x] constrain probe duration and total high-luminance exposure;
-- [x] enumerate all 84 equal-exposure binary probes;
-- [x] optimize on one synthetic parameter population;
-- [x] evaluate on 500 fresh parameter draws;
-- [x] identify a nontrivial split-pulse design that beats contiguous and evenly spaced controls.
+[APST5-SIM-001](results/APST5_SIMULATION_001.md)
 
-**Result:** [APST5-SIM-001](results/APST5_SIMULATION_001.md)
+- [x] fixed 5 s budget;
+- [x] equal total high-luminance exposure;
+- [x] exhaustive 84-pattern timing search;
+- [x] independent held-out synthetic population;
+- [x] optimized timing beats contiguous and evenly spaced controls.
 
-**Important:** this is a model-based design result, not evidence that fatigue can already be inferred from people.
+## Phase 0.6: baseline-conditioned compression
 
+**Status: complete computational result**
 
-## Phase 0.75: baseline-compression result
+[APST5-SIM-002](results/APST5_SIMULATION_002.md)
 
-**Status: first result complete**
+- [x] separate transient state from stable nuisance;
+- [x] derive nuisance-projected state information;
+- [x] prove monotonic benefit from tighter nuisance prior under the model;
+- [x] show 2 s personalized-information condition can exceed 5 s population condition in held-out simulations.
 
-- [x] partition transient state from stable nuisance parameters;
-- [x] derive efficient state information using a Schur complement;
-- [x] prove monotonic gain with increasing nuisance-prior precision;
-- [x] optimize two-second and five-second probes under matched model assumptions;
-- [x] evaluate on independent nuisance/effect populations;
-- [x] run ten additional held-out replication populations.
+## Phase 0.7: concurrent multimodal compression
 
-**Result:** [APST5-SIM-002](results/APST5_SIMULATION_002.md)
+**Status: complete computational result**
 
-The current surrogate predicts that a 25% reduction in stable nuisance uncertainty is sufficient for a two-second active probe to exceed a five-second population-level probe on state information across all ten additional held-out replication populations.
+[APST5-SIM-003](results/APST5_SIMULATION_003.md)
 
-This is a **measurement-design prediction**, not a validated human duration claim.
+- [x] add smooth-pursuit state channel;
+- [x] optimize pursuit frequency on a design population;
+- [x] evaluate 80 state-effect/device-noise conditions;
+- [x] show 3 s concurrent probe beats 5 s pupil-only in 72/80 conditions.
 
-## Phase 1: phone observability pilot
+## Phase 0.8: redundancy robustness
 
-Build the smallest instrument that can:
+**Status: complete computational result**
 
-- drive a precisely timed display sequence;
-- record synchronized front-camera video;
-- log actual device brightness / display setting;
-- estimate pupil / eye quality per frame;
-- preserve raw timing metadata.
+[APST5-SIM-004](results/APST5_SIMULATION_004.md)
 
-Primary question: can the response features required by APST-5 be measured repeatably on commodity hardware?
+- [x] relax full-information-additivity assumption;
+- [x] sweep incremental-information fractions from 100% to 0%;
+- [x] show 3 s median remains above 5 s pupil-only at 25% incremental weaker-channel information.
 
-**Kill condition:** signal quality is too inconsistent across ordinary phones to support dynamic inference.
+## Phase 0.9: public human-data bridge
 
-## Phase 2: paired human pilot
+**Status: complete, mixed result**
 
-Collect repeated active scans paired with:
+[MTS-REALDATA-001](results/MTS_REALDATA_001.md)
 
-- psychomotor vigilance / reaction-time reference;
-- state sleepiness;
-- recent sleep context.
+- [x] freeze analysis before full run;
+- [x] strict leave-one-subject-out analysis;
+- [x] keep immediate PVT target fixed across duration;
+- [x] retain preregistered null personalization result;
+- [x] identify exploratory 2 s temporal-locality effect;
+- [ ] replicate the duration effect on an independent cohort.
 
-Use the preregistration template before evaluating the final holdout.
+## Phase 1: commodity-phone observability
 
-Primary questions:
+**Status: next empirical gate**
 
-- does active five seconds beat passive five seconds?
-- does optimized timing beat fixed timing under matched exposure?
-- which target moves first?
+Build the minimum research instrument that can:
 
-## Phase 3: unseen-person test
+- drive the concurrent luminance + moving-target probe;
+- record synchronized front-camera frames;
+- preserve actual frame timestamps;
+- record device, brightness, and ambient-light metadata;
+- recover pupil / gaze trajectories with per-frame quality;
+- run a 3 s and 5 s matched protocol.
 
-Scale collection enough for meaningful participant-held-out evaluation.
+**Primary endpoint:** repeatability / observability of response dynamics, not fatigue prediction.
 
-Primary questions:
+**Kill condition:** ordinary phone hardware cannot recover the required signals with enough repeatability.
 
-- does the active advantage survive unseen people?
-- does personalization help after a small baseline set?
-- can identity be decoded from the representation more easily than state?
+## Phase 2: paired naturalistic human pilot
 
-## Phase 4: device and environment robustness
+After Phase 1 succeeds:
 
-Stress:
+- repeated sessions across normal day-to-day alertness variation;
+- no deliberately induced sleep deprivation required;
+- pair scans with a fixed behavioral reference;
+- compare passive 3 s, fixed-active 3 s, optimized-active 3 s;
+- keep the analysis frozen before the final holdout.
 
-- device family;
-- camera frame rate;
-- brightness calibration;
-- ambient illumination;
-- pose;
-- distance;
-- glasses / occlusion.
+**Primary question:** does active concurrent probing add held-out behavioral-state information?
 
-The optimizer may need to become **device-aware** while remaining state-general.
+## Phase 3: temporal-locality replication
 
-## Phase 5: fresh-cohort replication
+Use a new cohort or genuinely independent dataset.
+
+Test:
+
+- 2 s vs 3 s vs 5 s vs longer passive windows;
+- same immediate target for every duration;
+- duration chosen before final holdout;
+- whether target smoothing shifts the optimal window longer.
+
+This is the confirmatory test for the public-data observation.
+
+## Phase 4: unseen-person and unseen-device study
+
+- participant-held-out;
+- device-held-out;
+- session-held-out;
+- ambient-light stress;
+- glasses / occlusion;
+- viewing-distance variation;
+- explicit uncertainty calibration.
+
+## Phase 5: frozen fresh-cohort replication
 
 Freeze:
 
-- display probe;
+- probe;
+- duration;
 - preprocessing;
 - target;
 - model-selection rule;
-- primary metric;
-- exclusions.
+- exclusions;
+- primary metric.
 
-Then collect a new cohort and evaluate once.
+Collect a new cohort and evaluate once.
 
 ## Phase 6: productization
 
 Only after replication:
 
 - choose the narrowest reliable state variable;
-- minimize interaction further;
-- determine whether longitudinal personalization adds practical value;
-- test whether the measurement changes user decisions or outcomes.
+- decide whether personalization is worth its complexity;
+- minimize interaction;
+- measure whether the information changes real decisions or outcomes.
 
-Lucent does not need to infer everything. One robust, high-frequency state measurement would be more valuable than a broad set of fragile estimates.
+Lucent does not need to infer everything. One robust, high-frequency state measurement is more valuable than many fragile ones.
