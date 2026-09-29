@@ -80,3 +80,38 @@ Two literature searches conducted for Lucent did **not** locate a study jointly 
 - unseen-participant and unseen-device validation.
 
 This is the current defensible novelty gap. It should be treated as a search result, not as proof of universal priority.
+
+
+## Combined oculomotor fatigue screens
+
+### Mulligan, Díaz-Piedra & Di Stasi (2017)
+*Oculomotor Assessment of Diurnal Arousal Variations.*  
+https://doi.org/10.1167/17.10.1153
+
+Why it matters: a 30-second automated test combined saccadic peak velocity, pupil diameter, PLR latency, and PLR amplitude. This is the strongest short combined fatigue-screen precedent located so far.
+
+### Rowland et al. (2005)
+*Oculomotor responses during partial and total sleep deprivation.*  
+https://www.semanticscholar.org/paper/1c24379983403a537069bf344eb4388ac5ea0f55
+
+Why it matters: a 45-second automated oculomotor test found increased pupil-constriction latency and decreased saccadic velocity during total sleep deprivation.
+
+### McClelland, Pilcher & Moore (2010)
+*Oculomotor measures as predictors of performance during sleep deprivation.*  
+https://doi.org/10.3357/ASEM.2653.2010
+
+Why it matters: pupil diameter, constriction latency, and saccadic velocity predicted PVT performance under sleep deprivation.
+
+### Chen et al. (2022)
+*Fatigue and Arousal Modulations Revealed by Saccade and Pupil Dynamics.*  
+https://doi.org/10.3390/ijerph19159234
+
+Why it matters: fatigue / time-on-task affected both pupil and saccade dynamics, supporting a multimodal rather than single-feature state probe.
+
+### Lai et al. (2020)
+*Measuring Saccade Latency Using Smartphone Cameras.*  
+https://doi.org/10.1109/JBHI.2019.2913846
+
+Why it matters: establishes smartphone-camera oculomotor measurement, but at much longer effective measurement duration than Lucent's target.
+
+See [docs/MULTIMODAL_COMPRESSION.md](docs/MULTIMODAL_COMPRESSION.md) for the current temporal-compression boundary.
