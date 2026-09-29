@@ -117,10 +117,90 @@ jobs:
           print('\n'.join(lines[:260]))
           PY
 
+      - name: Analyze Phantom-Tobii alignment
+        run: |
+          python - <<'PY'
+          import io
+          from pathlib import Path
+          import numpy as np
+          import pandas as pd
+          import requests
+          from remotezip import RemoteZip
+
+          meta=requests.get('https://zenodo.org/api/records/18970793',timeout=60).json()
+          target=next(f for f in meta['files'] if f['key']=='S01.zip')
+          url=target['links'].get('self') or target['links'].get('content')
+
+          with RemoteZip(url) as z:
+              sync=pd.read_csv(io.BytesIO(z.read('Sess01/MI011_sync.csv')))
+              tobii=pd.read_csv(io.BytesIO(z.read('Sess01/MI011_tobii.csv')), low_memory=False)
+
+          lines=['# Eye-BCI Phantom/Tobii alignment audit','']
+
+          ph=sync.dropna(subset=['PhanFrame']).copy()
+          lines += [
+              '## Phantom mapping',
+              '',
+              f'sync rows: **{len(sync):,}**',
+              f'rows with PhanFrame: **{len(ph):,}**',
+              f'PhanFrame range: **{ph.PhanFrame.min()} .. {ph.PhanFrame.max()}**',
+              f'Time range at mapped frames: **{ph.Time.min():.6f} .. {ph.Time.max():.6f} s**',
+              '',
+          ]
+
+          for col in ['PhanFrame','PhanTime','RelTime','RecordingTimestamp','LocalTimeStamp']:
+              if col in ph:
+                  vals=pd.to_numeric(ph[col],errors='coerce')
+                  lines.append(f'- {col}: finite={vals.notna().sum():,}, min={vals.min()}, max={vals.max()}')
+
+          lines += ['', 'first mapped rows:', '']
+          lines.append('    '+ph[['Time','PhanFrame','PhanTime','RelTime','RecordingTimestamp','LocalTimeStamp']].head(12).to_csv(index=False).replace('\n','\n    '))
+
+          for col in ['RecordingTimestamp','PupilLeft','PupilRight','ValidityLeft','ValidityRight','CamLeftX','CamLeftY','CamRightX','CamRightY']:
+              if col in tobii:
+                  tobii[col]=pd.to_numeric(tobii[col],errors='coerce')
+
+          pupil=tobii[(tobii.PupilLeft.notna() | tobii.PupilRight.notna())].copy()
+          lines += [
+              '',
+              '## Tobii pupil stream',
+              '',
+              f'Tobii rows: **{len(tobii):,}**',
+              f'rows with pupil: **{len(pupil):,}**',
+              f'RecordingTimestamp range: **{pupil.RecordingTimestamp.min()} .. {pupil.RecordingTimestamp.max()} ms**',
+              f'PupilLeft range: **{pupil.PupilLeft.min()} .. {pupil.PupilLeft.max()}**',
+              f'PupilRight range: **{pupil.PupilRight.min()} .. {pupil.PupilRight.max()}**',
+              '',
+              'first valid pupil rows:',
+              '',
+              '    '+pupil[['RecordingTimestamp','LocalTimeStamp','PupilLeft','PupilRight','ValidityLeft','ValidityRight','CamLeftX','CamLeftY','CamRightX','CamRightY']].head(12).to_csv(index=False).replace('\n','\n    '),
+          ]
+
+          # Is sync RecordingTimestamp in the same millisecond domain as Tobii?
+          ph_rt=pd.to_numeric(ph['RecordingTimestamp'],errors='coerce').dropna().to_numpy()
+          tob_rt=pd.to_numeric(pupil['RecordingTimestamp'],errors='coerce').dropna().to_numpy()
+          lines += ['', '## Timestamp compatibility', '']
+          if len(ph_rt) and len(tob_rt):
+              overlap_lo=max(float(np.min(ph_rt)),float(np.min(tob_rt)))
+              overlap_hi=min(float(np.max(ph_rt)),float(np.max(tob_rt)))
+              lines.append(f'raw RecordingTimestamp overlap: **{overlap_lo} .. {overlap_hi}**')
+              lines.append(f'overlap exists: **{overlap_hi >= overlap_lo}**')
+              if len(tob_rt)>1:
+                  dt=np.diff(np.sort(np.unique(tob_rt)))
+                  dt=dt[(dt>0)&np.isfinite(dt)]
+                  if len(dt):
+                      lines.append(f'Tobii median timestamp step: **{np.median(dt):.3f}**')
+          else:
+              lines.append('No finite shared RecordingTimestamp fields found.')
+
+          Path('results/EYE_BCI_ALIGNMENT.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:220]))
+          PY
+
       - name: Commit manifest
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add results/EYE_BCI_S01_MANIFEST.md results/EYE_BCI_S01_SCHEMA.md
+          git add results/EYE_BCI_S01_MANIFEST.md results/EYE_BCI_S01_SCHEMA.md results/EYE_BCI_ALIGNMENT.md
           git commit -m "Inspect Eye-BCI S01 remote archive [skip ci]" || exit 0
           git push origin HEAD:eye-bci-extractor-validation
