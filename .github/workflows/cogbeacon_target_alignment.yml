@@ -1,0 +1,46 @@
+name: cogbeacon-target-alignment
+
+on:
+  push:
+    branches: ['cogbeacon-target-alignment']
+
+permissions:
+  contents: write
+
+jobs:
+  replicate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: cogbeacon-target-alignment
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install analysis dependencies
+        run: python -m pip install numpy pandas scikit-learn
+
+      - name: Download public CogBeacon inputs
+        run: |
+          mkdir -p external/cogbeacon
+          curl -L --fail --retry 3 -o external/cogbeacon/face_keypoints.tar.xz https://raw.githubusercontent.com/MikeMpapa/CogBeacon-MultiModal_Dataset_for_Cognitive_Fatigue/master/face_keypoints.tar.xz
+          curl -L --fail --retry 3 -o external/cogbeacon/user_performance.tar.xz https://raw.githubusercontent.com/MikeMpapa/CogBeacon-MultiModal_Dataset_for_Cognitive_Fatigue/master/user_performance.tar.xz
+          mkdir -p external/cogbeacon/extracted
+          tar -xf external/cogbeacon/face_keypoints.tar.xz -C external/cogbeacon/extracted
+          tar -xf external/cogbeacon/user_performance.tar.xz -C external/cogbeacon/extracted
+
+      - name: Run frozen target-alignment replication
+        run: |
+          python experiments/cogbeacon_target_alignment.py --data-root external/cogbeacon/extracted --output results/COGBEACON_TARGET_ALIGNMENT_001.md
+
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/COGBEACON_TARGET_ALIGNMENT_001.md
+          git commit -m "COGBEACON-TARGET-ALIGNMENT-001: frozen replication result [skip ci]" || exit 0
+          git push origin HEAD:cogbeacon-target-alignment
