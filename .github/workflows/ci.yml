@@ -2,7 +2,7 @@ name: research-ci
 
 on:
   push:
-    branches: ["main", "research-foundation", "apst5-breakthrough", "state-compression-breakthrough", "multimodal-compression", "correlated-multimodal"]
+    branches: ["main", "research-foundation", "apst5-breakthrough", "state-compression-breakthrough", "multimodal-compression", "correlated-multimodal", "wind-realdata-replication"]
   pull_request:
 
 jobs:
@@ -37,3 +37,7 @@ jobs:
       - name: APST-5 multimodal redundancy reproduction
         if: matrix.python-version == '3.12'
         run: python experiments/multimodal_redundancy.py
+
+      - name: Inspect independent Windsor dataset
+        if: matrix.python-version == '3.12' && github.ref == 'refs/heads/wind-realdata-replication'
+        run: python experiments/inspect_windsor_data.py
