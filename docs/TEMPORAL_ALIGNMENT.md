@@ -4,7 +4,7 @@ Lucent originally treated scan duration mostly as a compression constraint.
 
 The public-data results force a more precise view:
 
-> **There is no universally optimal ocular history length. The useful sensing horizon depends on the temporal support of the behavioral state being predicted.**
+> **There is no universally optimal ocular history length. In at least one controlled public-data setting, the relative value of short versus long ocular history changed when the behavioral target's temporal support was changed.**
 
 This is a design principle, not a claim of a new mathematical theorem.
 
@@ -112,7 +112,7 @@ with paired subject-bootstrap 95% interval
 
 across 28 subjects.
 
-The interval lies entirely above zero. This directly supports the prediction that broadening target temporal support increases the relative usefulness of longer sensing history.
+The interval lies entirely above zero. Within this Massoz/PVT pipeline, broadening target temporal support increased the relative usefulness of longer sensing history.
 
 ## Second independent boundary dataset
 
@@ -127,6 +127,40 @@ r_{2s}=0.1197,\qquad r_{5s}=0.1665.
 The 2 s - 5 s contrast was -0.0468 with 95% CI [-0.1046,+0.0101], while the secondary 3 s - 5 s contrast was -0.0796 with 95% CI [-0.1375,-0.0210].
 
 This is again inconsistent with a universal ultra-short optimum.
+
+## Preregistered independent interaction replication
+
+COGBEACON-TARGET-ALIGNMENT-001 then tested the **interaction itself** on a different human dataset rather than merely comparing fixed target durations.
+
+Using 1,786 common anchor rounds from 20 people, the same 2-second and 5-second facial histories were evaluated against:
+
+- H1: current log response time;
+- H3: mean log response time over the current + next 2 correct rounds;
+- H5: mean log response time over the current + next 4 correct rounds.
+
+The preregistered long-history advantage was
+
+\[
+D(H1)=+0.0358,
+\qquad
+D(H5)=-0.0288.
+\]
+
+Therefore
+
+\[
+\Delta=D(H5)-D(H1)=-0.0645,
+\]
+
+with paired person-bootstrap 95% interval
+
+\[
+[-0.1665,+0.0313].
+\]
+
+The positive Temporal Alignment interaction **did not replicate** in CogBeacon.
+
+This matters for interpretation: target smoothing is not, by itself, a universal mechanism that makes longer sensing histories more useful. The Massoz/PVT crossover is a real within-dataset interaction, but its generality remains open.
 
 ## A target-weighted model
 
@@ -257,7 +291,7 @@ A research system that discovers that boundary honestly is more useful than one 
 The Temporal Alignment Principle predicts:
 
 1. **target dependence:** different behavioral targets can prefer different ocular history lengths;
-2. **target smoothing:** deliberately smoothing an immediate behavioral target over a longer horizon should shift the useful sensor horizon longer;
+2. **target smoothing under compatible dynamics:** broadening an immediate behavioral target can shift the useful sensor horizon, but COGBEACON-TARGET-ALIGNMENT-001 shows that this is not guaranteed across tasks;
 3. **active compression:** a well-designed perturbation should increase information density and allow a shorter window than passive observation for the same target;
 4. **personalization interaction:** removing stable nuisance with longitudinal history should reduce the observation duration required to reach a fixed target-information level;
 5. **task-boundary sensitivity:** when a target depends on a bounded task episode, ocular samples from inside that episode should carry more useful information than equally old samples outside it.
@@ -266,6 +300,8 @@ Each prediction can fail independently.
 
 ## Claim boundary
 
-Current evidence now includes a preregistered within-dataset manipulation: broadening the PVT target horizon produced the predicted positive long-versus-short sensing interaction. Two independent datasets also show that the ultra-short optimum does not generalize unchanged across tasks.
+Current evidence includes one strong preregistered within-dataset crossover in the Massoz/PVT data, plus a preregistered failed interaction replication in CogBeacon. Separately, ADHD-REALDATA-001 and COGBEACON-REALDATA-001 show that an ultra-short optimum does not generalize unchanged across tasks.
 
-The remaining causal and deployment questions are whether active perturbation can further compress the target-matched sensing horizon, whether the effect survives prospective data collection, and whether commodity phones can measure the required ocular dynamics reliably.
+The defensible result is therefore narrower: **predictor-history length and behavioral target horizon are distinct design axes, and their interaction can be large enough to reverse the preferred sensing window in at least one public human dataset.** Whether that interaction generalizes within vigilance/PVT paradigms is the next replication target.
+
+See [TEMPORAL_ALIGNMENT_RELATED_WORK.md](TEMPORAL_ALIGNMENT_RELATED_WORK.md) for the prior-art and novelty boundary.
