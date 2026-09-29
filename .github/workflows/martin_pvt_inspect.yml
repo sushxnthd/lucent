@@ -96,13 +96,35 @@ jobs:
                   lines.append('```')
 
               Path('results/MARTIN_PVT_STRUCTURE.md').write_text('\n'.join(lines), encoding='utf-8')
-              print('\n'.join(lines[:220]))
+
+              schema=[]
+              schema.append('# Martin PVT sample schemas')
+              schema.append('')
+
+              wanted=[
+                  'data/sub004/sub004_samples.asc',
+                  'data/sub004/RESULTS_FILE.txt',
+                  'data/sub004/actual_TRIAL_DataSource_pmvig_gab_BLOCKTRIAL.dat',
+                  'data/sub004/actual_BLOCK_DataSource_pmvig_gabBLOCK.dat',
+              ]
+              for name in wanted:
+                  schema.append(f'## {name}')
+                  schema.append('')
+                  schema.append('~~~text')
+                  with z.open(name) as fh:
+                      raw=fh.read(40000).decode('utf-8', errors='replace')
+                  schema.extend(raw.splitlines()[:180])
+                  schema.append('~~~')
+                  schema.append('')
+
+              Path('results/MARTIN_PVT_SCHEMA.md').write_text('\n'.join(schema), encoding='utf-8')
+              print('\n'.join(schema[:260]))
           PY
 
       - name: Commit inspection
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add results/MARTIN_PVT_DATA_MANIFEST.md results/MARTIN_PVT_STRUCTURE.md
+          git add results/MARTIN_PVT_DATA_MANIFEST.md results/MARTIN_PVT_STRUCTURE.md results/MARTIN_PVT_SCHEMA.md
           git commit -m "Inspect Martin 2022 PVT archive structure [skip ci]" || exit 0
           git push origin HEAD:martin-pvt-replication
