@@ -1,0 +1,32 @@
+name: public-realdata-reproduction
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "experiments/mts_realdata_baseline_compression.py"
+      - "experiments/inspect_mts_data.py"
+      - "experiments/registrations/MTS_REALDATA_001.md"
+      - "results/MTS_REALDATA_001.md"
+      - ".github/workflows/realdata.yml"
+      - "pyproject.toml"
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Inspect public data
+        run: python experiments/inspect_mts_data.py
+      - name: Reproduce MTS-REALDATA-001
+        run: python experiments/mts_realdata_baseline_compression.py
