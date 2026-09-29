@@ -1,0 +1,58 @@
+name: makowski-code-inspect
+
+on:
+  push:
+    branches: ['makowski-short-window-analysis']
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: makowski-short-window-analysis
+      - name: Download code files
+        run: |
+          mkdir -p /tmp/makcode results
+          curl -L --fail --retry 3 -o /tmp/makcode/evaluation.py https://osf.io/download/5m7yr/
+          curl -L --fail --retry 3 -o /tmp/makcode/run_evaluation.py https://osf.io/download/dx8t4/
+          curl -L --fail --retry 3 -o /tmp/makcode/nn_model.py https://osf.io/download/m2xpf/
+      - name: Extract label/window logic
+        run: |
+          python - <<'PY'
+          import re
+          from pathlib import Path
+
+          lines=['# Makowski source-code audit for labels and windows','']
+          terms=['upcoming','microsleep','mean_rt','interpolated_kss','data_down','window','sequence','stride','label_format','same_window','session_type','sub_id']
+          for name in ['evaluation.py','run_evaluation.py','nn_model.py']:
+              text=Path('/tmp/makcode',name).read_text(encoding='utf-8',errors='replace')
+              src=text.splitlines()
+              lines += [f'## {name}','']
+              seen=set()
+              for i,line in enumerate(src):
+                  if any(term.lower() in line.lower() for term in terms):
+                      lo=max(0,i-8); hi=min(len(src),i+14)
+                      key=(lo,hi)
+                      if key in seen: continue
+                      seen.add(key)
+                      lines.append(f'### lines {lo+1}-{hi}')
+                      lines.append('~~~python')
+                      for j in range(lo,hi):
+                          lines.append(f'{j+1:04d}: {src[j]}')
+                      lines.append('~~~')
+                      lines.append('')
+          Path('results/MAKOWSKI_CODE_AUDIT.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:1000]))
+          PY
+      - name: Commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/MAKOWSKI_CODE_AUDIT.md
+          git commit -m "Audit Makowski label and sequence logic [skip ci]" || exit 0
+          git push origin HEAD:makowski-short-window-analysis
