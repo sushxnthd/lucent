@@ -123,6 +123,16 @@ If gaze vectors are unambiguously aligned in the same epoch, add:
 
 No post-outcome feature selection.
 
+## Missingness and common-trial rule
+
+To make duration contrasts compare the same behavioral observations, construct the **intersection of trials usable at every preregistered duration**.
+
+A pupil window is usable when at least 70% of its samples are finite. A trial enters any duration analysis only if all 1, 2, 3, and 5 second windows meet that threshold.
+
+Feature-level missing values that remain after this rule are imputed using the **training-fold median only**. The held-out participant never contributes to imputation values.
+
+This common-trial rule was fixed before computing any duration-performance outcome.
+
 ## Model
 
 - StandardScaler
@@ -186,5 +196,6 @@ Before the first duration-performance analysis was run, the published data descr
 1. Event 7 / probe onset is now fixed as the leakage-free anchor because the Task_epoch pupil vector is documented as -5 s to +3 s around that event.
 2. The RT upper bound is 1500 ms, matching the 1.5 s probe-response interval.
 3. Load and distractor main effects are residualized from the target before standardization so that decoding the experimentally imposed condition cannot by itself count as predicting trial-to-trial performance.
+4. Duration comparisons use one common intersection of trials with at least 70% finite pupil samples in every preregistered window, with any remaining feature missingness imputed from training-fold medians only.
 
 These changes were committed before inspecting any duration-performance correlation from this dataset.
