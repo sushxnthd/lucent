@@ -5,14 +5,15 @@ on:
     branches: ["cogbeacon-replication"]
 
 permissions:
-  contents: read
-  issues: write
+  contents: write
 
 jobs:
   inspect:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: cogbeacon-replication
 
       - name: Download public CogBeacon tables
         run: |
@@ -31,9 +32,9 @@ jobs:
           from pathlib import Path
           root=Path('external/cogbeacon/extracted')
           files=sorted([p for p in root.rglob('*') if p.is_file()])
-          print('## CogBeacon inspection\n')
+          print('# CogBeacon inspection\n')
           print(f'Files: {len(files)}\n')
-          for p in files[:120]:
+          for p in files[:160]:
               print(f'- {p.relative_to(root)} ({p.stat().st_size} bytes)')
           print('\n## CSV previews\n')
           shown=0
@@ -47,15 +48,19 @@ jobs:
               if not lines:
                   continue
               print(f'### {p.relative_to(root)}')
-              for line in lines[:5]:
-                  print('    '+line[:1500])
+              for line in lines[:8]:
+                  print('    '+line[:1800])
               shown += 1
-              if shown >= 16:
+              if shown >= 24:
                   break
           PY
-          cat /tmp/cogbeacon_inspection.md
+          mkdir -p results
+          cp /tmp/cogbeacon_inspection.md results/COGBEACON_INSPECTION.md
 
-      - name: Post inspection to research issue
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh issue comment 10 --repo ${{ github.repository }} --body-file /tmp/cogbeacon_inspection.md
+      - name: Commit inspection
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/COGBEACON_INSPECTION.md
+          git commit -m "Record CogBeacon inspection [skip ci]" || exit 0
+          git push origin HEAD:cogbeacon-replication
