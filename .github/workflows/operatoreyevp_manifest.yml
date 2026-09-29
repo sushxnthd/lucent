@@ -1,0 +1,143 @@
+name: operatoreyevp-manifest
+
+on:
+  push:
+    branches: ['operatoreyevp-external-validation']
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: operatoreyevp-external-validation
+
+      - name: Query public Yandex dataset tree
+        run: |
+          python - <<'PY'
+          import json, urllib.parse, urllib.request
+          from pathlib import Path
+
+          public_key='https://disk.yandex.ru/d/KmdoodhhveGZng'
+          endpoint='https://cloud-api.yandex.net/v1/disk/public/resources'
+
+          def get(path=None, limit=1000, offset=0):
+              params={'public_key':public_key,'limit':str(limit),'offset':str(offset)}
+              if path is not None:
+                  params['path']=path
+              url=endpoint+'?'+urllib.parse.urlencode(params)
+              req=urllib.request.Request(url, headers={'User-Agent':'lucent-research/1.0'})
+              with urllib.request.urlopen(req, timeout=60) as response:
+                  return json.load(response)
+
+          queue=[None]
+          seen=set()
+          rows=[]
+          max_nodes=5000
+
+          while queue and len(rows)<max_nodes:
+              path=queue.pop(0)
+              key=path or '/'
+              if key in seen:
+                  continue
+              seen.add(key)
+
+              offset=0
+              while True:
+                  data=get(path=path, limit=1000, offset=offset)
+                  embedded=data.get('_embedded') or {}
+                  items=embedded.get('items') or []
+
+                  # Root resource itself on first page.
+                  if offset==0 and path is None:
+                      rows.append({
+                          'path':'/',
+                          'name':data.get('name'),
+                          'type':data.get('type'),
+                          'size':data.get('size'),
+                          'mime_type':data.get('mime_type'),
+                          'file':data.get('file'),
+                      })
+
+                  for item in items:
+                      item_path=item.get('path') or item.get('name')
+                      row={
+                          'path':item_path,
+                          'name':item.get('name'),
+                          'type':item.get('type'),
+                          'size':item.get('size'),
+                          'mime_type':item.get('mime_type'),
+                          'file':item.get('file'),
+                      }
+                      rows.append(row)
+                      if item.get('type')=='dir':
+                          queue.append(item_path)
+
+                  total=int(embedded.get('total') or len(items))
+                  offset += len(items)
+                  if not items or offset >= total:
+                      break
+
+          total_bytes=sum(int(r.get('size') or 0) for r in rows if r.get('type')=='file')
+          suffix_counts={}
+          for r in rows:
+              if r.get('type')!='file':
+                  continue
+              name=(r.get('name') or '').lower()
+              suffix='.'+name.rsplit('.',1)[-1] if '.' in name else '<none>'
+              suffix_counts[suffix]=suffix_counts.get(suffix,0)+1
+
+          lines=[]
+          lines.append('# OperatorEYEVP public-resource manifest')
+          lines.append('')
+          lines.append(f'Resources discovered: **{len(rows)}**')
+          lines.append(f'Aggregate listed file bytes: **{total_bytes:,}**')
+          lines.append('')
+          lines.append('## File-type counts')
+          lines.append('')
+          lines.append('| suffix | count |')
+          lines.append('| --- | ---: |')
+          for suffix,count in sorted(suffix_counts.items(), key=lambda kv:(-kv[1],kv[0])):
+              lines.append(f'| {suffix} | {count} |')
+          lines.append('')
+          lines.append('## Small analysis / metadata files')
+          lines.append('')
+          lines.append('| path | bytes | type |')
+          lines.append('| --- | ---: | --- |')
+          interesting=[]
+          for r in rows:
+              if r.get('type')!='file':
+                  continue
+              name=(r.get('name') or '').lower()
+              if any(name.endswith(ext) for ext in ('.xlsx','.xls','.csv','.txt','.json','.tsv')):
+                  interesting.append(r)
+          for r in sorted(interesting, key=lambda x:(int(x.get('size') or 0),x.get('path') or ''))[:500]:
+              lines.append(f"| {r.get('path')} | {int(r.get('size') or 0):,} | {r.get('mime_type') or ''} |")
+          lines.append('')
+          lines.append('## Video inventory summary')
+          lines.append('')
+          videos=[r for r in rows if r.get('type')=='file' and (r.get('name') or '').lower().endswith(('.mp4','.avi','.mov','.mkv'))]
+          lines.append(f'Video files: **{len(videos)}**')
+          lines.append(f'Video bytes: **{sum(int(r.get("size") or 0) for r in videos):,}**')
+          lines.append('')
+          lines.append('## First 200 resource paths')
+          lines.append('')
+          for r in rows[:200]:
+              lines.append(f"- {r.get('type')}: {r.get('path')} ({int(r.get('size') or 0):,} bytes)")
+
+          Path('results/OPERATOREYEVP_MANIFEST.md').write_text('\n'.join(lines), encoding='utf-8')
+          Path('results/OPERATOREYEVP_MANIFEST.json').write_text(json.dumps(rows, indent=2), encoding='utf-8')
+          print('\n'.join(lines[:180]))
+          PY
+
+      - name: Commit manifest
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/OPERATOREYEVP_MANIFEST.md results/OPERATOREYEVP_MANIFEST.json
+          git commit -m "Inspect OperatorEYEVP public dataset tree [skip ci]" || exit 0
+          git push origin HEAD:operatoreyevp-external-validation
