@@ -1,1 +1,392 @@
-[]
+[
+  {
+    "provider": "osfstorage",
+    "id": "65116b380fbdf73f79314115",
+    "name": "Data",
+    "kind": "folder",
+    "path": "/Data/",
+    "size": null,
+    "date_modified": null,
+    "download": null
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163f71e76a452398a9a30",
+    "name": "code",
+    "kind": "folder",
+    "path": "/code/",
+    "size": null,
+    "date_modified": null,
+    "download": null
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651164bc1e76a452398a9aa2",
+    "name": "README.txt",
+    "kind": "file",
+    "path": "/README.txt",
+    "size": 1056,
+    "date_modified": "2023-09-25T10:45:16.739501",
+    "download": "https://osf.io/download/nqywk/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651164175a0a813ecf0448a1",
+    "name": "data",
+    "kind": "folder",
+    "path": "/Data/data/",
+    "size": null,
+    "date_modified": null,
+    "download": null
+  },
+  {
+    "provider": "osfstorage",
+    "id": "65116b93cf3dc95256ad17cb",
+    "name": "data_format.json",
+    "kind": "file",
+    "path": "/Data/data_format.json",
+    "size": 177,
+    "date_modified": "2023-09-25T11:14:28.072009",
+    "download": "https://osf.io/download/ak5rt/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "65116b911e76a452638a9a3f",
+    "name": "sub_id.npy",
+    "kind": "file",
+    "path": "/Data/sub_id.npy",
+    "size": 228704,
+    "date_modified": "2023-09-25T11:14:25.538709",
+    "download": "https://osf.io/download/67mux/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "65116b91c0a364429e189be0",
+    "name": "session_type.npy",
+    "kind": "file",
+    "path": "/Data/session_type.npy",
+    "size": 114416,
+    "date_modified": "2023-09-25T11:14:25.120408",
+    "download": "https://osf.io/download/mq28f/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "65116b90c0a364429e189bde",
+    "name": "label_format.json",
+    "kind": "file",
+    "path": "/Data/label_format.json",
+    "size": 752,
+    "date_modified": "2023-09-25T11:14:24.090764",
+    "download": "https://osf.io/download/e2mda/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "65116b91c0a364429f189937",
+    "name": "label.npy",
+    "kind": "file",
+    "path": "/Data/label.npy",
+    "size": 5485952,
+    "date_modified": "2023-09-25T11:14:25.480792",
+    "download": "https://osf.io/download/3zasd/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "65116b91cf3dc95251ad164b",
+    "name": "human_readable_featurenames.csv",
+    "kind": "file",
+    "path": "/Data/human_readable_featurenames.csv",
+    "size": 26518,
+    "date_modified": "2023-09-25T11:14:25.282358",
+    "download": "https://osf.io/download/pjn8b/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "65116b92c0a364429f189939",
+    "name": "data_format_rf_big.json",
+    "kind": "file",
+    "path": "/Data/data_format_rf_big.json",
+    "size": 4775,
+    "date_modified": "2023-09-25T11:14:26.904067",
+    "download": "https://osf.io/download/en2zj/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "691732c23b8c73fa163edd7d",
+    "name": "plots",
+    "kind": "folder",
+    "path": "/code/plots/",
+    "size": null,
+    "date_modified": null,
+    "download": null
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e25a0a813ed20448c6",
+    "name": "evaluation.py",
+    "kind": "file",
+    "path": "/code/evaluation.py",
+    "size": 16760,
+    "date_modified": "2023-09-25T10:41:38.130035",
+    "download": "https://osf.io/download/5m7yr/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e20fbdf73f51313d5d",
+    "name": "config.py",
+    "kind": "file",
+    "path": "/code/config.py",
+    "size": 25,
+    "date_modified": "2023-09-25T10:41:38.121939",
+    "download": "https://osf.io/download/7bhnx/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e2c0a364427a1898b0",
+    "name": "run_evaluation.py",
+    "kind": "file",
+    "path": "/code/run_evaluation.py",
+    "size": 2329,
+    "date_modified": "2023-09-25T10:41:38.795815",
+    "download": "https://osf.io/download/dx8t4/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e30fbdf73f4e313d25",
+    "name": "run_ablation_study_cnn.sh",
+    "kind": "file",
+    "path": "/code/run_ablation_study_cnn.sh",
+    "size": 662,
+    "date_modified": "2023-09-25T10:41:39.353473",
+    "download": "https://osf.io/download/t68jb/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e15a0a813ed20448c4",
+    "name": "plotting_utils.py",
+    "kind": "file",
+    "path": "/code/plotting_utils.py",
+    "size": 9713,
+    "date_modified": "2023-09-25T10:41:37.105241",
+    "download": "https://osf.io/download/ce6x9/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e41e76a452398a9a2c",
+    "name": "run_evaluation.sh",
+    "kind": "file",
+    "path": "/code/run_evaluation.sh",
+    "size": 1227,
+    "date_modified": "2023-09-25T10:41:40.622621",
+    "download": "https://osf.io/download/7mtkx/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e30fbdf73f52313dd8",
+    "name": "requirements.txt",
+    "kind": "file",
+    "path": "/code/requirements.txt",
+    "size": 416,
+    "date_modified": "2023-09-25T10:41:39.302945",
+    "download": "https://osf.io/download/3hmdk/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e11e76a4523c8a9a6b",
+    "name": "create_configs.ipynb",
+    "kind": "file",
+    "path": "/code/create_configs.ipynb",
+    "size": 32425,
+    "date_modified": "2023-09-25T10:41:37.130253",
+    "download": "https://osf.io/download/6szx9/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "691732777893305e3d3ee4b4",
+    "name": "configs",
+    "kind": "folder",
+    "path": "/code/configs/",
+    "size": null,
+    "date_modified": null,
+    "download": null
+  },
+  {
+    "provider": "osfstorage",
+    "id": "691732d848d43e0cee3edeaf",
+    "name": "Models",
+    "kind": "folder",
+    "path": "/code/Models/",
+    "size": null,
+    "date_modified": null,
+    "download": null
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e00fbdf73f52313dd5",
+    "name": "plot_results.ipynb",
+    "kind": "file",
+    "path": "/code/plot_results.ipynb",
+    "size": 800002,
+    "date_modified": "2023-09-25T10:41:37.108269",
+    "download": "https://osf.io/download/x9qf4/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e4c0a3644279189841",
+    "name": "run_hp_tuning.py",
+    "kind": "file",
+    "path": "/code/run_hp_tuning.py",
+    "size": 2825,
+    "date_modified": "2023-09-25T10:41:40.571647",
+    "download": "https://osf.io/download/devmb/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e5c0a3644276189809",
+    "name": "run_hp_tuning.sh",
+    "kind": "file",
+    "path": "/code/run_hp_tuning.sh",
+    "size": 1215,
+    "date_modified": "2023-09-25T10:41:41.176771",
+    "download": "https://osf.io/download/f9xsh/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651163e5cf3dc95225ad160b",
+    "name": "shap_rf.ipynb",
+    "kind": "file",
+    "path": "/code/shap_rf.ipynb",
+    "size": 411031,
+    "date_modified": "2023-09-25T10:41:41.854704",
+    "download": "https://osf.io/download/f7jgt/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "691732cf9bfeb28c54dde084",
+    "name": "results",
+    "kind": "folder",
+    "path": "/code/results/",
+    "size": null,
+    "date_modified": null,
+    "download": null
+  },
+  {
+    "provider": "osfstorage",
+    "id": "6630b25bc5851a45b7f66f32",
+    "name": "data_down_5_6.npy",
+    "kind": "file",
+    "path": "/Data/data/data_down_5_6.npy",
+    "size": 2469312128,
+    "date_modified": "2024-04-30T08:56:59.292394",
+    "download": "https://osf.io/download/jtrzf/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651169080fbdf73f78313d44",
+    "name": "data_down_5_0.zip",
+    "kind": "file",
+    "path": "/Data/data/data_down_5_0.zip",
+    "size": 740187361,
+    "date_modified": "2023-09-25T11:03:37.052898",
+    "download": "https://osf.io/download/jqau7/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "6630b396f49cdf5539d2535a",
+    "name": "data_down_5_7.npy",
+    "kind": "file",
+    "path": "/Data/data/data_down_5_7.npy",
+    "size": 2469312128,
+    "date_modified": "2024-04-30T09:02:14.983034",
+    "download": "https://osf.io/download/gyq6z/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "6630b63ac5851a45b7f67041",
+    "name": "data_down_5_8.npy",
+    "kind": "file",
+    "path": "/Data/data/data_down_5_8.npy",
+    "size": 2469312128,
+    "date_modified": "2024-04-30T09:13:30.954011",
+    "download": "https://osf.io/download/b2zpn/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "6630b79b3145c63f986a82a1",
+    "name": "data_down_5_9.npy",
+    "kind": "file",
+    "path": "/Data/data/data_down_5_9.npy",
+    "size": 2462400128,
+    "date_modified": "2024-04-30T09:19:23.383323",
+    "download": "https://osf.io/download/5whm2/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "6630b13c3145c63f6d6a835a",
+    "name": "data_down_5_5.npy",
+    "kind": "file",
+    "path": "/Data/data/data_down_5_5.npy",
+    "size": 2469312128,
+    "date_modified": "2024-04-30T08:52:12.352058",
+    "download": "https://osf.io/download/6by2h/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651167ea0fbdf73f79313ce3",
+    "name": "data_down_5_3.zip",
+    "kind": "file",
+    "path": "/Data/data/data_down_5_3.zip",
+    "size": 722877151,
+    "date_modified": "2023-09-25T10:58:51.008414",
+    "download": "https://osf.io/download/k9ztp/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "65116b1c0fbdf73f78313dda",
+    "name": "data_down_5_4.zip",
+    "kind": "file",
+    "path": "/Data/data/data_down_5_4.zip",
+    "size": 706201835,
+    "date_modified": "2023-09-25T11:12:29.085836",
+    "download": "https://osf.io/download/yahbr/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "65116701cf3dc95236ad15e3",
+    "name": "data_down_5_2.zip",
+    "kind": "file",
+    "path": "/Data/data/data_down_5_2.zip",
+    "size": 692953780,
+    "date_modified": "2023-09-25T10:54:57.930228",
+    "download": "https://osf.io/download/2hsxj/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "65116a13cf3dc95256ad16dd",
+    "name": "data_down_5_1.zip",
+    "kind": "file",
+    "path": "/Data/data/data_down_5_1.zip",
+    "size": 684670410,
+    "date_modified": "2023-09-25T11:08:03.245190",
+    "download": "https://osf.io/download/wpba3/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "651165e41e76a452498a9998",
+    "name": "data_rf_big.npy",
+    "kind": "file",
+    "path": "/Data/data/data_rf_big.npy",
+    "size": 25829216,
+    "date_modified": "2023-09-25T10:50:12.340694",
+    "download": "https://osf.io/download/zvpk3/"
+  },
+  {
+    "provider": "osfstorage",
+    "id": "691732f248d43e0cee3edec0",
+    "name": "nn_model.py",
+    "kind": "file",
+    "path": "/code/Models/nn_model.py",
+    "size": 29061,
+    "date_modified": "2025-11-14T13:47:30.416490",
+    "download": "https://osf.io/download/m2xpf/"
+  }
+]
