@@ -15,8 +15,8 @@ from __future__ import annotations
 import tempfile
 import numpy as np
 
-import experiments.adhd_realdata_temporal_locality as adhd
-import experiments.mts_realdata_baseline_compression as mts
+import adhd_realdata_temporal_locality as adhd
+import mts_realdata_baseline_compression as mts
 
 
 B = 10_000
