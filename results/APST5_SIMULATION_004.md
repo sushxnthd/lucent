@@ -48,6 +48,34 @@ Reproduce with:
 
 python experiments/multimodal_redundancy.py
 
+## Reproduced result
+
+Five-second pupil-only comparator: **0.392970 nats**.
+
+### Two-second concurrent scan
+
+| kappa | Wins vs 5 s | Median ratio | Min | Max |
+| ---: | ---: | ---: | ---: | ---: |
+| 1.00 | 60/80 | **1.157x** | 0.880x | 1.692x |
+| 0.75 | 56/80 | **1.098x** | 0.874x | 1.614x |
+| 0.50 | 49/80 | **1.036x** | 0.869x | 1.529x |
+| 0.25 | 37/80 | 0.971x | 0.863x | 1.438x |
+| 0.00 | 27/80 | 0.907x | 0.857x | 1.339x |
+
+### Three-second concurrent scan
+
+| kappa | Wins vs 5 s | Median ratio | Min | Max |
+| ---: | ---: | ---: | ---: | ---: |
+| 1.00 | 72/80 | **1.238x** | 0.967x | 1.757x |
+| 0.75 | 72/80 | **1.176x** | 0.961x | 1.678x |
+| 0.50 | 63/80 | **1.112x** | 0.955x | 1.592x |
+| 0.25 | 55/80 | **1.048x** | 0.949x | 1.500x |
+| 0.00 | 37/80 | 0.983x | 0.942x | 1.399x |
+
+The three-second result remains above the five-second pupil-only comparator in the **median** even when only 25% of the weaker channel's information is allowed to count as incremental. At kappa=0.25, 55/80 grid cells still win. At kappa=0.50, 63/80 win and the median advantage is about 11.2%.
+
+This makes **3 seconds** a more robust next empirical target than 2 seconds under the current model family.
+
 ## Interpretation rule
 
 The useful result is not that multimodality is mathematically guaranteed to help.
