@@ -16,6 +16,10 @@ dependencies = [
 dev = [
   "pytest>=8.0",
   "torchfile>=0.1.0",
+  "pandas>=2.2",
+  "requests>=2.31",
+  "h5py>=3.10",
+  "mat73-reader==0.1.0",
 ]
 
 [tool.setuptools.packages.find]
