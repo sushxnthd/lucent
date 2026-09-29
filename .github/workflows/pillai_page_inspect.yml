@@ -1,0 +1,74 @@
+name: pillai-page-inspect
+
+on:
+  push:
+    branches: ['pillai-drt-short-window']
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pillai-drt-short-window
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Inspect Mendeley page source and OAI metadata
+        run: |
+          python - <<'PY'
+          import html, json, re, urllib.request, urllib.parse, urllib.error
+          from pathlib import Path
+
+          targets={
+            'original':'https://data.mendeley.com/datasets/dp8g983t38/1',
+            'driving':'https://data.mendeley.com/datasets/nmnfjry6vb/1',
+            'oai':'https://data.mendeley.com/oai?verb=GetRecord&metadataPrefix=oai_datacite&identifier=oai:data.mendeley.com:dp8g983t38/1'
+          }
+          lines=['# Pillai dataset page-source inspection','']
+          for label,url in targets.items():
+            lines += [f'## {label}', '', url, '']
+            try:
+              req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0','Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'})
+              with urllib.request.urlopen(req,timeout=60) as response:
+                raw=response.read()
+                text=raw.decode('utf-8','replace')
+                lines.append(f'HTTP: {response.status}; bytes: {len(raw):,}')
+                lines.append('')
+                patterns=[
+                  r'https?://[^\"\'<> ]+',
+                  r'[0-9a-f]{8}-[0-9a-f-]{27,}',
+                  r'(?:download|file|dataset)[^\"\'<>]{0,150}',
+                ]
+                hits=[]
+                for pat in patterns:
+                  for hit in re.findall(pat,text,flags=re.I):
+                    if isinstance(hit,tuple): hit=' '.join(hit)
+                    hit=html.unescape(str(hit))
+                    if hit not in hits: hits.append(hit)
+                lines.append('Selected source tokens:')
+                lines.append('')
+                for hit in hits[:500]:
+                  lines.append(f'- {hit[:1000]}')
+                Path(f'results/PILLAI_{label.upper()}_SOURCE.txt').write_text(text[:500000],encoding='utf-8')
+            except urllib.error.HTTPError as exc:
+              body=exc.read().decode('utf-8','replace')
+              lines.append(f'HTTP error {exc.code}: {body[:10000]}')
+            except Exception as exc:
+              lines.append(f'Error {type(exc).__name__}: {exc}')
+            lines.append('')
+
+          Path('results/PILLAI_PAGE_INSPECTION.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:500]))
+          PY
+      - name: Commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/PILLAI_PAGE_INSPECTION.md results/PILLAI_*_SOURCE.txt || true
+          git commit -m "Inspect Pillai dataset page source [skip ci]" || exit 0
+          git push origin HEAD:pillai-drt-short-window
