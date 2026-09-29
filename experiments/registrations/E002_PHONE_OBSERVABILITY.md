@@ -4,6 +4,8 @@
 
 This is an instrumentation study. It is not a fatigue experiment.
 
+**Pre-data amendment:** capture order is frozen in [E002_PROTOCOL_AMENDMENT_001.md](E002_PROTOCOL_AMENDMENT_001.md). No stimulus, quality gate, endpoint, or exit criterion is changed.
+
 ## Safety boundary
 
 - use ordinary rested / naturalistic states only;
@@ -27,9 +29,21 @@ RGB content levels are fixed by instrument/protocol.json. They are not treated a
 
 ## Repeats
 
-For an engineering pilot, collect at least 3 usable repeats per condition on one phone under one stable lighting setup.
+For the first engineering pilot, the nine planned captures follow this exact predeclared order:
 
-Do not tune thresholds or probe timing after seeing the first condition difference. Any redesign creates a new protocol version.
+1. passive
+2. contiguous
+3. split
+4. passive
+5. split
+6. contiguous
+7. split
+8. contiguous
+9. passive
+
+This gives three planned captures per condition and includes every directed condition-to-condition transition at least once.
+
+Do not reorder captures or tune thresholds/probe timing after seeing the first condition difference. Technical retries follow the rules in E002_PROTOCOL_AMENDMENT_001.md. Any redesign creates a new protocol version.
 
 ## Required capture outputs
 
