@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lucent E002 Instrument</title>
+<style>
+html,body{margin:0;min-height:100%;background:#111;color:#eee;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+body{display:grid;place-items:center}.setup{width:min(760px,92vw);line-height:1.45}label{display:block;margin:.9rem 0}
+select,input,button{font:inherit;padding:.55rem}small{opacity:.72;display:block;margin-top:.35rem}
+#stage{position:fixed;inset:0;display:none;overflow:hidden;background:rgb(26,26,26)}
+#target{position:absolute;width:18px;height:18px;border-radius:50%;background:#eee;transform:translate(-50%,-50%);left:50%;top:50%}
+#status{position:absolute;left:12px;bottom:12px;font-size:12px;background:rgba(0,0,0,.55);padding:6px 8px}
+video{display:none}
+</style>
+</head>
+<body>
+<main class="setup" id="setup">
+<h1>Lucent E002 phone observability instrument</h1>
+<p>Research capture harness only. It runs a five-second visual sequence while recording the front camera and frame timing metadata. It performs no fatigue or diagnostic inference.</p>
+<p>Do not use with research participants until consent and visual-stimulus safety procedures are approved. Stop immediately if the display causes discomfort.</p>
+<label>Condition
+<select id="condition">
+<option value="passive">Passive control</option>
+<option value="pupil">Active pupil probe</option>
+<option value="multimodal">Concurrent pupil + pursuit</option>
+</select></label>
+<label>Pursuit frequency (Hz)
+<input id="frequency" type="number" min="0.3" max="1.5" step="0.1" value="0.8">
+<small>Multimodal mode only. Pilot parameter, not a validated human optimum.</small>
+</label>
+<label>Trial ID <input id="trialId" value="pilot-001"></label>
+<button id="start">Request camera and run 5 s capture</button>
+<small>Camera access requires HTTPS or localhost. Capture files stay local unless you save/share them.</small>
+</main>
+<section id="stage"><div id="target"></div><div id="status"></div></section>
+<video id="camera" autoplay muted playsinline></video>
+<script>
+"use strict";
+const TOTAL_MS=5000, SEGMENT_MS=500, LOW=0.10, HIGH=0.95;
+const HIGH_SEGMENTS=new Set([1,2,8]);
+const setup=document.getElementById("setup"), stage=document.getElementById("stage");
+const target=document.getElementById("target"), statusEl=document.getElementById("status");
+const video=document.getElementById("camera"), startButton=document.getElementById("start");
+
+function drive(level){
+  const v=Math.round(Math.max(0,Math.min(1,level))*255);
+  stage.style.background="rgb("+v+","+v+","+v+")";
+}
+function targetPosition(ms,condition,f){
+  if(condition!=="multimodal") return {x:.5,y:.5};
+  const phase=2*Math.PI*f*(ms/1000);
+  return {x:.5+.30*Math.sin(phase),y:.5};
+}
+function save(blob,name){
+  const url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function mime(){
+  const c=["video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"];
+  return c.find(x=>MediaRecorder.isTypeSupported(x))||"";
+}
+async function camera(){
+  const s=await navigator.mediaDevices.getUserMedia({audio:false,video:{
+    facingMode:"user",width:{ideal:1280},height:{ideal:720},frameRate:{ideal:60,min:24}
+  }});
+  video.srcObject=s;await video.play();return s;
+}
+function frameLoop(records,t0){
+  if(!("requestVideoFrameCallback" in HTMLVideoElement.prototype)) return ()=>{};
+  let stop=false;
+  function cb(now,m){
+    if(stop)return;
+    records.push({
+      callback_perf_ms:performance.now()-t0,
+      expected_display_time_ms:m.expectedDisplayTime==null?null:m.expectedDisplayTime-t0,
+      media_time_s:m.mediaTime==null?null:m.mediaTime,
+      presented_frames:m.presentedFrames==null?null:m.presentedFrames,
+      width:m.width==null?null:m.width,height:m.height==null?null:m.height,
+      processing_duration_s:m.processingDuration==null?null:m.processingDuration
+    });
+    video.requestVideoFrameCallback(cb);
+  }
+  video.requestVideoFrameCallback(cb);
+  return ()=>{stop=true};
+}
+async function run(){
+  startButton.disabled=true;
+  const condition=document.getElementById("condition").value;
+  const f=Number(document.getElementById("frequency").value);
+  const trial=(document.getElementById("trialId").value.trim()||"trial").replace(/[^a-zA-Z0-9._-]+/g,"_");
+  const stream=await camera(), track=stream.getVideoTracks()[0], settings=track.getSettings();
+  setup.style.display="none";stage.style.display="block";drive(LOW);target.style.left="50%";target.style.top="50%";
+  statusEl.textContent="arming";await new Promise(r=>setTimeout(r,1000));
+  const mt=mime(), recorder=new MediaRecorder(stream,mt?{mimeType:mt,videoBitsPerSecond:8000000}:undefined);
+  const chunks=[];recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+  const frames=[], display=[];const t0=performance.now(), wallStart=new Date().toISOString();
+  recorder.start(100);const stopFrames=frameLoop(frames,t0);
+  let last=-1, raf=null;
+  function animate(){
+    const elapsed=performance.now()-t0, seg=Math.min(9,Math.floor(elapsed/SEGMENT_MS));
+    if(seg!==last){
+      last=seg;
+      const level=condition==="passive"?LOW:(HIGH_SEGMENTS.has(seg)?HIGH:LOW);
+      drive(level);display.push({perf_ms:elapsed,segment:seg,normalized_display_drive:level});
+    }
+    const p=targetPosition(elapsed,condition,f);
+    target.style.left=(100*p.x)+"%";target.style.top=(100*p.y)+"%";
+    statusEl.textContent=condition+" "+(elapsed/1000).toFixed(2)+" / 5.00 s";
+    if(elapsed<TOTAL_MS)raf=requestAnimationFrame(animate);
+  }
+  raf=requestAnimationFrame(animate);
+  await new Promise(r=>setTimeout(r,TOTAL_MS));
+  if(raf!==null)cancelAnimationFrame(raf);stopFrames();
+  await new Promise(r=>{recorder.onstop=r;recorder.stop()});
+  const wallEnd=new Date().toISOString();stream.getTracks().forEach(t=>t.stop());
+  const meta={
+    schema:"lucent-e002-capture-v1",trial_id:trial,condition:condition,
+    pursuit_frequency_hz:condition==="multimodal"?f:null,total_duration_ms:TOTAL_MS,
+    segment_duration_ms:SEGMENT_MS,high_segments:condition==="passive"?[]:[1,2,8],
+    requested_low_drive:LOW,requested_high_drive:condition==="passive"?LOW:HIGH,
+    wall_start_iso:wallStart,wall_end_iso:wallEnd,user_agent:navigator.userAgent,
+    track_settings:settings,display_timeline:display,video_frame_metadata:frames,
+    notes:[
+      "RGB drive is not calibrated photometric luminance.",
+      "MediaRecorder timing is not a raw camera sensor clock.",
+      "No state inference is performed."
+    ]
+  };
+  save(new Blob(chunks,{type:mt||"video/webm"}),trial+"-"+condition+".webm");
+  save(new Blob([JSON.stringify(meta,null,2)],{type:"application/json"}),trial+"-"+condition+".json");
+  statusEl.textContent="capture complete";
+  setTimeout(()=>{stage.style.display="none";setup.style.display="block";startButton.disabled=false},1000);
+}
+startButton.addEventListener("click",()=>run().catch(err=>{
+  console.error(err);alert("Capture failed: "+err.message);stage.style.display="none";setup.style.display="block";startButton.disabled=false;
+}));
+</script>
+</body>
+</html>
