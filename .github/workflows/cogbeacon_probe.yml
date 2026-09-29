@@ -57,6 +57,9 @@ jobs:
           mkdir -p results
           cp /tmp/cogbeacon_inspection.md results/COGBEACON_INSPECTION.md
 
+      - name: Install schema dependency
+        run: python -m pip install numpy
+
       - name: Inspect schemas
         run: |
           python - <<'PY' > /tmp/cogbeacon_schema.md
