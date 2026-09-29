@@ -53,6 +53,23 @@ DOI: https://doi.org/10.3389/fnbeh.2024.1386723
 
 This is conceptually consistent with timescale-dependent information but does not isolate the target-history interaction.
 
+## Recent theoretical overlap: the label defines the timescale
+
+Xi-Zhe Zhang (2026), *The Label Defines the Timescale: Trait-State Limits of Temporal-Aggregate Learning*, derives protocol-conditioned limits for predicting long-horizon aggregate labels from temporally limited observations.
+
+https://arxiv.org/abs/2608.01587
+
+The paper makes a stronger theoretical point than Lucent can claim as novel: the useful observation protocol depends jointly on the label functional and latent temporal dynamics. It derives task-dependent effective temporal spans and shows that a snapshot can retain trait-level predictability while losing within-person state information as label horizon grows.
+
+This substantially narrows Lucent's novelty boundary. Lucent should **not** claim to originate the general principle that "the label defines the relevant timescale."
+
+The remaining empirical contribution is more specific:
+
+- directly crossing sensor-history length and behavioral target horizon in public ocular-performance data;
+- freezing the interaction statistic before analysis;
+- retaining failed replications;
+- testing explicit temporal nuisance baselines.
+
 ## What the literature search did not find
 
 The search did **not** identify a directly equivalent prior result in which:
@@ -92,4 +109,23 @@ It did **not** replicate the positive interaction:
 
 Therefore the current evidence supports a real interaction in the Massoz PVT dataset, but **not a universal target-smoothing rule**.
 
-The next high-value test is a second PVT/vigilance dataset with pupil or ocular time series and trial-level behavior, because that preserves the target family while changing participants and instrumentation.
+A second PVT/vigilance replication has now been completed on Martin, Whittaker & Johnston (2022), Experiment 2.
+
+MARTIN-PVT-TARGET-ALIGNMENT-001 preserved the PVT target family while changing participants and ocular measurement:
+
+- 25 participants;
+- 2,330 common Block 2/3 anchors;
+- 250 Hz EyeLink pupil area;
+- strict leave-one-participant-out prediction;
+- Block 1 used only for person-specific target normalization.
+
+The preregistered interaction was **-0.0264**, 95% CI **[-0.0815,+0.0281]**. It did **not** replicate the Massoz crossover.
+
+The Massoz crossover was then subjected to a preregistered explicit time-on-task/session nuisance audit. It remained positive:
+
+- adjusted interaction **+0.2056**;
+- 95% CI **[+0.1328,+0.2749]**.
+
+So the current evidence is unusually asymmetric: the original Massoz/PVT crossover is robust to one simple temporal-confound model, but it fails to generalize to either an independent PVT/pupil cohort or CogBeacon.
+
+The next empirical priority is no longer another passive window sweep. It is the prospective active-probe observability test, because passive temporal-scale effects are clearly measurement/protocol specific.
