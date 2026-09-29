@@ -47,6 +47,28 @@ The current surrogate predicts that a 25% reduction in stable nuisance uncertain
 
 This is a **measurement-design prediction**, not a validated human duration claim.
 
+## Phase 0.9: empirical Temporal Alignment
+
+**Status: preregistered public-data result complete**
+
+- [x] retain the original MTS 2-second exploratory temporal-locality observation;
+- [x] run an independent preregistered EyeLink duration test and retain the reversed result;
+- [x] run an independent CogBeacon duration test and retain the null/reversed result;
+- [x] preregister a within-dataset target-timescale manipulation before outcome analysis;
+- [x] broaden PVT target support from immediate to 15/30/60 seconds while holding the sensing pipeline fixed;
+- [x] confirm the predicted long-vs-short sensing interaction.
+
+**Primary result:**
+
+\[
+\Delta=[r_{60s,60H}-r_{2s,60H}]-[r_{60s,0H}-r_{2s,0H}]
+=+0.2439,
+\]
+
+paired-subject bootstrap 95% CI **[+0.1647,+0.3191]**, N=28.
+
+This supports a target-dependent sensing horizon. It does not validate active smartphone sensing.
+
 ## Phase 1: phone observability pilot
 
 Build the smallest instrument that can:
