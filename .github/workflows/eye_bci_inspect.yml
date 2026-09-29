@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install remote zip tools
-        run: python -m pip install requests remotezip
+        run: python -m pip install requests remotezip pandas openpyxl
       - name: Inspect Zenodo S01 archive without full download
         run: |
           python - <<'PY'
@@ -63,10 +63,64 @@ jobs:
           Path('results/EYE_BCI_S01_MANIFEST.md').write_text('\n'.join(lines),encoding='utf-8')
           print('\n'.join(lines[:240]))
           PY
+      - name: Inspect synchronization and Tobii schemas
+        run: |
+          python - <<'PY'
+          import io, json
+          from pathlib import Path
+          import pandas as pd
+          import requests
+          from remotezip import RemoteZip
+
+          record_id='18970793'
+          meta=requests.get(f'https://zenodo.org/api/records/{record_id}',timeout=60).json()
+          target=next(f for f in meta['files'] if f['key']=='S01.zip')
+          url=target['links'].get('self') or target['links'].get('content')
+
+          lines=['# Eye-BCI S01 schema inspection','']
+          with RemoteZip(url) as z:
+              for name in [
+                  'Sess01/MI011_sync.csv',
+                  'Sess01/MI011_tobii.csv',
+                  'Sess01/MI011_annotations.json',
+                  'Sess01/S01_Sess01.xlsx',
+              ]:
+                  lines.append(f'## {name}')
+                  lines.append('')
+                  raw=z.read(name)
+                  lines.append(f'bytes: {len(raw):,}')
+                  lines.append('')
+                  if name.endswith('.csv'):
+                      df=pd.read_csv(io.BytesIO(raw), nrows=8)
+                      lines.append('columns:')
+                      for col in df.columns:
+                          lines.append(f'- {col}')
+                      lines.append('')
+                      lines.append('first rows:')
+                      lines.append('')
+                      lines.append('    '+df.head(5).to_csv(index=False).replace('\n','\n    '))
+                  elif name.endswith('.json'):
+                      obj=json.loads(raw.decode('utf-8'))
+                      preview=json.dumps(obj,indent=2)[:12000]
+                      lines.append('~~~json')
+                      lines.append(preview)
+                      lines.append('~~~')
+                  elif name.endswith('.xlsx'):
+                      df=pd.read_excel(io.BytesIO(raw))
+                      lines.append('columns:')
+                      for col in df.columns:
+                          lines.append(f'- {col}')
+                      lines.append('')
+                      lines.append('    '+df.head(10).to_csv(index=False).replace('\n','\n    '))
+
+          Path('results/EYE_BCI_S01_SCHEMA.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:260]))
+          PY
+
       - name: Commit manifest
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add results/EYE_BCI_S01_MANIFEST.md
+          git add results/EYE_BCI_S01_MANIFEST.md results/EYE_BCI_S01_SCHEMA.md
           git commit -m "Inspect Eye-BCI S01 remote archive [skip ci]" || exit 0
           git push origin HEAD:eye-bci-extractor-validation
