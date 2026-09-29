@@ -1,15 +1,13 @@
 name: martin-pvt-target-alignment
 
 on:
-  push:
-    branches: ['martin-pvt-replication']
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   replicate:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
