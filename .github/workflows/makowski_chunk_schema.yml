@@ -11,7 +11,7 @@ jobs:
   inspect:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,63 +20,59 @@ jobs:
         with:
           python-version: '3.12'
       - name: Install
-        run: python -m pip install numpy requests
-      - name: Inspect public code and first data chunk
+        run: python -m pip install numpy
+      - name: Download first chunk and source code
+        run: |
+          mkdir -p /tmp/makowski
+          curl -L --fail --retry 3 -o /tmp/makowski/evaluation.py https://osf.io/download/5m7yr/
+          curl -L --fail --retry 3 -o /tmp/makowski/run_evaluation.py https://osf.io/download/dx8t4/
+          curl -L --fail --retry 3 -o /tmp/makowski/config.py https://osf.io/download/7bhnx/
+          curl -L --fail --retry 3 -o /tmp/makowski/data_down_5_0.zip https://osf.io/download/jqau7/
+          ls -lh /tmp/makowski/
+      - name: Inspect
         run: |
           python - <<'PY'
-          import io, json, os, shutil, subprocess, urllib.request, zipfile
+          import shutil, zipfile
           from pathlib import Path
           import numpy as np
 
-          code_urls={
-            'evaluation.py':'https://osf.io/download/5m7yr/',
-            'run_evaluation.py':'https://osf.io/download/dx8t4/',
-            'config.py':'https://osf.io/download/7bhnx/',
-          }
+          root=Path('/tmp/makowski')
           lines=['# Makowski code + first-chunk schema','']
-          for name,url in code_urls.items():
-            with urllib.request.urlopen(url,timeout=120) as response:
-              text=response.read().decode('utf-8','replace')
-            lines += [f'## {name}','', '~~~python', text[:30000], '~~~','']
+          for name in ['evaluation.py','run_evaluation.py','config.py']:
+              text=(root/name).read_text(encoding='utf-8',errors='replace')
+              lines += [f'## {name}','', '~~~python', text[:30000], '~~~','']
 
-          zip_path=Path('/tmp/data_down_5_0.zip')
-          urllib.request.urlretrieve('https://osf.io/download/jqau7/',zip_path)
-          lines += ['## first ZIP','','archive bytes: **'+f'{zip_path.stat().st_size:,}'+'**','']
-          with zipfile.ZipFile(zip_path) as z:
-            infos=z.infolist()
-            lines.append('members:')
-            for info in infos:
-              lines.append(f'- {info.filename}: compressed={info.compress_size:,}; uncompressed={info.file_size:,}')
-            target=next((i for i in infos if i.filename.lower().endswith('.npy')),None)
-            if target is None:
-              raise RuntimeError('No NPY in chunk ZIP')
-            out=Path('/tmp/chunk.npy')
-            with z.open(target) as src, out.open('wb') as dst:
-              shutil.copyfileobj(src,dst,length=16*1024*1024)
+          zpath=root/'data_down_5_0.zip'
+          lines += ['## first ZIP','','archive bytes: **'+f'{zpath.stat().st_size:,}'+'**','']
+          with zipfile.ZipFile(zpath) as z:
+              infos=z.infolist()
+              lines.append('members:')
+              for info in infos:
+                  lines.append(f'- {info.filename}: compressed={info.compress_size:,}; uncompressed={info.file_size:,}')
+              target=next((i for i in infos if i.filename.lower().endswith('.npy')),None)
+              if target is None:
+                  raise RuntimeError('No NPY in chunk ZIP; members='+str([i.filename for i in infos]))
+              out=root/'chunk.npy'
+              with z.open(target) as src, out.open('wb') as dst:
+                  shutil.copyfileobj(src,dst,length=16*1024*1024)
 
-          arr=np.load('/tmp/chunk.npy',mmap_mode='r')
+          arr=np.load(root/'chunk.npy',mmap_mode='r')
           lines += ['','## NPY','','shape: **'+str(arr.shape)+'**','dtype: **'+str(arr.dtype)+'**','C contiguous: **'+str(arr.flags.c_contiguous)+'**','']
-          lines.append('first sample, first two time steps:')
-          lines.append('')
-          lines.append('    '+np.array2string(np.asarray(arr[0,:2,:]),precision=4,threshold=2000).replace('\n','\n    '))
-          lines.append('')
-          lines.append('first sample, last two time steps:')
-          lines.append('')
-          lines.append('    '+np.array2string(np.asarray(arr[0,-2:,:]),precision=4,threshold=2000).replace('\n','\n    '))
-          lines.append('')
+          lines += ['first sample, first two time steps:','','    '+np.array2string(np.asarray(arr[0,:2,:]),precision=4,threshold=2000).replace('\n','\n    '),'']
+          lines += ['first sample, last two time steps:','','    '+np.array2string(np.asarray(arr[0,-2:,:]),precision=4,threshold=2000).replace('\n','\n    '),'']
           for duration in [2,3,5,15,60]:
-            n=int(duration*200)
-            tail=np.asarray(arr[:min(200,len(arr)),-n:,:])
-            finite=np.isfinite(tail)
-            lines.append(f'{duration}s tail: shape={tail.shape}, finite={finite.mean():.4%}, mean={np.nanmean(tail):.6g}, sd={np.nanstd(tail):.6g}')
+              n=int(duration*200)
+              tail=np.asarray(arr[:min(200,len(arr)),-n:,:])
+              lines.append(f'{duration}s tail: shape={tail.shape}, finite={np.isfinite(tail).mean():.4%}, mean={np.nanmean(tail):.6g}, sd={np.nanstd(tail):.6g}')
 
           Path('results/MAKOWSKI_CHUNK_SCHEMA.md').write_text('\n'.join(lines),encoding='utf-8')
-          print('\n'.join(lines[-80:]))
+          print('\n'.join(lines[-100:]))
           PY
       - name: Commit
+        if: always()
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add results/MAKOWSKI_CHUNK_SCHEMA.md
+          test ! -f results/MAKOWSKI_CHUNK_SCHEMA.md || git add results/MAKOWSKI_CHUNK_SCHEMA.md
           git commit -m "Inspect Makowski sequence chunk schema [skip ci]" || exit 0
           git push origin HEAD:makowski-drowsiness-validation
