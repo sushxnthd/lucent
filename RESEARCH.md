@@ -2,70 +2,93 @@
 
 ## 1. Core question
 
-Can an ordinary smartphone recover useful information about current fatigue and cognitive-performance state in approximately five seconds by **actively perturbing** the visual system and measuring the response?
+Can an ordinary smartphone recover useful information about current fatigue and cognitive-performance state in roughly **2–5 seconds** by actively designing the ocular measurement?
 
-Lucent now treats passive video as the baseline, not the final architecture.
+Lucent treats passive video as the baseline, not the final architecture.
 
 ## 2. Research hypothesis
 
-A known stimulus turns state inference into a system-identification problem.
-
-Passive observation sees a mixture of:
+Passive observation mixes:
 
 - stable identity;
 - current state;
-- lighting;
 - device behavior;
+- ambient light;
 - pose;
 - spontaneous motion;
 - context.
 
-Active probing adds an input whose timing is known exactly. If transient state changes the response dynamics, that input can help separate state from nuisance.
+Active probing introduces a known input. Longitudinal history supplies prior information about stable nuisance. Concurrent ocular challenges can interrogate multiple response systems in the same time window.
 
-The key claim is therefore:
+The architecture is therefore:
 
-> Under a fixed five-second and exposure budget, a carefully designed display probe should reveal more identifiable state information than a passive clip or a conventional fixed probe.
+[
+\text{state}
+\mid
+\text{active response},\
+\text{personal history},\
+\text{device/context}.
+]
+
+The optimization target is **state information density**, not raw model complexity.
 
 ## 3. Operational targets
 
 "Fatigue" is not treated as one perfect scalar.
 
-Targets should remain separate until evidence justifies combining them:
+Candidate targets remain separate:
 
-- psychomotor vigilance / reaction-time outcomes;
-- lapse-like events or slow-response tails;
+- PVT / reaction-speed outcomes;
+- lapse-like events;
 - subjective state sleepiness;
-- pupil-light-reflex / autonomic dynamic parameters;
-- recent sleep duration and time awake as contextual baselines;
-- within-person deviation from personal baseline.
+- pupil/autonomic dynamic parameters;
+- controlled oculomotor performance;
+- within-person deviation from an earlier baseline.
+
+A composite score is justified only after the individual targets are understood.
 
 ## 4. Working hypotheses
 
 ### H1: active > passive
-Matched five-second active probing adds information beyond passive five-second video.
+At matched duration, an informative active probe adds state information beyond passive observation.
 
 ### H2: optimized > fixed
-Under matched duration and luminous exposure, an information-designed probe outperforms a conventional fixed stimulus.
+At matched duration and exposure, an information-designed probe beats a conventional fixed active probe.
 
 ### H3: temporal placement matters
-The timing of perturbations changes parameter identifiability even when total high-luminance exposure is identical.
+Stimulus timing changes dynamic-parameter identifiability even with identical total exposure.
 
-### H4: person-relative state is easier than universal ranking
-Predicting deviation from a person's own baseline may generalize better than assigning one absolute cross-person state score.
+**Computational status:** supported by APST5-SIM-001.
 
-### H5: the useful luminance regime is state-dependent
-Low-to-mid luminance may carry stronger arousal-related modulation than simply maximizing brightness.
+### H4: stable nuisance can be learned once
+Longitudinal history can reduce uncertainty about stable person/device dynamics, leaving a short scan to focus on what changed.
 
-### H6: identity is a major shortcut
-Random clip splits will overestimate generalization whenever repeated observations from the same person appear in training and test.
+**Mathematical status:** Baseline Compression Principle.
 
-### H7: uncertainty should rise under distribution shift
-The system should become less confident on unseen devices, lighting, pose, or ocular conditions.
+**Computational status:** APST5-SIM-002.
 
-### H8: personal baselines should compress measurement time
-Longitudinal knowledge of stable person-specific dynamics should reduce nuisance uncertainty enough that a shorter active scan can preserve the state information of a longer population-level scan.
+**Human-data status:** the simple personalization transform in MTS-REALDATA-001 did not pass its preregistered primary test.
 
-This is formalized with nuisance-projected Fisher information in [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md).
+### H5: immediate state is temporally local
+For an immediate functional target, a short state-proximal sensor window may outperform a longer backward average because older observations dilute the current state.
+
+**Human-data status:** exploratory support in MTS-REALDATA-001; independent replication required.
+
+### H6: multimodal probing increases information density
+Pupil and controlled gaze/pursuit dynamics can be elicited concurrently, allowing a shorter joint scan to compete with a longer single-channel scan.
+
+**Computational status:** APST5-SIM-003.
+
+### H7: the multimodal gain is not purely an independence artifact
+The compression advantage should survive meaningful cross-channel information overlap.
+
+**Computational status:** APST5-SIM-004; 3 s remains above the 5 s pupil-only comparator in the median at 25% incremental weaker-channel information.
+
+### H8: identity is a major shortcut
+Random clip splits overestimate generalization whenever the same participant appears in train and test.
+
+### H9: uncertainty should increase under distribution shift
+Unseen devices, lighting, pose, or ocular conditions should produce lower confidence rather than confident extrapolation.
 
 ## 5. Candidate observed channels
 
@@ -75,16 +98,17 @@ The active scan may use:
 - constriction / redilation velocity;
 - blink timing;
 - eyelid aperture;
-- gaze and saccadic response to controlled targets;
-- smooth-pursuit response;
-- facial photoplethysmographic channels if signal quality permits;
-- static and temporal facial representations as secondary signals.
+- controlled gaze;
+- smooth pursuit;
+- reactive saccades where sampling allows;
+- facial dynamics as secondary channels.
 
-No channel is assumed to be useful before ablation.
+A channel is retained only if it adds held-out information beyond simpler channels and context baselines.
 
 ## 6. Confounds
 
 ### Person-level
+
 - identity;
 - age;
 - eye color / iris contrast;
@@ -93,8 +117,9 @@ No channel is assumed to be useful before ablation.
 - habitual expression.
 
 ### Recording-level
+
 - display luminance calibration;
-- camera exposure and white balance;
+- camera exposure / white balance;
 - frame rate;
 - rolling shutter;
 - distance;
@@ -103,62 +128,76 @@ No channel is assumed to be useful before ablation.
 - device family.
 
 ### Protocol-level
+
 - time of day;
-- prior dark/light adaptation;
+- prior light adaptation;
 - session order;
-- recent caffeine;
-- sleep history;
+- caffeine;
+- recent sleep;
 - label timing;
-- expectation effects;
-- clips from one source recording crossing a split.
+- expectation / task-learning effects;
+- source clips crossing split boundaries.
 
-## 7. Falsification criteria
+## 7. Evidence ladder
 
-The active-sensing hypothesis weakens if:
+### Layer A: mathematical design principles
 
-- optimized active probes do not outperform fixed active probes under matched exposure;
-- active five seconds does not outperform passive five seconds;
-- participant-held-out effects vanish;
-- results are explained by device or identity;
-- state targets disagree in a way that invalidates the intended construct;
-- fresh-cohort replication fails.
+- Baseline Compression Principle.
+- Concurrent Multimodal Information Principle.
+- Temporal Locality model.
 
-## 8. Evidence ladder
+### Layer B: reproduced computational evidence
 
-### Level 0: in-silico identifiability
-Under explicit model assumptions, active design improves parameter identifiability under matched exposure.
+- **SIM-001:** equal-exposure probe timing.
+- **SIM-002:** baseline-conditioned temporal compression.
+- **SIM-003:** concurrent pupil + pursuit compression.
+- **SIM-004:** redundancy stress test.
 
-**Current status: achieved provisionally in APST5-SIM-001.**
+### Layer C: existing human-data evidence
 
-### Level 0b: personalization-compression prediction
-A tighter longitudinal prior over stable nuisance dynamics should shift the duration-information curve leftward.
+- **MTS-REALDATA-001:** immediate PVT performance contains a short-window passive ocular signal.
+- Primary personalization hypothesis: **null**.
+- 2 s temporal-locality observation: **exploratory positive**.
 
-**Current status: achieved provisionally in APST5-SIM-002.**
+### Layer D: commodity-phone observability
 
-### Level 1: hardware observability
-A commodity phone can execute the probe and recover repeatable ocular response dynamics.
+**Not yet achieved.**
 
-### Level 2: within-person state sensitivity
-Repeated scans track paired state changes within individuals.
+Required: synchronized display/camera timing and repeatable recovery of the modeled ocular dynamics on ordinary hardware.
 
-### Level 3: unseen-person generalization
-The active signal survives participant-held-out evaluation.
+### Layer E: prospective within-person state sensitivity
 
-### Level 4: active advantage
-Optimized active five seconds beats passive five seconds and fixed active five seconds under matched constraints.
+**Not yet achieved.**
 
-### Level 5: nuisance robustness
-The active advantage survives device, session, lighting, and environment shifts.
+Required: frozen paired active/passive protocol with behavioral reference.
 
-### Level 6: fresh-cohort replication
-A frozen probe and analysis plan reproduce on a new cohort.
+### Layer F: unseen-person and unseen-device active advantage
 
-Only Levels 4-6 justify strong external claims.
+**Not yet achieved.**
+
+### Layer G: fresh-cohort replication
+
+**Not yet achieved.**
+
+Only Layers F–G support strong real-world generalization claims.
+
+## 8. Current falsification targets
+
+Lucent should be narrowed if:
+
+- ordinary phone cameras cannot measure the required dynamics reliably;
+- active scanning fails to beat passive scanning at matched duration;
+- optimized stimulation fails to beat matched fixed stimulation;
+- the multimodal channel adds no conditional information once pupil/history are known;
+- the public-data temporal-locality effect fails on an independent cohort;
+- participant-held-out effects disappear;
+- device shifts dominate the signal;
+- frozen fresh-cohort replication fails.
 
 ## 9. Immediate direction
 
-The next decisive experiment is no longer "train a larger face model."
+The next decisive step is empirical:
 
-It is:
+> **execute a synchronized ~3 s concurrent pupil + pursuit probe on ordinary phone hardware and determine whether the required response dynamics are observable before making any state-prediction claim.**
 
-> implement the APST-5 probe on a commodity smartphone, verify pupil/eye observability, then run a paired pilot with a preregistered behavioral reference.
+The current repository has enough computational evidence to specify that experiment. It does not yet have the human phone data to declare it solved.
