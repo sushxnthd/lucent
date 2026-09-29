@@ -163,36 +163,64 @@ def load_dataset(root: Path) -> dict[int, SubjectData]:
     return dataset
 
 
-def feature_map(window: np.ndarray, open_ref: np.ndarray, duration_s: int) -> np.ndarray:
-    x = window / open_ref.reshape(1, 2)
+def feature_map_many(
+    windows: np.ndarray,
+    open_ref: np.ndarray,
+    duration_s: int,
+) -> np.ndarray:
+    """Vectorized deterministic feature map.
+
+    windows shape: [n_windows, n_frames, 2].
+    """
+
+    windows = np.asarray(windows, dtype=float)
+    if windows.ndim != 3 or windows.shape[2] != 2:
+        raise ValueError(f"unexpected window shape: {windows.shape}")
+
+    x = windows / open_ref.reshape(1, 1, 2)
     x = np.clip(x, 0.0, 1.5)
 
-    aperture = np.mean(x, axis=1)
-    asymmetry = np.abs(x[:, 0] - x[:, 1])
-    diff = np.diff(aperture)
+    aperture = np.mean(x, axis=2)
+    asymmetry = np.abs(x[:, :, 0] - x[:, :, 1])
+    diff = np.diff(aperture, axis=1)
 
     quantiles = np.quantile(
         aperture,
         [0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95],
-    )
-    closed = aperture < 0.70
-    closure_entries = np.sum((~closed[:-1]) & closed[1:]) if len(closed) > 1 else 0
+        axis=1,
+    ).T
 
-    return np.asarray(
-        [
-            np.mean(aperture),
-            np.std(aperture),
-            *quantiles.tolist(),
-            np.mean(aperture < 0.80),
-            np.mean(aperture < 0.70),
-            np.mean(aperture < 0.50),
-            np.mean(np.abs(diff)) if len(diff) else 0.0,
-            np.std(diff) if len(diff) else 0.0,
-            closure_entries / max(float(duration_s), 1.0),
-            np.mean(asymmetry),
-        ],
-        dtype=float,
+    closed = aperture < 0.70
+    closure_entries = np.sum(
+        (~closed[:, :-1]) & closed[:, 1:],
+        axis=1,
     )
+
+    parts = [
+        np.mean(aperture, axis=1, keepdims=True),
+        np.std(aperture, axis=1, keepdims=True),
+        quantiles,
+        np.mean(aperture < 0.80, axis=1, keepdims=True),
+        np.mean(aperture < 0.70, axis=1, keepdims=True),
+        np.mean(aperture < 0.50, axis=1, keepdims=True),
+        np.mean(np.abs(diff), axis=1, keepdims=True),
+        np.std(diff, axis=1, keepdims=True),
+        (closure_entries / max(float(duration_s), 1.0)).reshape(-1, 1),
+        np.mean(asymmetry, axis=1, keepdims=True),
+    ]
+    return np.concatenate(parts, axis=1)
+
+
+def feature_map(
+    window: np.ndarray,
+    open_ref: np.ndarray,
+    duration_s: int,
+) -> np.ndarray:
+    return feature_map_many(
+        np.asarray(window)[None, :, :],
+        open_ref,
+        duration_s,
+    )[0]
 
 
 def baseline_feature(
@@ -204,14 +232,11 @@ def baseline_feature(
     if n <= 0 or n > len(session.eye):
         raise ValueError("invalid duration")
 
-    # Non-overlapping prior-session windows; the median makes the baseline
-    # robust to occasional blinks/microsleeps.
-    features = []
-    for end in range(n, len(session.eye) + 1, n):
-        window = session.eye[end - n : end]
-        features.append(feature_map(window, open_ref, duration_s))
+    usable = (len(session.eye) // n) * n
+    windows = session.eye[:usable].reshape(-1, n, 2)
+    features = feature_map_many(windows, open_ref, duration_s)
 
-    return np.median(np.vstack(features), axis=0)
+    return np.median(features, axis=0)
 
 
 def later_samples(
@@ -221,8 +246,8 @@ def later_samples(
     baseline_vector: np.ndarray,
 ) -> tuple[np.ndarray, np.ndarray]:
     n = int(round(duration_s * FPS))
-    x_rows = []
-    y_rows = []
+    windows = []
+    targets = []
 
     for session in data.later:
         for onset_s, rt_ms in zip(session.event_time_s, session.rt_ms, strict=True):
@@ -235,20 +260,28 @@ def later_samples(
             if start < 0 or end > len(session.eye) or end <= start:
                 continue
 
-            window = session.eye[start:end]
-            feat = feature_map(window, open_ref, duration_s) - baseline_vector
+            windows.append(session.eye[start:end])
 
             speed = 1000.0 / rt_ms
-            target = (speed - data.speed_mean) / data.speed_sd
+            targets.append((speed - data.speed_mean) / data.speed_sd)
 
-            if np.isfinite(feat).all() and np.isfinite(target):
-                x_rows.append(feat)
-                y_rows.append(target)
-
-    if not x_rows:
+    if not windows:
         return np.empty((0, 15)), np.empty((0,))
 
-    return np.vstack(x_rows), np.asarray(y_rows, dtype=float)
+    feature_matrix = feature_map_many(
+        np.stack(windows, axis=0),
+        open_ref,
+        duration_s,
+    )
+    feature_matrix = feature_matrix - baseline_vector.reshape(1, -1)
+    target_array = np.asarray(targets, dtype=float)
+
+    keep = (
+        np.isfinite(feature_matrix).all(axis=1)
+        & np.isfinite(target_array)
+    )
+
+    return feature_matrix[keep], target_array[keep]
 
 
 def pearson(y: np.ndarray, pred: np.ndarray) -> float:
