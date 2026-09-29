@@ -386,14 +386,28 @@ def main():
     cap.release()
     mesh.close()
 
+    stimulus_errors = [
+        abs(float(event.get("actualOffsetMs", 0.0)) - float(event.get("scheduledOffsetMs", 0.0)))
+        for event in meta.get("stimulusEvents", [])
+    ]
+
     summary = {
         "schemaVersion": "lucent-e002-pupil-v1",
+        "participantPseudonym": meta.get("participantPseudonym"),
+        "session": meta.get("session"),
+        "condition": meta.get("condition"),
+        "protocolVersion": meta.get("protocolVersion"),
         "video": {
             "fpsReported": fps,
             "width": width,
             "height": height,
         },
         "summary": summarize(trace, meta),
+        "captureTiming": {
+            "actualDurationMs": meta.get("actualDurationMs"),
+            "maxStimulusSchedulingErrorMs": max(stimulus_errors) if stimulus_errors else None,
+            "frameCadence": meta.get("frameCadence"),
+        },
         "warning": (
             "Visible-light pupil segmentation is heuristic and must be "
             "quality-checked. This output is not a clinical measurement."
