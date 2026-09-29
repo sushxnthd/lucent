@@ -1,0 +1,45 @@
+name: makowski-chunk-debug
+
+on:
+  push:
+    branches: ['makowski-drowsiness-validation']
+
+permissions:
+  contents: write
+
+jobs:
+  debug:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: makowski-drowsiness-validation
+      - name: Capture download diagnostics
+        continue-on-error: true
+        run: |
+          mkdir -p results /tmp/makowski
+          {
+            echo '# Makowski chunk download debug'
+            echo
+            date -u
+            echo
+            echo '## HEAD'
+            curl -IL --max-time 60 https://osf.io/download/jqau7/ || true
+            echo
+            echo '## Download'
+            curl -L --retry 2 --max-time 1200 -o /tmp/makowski/chunk.zip -w '\nHTTP=%{http_code} bytes=%{size_download} speed=%{speed_download}\n' https://osf.io/download/jqau7/ || true
+            echo
+            ls -lh /tmp/makowski || true
+            file /tmp/makowski/chunk.zip || true
+            unzip -l /tmp/makowski/chunk.zip | head -80 || true
+          } > results/MAKOWSKI_CHUNK_DEBUG.txt 2>&1
+      - name: Commit debug
+        if: always()
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/MAKOWSKI_CHUNK_DEBUG.txt
+          git commit -m "Capture Makowski chunk download diagnostics [skip ci]" || exit 0
+          git push origin HEAD:makowski-drowsiness-validation
