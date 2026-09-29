@@ -1,0 +1,97 @@
+name: makowski-structure-audit
+
+on:
+  push:
+    branches: ['makowski-short-window-analysis']
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: makowski-short-window-analysis
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: |
+          python -m pip install numpy
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq p7zip-full
+      - name: Download code and first sequence chunk
+        run: |
+          mkdir -p /tmp/makowski
+          curl -L --fail --retry 3 -o /tmp/makowski/evaluation.py https://osf.io/download/5m7yr/
+          curl -L --fail --retry 3 -o /tmp/makowski/run_evaluation.py https://osf.io/download/dx8t4/
+          curl -L --fail --retry 3 -o /tmp/makowski/nn_model.py https://osf.io/download/m2xpf/
+          curl -L --fail --retry 3 -o /tmp/makowski/data_down_5_0.zip https://osf.io/download/jqau7/
+          7z e -y /tmp/makowski/data_down_5_0.zip -o/tmp/makowski data_down_5_0.npy >/tmp/7z.log
+          tail -30 /tmp/7z.log
+      - name: Audit structure and label logic
+        run: |
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          import numpy as np
+
+          root=Path('/tmp/makowski')
+          arr=np.load(root/'data_down_5_0.npy',mmap_mode='r')
+
+          lines=['# Makowski sequence structure and source-code audit','']
+          lines += [
+              '## sequence chunk',
+              '',
+              f'shape: **{arr.shape}**',
+              f'dtype: **{arr.dtype}**',
+              f'NPY bytes: **{(root/"data_down_5_0.npy").stat().st_size:,}**',
+              '',
+              'first sample first 2 steps:',
+              '',
+              '    '+np.array2string(np.asarray(arr[0,:2,:]),precision=4,threshold=2000).replace('\n','\n    '),
+              '',
+              'first sample last 2 steps:',
+              '',
+              '    '+np.array2string(np.asarray(arr[0,-2:,:]),precision=4,threshold=2000).replace('\n','\n    '),
+              '',
+          ]
+          if arr.ndim==3:
+              sample_hz=arr.shape[1]/60.0
+              lines.append(f'implied steps per 60 s: **{arr.shape[1]}** => **{sample_hz:.3f} Hz** if the published 60 s window applies.')
+              lines.append('')
+              for duration in [2,3,5,10,15,30,60]:
+                  n=min(arr.shape[1],int(round(duration*sample_hz)))
+                  tail=np.asarray(arr[:min(100,len(arr)),-n:,:])
+                  lines.append(f'- {duration}s tail: {tail.shape}; finite={np.isfinite(tail).mean():.3%}')
+
+          terms=['upcoming','microsleep','mean_rt','interpolated_kss','data_down','window','sequence','stride','label_format','same_window','session_type','sub_id','1000']
+          for name in ['evaluation.py','run_evaluation.py','nn_model.py']:
+              text=(root/name).read_text(encoding='utf-8',errors='replace')
+              src=text.splitlines()
+              lines += ['',f'## {name}','']
+              covered=[]
+              for i,line in enumerate(src):
+                  if any(term.lower() in line.lower() for term in terms):
+                      lo=max(0,i-6); hi=min(len(src),i+12)
+                      if any(lo>=a and hi<=b for a,b in covered):
+                          continue
+                      covered.append((lo,hi))
+                      lines += [f'### lines {lo+1}-{hi}','~~~python']
+                      lines += [f'{j+1:04d}: {src[j]}' for j in range(lo,hi)]
+                      lines += ['~~~','']
+
+          Path('results/MAKOWSKI_STRUCTURE_AUDIT.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:1200]))
+          PY
+      - name: Commit audit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/MAKOWSKI_STRUCTURE_AUDIT.md
+          git commit -m "Audit Makowski 60 s sequence structure and label logic [skip ci]" || exit 0
+          git push origin HEAD:makowski-short-window-analysis
