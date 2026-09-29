@@ -74,7 +74,7 @@ Across the 80 sensitivity cells:
 - **60/80 (75%)** beat the five-second pupil-only comparator;
 - median information ratio: **1.157x**;
 - worst-case ratio in the grid: **0.880x**;
-- best-case ratio: **1.725x**.
+- best-case ratio: **1.692x**.
 
 ### Three-second concurrent scan
 
