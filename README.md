@@ -160,6 +160,7 @@ The repo is structured to make those claims harder to fake.
 | [results/APST5_SIMULATION_001.md](results/APST5_SIMULATION_001.md) | equal-exposure active-probe result |
 | [results/APST5_SIMULATION_002.md](results/APST5_SIMULATION_002.md) | personalization / temporal-compression result |
 | [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md) | nuisance-projection derivation and design principle |
+| [docs/MULTIMODAL_COMPRESSION.md](docs/MULTIMODAL_COMPRESSION.md) | closest 30–45 s ocular screens and the open ~5 s compression target |
 
 ## Research principles
 
