@@ -34,3 +34,6 @@ jobs:
       - name: Public MTS data smoke test
         if: matrix.python-version == '3.12'
         run: python experiments/inspect_mts_data.py
+      - name: MTS real-data baseline-compression analysis
+        if: matrix.python-version == '3.12'
+        run: python experiments/mts_realdata_baseline_compression.py
