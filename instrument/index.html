@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#111111">
+  <title>Lucent E002 Instrument</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main id="app">
+    <section id="setup" class="panel">
+      <p class="eyebrow">LUCENT / E002</p>
+      <h1>Phone observability instrument</h1>
+      <p class="lede">Synchronized front-camera capture plus the fixed APST-5 display probe. Data stay on this device until you export them.</p>
+      <div class="notice">Use only in a comfortable, ordinary state. Do not intentionally deprive yourself of sleep. Do not use while driving. Stop if the display causes discomfort.</div>
+
+      <div class="grid">
+        <label>Participant pseudonym<input id="participant" autocomplete="off" value="pilot-001"></label>
+        <label>Session<input id="session" type="number" min="1" value="1"></label>
+        <label>Condition
+          <select id="condition">
+            <option value="passive">Passive control</option>
+            <option value="contiguous">Contiguous active</option>
+            <option value="split">APST-5 split pulse</option>
+          </select>
+        </label>
+        <label>Screen brightness (%)<input id="brightness" type="number" min="1" max="100" value="50"></label>
+        <label>Ambient
+          <select id="ambient">
+            <option value="dim-indoor">Dim indoor</option>
+            <option value="normal-indoor" selected>Normal indoor</option>
+            <option value="bright-indoor">Bright indoor</option>
+          </select>
+        </label>
+        <label>Approx. phone distance (cm)<input id="distance" type="number" min="15" max="100" value="35"></label>
+      </div>
+
+      <div class="actions">
+        <button id="cameraButton">1. Enable camera</button>
+        <button id="startButton" disabled>2. Start 5 s capture</button>
+      </div>
+
+      <div class="cameraCard">
+        <video id="preview" autoplay muted playsinline></video>
+        <div id="cameraStatus">Camera not started.</div>
+      </div>
+
+      <div id="exportArea" class="export hidden">
+        <strong>Capture complete.</strong>
+        <p>Export both files. Keep raw participant video outside Git.</p>
+        <div class="actions">
+          <button id="videoDownload">Download video</button>
+          <button id="jsonDownload">Download JSON</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="capture" class="capture hidden" aria-live="polite">
+      <div id="target" class="target"></div>
+      <div id="countdown" class="countdown"></div>
+    </section>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
