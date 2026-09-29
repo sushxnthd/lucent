@@ -1,0 +1,56 @@
+{
+  "protocol_version": "e002-v1",
+  "total_seconds": 5,
+  "segment_seconds": 0.5,
+  "low_rgb": [
+    48,
+    48,
+    48
+  ],
+  "high_rgb": [
+    176,
+    176,
+    176
+  ],
+  "target_rgb": [
+    255,
+    255,
+    255
+  ],
+  "conditions": {
+    "passive": {
+      "high_segments": [],
+      "description": "Constant low-display control."
+    },
+    "contiguous": {
+      "high_segments": [
+        4,
+        5,
+        6
+      ],
+      "description": "Matched-exposure contiguous active control from APST5-SIM-001."
+    },
+    "split": {
+      "high_segments": [
+        1,
+        2,
+        8
+      ],
+      "description": "APST5-SIM-001 split-pulse design."
+    }
+  },
+  "capture": {
+    "video": {
+      "facingMode": "user",
+      "width_ideal": 1280,
+      "height_ideal": 720,
+      "frameRate_ideal": 60,
+      "frameRate_min": 24
+    }
+  },
+  "safety": {
+    "rapid_flashing": false,
+    "minimum_segment_seconds": 0.5,
+    "note": "Screen-content levels are not calibrated retinal illuminance."
+  }
+}
