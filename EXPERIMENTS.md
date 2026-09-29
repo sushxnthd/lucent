@@ -1,79 +1,149 @@
-# Experimental Plan
+# Experimental Program
 
-This document defines the current evaluation logic for Lucent. Exact sample sizes and model families may change as data collection develops, but the anti-leakage structure should remain fixed.
+This document defines the experimental logic for Lucent. Model families and exact sample sizes may evolve, but the anti-leakage rules should remain stable.
 
-## A. Data unit
+## 1. Unit of observation
 
-Each observation should contain:
+A paired observation should contain:
 
-- a short front-camera video clip;
-- timestamp and session identifier;
-- psychomotor reaction-time measurement collected near the clip;
-- subjective sleepiness score;
+- one short front-camera video clip;
+- participant identifier;
+- session identifier;
+- capture timestamp;
+- device metadata;
+- psychomotor / reaction-time measurement collected near the clip;
+- subjective state-sleepiness score;
 - recent sleep-history variables;
-- device/environment metadata needed for robustness analysis.
+- environmental metadata required for robustness analysis.
 
-## B. Split design
+Derived frames from the same source clip are never allowed to cross a train/test boundary.
 
-Random frame-level or clip-level splits are not acceptable as the main result.
+## 2. Collection sequence
 
-Primary splits should include:
+A candidate session:
 
-- **subject-held-out:** no identity overlap between train and test;
-- **session-held-out:** later sessions are unseen during training;
-- **device-held-out:** where collection permits;
-- **environment-held-out:** lighting/location shifts where collection permits.
+1. quality check and standardized camera placement;
+2. short front-camera clip;
+3. state sleepiness rating;
+4. psychomotor vigilance / reaction-time task;
+5. recent sleep and contextual metadata;
+6. optional repeated clip after the task for temporal stability analysis.
 
-A within-person setting can be evaluated separately, but must be clearly distinguished from cross-person generalization.
+The allowed time interval between video and reference measurement must be pre-specified for each study.
 
-## C. Baselines
+## 3. Primary split design
 
-Before using complex video models, compare against:
+Random frame-level or clip-level splits are **not** accepted as the primary result.
 
-1. mean/median prediction;
-2. time-of-day and sleep-history-only predictors;
-3. simple static image features;
-4. a single-frame vision model;
-5. handcrafted temporal summaries where appropriate.
+### A. Participant-held-out
+No participant identity appears in both training and test sets.
 
-A video model is only useful if it adds signal beyond these baselines.
+### B. Session-held-out
+Later or otherwise isolated sessions are held out when evaluating longitudinal generalization.
 
-## D. Ablations
+### C. Device-held-out
+Where sample size permits, one or more device families are held out.
+
+### D. Environment-held-out
+Lighting, location, or recording-condition shifts are evaluated separately.
+
+Within-person evaluation is useful but must be reported as a distinct task.
+
+## 4. Baseline ladder
+
+Before complex video models, compare against:
+
+1. constant mean / median;
+2. time-of-day only;
+3. sleep-history only;
+4. time + sleep-history + metadata;
+5. static frame;
+6. handcrafted ocular / motion summaries;
+7. full temporal video representation.
+
+The question is not "does the model predict?" It is "what information does video add?"
+
+## 5. Ablation matrix
 
 Planned ablations include:
 
-- temporal order shuffled;
-- reduced frame rate;
-- cropped eye region versus full face;
-- static frame versus full clip;
-- removal of blink-related features;
-- removal of head-motion information;
-- personalized versus population-level normalization.
+- full clip vs single frame;
+- temporal order preserved vs shuffled;
+- full face vs eye region;
+- high vs reduced frame rate;
+- with vs without blink-related features;
+- with vs without head-motion features;
+- raw target vs person-centered target;
+- metadata available vs removed;
+- confidence-aware vs point prediction only.
 
-## E. Evaluation
+## 6. Metrics
 
-Depending on the target:
+### Continuous targets
+- MAE;
+- RMSE;
+- R²;
+- rank correlation where relevant;
+- participant-level bootstrap confidence intervals.
 
-- MAE / RMSE for continuous outcomes;
-- rank correlation for monotonic association;
-- AUROC / AUPRC for thresholded states;
-- calibration error and reliability plots for probabilistic outputs;
-- confidence intervals via participant-level resampling.
+### Thresholded targets
+- AUROC;
+- AUPRC;
+- sensitivity / specificity at pre-declared thresholds;
+- calibration / reliability.
 
-All metrics should be reported on held-out participants where applicable.
+All aggregate metrics should be paired with participant-level distributions to expose subgroup or outlier effects.
 
-## F. Failure tests
+## 7. Leakage audit
 
-Any promising model should be challenged with:
+Before any result is accepted:
+
+- verify participant sets are disjoint;
+- verify source recordings are disjoint;
+- inspect timestamps for accidental session leakage;
+- train a participant-ID probe on the representation;
+- train a device-ID probe where metadata permits;
+- compare random-split and participant-held-out performance;
+- inspect nearest neighbors in embedding space;
+- check whether labels can be predicted from metadata alone.
+
+## 8. Stress tests
+
+Promising models should be challenged with:
 
 - lighting shifts;
-- camera quality degradation;
+- compression and resolution degradation;
 - partial occlusion;
 - glasses;
 - altered viewing distance;
 - head-pose variation;
-- repeated sessions on the same participant.
+- camera movement;
+- unseen devices;
+- repeated sessions separated in time.
 
-## G. Evidence threshold
+## 9. Statistical discipline
 
-The working thesis is not considered supported by a single high validation score. The stronger evidence is a result that remains useful across held-out people and conditions, beats non-visual and static baselines, and reproduces on a fresh dataset.
+Before a confirmatory experiment:
+
+- specify the primary target;
+- specify the primary metric;
+- specify participant inclusion / exclusion rules;
+- specify the split seed or split-generation rule;
+- specify which analyses are exploratory;
+- freeze the model or model-selection rule before evaluating the final holdout.
+
+The repository includes a [preregistration template](docs/PREREGISTRATION_TEMPLATE.md).
+
+## 10. Publication rule
+
+A result is not promoted as evidence for the central thesis because it scores well on one split.
+
+The minimum interesting result is one that:
+
+- beats non-visual and static baselines;
+- survives participant-held-out evaluation;
+- retains useful signal under at least one meaningful distribution shift;
+- includes uncertainty;
+- can be reproduced from a committed configuration.
+
+The strongest result is a frozen pipeline that reproduces on a fresh cohort.
