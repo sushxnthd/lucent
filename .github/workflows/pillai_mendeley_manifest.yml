@@ -1,0 +1,68 @@
+name: pillai-mendeley-manifest
+
+on:
+  push:
+    branches: ['pillai-drt-short-window']
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pillai-drt-short-window
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Query Mendeley Data public API
+        run: |
+          python - <<'PY'
+          import json, urllib.parse, urllib.request, urllib.error
+          from pathlib import Path
+
+          dataset='dp8g983t38'
+          urls=[
+              f'https://api.data.mendeley.com/datasets/{dataset}',
+              f'https://api.data.mendeley.com/datasets/publics/{dataset}/files?version=1&$limit=500',
+          ]
+          lines=['# Pillai/Mendeley public API inspection','']
+          payloads={}
+          for url in urls:
+              lines += [f'## {url}','']
+              try:
+                  req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 LucentResearch','Accept':'application/json'})
+                  with urllib.request.urlopen(req,timeout=60) as response:
+                      body=response.read().decode('utf-8','replace')
+                      lines.append(f'HTTP {response.status}')
+                      try:
+                          data=json.loads(body)
+                          payloads[url]=data
+                          lines.append('~~~json')
+                          lines.append(json.dumps(data,indent=2)[:60000])
+                          lines.append('~~~')
+                      except Exception:
+                          lines.append(body[:30000])
+              except urllib.error.HTTPError as exc:
+                  body=exc.read().decode('utf-8','replace')
+                  lines.append(f'HTTP error {exc.code}')
+                  lines.append(body[:30000])
+              except Exception as exc:
+                  lines.append(f'Error {type(exc).__name__}: {exc}')
+              lines.append('')
+
+          Path('results/PILLAI_MENDELEY_API.md').write_text('\n'.join(lines),encoding='utf-8')
+          Path('results/PILLAI_MENDELEY_API.json').write_text(json.dumps(payloads,indent=2),encoding='utf-8')
+          print('\n'.join(lines[:500]))
+          PY
+      - name: Commit inspection
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/PILLAI_MENDELEY_API.md results/PILLAI_MENDELEY_API.json
+          git commit -m "Inspect Pillai Mendeley public dataset API [skip ci]" || exit 0
+          git push origin HEAD:pillai-drt-short-window
