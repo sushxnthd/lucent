@@ -38,7 +38,21 @@ For a phone, use an HTTPS host.
 
 Use ordinary rested/naturalistic states. Do not intentionally deprive yourself or anyone else of sleep for this pilot.
 
-For each phone and condition: set a comfortable fixed screen brightness, choose stable indoor lighting, hold the phone at a repeatable distance, look at the target, record at least three repeated captures, export both files, and run the offline quality checker before any biological analysis.
+For the first nine-capture pilot, keep the phone, brightness, lighting, and approximate distance stable and use the frozen order:
+
+    passive
+    contiguous
+    split
+    passive
+    split
+    contiguous
+    split
+    contiguous
+    passive
+
+Export both files after every capture. The video and JSON sidecar now share one frozen capture stem. Run the offline quality checker before any biological interpretation.
+
+Do not reorder conditions after seeing any trace or quality metric. Technical retry rules are frozen in experiments/registrations/E002_PROTOCOL_AMENDMENT_001.md.
 
 ## Safety
 
