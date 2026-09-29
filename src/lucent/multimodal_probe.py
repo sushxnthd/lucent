@@ -208,3 +208,38 @@ def joint_state_information_gain(
 
     total = pupil_information + pursuit_information
     return 0.5 * np.log1p(state_prior_variance * total)
+
+def redundant_joint_state_information_gain(
+    pupil_information: np.ndarray,
+    pursuit_information: np.ndarray,
+    *,
+    incremental_fraction: float,
+    state_prior_variance: float = 0.25,
+) -> np.ndarray:
+    """Stress-test multimodal gain under unknown cross-channel redundancy.
+
+    incremental_fraction is the fraction of the weaker channel's efficient
+    state information that remains incremental after accounting for overlap
+    with the stronger channel.
+
+    1.0 means fully additive information.
+    0.0 means complete redundancy: joint information equals the better channel.
+
+    This is intentionally a conservative information-overlap envelope, not a
+    claim about the exact covariance structure of real pupil and gaze signals.
+    """
+
+    if not 0.0 <= incremental_fraction <= 1.0:
+        raise ValueError("incremental_fraction must be in [0, 1]")
+
+    pupil_information = np.asarray(pupil_information, dtype=float)
+    pursuit_information = np.asarray(pursuit_information, dtype=float)
+
+    if pupil_information.shape != pursuit_information.shape:
+        raise ValueError("information arrays must have identical shape")
+
+    stronger = np.maximum(pupil_information, pursuit_information)
+    weaker = np.minimum(pupil_information, pursuit_information)
+    total = stronger + incremental_fraction * weaker
+
+    return 0.5 * np.log1p(state_prior_variance * total)
