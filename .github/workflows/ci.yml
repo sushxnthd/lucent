@@ -26,9 +26,9 @@ jobs:
         run: pytest
       - name: Synthetic leakage smoke test
         run: python experiments/synthetic_identity_leakage.py
-      - name: Inspect independent ADHD pupil dataset
+      - name: Run independent temporal-locality replication
         if: matrix.python-version == '3.12' && github.ref == 'refs/heads/adhd-temporal-locality'
-        run: python experiments/inspect_adhd_pupil_data.py
+        run: python experiments/adhd_realdata_temporal_locality.py
       - name: APST-5 active-probe reproduction
         if: github.ref != 'refs/heads/adhd-temporal-locality'
         run: python experiments/active_probe_design.py
