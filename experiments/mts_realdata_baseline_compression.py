@@ -507,6 +507,26 @@ def main() -> None:
             f"{personal_5 / pop if abs(pop) > 1e-12 else np.nan:+.4f}"
         )
 
+    # Exploratory follow-up added only after the preregistered primary result
+    # was observed. These paired duration contrasts were not the primary test.
+    print()
+    print("EXPLORATORY PAIRED DURATION CONTRASTS")
+    for label in ("population", "personal"):
+        short = all_results[(2, label)]
+        for duration in (5, 15, 30, 60):
+            long = all_results[(duration, label)]
+            low, high, n_subjects = paired_bootstrap_diff(
+                short["subject_r"],
+                long["subject_r"],
+            )
+            diff = short["macro_r"] - long["macro_r"]
+            print(
+                f"{label:>10} 2s-{duration:>2}s: "
+                f"macro_r_diff={diff:+.4f} "
+                f"95%CI=[{low:+.4f}, {high:+.4f}] "
+                f"subjects={n_subjects}"
+            )
+
 
 if __name__ == "__main__":
     main()
