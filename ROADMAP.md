@@ -29,6 +29,24 @@ Lucent is staged so that each phase can kill the hypothesis before more complexi
 
 **Important:** this is a model-based design result, not evidence that fatigue can already be inferred from people.
 
+
+## Phase 0.75: baseline-compression result
+
+**Status: first result complete**
+
+- [x] partition transient state from stable nuisance parameters;
+- [x] derive efficient state information using a Schur complement;
+- [x] prove monotonic gain with increasing nuisance-prior precision;
+- [x] optimize two-second and five-second probes under matched model assumptions;
+- [x] evaluate on independent nuisance/effect populations;
+- [x] run ten additional held-out replication populations.
+
+**Result:** [APST5-SIM-002](results/APST5_SIMULATION_002.md)
+
+The current surrogate predicts that a 25% reduction in stable nuisance uncertainty is sufficient for a two-second active probe to exceed a five-second population-level probe on state information across all ten additional held-out replication populations.
+
+This is a **measurement-design prediction**, not a validated human duration claim.
+
 ## Phase 1: phone observability pilot
 
 Build the smallest instrument that can:

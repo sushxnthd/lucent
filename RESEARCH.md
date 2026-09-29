@@ -62,6 +62,11 @@ Random clip splits will overestimate generalization whenever repeated observatio
 ### H7: uncertainty should rise under distribution shift
 The system should become less confident on unseen devices, lighting, pose, or ocular conditions.
 
+### H8: personal baselines should compress measurement time
+Longitudinal knowledge of stable person-specific dynamics should reduce nuisance uncertainty enough that a shorter active scan can preserve the state information of a longer population-level scan.
+
+This is formalized with nuisance-projected Fisher information in [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md).
+
 ## 5. Candidate observed channels
 
 The active scan may use:
@@ -124,6 +129,11 @@ The active-sensing hypothesis weakens if:
 Under explicit model assumptions, active design improves parameter identifiability under matched exposure.
 
 **Current status: achieved provisionally in APST5-SIM-001.**
+
+### Level 0b: personalization-compression prediction
+A tighter longitudinal prior over stable nuisance dynamics should shift the duration-information curve leftward.
+
+**Current status: achieved provisionally in APST5-SIM-002.**
 
 ### Level 1: hardware observability
 A commodity phone can execute the probe and recover repeatable ocular response dynamics.

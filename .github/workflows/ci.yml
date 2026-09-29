@@ -2,7 +2,7 @@ name: research-ci
 
 on:
   push:
-    branches: ["main", "research-foundation", "apst5-breakthrough"]
+    branches: ["main", "research-foundation", "apst5-breakthrough", "state-compression-breakthrough"]
   pull_request:
 
 jobs:
@@ -28,3 +28,6 @@ jobs:
         run: python experiments/synthetic_identity_leakage.py
       - name: APST-5 active-probe reproduction
         run: python experiments/active_probe_design.py
+      - name: APST-5 personalization-compression reproduction
+        if: matrix.python-version == '3.12'
+        run: python experiments/personalization_compression.py
