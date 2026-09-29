@@ -1,8 +1,12 @@
 from pathlib import Path
+import sys
 
 import numpy as np
 
-from experiments.martin_pvt_target_alignment import (
+EXPERIMENTS_DIR = Path(__file__).resolve().parents[1] / "experiments"
+sys.path.insert(0, str(EXPERIMENTS_DIR))
+
+from martin_pvt_target_alignment import (  # noqa: E402
     parse_events,
     pupil_features,
 )
