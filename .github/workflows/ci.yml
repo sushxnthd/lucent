@@ -2,7 +2,7 @@ name: research-ci
 
 on:
   push:
-    branches: ["main", "research-foundation", "apst5-breakthrough", "state-compression-breakthrough", "multimodal-compression"]
+    branches: ["main", "research-foundation", "apst5-breakthrough", "state-compression-breakthrough", "multimodal-compression", "correlated-multimodal"]
   pull_request:
 
 jobs:
@@ -34,3 +34,6 @@ jobs:
       - name: APST-5 multimodal-compression reproduction
         if: matrix.python-version == '3.12'
         run: python experiments/multimodal_compression.py
+      - name: APST-5 multimodal redundancy reproduction
+        if: matrix.python-version == '3.12'
+        run: python experiments/multimodal_redundancy.py
