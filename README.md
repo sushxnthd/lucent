@@ -110,6 +110,72 @@ rather than re-estimating a person from scratch on every scan.
 
 See [APST5-SIM-002](results/APST5_SIMULATION_002.md) and the [baseline compression derivation](docs/BASELINE_COMPRESSION.md).
 
+
+## Third computational result: concurrent multimodal compression
+
+APST5-SIM-003 asks whether a short scan can probe **pupil + smooth-pursuit state information concurrently** instead of spending the same time on pupil dynamics alone.
+
+Across an 80-cell held-out sensitivity grid spanning pursuit-effect strength, response slowing, and gaze noise:
+
+| Scan | Cells beating optimized 5 s pupil-only | Median information ratio |
+| --- | ---: | ---: |
+| 2 s concurrent pupil + pursuit | 60/80 | **1.157x** |
+| 3 s concurrent pupil + pursuit | 72/80 | **1.238x** |
+
+This is a model-based sensitivity result, not human validation.
+
+Full result: [results/APST5_SIMULATION_003.md](results/APST5_SIMULATION_003.md)
+
+## First public human-data result: temporal locality
+
+MTS-REALDATA-001 uses public eyelid-distance and PVT reaction-time data from Massoz et al. with a frozen leave-one-subject-out analysis.
+
+The preregistered personalization hypothesis at 5 seconds was **not supported**:
+
+\[
+\Delta r = +0.0064,\qquad 95\%\ \mathrm{CI}=[-0.0169,+0.0295].
+\]
+
+That null result is retained.
+
+However, the exploratory duration analysis produced a stronger observation: the **2-second pre-stimulus window** predicted immediate within-person reaction-speed variation better than every longer tested window under the same feature/model family.
+
+| Passive ocular window | Population macro-r |
+| ---: | ---: |
+| **2 s** | **0.2742** |
+| 5 s | 0.2033 |
+| 15 s | 0.1399 |
+| 30 s | 0.1177 |
+| 60 s | 0.0909 |
+
+The paired 2 s − 5 s macro-r difference was **+0.0709**, with bootstrap 95% CI **[+0.0424,+0.1010]**.
+
+This is exploratory and dataset-specific, but it gives Lucent its first real-data evidence for a **temporal-locality principle**: for an immediate functional target, older ocular history may dilute the most state-proximal signal.
+
+Full result: [results/MTS_REALDATA_001.md](results/MTS_REALDATA_001.md)
+
+## Fourth computational result: redundancy stress test
+
+APST5-SIM-004 removes the clean additive-information assumption from the multimodal result.
+
+Let \(\kappa\) be the fraction of the weaker channel that remains genuinely incremental after overlap with the stronger channel.
+
+For the **3-second concurrent scan**:
+
+| Incremental fraction \(\kappa\) | Cells beating 5 s pupil-only | Median ratio |
+| ---: | ---: | ---: |
+| 1.00 | 72/80 | **1.238x** |
+| 0.75 | 72/80 | **1.176x** |
+| 0.50 | 63/80 | **1.112x** |
+| 0.25 | 55/80 | **1.048x** |
+| 0.00 | 37/80 | 0.983x |
+
+The 3-second design remains above the 5-second pupil-only comparator in the **median** even when only 25% of the weaker channel is allowed to count as incremental information.
+
+This makes **3 seconds** the more robust empirical target under the current model family.
+
+Full result: [results/APST5_SIMULATION_004.md](results/APST5_SIMULATION_004.md)
+
 ## Why active probing is different
 
 Passive five-second face-video drowsiness inference is already prior art. Smartphone pupillometry is prior art. Controlled screen-evoked pupil responses are prior art. Active ocular probing is also prior art.
@@ -159,6 +225,9 @@ The repo is structured to make those claims harder to fake.
 | [experiments/active_probe_design.py](experiments/active_probe_design.py) | reproducible APST-5 design experiment |
 | [results/APST5_SIMULATION_001.md](results/APST5_SIMULATION_001.md) | equal-exposure active-probe result |
 | [results/APST5_SIMULATION_002.md](results/APST5_SIMULATION_002.md) | personalization / temporal-compression result |
+| [results/APST5_SIMULATION_003.md](results/APST5_SIMULATION_003.md) | concurrent pupil + pursuit temporal-compression result |
+| [results/APST5_SIMULATION_004.md](results/APST5_SIMULATION_004.md) | multimodal redundancy stress test |
+| [results/MTS_REALDATA_001.md](results/MTS_REALDATA_001.md) | public human-data temporal-locality analysis |
 | [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md) | nuisance-projection derivation and design principle |
 | [docs/MULTIMODAL_COMPRESSION.md](docs/MULTIMODAL_COMPRESSION.md) | closest 30–45 s ocular screens and the open ~5 s compression target |
 
@@ -175,8 +244,6 @@ The repo is structured to make those claims harder to fake.
 
 ## Status
 
-**Two converging computational results; biological validation pending.**
+**Four reproduced computational results plus one public human-data analysis; prospective smartphone validation pending.**
 
-The current result supports the research strategy that an actively designed five-second scan may be more informative than a conventional fixed probe under the same time and exposure budget. It does **not** yet establish that Lucent can estimate fatigue or cognitive performance in humans.
-
-That is the next experiment.
+The current evidence supports a sharper target: a **3-second concurrent active ocular probe** is the most robust model-based candidate, while public human data independently suggest that the most recent ~2 seconds of passive ocular behavior can be more informative about the next vigilance response than longer history under a fixed immediate target. Neither result yet establishes a prospective smartphone fatigue measurement system. The next decisive step is an independent, synchronized phone study comparing passive, single-channel active, and concurrent active probes on held-out people and sessions.
