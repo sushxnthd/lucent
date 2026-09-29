@@ -190,6 +190,30 @@ jobs:
                   dt=dt[(dt>0)&np.isfinite(dt)]
                   if len(dt):
                       lines.append(f'Tobii median timestamp step: **{np.median(dt):.3f}**')
+
+              markers=ph.dropna(subset=['RecordingTimestamp']).copy()
+              markers['RecordingTimestamp']=pd.to_numeric(markers['RecordingTimestamp'],errors='coerce')
+              markers['Time']=pd.to_numeric(markers['Time'],errors='coerce')
+              markers=markers.dropna(subset=['RecordingTimestamp','Time'])
+              if len(markers)>=3:
+                  x=markers['Time'].to_numpy(dtype=float)*1000.0
+                  y=markers['RecordingTimestamp'].to_numpy(dtype=float)
+                  slope,intercept=np.polyfit(x,y,1)
+                  pred=slope*x+intercept
+                  resid=y-pred
+                  lines += [
+                      '',
+                      '## Affine sync fit',
+                      '',
+                      f'markers: **{len(markers)}**',
+                      f'Tobii_ms = **{slope:.9f}** * SyncTime_ms + **{intercept:.3f}**',
+                      f'RMSE: **{np.sqrt(np.mean(resid**2)):.3f} ms**',
+                      f'max |residual|: **{np.max(np.abs(resid)):.3f} ms**',
+                      '',
+                      'marker preview:',
+                      '',
+                      '    '+markers[['Time','PhanFrame','RelTime','RecordingTimestamp']].head(15).to_csv(index=False).replace('\n','\n    '),
+                  ]
           else:
               lines.append('No finite shared RecordingTimestamp fields found.')
 
