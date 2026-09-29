@@ -1,6 +1,6 @@
 # Makowski chunk download debug
 
-Tue Sep 29 17:35:32 UTC 2026
+Tue Sep 29 17:38:15 UTC 2026
 
 ## HEAD
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -9,7 +9,7 @@ Tue Sep 29 17:35:32 UTC 2026
   0  705M    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0  0  705M    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
 HTTP/2 302 
 server: nginx
-date: Tue, 29 Sep 2026 17:35:32 GMT
+date: Tue, 29 Sep 2026 17:38:16 GMT
 content-type: text/html; charset=utf-8
 content-length: 0
 location: https://files.de-1.osf.io/v1/resources/hmyc4/providers/osfstorage/651169080fbdf73f78313d44
@@ -22,14 +22,14 @@ cache-control: no-cache, no-store, max-age=0, must-revalidate
 expires: -1
 pragma: no-cache
 via: 1.1 google
-alt-svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+alt-svc: h3=":443"; ma=2592000
 
 HTTP/2 200 
 server: nginx
-date: Tue, 29 Sep 2026 17:35:33 GMT
+date: Tue, 29 Sep 2026 17:38:17 GMT
 content-type: application/octet-stream
 content-length: 740187361
-x-waterbutler-request-id: 4ec0dfa5-9ecc-4d95-8bd2-896eedb3e15e
+x-waterbutler-request-id: 039f1ccf-e688-4dd8-9b6d-3d5ea50415c0
 last-modified: Mon, 25 Sep 2023 11:03:37 GMT
 x-waterbutler-metadata: {"id": "osfstorage/651169080fbdf73f78313d44", "type": "files", "attributes": {"extra": {"guid": null, "version": 1, "downloads": 13, "checkout": null, "latestVersionSeen": null, "hashes": {"md5": "fc97130b1d963caa1c4d062befa63dec", "sha256": "9a2f48da6330d719e12dbf59367b3b90a147a29ace759c6f40ff49e7f56fa814"}}, "kind": "file", "name": "data_down_5_0.zip", "path": "/651169080fbdf73f78313d44", "provider": "osfstorage", "materialized": "/Data/data/data_down_5_0.zip", "etag": "55c56d6c304a2a93a5b8bf83756990f3eef17a4cccaea088f431eca079aba7a1", "contentType": "application/octet-stream", "modified": "2023-09-25T11:03:37.052898+00:00", "modified_utc": "2023-09-25T11:03:37.052898+00:00", "created_utc": "2023-09-25T11:03:37.052898+00:00", "size": 740187361, "sizeInt": 740187361, "resource": "hmyc4"}, "links": {"move": "https://files.de-1.osf.io/v1/resources/hmyc4/providers/osfstorage/651169080fbdf73f78313d44", "upload": "https://files.de-1.osf.io/v1/resources/hmyc4/providers/osfstorage/651169080fbdf73f78313d44?kind=file", "delete": "https://files.de-1.osf.io/v1/resources/hmyc4/providers/osfstorage/651169080fbdf73f78313d44", "download": "https://files.de-1.osf.io/v1/resources/hmyc4/providers/osfstorage/651169080fbdf73f78313d44"}}
 etag: "da39a3ee5e6b4b0d3255bfef95601890afd80709"
@@ -44,13 +44,13 @@ alt-svc: h3=":443"; ma=2592000
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
-  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
-  0  705M    0  6881    0     0   2496      0 82:22:29  0:00:02 82:22:27  2496  0  705M    0  575k    0     0   155k      0  1:17:31  0:00:03  1:17:28  598k  2  705M    2 17.9M    0     0  3896k      0  0:03:05  0:00:04  0:03:01 9401k  5  705M    5 36.5M    0     0  6554k      0  0:01:50  0:00:05  0:01:45 12.3M  8  705M    8 62.3M    0     0  9426k      0  0:01:16  0:00:06  0:01:10 15.5M 11  705M   11 82.3M    0     0  10.5M      0  0:01:06  0:00:07  0:00:59 16.3M 13  705M   13 95.9M    0     0  11.0M      0  0:01:04  0:00:08  0:00:56 19.0M 16  705M   16  116M    0     0  11.9M      0  0:00:58  0:00:09  0:00:49 19.5M 19  705M   19  140M    0     0  13.1M      0  0:00:53  0:00:10  0:00:43 20.7M 23  705M   23  163M    0     0  13.9M      0  0:00:50  0:00:11  0:00:39 20.4M 26  705M   26  188M    0     0  14.8M      0  0:00:47  0:00:12  0:00:35 21.5M 30  705M   30  212M    0     0  15.4M      0  0:00:45  0:00:13  0:00:32 23.2M 33  705M   33  235M    0     0  16.0M      0  0:00:44  0:00:14  0:00:30 24.0M 36  705M   36  260M    0     0  16.5M      0  0:00:42  0:00:15  0:00:27 24.0M 40  705M   40  284M    0     0  17.0M      0  0:00:41  0:00:16  0:00:25 24.1M 43  705M   43  309M    0     0  17.4M      0  0:00:40  0:00:17  0:00:23 24.1M 47  705M   47  332M    0     0  17.7M      0  0:00:39  0:00:18  0:00:21 24.0M 50  705M   50  357M    0     0  18.1M      0  0:00:38  0:00:19  0:00:19 24.2M 53  705M   53  377M    0     0  18.2M      0  0:00:38  0:00:20  0:00:18 23.3M 56  705M   56  400M    0     0  18.4M      0  0:00:38  0:00:21  0:00:17 23.2M 59  705M   59  422M    0     0  18.5M      0  0:00:37  0:00:22  0:00:15 22.5M 61  705M   61  432M    0     0  18.2M      0  0:00:38  0:00:23  0:00:15 20.0M 64  705M   64  458M    0     0  18.5M      0  0:00:38  0:00:24  0:00:14 20.2M 67  705M   67  478M    0     0  18.6M      0  0:00:37  0:00:25  0:00:12 20.1M 70  705M   70  499M    0     0  18.6M      0  0:00:37  0:00:26  0:00:11 19.6M 73  705M   73  517M    0     0  18.6M      0  0:00:37  0:00:27  0:00:10 19.1M 75  705M   75  535M    0     0  18.6M      0  0:00:37  0:00:28  0:00:09 20.6M 78  705M   78  553M    0     0  18.6M      0  0:00:37  0:00:29  0:00:08 18.9M 80  705M   80  564M    0     0  18.3M      0  0:00:38  0:00:30  0:00:08 17.1M 80  705M   80  565M    0     0  17.8M      0  0:00:39  0:00:31  0:00:08 13.1M 81  705M   81  572M    0     0  17.4M      0  0:00:40  0:00:32  0:00:08 10.8M 84  705M   84  595M    0     0  17.6M      0  0:00:39  0:00:33  0:00:06 11.7M 87  705M   87  618M    0     0  17.8M      0  0:00:39  0:00:34  0:00:05 13.0M 91  705M   91  642M    0     0  18.0M      0  0:00:39  0:00:35  0:00:04 15.7M 94  705M   94  667M    0     0  18.1M      0  0:00:38  0:00:36  0:00:02 20.5M 97  705M   97  691M    0     0  18.3M      0  0:00:38  0:00:37  0:00:01 23.7M100  705M  100  705M    0     0  18.4M      0  0:00:38  0:00:38 --:--:-- 24.5M
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  1  705M    1 7743k    0     0  3931k      0  0:03:03  0:00:01  0:03:02 3931k  6  705M    6 49.1M    0     0  16.5M      0  0:00:42  0:00:02  0:00:40 41.3M 12  705M   12 89.5M    0     0  22.5M      0  0:00:31  0:00:03  0:00:28 40.9M 18  705M   18  130M    0     0  26.2M      0  0:00:26  0:00:04  0:00:22 40.9M 24  705M   24  171M    0     0  28.6M      0  0:00:24  0:00:05  0:00:19 40.9M 30  705M   30  212M    0     0  30.4M      0  0:00:23  0:00:06  0:00:17 40.8M 35  705M   35  247M    0     0  31.0M      0  0:00:22  0:00:07  0:00:15 39.6M 40  705M   40  287M    0     0  32.0M      0  0:00:21  0:00:08  0:00:13 39.6M 46  705M   46  328M    0     0  32.9M      0  0:00:21  0:00:09  0:00:12 39.6M 51  705M   51  366M    0     0  33.1M      0  0:00:21  0:00:11  0:00:10 38.5M 57  705M   57  406M    0     0  33.8M      0  0:00:20  0:00:12  0:00:08 38.5M 62  705M   62  439M    0     0  33.8M      0  0:00:20  0:00:12  0:00:08 38.4M 67  705M   67  477M    0     0  34.1M      0  0:00:20  0:00:13  0:00:07 37.8M 73  705M   73  518M    0     0  34.6M      0  0:00:20  0:00:14  0:00:06 37.9M 79  705M   79  559M    0     0  35.0M      0  0:00:20  0:00:15  0:00:05 39.0M 84  705M   84  599M    0     0  35.3M      0  0:00:19  0:00:16  0:00:03 39.0M 90  705M   90  640M    0     0  35.6M      0  0:00:19  0:00:17  0:00:02 40.1M 96  705M   96  680M    0     0  35.8M      0  0:00:19  0:00:18  0:00:01 40.6M100  705M  100  705M    0     0  35.8M      0  0:00:19  0:00:19 --:--:-- 39.8M
 
-HTTP=200 bytes=740187361 speed=19357571
+HTTP=200 bytes=740187361 speed=37611910
 
 total 706M
--rw-r--r-- 1 runner runner 706M Sep 29 17:36 chunk.zip
+-rw-r--r-- 1 runner runner 706M Sep 29 17:38 chunk.zip
 /tmp/makowski/chunk.zip: Zip archive data, at least v2.1 to extract, compression method=deflate64
 Archive:  /tmp/makowski/chunk.zip
   Length      Date    Time    Name
