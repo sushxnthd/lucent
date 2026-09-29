@@ -1,0 +1,146 @@
+name: eye-bci-s01-pupil-diagnostic
+
+on:
+  push:
+    branches: ['eye-bci-extractor-validation']
+
+permissions:
+  contents: write
+
+jobs:
+  diagnostic:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: eye-bci-extractor-validation
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install
+        run: python -m pip install numpy pandas opencv-python-headless mediapipe
+      - name: Download S01 public archive
+        run: |
+          curl -L --fail --retry 3 -o /tmp/S01.zip https://zenodo.org/api/records/18970793/files/S01.zip/content
+          mkdir -p /tmp/eye_bci
+          unzip -q /tmp/S01.zip 'Sess01/MI011_phantom.avi' 'Sess01/MI011_sync.csv' 'Sess01/MI011_tobii.csv' -d /tmp/eye_bci
+          ls -lh /tmp/eye_bci/Sess01/
+      - name: Run sparse video-vs-Tobii pupil diagnostic
+        run: |
+          python - <<'PY'
+          import sys, json
+          from pathlib import Path
+          import cv2, mediapipe as mp, numpy as np, pandas as pd
+
+          sys.path.insert(0,'instrument')
+          from extract_pupil_dynamics import estimate_pupil, LEFT_IRIS_CENTER, LEFT_IRIS_BORDER, RIGHT_IRIS_CENTER, RIGHT_IRIS_BORDER
+
+          root=Path('/tmp/eye_bci/Sess01')
+          sync=pd.read_csv(root/'MI011_sync.csv')
+          tobii=pd.read_csv(root/'MI011_tobii.csv',low_memory=False)
+
+          ph=sync.dropna(subset=['PhanFrame']).copy()
+          for col in ['Time','PhanFrame','RecordingTimestamp']:
+              ph[col]=pd.to_numeric(ph[col],errors='coerce')
+          ph=ph.sort_values('PhanFrame').reset_index(drop=True)
+
+          markers=ph.dropna(subset=['RecordingTimestamp','Time'])
+          slope,intercept=np.polyfit(markers.Time.to_numpy()*1000.0,markers.RecordingTimestamp.to_numpy(),1)
+
+          for col in ['RecordingTimestamp','PupilLeft','PupilRight','ValidityLeft','ValidityRight']:
+              tobii[col]=pd.to_numeric(tobii[col],errors='coerce')
+          t=tobii.RecordingTimestamp.to_numpy(dtype=float)
+          pl=tobii.PupilLeft.to_numpy(dtype=float)
+          pr=tobii.PupilRight.to_numpy(dtype=float)
+          pupil=np.nanmean(np.vstack([pl,pr]),axis=0)
+          valid=np.isfinite(t)&np.isfinite(pupil)&(pupil>0)
+          t=t[valid]; pupil=pupil[valid]
+          order=np.argsort(t); t=t[order]; pupil=pupil[order]
+
+          cap=cv2.VideoCapture(str(root/'MI011_phantom.avi'))
+          fps=float(cap.get(cv2.CAP_PROP_FPS) or 0)
+          nframes=int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+          width=int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) or 0)
+          height=int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) or 0)
+
+          mesh=mp.solutions.face_mesh.FaceMesh(static_image_mode=True,max_num_faces=1,refine_landmarks=True,min_detection_confidence=0.4)
+          stride=max(1,int(round(fps/5.0)))
+          rows=[]
+          detect=0
+          pupil_detect=0
+
+          for video_idx in range(0,nframes,stride):
+              if video_idx>=len(ph):
+                  break
+              cap.set(cv2.CAP_PROP_POS_FRAMES,video_idx)
+              ok,frame=cap.read()
+              if not ok: continue
+              rgb=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+              result=mesh.process(rgb)
+              sync_time=float(ph.iloc[video_idx].Time)
+              tobii_ms=float(slope*sync_time*1000.0+intercept)
+              gt=float(np.interp(tobii_ms,t,pupil)) if t[0]<=tobii_ms<=t[-1] else np.nan
+              row={'videoIndex':video_idx,'phantomFrame':float(ph.iloc[video_idx].PhanFrame),'syncTimeS':sync_time,'tobiiMs':tobii_ms,'tobiiPupil':gt,'visionRatio':np.nan,'quality':np.nan}
+              if result.multi_face_landmarks:
+                  detect+=1
+                  lms=result.multi_face_landmarks[0].landmark
+                  if len(lms)>=478:
+                      gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
+                      left=estimate_pupil(gray,lms,LEFT_IRIS_CENTER,LEFT_IRIS_BORDER)
+                      right=estimate_pupil(gray,lms,RIGHT_IRIS_CENTER,RIGHT_IRIS_BORDER)
+                      est=[x for x in [left,right] if x is not None and x['quality']>=0.25]
+                      if est:
+                          weights=np.array([x['quality'] for x in est])
+                          vals=np.array([x['ratio'] for x in est])
+                          row['visionRatio']=float(np.average(vals,weights=np.maximum(weights,1e-3)))
+                          row['quality']=float(np.mean(weights))
+                          pupil_detect+=1
+              rows.append(row)
+
+          cap.release(); mesh.close()
+          df=pd.DataFrame(rows)
+          good=df[np.isfinite(df.visionRatio)&np.isfinite(df.tobiiPupil)&(df.quality>=0.45)].copy()
+
+          if len(good)>=10:
+              raw_r=float(np.corrcoef(good.visionRatio,good.tobiiPupil)[0,1])
+              # Rolling ~2 s median on sparse 5 Hz samples to compare slower dynamics.
+              smooth=good[['syncTimeS','visionRatio','tobiiPupil']].copy().sort_values('syncTimeS')
+              # Index-based 11-point centered median is approximately 2.2 s at 5Hz.
+              smooth['v']=smooth.visionRatio.rolling(11,center=True,min_periods=5).median()
+              smooth['g']=smooth.tobiiPupil.rolling(11,center=True,min_periods=5).median()
+              sg=smooth.dropna()
+              smooth_r=float(np.corrcoef(sg.v,sg.g)[0,1]) if len(sg)>=10 else np.nan
+          else:
+              raw_r=np.nan; smooth_r=np.nan
+
+          lines=['# Eye-BCI S01 pupil-extractor development diagnostic','']
+          lines += [
+              f'Video FPS: **{fps:.3f}**',
+              f'Video frames: **{nframes:,}**',
+              f'Frame size: **{width} x {height}**',
+              f'Sparse sampled frames: **{len(df):,}**',
+              f'FaceMesh detections: **{detect:,} ({detect/max(len(df),1):.1%})**',
+              f'Any pupil candidate: **{pupil_detect:,} ({pupil_detect/max(len(df),1):.1%})**',
+              f'High-quality matched points: **{len(good):,} ({len(good)/max(len(df),1):.1%})**',
+              f'Raw vision-ratio vs Tobii pupil r: **{raw_r:.4f}**',
+              f'Approx. 2 s median-smoothed r: **{smooth_r:.4f}**',
+              '',
+              'This S01 analysis is explicitly a development diagnostic, not a held-out validation result.',
+              '',
+              '## Sync',
+              '',
+              f'Tobii_ms = {slope:.9f} * SyncTime_ms + {intercept:.3f}',
+          ]
+          Path('results/EYE_BCI_S01_PUPIL_DIAGNOSTIC.md').write_text('\n'.join(lines),encoding='utf-8')
+          df.to_csv('results/EYE_BCI_S01_PUPIL_DIAGNOSTIC.csv',index=False)
+          print('\n'.join(lines))
+          PY
+      - name: Commit diagnostic
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/EYE_BCI_S01_PUPIL_DIAGNOSTIC.md
+          git commit -m "EYE-BCI-S01: pupil extractor development diagnostic [skip ci]" || exit 0
+          git push origin HEAD:eye-bci-extractor-validation
