@@ -33,14 +33,15 @@ jobs:
           session.headers.update({'User-Agent':'lucent-research/1.0'})
 
           providers=session.get(f'https://api.osf.io/v2/nodes/{node}/files/',timeout=60).json()
+          Path('results/MAKOWSKI_OSF_PROVIDERS.json').write_text(json.dumps(providers,indent=2),encoding='utf-8')
           rows=[]
           queue=deque()
 
           for item in providers.get('data',[]):
               attr=item.get('attributes') or {}
-              links=item.get('links') or {}
-              rel=links.get('related')
-              if isinstance(rel,dict): rel=rel.get('href')
+              rel=(
+                  (((item.get('relationships') or {}).get('files') or {}).get('links') or {}).get('related') or {}
+              ).get('href')
               if rel:
                   queue.append((attr.get('name') or item.get('id'), rel))
 
@@ -67,9 +68,13 @@ jobs:
                       }
                       rows.append(row)
                       if kind=='folder':
-                          rel=links.get('related')
-                          if isinstance(rel,dict): rel=rel.get('href')
-                          if rel: queue.append((provider,rel))
+                          rel=(
+                              (((item.get('relationships') or {}).get('files') or {}).get('links') or {}).get('related') or {}
+                          ).get('href')
+                          if not rel:
+                              rel=links.get('new_folder')
+                          if rel:
+                              queue.append((provider,rel))
                   nxt=(data.get('links') or {}).get('next')
                   if isinstance(nxt,dict): nxt=nxt.get('href')
                   url=nxt
@@ -97,6 +102,6 @@ jobs:
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add results/MAKOWSKI_OSF_MANIFEST.md results/MAKOWSKI_OSF_MANIFEST.json
+          git add results/MAKOWSKI_OSF_MANIFEST.md results/MAKOWSKI_OSF_MANIFEST.json results/MAKOWSKI_OSF_PROVIDERS.json
           git commit -m "Inspect public Makowski drowsiness OSF dataset [skip ci]" || exit 0
           git push origin HEAD:makowski-drowsiness-validation
