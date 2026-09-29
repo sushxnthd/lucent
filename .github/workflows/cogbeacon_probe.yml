@@ -1,0 +1,61 @@
+name: cogbeacon-inspect
+
+on:
+  push:
+    branches: ["cogbeacon-replication"]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download public CogBeacon tables
+        run: |
+          mkdir -p external/cogbeacon
+          curl -L --fail --retry 3 -o external/cogbeacon/face_keypoints.tar.xz https://raw.githubusercontent.com/MikeMpapa/CogBeacon-MultiModal_Dataset_for_Cognitive_Fatigue/master/face_keypoints.tar.xz
+          curl -L --fail --retry 3 -o external/cogbeacon/fatigue_self_report.tar.xz https://raw.githubusercontent.com/MikeMpapa/CogBeacon-MultiModal_Dataset_for_Cognitive_Fatigue/master/fatigue_self_report.tar.xz
+          curl -L --fail --retry 3 -o external/cogbeacon/user_performance.tar.xz https://raw.githubusercontent.com/MikeMpapa/CogBeacon-MultiModal_Dataset_for_Cognitive_Fatigue/master/user_performance.tar.xz
+          mkdir -p external/cogbeacon/extracted
+          tar -xf external/cogbeacon/face_keypoints.tar.xz -C external/cogbeacon/extracted
+          tar -xf external/cogbeacon/fatigue_self_report.tar.xz -C external/cogbeacon/extracted
+          tar -xf external/cogbeacon/user_performance.tar.xz -C external/cogbeacon/extracted
+
+      - name: Inspect structure
+        run: |
+          python - <<'PY' > /tmp/cogbeacon_inspection.md
+          from pathlib import Path
+          root=Path('external/cogbeacon/extracted')
+          files=sorted([p for p in root.rglob('*') if p.is_file()])
+          print('## CogBeacon inspection\n')
+          print(f'Files: {len(files)}\n')
+          for p in files[:120]:
+              print(f'- {p.relative_to(root)} ({p.stat().st_size} bytes)')
+          print('\n## CSV previews\n')
+          shown=0
+          for p in files:
+              if p.suffix.lower() not in {'.csv','.txt'}:
+                  continue
+              try:
+                  lines=p.read_text(errors='replace').splitlines()
+              except Exception:
+                  continue
+              if not lines:
+                  continue
+              print(f'### {p.relative_to(root)}')
+              for line in lines[:5]:
+                  print('    '+line[:1500])
+              shown += 1
+              if shown >= 16:
+                  break
+          PY
+          cat /tmp/cogbeacon_inspection.md
+
+      - name: Post inspection to research issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh issue comment 10 --repo ${{ github.repository }} --body-file /tmp/cogbeacon_inspection.md
