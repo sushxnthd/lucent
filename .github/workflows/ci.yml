@@ -33,6 +33,9 @@ jobs:
       - name: Run independent temporal-locality replication
         if: matrix.python-version == '3.12' && github.ref == 'refs/heads/adhd-temporal-locality'
         run: python experiments/adhd_realdata_temporal_locality.py
+      - name: Run cross-dataset temporal interaction
+        if: matrix.python-version == '3.12' && github.ref == 'refs/heads/adhd-temporal-locality'
+        run: python experiments/cross_dataset_temporal_interaction.py
       - name: APST-5 active-probe reproduction
         if: github.ref != 'refs/heads/adhd-temporal-locality'
         run: python experiments/active_probe_design.py
