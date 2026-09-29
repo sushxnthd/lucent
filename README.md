@@ -193,13 +193,24 @@ When the target was broadened to 60 seconds, the ordering reversed.
 
 The preregistered long-vs-short interaction was **+0.2439**, with paired-subject bootstrap 95% CI **[+0.1647,+0.3191]** across 28 subjects.
 
-This supports the **Temporal Alignment Principle**:
+This establishes a **dataset-specific Temporal Alignment interaction**: predictor-history length and target horizon cannot be treated as the same design choice.
 
-> The useful ocular sensing horizon depends on the temporal support of the functional target; scan duration should be optimized for the target rather than fixed globally.
+A preregistered independent interaction replication on CogBeacon did **not** reproduce the positive shift:
 
-Two independent public datasets constrain the claim further. A preregistered EyeLink working-memory analysis found 5 seconds significantly better than 2 seconds, and CogBeacon found 5 seconds significantly better than 3 seconds. Together, these results reject a universal '2 seconds is best' story and point instead to target-dependent sensing horizons.
+- D(H1) = +0.0358
+- D(H5) = -0.0288
+- interaction = -0.0645
+- paired-person bootstrap 95% CI = [-0.1665,+0.0313]
+
+So the current result is deliberately narrower than a universal law. In the Massoz/PVT dataset, broadening target support reversed the preferred ocular history. That mechanism did not generalize automatically to a WCST-like facial-landmark dataset.
+
+The literature search also found close multi-timescale precedents, especially Massoz et al. (2018). Lucent's specific extension is the **orthogonal factorization of sensor-history length and target aggregation horizon** and a preregistered interaction test, not the generic idea that temporal scale matters.
 
 Full synthesis: [TEMPORAL-ALIGNMENT-001](results/TEMPORAL_ALIGNMENT_001.md)
+
+Independent interaction replication: [COGBEACON-TARGET-ALIGNMENT-001](results/COGBEACON_TARGET_ALIGNMENT_001.md)
+
+Related-work boundary: [docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md](docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md)
 
 ## Why active probing is different
 
@@ -256,6 +267,8 @@ The repo is structured to make those claims harder to fake.
 | [results/MTS_TARGET_SMOOTHING_001.md](results/MTS_TARGET_SMOOTHING_001.md) | preregistered direct Temporal Alignment test |
 | [results/TEMPORAL_ALIGNMENT_001.md](results/TEMPORAL_ALIGNMENT_001.md) | synthesis across direct manipulation + independent boundary datasets |
 | [results/ADHD_REALDATA_001.md](results/ADHD_REALDATA_001.md) | preregistered independent duration reversal |
+| [results/COGBEACON_TARGET_ALIGNMENT_001.md](results/COGBEACON_TARGET_ALIGNMENT_001.md) | preregistered failed independent interaction replication |
+| [docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md](docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md) | closest prior art and conservative novelty boundary |
 | [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md) | nuisance-projection derivation and design principle |
 | [docs/MULTIMODAL_COMPRESSION.md](docs/MULTIMODAL_COMPRESSION.md) | closest 30–45 s ocular screens and the open ~5 s compression target |
 
@@ -272,6 +285,6 @@ The repo is structured to make those claims harder to fake.
 
 ## Status
 
-**Four reproduced computational results plus a preregistered public-human-data Temporal Alignment result; prospective active-smartphone validation pending.**
+**Four reproduced computational results plus one preregistered public-human-data Temporal Alignment crossover and one preregistered failed cross-task interaction replication; prospective active-smartphone validation pending.**
 
 The current evidence supports a sharper target: a **3-second concurrent active ocular probe** is the most robust model-based candidate, while public human data independently suggest that the most recent ~2 seconds of passive ocular behavior can be more informative about the next vigilance response than longer history under a fixed immediate target. Neither result yet establishes a prospective smartphone fatigue measurement system. The next decisive step is an independent, synchronized phone study comparing passive, single-channel active, and concurrent active probes on held-out people and sessions.
