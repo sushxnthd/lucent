@@ -81,7 +81,7 @@ The repository now contains the falsifiable thesis, anti-leakage protocol, evalu
 | [ROADMAP.md](ROADMAP.md) | staged path from pilot to fresh-cohort replication |
 | [REFERENCES.md](REFERENCES.md) | literature and benchmark map |
 | [docs/PREREGISTRATION_TEMPLATE.md](docs/PREREGISTRATION_TEMPLATE.md) | lock hypotheses and analysis before looking at outcomes |
-| [docs/FAILURE_MODES.md](docs/FAILURE_MODES.md) | ways a convincing result can still be wrong |
+| [docs/FAILURE_MODES.md](docs/FAILURE_MODES.md) | ways a convincing result can still be wrong |\n| [docs/POSITIONING.md](docs/POSITIONING.md) | how Lucent differs from ordinary drowsiness classification |\n| [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | ordered research questions that can kill or narrow the thesis |
 | [data/README.md](data/README.md) | proposed data contract, privacy, and collection rules |
 | [results/README.md](results/README.md) | publication rules for positive and negative results |
 | [src/lucent/](src/lucent/) | split and evaluation utilities |
