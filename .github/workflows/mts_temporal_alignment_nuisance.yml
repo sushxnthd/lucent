@@ -1,19 +1,13 @@
 name: mts-temporal-alignment-nuisance
 
 on:
-  push:
-    branches: ['martin-pvt-replication']
-    paths:
-      - 'experiments/mts_temporal_alignment_nuisance.py'
-      - 'experiments/registrations/MTS_TEMPORAL_ALIGNMENT_NUISANCE_001.md'
-      - '.github/workflows/mts_temporal_alignment_nuisance.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   audit:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
