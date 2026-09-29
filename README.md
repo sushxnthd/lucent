@@ -219,6 +219,28 @@ CogBeacon interaction replication: [COGBEACON-TARGET-ALIGNMENT-001](results/COGB
 
 Related-work boundary: [docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md](docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md)
 
+## Camera-robust observability stress test
+
+APST5-SIM-005 asks a narrower engineering question before the phone pilot:
+
+> if the delayed pupil-response surrogate is approximately right, does ordinary phone-camera sampling destroy the matched-exposure split-vs-contiguous timing signal?
+
+The search modeled 60/30/24 FPS cameras, timestamp jitter, frame drops, and increasing fractional-pupil observation noise. Probe selection maximized the **10th-percentile** separation ratio on a design population, then evaluation used 500 fresh synthetic people.
+
+| Sequence | Held-out P10 separation S | Median S | Cells with S > 1.25 |
+| --- | ---: | ---: | ---: |
+| robust search winner (1,2,9) | **11.590** | 26.291 | 100% |
+| frozen E002 (1,2,8) | **11.272** | 25.822 | 100% |
+| evenly spaced (2,5,8) | 6.791 | 15.486 | 100% |
+
+Even in the predeclared stressed 24 FPS / jitter / dropout / noise scenario, the frozen E002 sequence retained P10 S = **9.062**.
+
+This strongly reduces one model-level failure mode: **camera cadence alone should not erase the predicted split-vs-contiguous waveform difference under the committed surrogate**.
+
+It does **not** clear E002. Real RGB pupil extraction may be much noisier or systematically biased, and real pupils may violate the surrogate.
+
+Full result: [APST5-SIM-005](results/APST5_SIMULATION_005.md)
+
 ## Why active probing is different
 
 Passive five-second face-video drowsiness inference is already prior art. Smartphone pupillometry is prior art. Controlled screen-evoked pupil responses are prior art. Active ocular probing is also prior art.
