@@ -176,6 +176,31 @@ This makes **3 seconds** the more robust empirical target under the current mode
 
 Full result: [results/APST5_SIMULATION_004.md](results/APST5_SIMULATION_004.md)
 
+## Empirical result: Temporal Alignment
+
+The strongest Lucent result is now no longer a simulation.
+
+**MTS-TARGET-SMOOTHING-001** directly manipulated the timescale of the behavioral target while holding the human dataset, ocular signal, feature family, model, LOSO evaluation, and event intersection fixed.
+
+For the immediate PVT target, the 2-second ocular window was strongest:
+
+| Target support | 2 s sensor | 5 s | 15 s | 30 s | 60 s |
+| ---: | ---: | ---: | ---: | ---: | ---: |
+| 0 s | **0.2700** | 0.1975 | 0.1199 | 0.0968 | 0.0744 |
+| 60 s | 0.1559 | 0.1607 | 0.1712 | 0.1953 | **0.2042** |
+
+When the target was broadened to 60 seconds, the ordering reversed.
+
+The preregistered long-vs-short interaction was **+0.2439**, with paired-subject bootstrap 95% CI **[+0.1647,+0.3191]** across 28 subjects.
+
+This supports the **Temporal Alignment Principle**:
+
+> The useful ocular sensing horizon depends on the temporal support of the functional target; scan duration should be optimized for the target rather than fixed globally.
+
+Two independent public datasets constrain the claim further. A preregistered EyeLink working-memory analysis found 5 seconds significantly better than 2 seconds, and CogBeacon found 5 seconds significantly better than 3 seconds. Together, these results reject a universal '2 seconds is best' story and point instead to target-dependent sensing horizons.
+
+Full synthesis: [TEMPORAL-ALIGNMENT-001](results/TEMPORAL_ALIGNMENT_001.md)
+
 ## Why active probing is different
 
 Passive five-second face-video drowsiness inference is already prior art. Smartphone pupillometry is prior art. Controlled screen-evoked pupil responses are prior art. Active ocular probing is also prior art.
@@ -228,6 +253,9 @@ The repo is structured to make those claims harder to fake.
 | [results/APST5_SIMULATION_003.md](results/APST5_SIMULATION_003.md) | concurrent pupil + pursuit temporal-compression result |
 | [results/APST5_SIMULATION_004.md](results/APST5_SIMULATION_004.md) | multimodal redundancy stress test |
 | [results/MTS_REALDATA_001.md](results/MTS_REALDATA_001.md) | public human-data temporal-locality analysis |
+| [results/MTS_TARGET_SMOOTHING_001.md](results/MTS_TARGET_SMOOTHING_001.md) | preregistered direct Temporal Alignment test |
+| [results/TEMPORAL_ALIGNMENT_001.md](results/TEMPORAL_ALIGNMENT_001.md) | synthesis across direct manipulation + independent boundary datasets |
+| [results/ADHD_REALDATA_001.md](results/ADHD_REALDATA_001.md) | preregistered independent duration reversal |
 | [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md) | nuisance-projection derivation and design principle |
 | [docs/MULTIMODAL_COMPRESSION.md](docs/MULTIMODAL_COMPRESSION.md) | closest 30–45 s ocular screens and the open ~5 s compression target |
 
@@ -244,6 +272,6 @@ The repo is structured to make those claims harder to fake.
 
 ## Status
 
-**Four reproduced computational results plus one public human-data analysis; prospective smartphone validation pending.**
+**Four reproduced computational results plus a preregistered public-human-data Temporal Alignment result; prospective active-smartphone validation pending.**
 
 The current evidence supports a sharper target: a **3-second concurrent active ocular probe** is the most robust model-based candidate, while public human data independently suggest that the most recent ~2 seconds of passive ocular behavior can be more informative about the next vigilance response than longer history under a fixed immediate target. Neither result yet establishes a prospective smartphone fatigue measurement system. The next decisive step is an independent, synchronized phone study comparing passive, single-channel active, and concurrent active probes on held-out people and sessions.
