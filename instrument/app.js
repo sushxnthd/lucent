@@ -34,11 +34,30 @@ function sanitize(value) {
     .replace(/^-+|-+$/g, "");
 }
 
-function fileStem(condition, startedAtIso) {
+function fileStem(condition, startedAtIso, captureNumber, retry) {
   const participant = sanitize(byId("participant").value || "pilot");
   const session = sanitize(byId("session").value || "1");
   const stamp = startedAtIso.replace(/[:.]/g, "-");
-  return "lucent_" + participant + "_s" + session + "_" + condition + "_" + stamp;
+  const captureTag = "c" + String(captureNumber).padStart(2, "0");
+  const attemptTag = retry ? "retry" : "primary";
+  return (
+    "lucent_" + participant +
+    "_s" + session +
+    "_" + captureTag +
+    "_" + condition +
+    "_" + attemptTag +
+    "_" + stamp
+  );
+}
+
+function syncPlannedCondition() {
+  if (!protocol?.pilot?.capture_order) return;
+  const captureNumber = Number(byId("captureNumber").value);
+  const condition = protocol.pilot.capture_order[captureNumber - 1];
+  if (!condition || !protocol.conditions[condition]) {
+    throw new Error("Invalid frozen pilot capture number.");
+  }
+  byId("condition").value = condition;
 }
 
 function chooseMimeType() {
@@ -60,6 +79,7 @@ async function loadProtocol() {
   const response = await fetch("./protocol.json", {cache: "no-store"});
   if (!response.ok) throw new Error("Could not load protocol.json");
   protocol = await response.json();
+  syncPlannedCondition();
 }
 
 async function enableCamera() {
@@ -231,15 +251,27 @@ async function runCapture() {
   startButton.disabled = true;
   exportArea.classList.add("hidden");
 
+  syncPlannedCondition();
+  const captureNumber = Number(byId("captureNumber").value);
+  const technicalRetry = byId("retry").checked;
   const condition = byId("condition").value;
+  const plannedCondition = protocol.pilot.capture_order[captureNumber - 1];
   const conditionDef = protocol.conditions[condition];
   const startedAtIso = new Date().toISOString();
-  const currentCaptureStem = fileStem(condition, startedAtIso);
+  const currentCaptureStem = fileStem(
+    condition,
+    startedAtIso,
+    captureNumber,
+    technicalRetry
+  );
   const segmentCount = Math.round(
     protocol.total_seconds / protocol.segment_seconds
   );
 
   if (!conditionDef) throw new Error("Unknown condition");
+  if (condition !== plannedCondition) {
+    throw new Error("Condition does not match the frozen pilot order.");
+  }
   if (condition !== "passive" && conditionDef.high_segments.length !== 3) {
     throw new Error("Matched-exposure active protocol has changed.");
   }
@@ -252,6 +284,9 @@ async function runCapture() {
     schemaVersion: "lucent-e002-capture-v1",
     protocolVersion: protocol.protocol_version,
     condition,
+    plannedCondition,
+    pilotCaptureNumber: captureNumber,
+    technicalRetry,
     participantPseudonym: byId("participant").value,
     session: byId("session").value,
     captureFileStem: currentCaptureStem,
@@ -377,6 +412,14 @@ function downloadBlob(blob, filename) {
   anchor.remove();
   setTimeout(() => URL.revokeObjectURL(url), 5000);
 }
+
+byId("captureNumber").addEventListener("change", () => {
+  try {
+    syncPlannedCondition();
+  } catch (error) {
+    cameraStatus.textContent = "Protocol error: " + error.message;
+  }
+});
 
 cameraButton.addEventListener("click", async () => {
   try {

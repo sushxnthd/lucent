@@ -37,3 +37,37 @@ def test_segments_are_in_range():
     for condition in ("contiguous", "split"):
         for segment in protocol["conditions"][condition]["high_segments"]:
             assert 0 <= segment < n
+
+
+def test_frozen_pilot_order_is_balanced_and_exact():
+    protocol = load_protocol()
+    order = protocol["pilot"]["capture_order"]
+
+    assert order == [
+        "passive",
+        "contiguous",
+        "split",
+        "passive",
+        "split",
+        "contiguous",
+        "split",
+        "contiguous",
+        "passive",
+    ]
+    assert len(order) == 9
+    assert order.count("passive") == 3
+    assert order.count("contiguous") == 3
+    assert order.count("split") == 3
+
+
+def test_frozen_pilot_order_contains_every_directed_transition():
+    protocol = load_protocol()
+    order = protocol["pilot"]["capture_order"]
+    transitions = set(zip(order[:-1], order[1:]))
+
+    assert ("passive", "contiguous") in transitions
+    assert ("contiguous", "passive") in transitions
+    assert ("passive", "split") in transitions
+    assert ("split", "passive") in transitions
+    assert ("contiguous", "split") in transitions
+    assert ("split", "contiguous") in transitions

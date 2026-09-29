@@ -98,3 +98,30 @@ Then evaluate the frozen engineering gates:
     python experiments/e002_observability_analysis.py path/to/captures --output e002_result.json
 
 The exact gates and exit rule are frozen in experiments/registrations/E002_PHONE_OBSERVABILITY.md.
+
+## Hardened collection workflow
+
+The browser now enforces the frozen nine-capture order from protocol.json. Select the pilot capture number; the condition is filled automatically and cannot be changed manually.
+
+If a capture is a predeclared technical retry, mark **Technical retry** before recording. The capture number and retry flag are written into the JSON sidecar and the shared frozen file stem.
+
+After each capture:
+
+    python instrument/process_capture.py <capture-video> <capture-json>
+
+This creates the quality, pupil-summary, and pupil-trace files using the exact capture stem.
+
+Before aggregate E002 analysis, validate the whole directory:
+
+    python instrument/validate_pilot_manifest.py path/to/captures --output pilot_manifest.json
+
+The manifest validator checks:
+
+- all nine primary capture numbers exist exactly once;
+- chronological order matches the frozen schedule;
+- condition matches the predeclared number;
+- filenames match the metadata-frozen capture stem;
+- participant/session/protocol/brightness/ambient/camera are consistent;
+- technical retries are explicitly marked.
+
+Do not run the aggregate E002 decision script if the manifest reports errors.

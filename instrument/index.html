@@ -18,13 +18,27 @@
       <div class="grid">
         <label>Participant pseudonym<input id="participant" autocomplete="off" value="pilot-001"></label>
         <label>Session<input id="session" type="number" min="1" value="1"></label>
+        <label>Pilot capture number
+          <select id="captureNumber">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+          </select>
+        </label>
         <label>Condition
-          <select id="condition">
+          <select id="condition" disabled>
             <option value="passive">Passive control</option>
             <option value="contiguous">Contiguous active</option>
             <option value="split">APST-5 split pulse</option>
           </select>
         </label>
+        <label class="checkboxLabel"><span>Technical retry</span><input id="retry" type="checkbox"></label>
         <label>Screen brightness (%)<input id="brightness" type="number" min="1" max="100" value="50"></label>
         <label>Ambient
           <select id="ambient">

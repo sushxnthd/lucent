@@ -52,5 +52,21 @@
     "rapid_flashing": false,
     "minimum_segment_seconds": 0.5,
     "note": "Screen-content levels are not calibrated retinal illuminance."
+  },
+  "pilot": {
+    "capture_order": [
+      "passive",
+      "contiguous",
+      "split",
+      "passive",
+      "split",
+      "contiguous",
+      "split",
+      "contiguous",
+      "passive"
+    ],
+    "planned_captures": 9,
+    "repeats_per_condition": 3,
+    "technical_retry_policy": "Retry the same capture number/condition only after a predeclared technical failure; retain both metadata records."
   }
 }
