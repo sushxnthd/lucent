@@ -1,0 +1,63 @@
+name: martin-pvt-inspect
+
+on:
+  push:
+    branches: ['martin-pvt-replication']
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: martin-pvt-replication
+
+      - name: Inspect Figshare article
+        run: |
+          python - <<'PY'
+          import json, urllib.request
+          from pathlib import Path
+
+          api='https://api.figshare.com/v2/articles/17317886'
+          with urllib.request.urlopen(api, timeout=60) as response:
+              article=json.load(response)
+
+          lines=[]
+          lines.append('# Martin et al. 2022 raw-data manifest')
+          lines.append('')
+          lines.append(f"Title: {article.get('title')}")
+          lines.append('')
+          lines.append(f"DOI: {article.get('doi')}")
+          lines.append('')
+          lines.append(f"License: {(article.get('license') or {}).get('name')}")
+          lines.append('')
+          lines.append('## Files')
+          lines.append('')
+          lines.append('| name | bytes | id | download URL |')
+          lines.append('| --- | ---: | ---: | --- |')
+          total=0
+          for f in article.get('files', []):
+              total += int(f.get('size') or 0)
+              lines.append(f"| {f.get('name')} | {f.get('size')} | {f.get('id')} | {f.get('download_url')} |")
+          lines.append('')
+          lines.append(f'Total bytes: {total}')
+          lines.append('')
+          lines.append('## Description')
+          lines.append('')
+          lines.append(article.get('description','').replace('<p>','').replace('</p>','\n').replace('<br>','\n').replace('<br/>','\n'))
+
+          Path('results/MARTIN_PVT_DATA_MANIFEST.md').write_text('\n'.join(lines), encoding='utf-8')
+          print('\n'.join(lines[:80]))
+          PY
+
+      - name: Commit manifest
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/MARTIN_PVT_DATA_MANIFEST.md
+          git commit -m "Inspect Martin 2022 open PVT/pupil data [skip ci]" || exit 0
+          git push origin HEAD:martin-pvt-replication
