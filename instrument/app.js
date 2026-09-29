@@ -15,6 +15,7 @@ let recorder;
 let recordedChunks = [];
 let videoBlob = null;
 let metadataBlob = null;
+let captureFileStem = null;
 let frameLoopActive = false;
 let frameLog = [];
 let faceLog = [];
@@ -33,10 +34,10 @@ function sanitize(value) {
     .replace(/^-+|-+$/g, "");
 }
 
-function fileStem(condition) {
+function fileStem(condition, startedAtIso) {
   const participant = sanitize(byId("participant").value || "pilot");
   const session = sanitize(byId("session").value || "1");
-  const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const stamp = startedAtIso.replace(/[:.]/g, "-");
   return "lucent_" + participant + "_s" + session + "_" + condition + "_" + stamp;
 }
 
@@ -232,6 +233,8 @@ async function runCapture() {
 
   const condition = byId("condition").value;
   const conditionDef = protocol.conditions[condition];
+  const startedAtIso = new Date().toISOString();
+  const currentCaptureStem = fileStem(condition, startedAtIso);
   const segmentCount = Math.round(
     protocol.total_seconds / protocol.segment_seconds
   );
@@ -251,12 +254,13 @@ async function runCapture() {
     condition,
     participantPseudonym: byId("participant").value,
     session: byId("session").value,
+    captureFileStem: currentCaptureStem,
     userInputs: {
       screenBrightnessPercent: Number(byId("brightness").value),
       ambientCategory: byId("ambient").value,
       approximateDistanceCm: Number(byId("distance").value)
     },
-    startedAtIso: new Date().toISOString(),
+    startedAtIso,
     timeOriginEpochMs: performance.timeOrigin,
     userAgent: navigator.userAgent,
     platform: navigator.platform ?? null,
@@ -343,6 +347,7 @@ async function runCapture() {
     [JSON.stringify(meta, null, 2)],
     {type: "application/json"}
   );
+  captureFileStem = currentCaptureStem;
 
   capture.classList.add("hidden");
   setup.classList.remove("hidden");
@@ -393,16 +398,14 @@ startButton.addEventListener("click", async () => {
 });
 
 byId("videoDownload").addEventListener("click", () => {
-  if (!videoBlob) return;
-  const condition = byId("condition").value;
+  if (!videoBlob || !captureFileStem) return;
   const extension = videoBlob.type.includes("mp4") ? "mp4" : "webm";
-  downloadBlob(videoBlob, fileStem(condition) + "." + extension);
+  downloadBlob(videoBlob, captureFileStem + "." + extension);
 });
 
 byId("jsonDownload").addEventListener("click", () => {
-  if (!metadataBlob) return;
-  const condition = byId("condition").value;
-  downloadBlob(metadataBlob, fileStem(condition) + ".json");
+  if (!metadataBlob || !captureFileStem) return;
+  downloadBlob(metadataBlob, captureFileStem + ".json");
 });
 
 await loadProtocol();
