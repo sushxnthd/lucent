@@ -2,7 +2,7 @@ name: research-ci
 
 on:
   push:
-    branches: ["main", "research-foundation", "apst5-breakthrough", "state-compression-breakthrough"]
+    branches: ["main", "research-foundation", "apst5-breakthrough", "state-compression-breakthrough", "mts-realdata"]
   pull_request:
 
 jobs:
@@ -31,3 +31,6 @@ jobs:
       - name: APST-5 personalization-compression reproduction
         if: matrix.python-version == '3.12'
         run: python experiments/personalization_compression.py
+      - name: Public MTS data smoke test
+        if: matrix.python-version == '3.12'
+        run: python experiments/inspect_mts_data.py
