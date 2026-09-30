@@ -241,6 +241,51 @@ It does **not** clear E002. Real RGB pupil extraction may be much noisier or sys
 
 Full result: [APST5-SIM-005](results/APST5_SIMULATION_005.md)
 
+## Human-calibrated active-probe result
+
+The strongest APST-5 evidence now comes from **public human controlled-luminance data**, not only Lucent's synthetic pupil population.
+
+The analysis was deliberately staged.
+
+First, APST5-HUMAN-PRF-001 fit a single signed-normalized empirical pupil-response kernel per person on the public PsPM-AOB_UW dataset. That preregistered primary test **failed** for frozen E002 and is retained:
+
+| Analysis | E002 design rank | Held-out P10 S | Held-out median S | Held-out S > 1.25 |
+| --- | ---: | ---: | ---: | ---: |
+| PsPM single-kernel primary | 2/84 | 0.824 | 1.059 | 27.3% |
+| PsPM directional secondary | **1/84** | **1.264** | **1.836** | **90.9%** |
+| Independent Ehinger EyeLink replication | 5/84 | **5.395** | **9.180** | **100%** |
+| Ehinger Pupil Labs transfer | — | **5.615** | **9.544** | **100%** |
+
+The directional PsPM analysis was predeclared as secondary but implemented after the failed primary result, so it is **not** treated as a confirmatory rescue. It separates brightening/constriction from darkening/redilation rather than forcing both through one response kernel.
+
+The decisive follow-up was **APST5-EHINGER-001**, preregistered before sequence outcomes on an independent controlled-luminance dataset. It changed participants, laboratory protocol, preprocessing pipeline, and measurement hardware.
+
+On held-out EyeLink participants, frozen E002 ((1,2,8)):
+
+- achieved **P10 separation (S=5.395)**;
+- median (S=9.180);
+- exceeded the frozen engineering threshold (S>1.25) in **100%** of held-out participants;
+- ranked **5/84** on the independent design set.
+
+The same frozen E002 timing transferred to simultaneously recorded **Pupil Labs** data without reoptimization:
+
+- P10 (S=5.615);
+- median (S=9.544);
+- **100%** above threshold;
+- participant-wise EyeLink↔Pupil-Labs separation correlation **(r=0.859)**.
+
+The important mechanistic lesson is that **constriction/redilation asymmetry matters**. That converges with Lucent's original asymmetric pupil surrogate, which already used separate constriction and dilation dynamics.
+
+This is an independent human **waveform-observability / measurement-design result**. It does **not** establish ordinary RGB-phone observability or fatigue-state prediction.
+
+Full synthesis: [HUMAN-OBSERVABILITY-001](results/HUMAN_OBSERVABILITY_001.md)
+
+Primary PsPM test: [APST5-HUMAN-PRF-001](results/APST5_HUMAN_PRF_001.md)
+
+Directional PsPM secondary: [APST5-HUMAN-PRF-001 secondary](results/APST5_HUMAN_PRF_001_SECONDARY.md)
+
+Independent Ehinger replication: [APST5-EHINGER-001](results/APST5_EHINGER_001.md)
+
 ## Why active probing is different
 
 Passive five-second face-video drowsiness inference is already prior art. Smartphone pupillometry is prior art. Controlled screen-evoked pupil responses are prior art. Active ocular probing is also prior art.
@@ -304,6 +349,10 @@ The repo is structured to make those claims harder to fake.
 | [results/MARTIN_PVT_TARGET_ALIGNMENT_001.md](results/MARTIN_PVT_TARGET_ALIGNMENT_001.md) | preregistered failed independent PVT interaction replication |
 | [results/MTS_TEMPORAL_ALIGNMENT_NUISANCE_001.md](results/MTS_TEMPORAL_ALIGNMENT_NUISANCE_001.md) | preregistered time-on-task/session nuisance audit |
 | [results/TEMPORAL_SCALE_AUDIT_001.md](results/TEMPORAL_SCALE_AUDIT_001.md) | replication and falsification synthesis |
+| [results/APST5_HUMAN_PRF_001.md](results/APST5_HUMAN_PRF_001.md) | preregistered human-calibrated primary observability test |
+| [results/APST5_HUMAN_PRF_001_SECONDARY.md](results/APST5_HUMAN_PRF_001_SECONDARY.md) | directional response-kernel secondary analysis |
+| [results/APST5_EHINGER_001.md](results/APST5_EHINGER_001.md) | preregistered independent human luminance-response replication |
+| [results/HUMAN_OBSERVABILITY_001.md](results/HUMAN_OBSERVABILITY_001.md) | synthesis of human-calibrated APST-5 observability evidence |
 | [docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md](docs/TEMPORAL_ALIGNMENT_RELATED_WORK.md) | closest prior art and conservative novelty boundary |
 | [docs/BASELINE_COMPRESSION.md](docs/BASELINE_COMPRESSION.md) | nuisance-projection derivation and design principle |
 | [docs/MULTIMODAL_COMPRESSION.md](docs/MULTIMODAL_COMPRESSION.md) | closest 30–45 s ocular screens and the open ~5 s compression target |
@@ -321,6 +370,6 @@ The repo is structured to make those claims harder to fake.
 
 ## Status
 
-**Four reproduced computational results, one preregistered public-human-data temporal crossover that survives a nuisance audit, and two preregistered failed interaction replications; prospective active-smartphone validation pending.**
+**Four reproduced computational APST results plus a preregistered independent human controlled-luminance replication supporting frozen E002 waveform separability; ordinary RGB-phone observability and cognitive-state validity remain pending.**
 
-The current evidence supports a sharper target: a **3-second concurrent active ocular probe** is the most robust model-based candidate, while public human data independently suggest that the most recent ~2 seconds of passive ocular behavior can be more informative about the next vigilance response than longer history under a fixed immediate target. Neither result yet establishes a prospective smartphone fatigue measurement system. The next decisive step is an independent, synchronized phone study comparing passive, single-channel active, and concurrent active probes on held-out people and sessions.
+The current evidence now supports a narrower but stronger next step: the equal-exposure E002 timing produces large held-out waveform separation in an independently preregistered human EyeLink analysis and transfers to a simultaneous mobile eye tracker. The unresolved bottleneck is whether an **ordinary RGB front camera** can recover that biological waveform without photometric or geometry artifacts. State prediction comes only after that observability test clears.
