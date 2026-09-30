@@ -125,3 +125,24 @@ The manifest validator checks:
 - technical retries are explicitly marked.
 
 Do not run the aggregate E002 decision script if the manifest reports errors.
+
+
+## Photometric specificity audit
+
+The display itself changes illumination reaching both the eye and the camera. To avoid confusing camera auto-exposure or segmentation contrast with a biological pupil waveform, the pupil trace now also records negative-control channels:
+
+- whole-frame median grayscale;
+- face median grayscale;
+- iris-region median grayscale;
+- iris radius;
+- inter-eye distance.
+
+After the frozen O1–O4 analysis, run:
+
+    python experiments/e002_photometric_audit.py path/to/captures --output e002_photometric_audit.json
+
+The pre-data audit is frozen in:
+
+    experiments/registrations/E002_PHOTOMETRIC_AUDIT.md
+
+E002 may still clear as an **engineering observability** test if its original gates pass. But a split-vs-contiguous pupil difference should not be described as biologically specific if the same or stronger condition separation appears in brightness or geometry negative controls.
