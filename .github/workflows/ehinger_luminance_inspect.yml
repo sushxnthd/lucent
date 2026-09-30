@@ -1,0 +1,63 @@
+name: inspect-ehinger-luminance
+
+on:
+  push:
+    branches: ['pspm-luminance-calibration']
+    paths:
+      - '.github/workflows/ehinger_luminance_inspect.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pspm-luminance-calibration
+
+      - name: Download preprocessed luminance data
+        run: |
+          curl -L --fail --retry 3 -o /tmp/lum_binned.csv https://ndownloader.figshare.com/files/14184857
+          ls -lh /tmp/lum_binned.csv
+
+      - name: Inspect schema
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import csv
+
+          path=Path('/tmp/lum_binned.csv')
+          lines=['# Ehinger et al. luminance dataset inspection','']
+          lines.append(f'Bytes: {path.stat().st_size:,}')
+          lines.append('')
+          with path.open('r',encoding='utf-8',errors='replace',newline='') as fh:
+              reader=csv.reader(fh)
+              rows=[]
+              for i,row in enumerate(reader):
+                  rows.append(row)
+                  if i>=40: break
+          lines.append('## First rows')
+          lines.append('')
+          lines.append('~~~csv')
+          for row in rows:
+              lines.append(','.join(row))
+          lines.append('~~~')
+          lines.append('')
+          if rows:
+              lines.append('Columns: '+', '.join(rows[0]))
+
+          Path('results/EHINGER_LUMINANCE_INSPECTION.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines))
+          PY
+
+      - name: Commit inspection
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/EHINGER_LUMINANCE_INSPECTION.md
+          git commit -m 'Inspect independent Ehinger luminance data [skip ci]' || exit 0
+          git pull --rebase origin pspm-luminance-calibration
+          git push origin HEAD:pspm-luminance-calibration
