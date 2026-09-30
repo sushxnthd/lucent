@@ -65,6 +65,78 @@ def stimulus_state(meta: dict, offset_ms: float):
     return int(active["segment"]), bool(active["high"])
 
 
+
+def photometric_controls(
+    gray: np.ndarray,
+    landmarks,
+):
+    """Return negative-control photometric and geometry channels."""
+    height, width = gray.shape[:2]
+
+    pts = np.stack(
+        [point(landmarks, i, width, height) for i in range(468)],
+        axis=0,
+    )
+    x0 = max(0, int(np.floor(np.min(pts[:, 0]))))
+    x1 = min(width, int(np.ceil(np.max(pts[:, 0]))) + 1)
+    y0 = max(0, int(np.floor(np.min(pts[:, 1]))))
+    y1 = min(height, int(np.ceil(np.max(pts[:, 1]))) + 1)
+
+    face_median = None
+    if x1 > x0 and y1 > y0:
+        face_crop = gray[y0:y1, x0:x1]
+        if face_crop.size:
+            face_median = float(np.median(face_crop))
+
+    frame_median = float(np.median(gray))
+
+    iris_medians = []
+    iris_radii = []
+    for center_index, border_indices in (
+        (RIGHT_IRIS_CENTER, RIGHT_IRIS_BORDER),
+        (LEFT_IRIS_CENTER, LEFT_IRIS_BORDER),
+    ):
+        center = point(landmarks, center_index, width, height)
+        border = np.stack(
+            [point(landmarks, i, width, height) for i in border_indices],
+            axis=0,
+        )
+        radius = float(
+            np.median(np.linalg.norm(border - center.reshape(1, 2), axis=1))
+        )
+        if not np.isfinite(radius) or radius < 1.0:
+            continue
+
+        yy, xx = np.mgrid[:height, :width]
+        mask = (
+            (xx - center[0]) ** 2
+            + (yy - center[1]) ** 2
+            <= (0.92 * radius) ** 2
+        )
+        values = gray[mask]
+        if values.size:
+            iris_medians.append(float(np.median(values)))
+            iris_radii.append(radius)
+
+    right_eye = point(landmarks, 33, width, height)
+    left_eye = point(landmarks, 263, width, height)
+    inter_eye = float(np.linalg.norm(left_eye - right_eye))
+
+    return {
+        "frameMedianGray": frame_median,
+        "faceMedianGray": (
+            float(face_median) if face_median is not None else None
+        ),
+        "irisMedianGray": (
+            float(np.mean(iris_medians)) if iris_medians else None
+        ),
+        "irisRadiusPx": (
+            float(np.mean(iris_radii)) if iris_radii else None
+        ),
+        "interEyeDistancePx": inter_eye,
+    }
+
+
 def estimate_pupil(
     gray: np.ndarray,
     landmarks,
@@ -336,12 +408,20 @@ def main():
             "rightRatio": None,
             "pupilRatio": None,
             "quality": None,
+            "frameMedianGray": None,
+            "faceMedianGray": None,
+            "irisMedianGray": None,
+            "irisRadiusPx": None,
+            "interEyeDistancePx": None,
         }
 
         if result.multi_face_landmarks:
             landmarks = result.multi_face_landmarks[0].landmark
             if len(landmarks) >= 478:
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+                controls = photometric_controls(gray, landmarks)
+                row.update(controls)
 
                 right = estimate_pupil(
                     gray,
