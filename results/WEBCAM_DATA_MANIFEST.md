@@ -1,0 +1,433 @@
+# Saxena webcam eye-tracking public-data manifest
+
+## Provider: osfstorage
+
+- file: /OSF_Prereg_WebET.pdf size=197006 download=https://osf.io/download/bj5dv/
+- folder: /Experiment and stimuli/ size=None download=None
+  - file: /Experiment and stimuli/blinks_task_beep.wav size=8864 download=https://osf.io/download/dxqhk/
+  - file: /Experiment and stimuli/Fixation_target.png size=4026 download=https://osf.io/download/6ckz5/
+  - file: /Experiment and stimuli/Zone_classification_target.png size=266770 download=https://osf.io/download/f4thp/
+  - file: /Experiment and stimuli/Smooth_pursuit_target.png size=20579 download=https://osf.io/download/ykq8h/
+  - file: /Experiment and stimuli/Webcam_eye_tracking_online_study.json size=806259 download=https://osf.io/download/qdpkr/
+- file: /subjects_fps.jpg size=660070 download=https://osf.io/download/ykfm2/
+- folder: /Posters/ size=None download=None
+  - file: /Posters/Poster_ECEM.pdf size=19137165 download=https://osf.io/download/3u6dr/
+  - file: /Posters/Poster_MusicET.pdf size=16195378 download=https://osf.io/download/cjgyd/
+  - file: /Posters/poster_ETRA.pdf size=885968 download=https://osf.io/download/sbm5e/
+- file: /Saxena_2023_BRM_paper.pdf size=2433218 download=https://osf.io/download/qn9kw/
+- folder: /Data/ size=None download=None
+  - file: /Data/OSF_Subjects.zip size=2017766194 download=https://osf.io/download/n4v59/
+- file: /Addendum to OSF_Prereg_WebET.pdf, 19-10-2021, doi.org_10.17605_OSF.IO_37NQS (1).pdf size=146937 download=https://osf.io/download/qtf7d/
+
+## Provider: None
+
+- file: /analysis_blinks.py size=None download=https://osf.io/download/uxsfe/
+- file: /analysis_fixation.py size=None download=https://osf.io/download/e6pkj/
+- file: /analysis_freeview.py size=None download=https://osf.io/download/acwmv/
+- file: /analysis_module.py size=None download=https://osf.io/download/njsbg/
+- file: /analysis_smooth_pursuit.py size=None download=https://osf.io/download/4fpax/
+- file: /analysis_zone.py size=None download=https://osf.io/download/7fxp4/
+- file: /Calib_tests.ipynb size=None download=https://osf.io/download/qt6yd/
+- folder: /csv_backup/ size=None download=None
+  - file: /csv_backup/blinks_anova.csv size=None download=https://osf.io/download/685bd143acfc1dc0e7140899/
+  - file: /csv_backup/blinks_df_ear.csv size=None download=https://osf.io/download/685bd143acfc1dc0e714089b/
+  - file: /csv_backup/blinks_df_ear.pkl size=None download=https://osf.io/download/5zgmp/
+  - file: /csv_backup/blinks_df_rt_bene.csv size=None download=https://osf.io/download/7n5jm/
+  - file: /csv_backup/blinks_df_rt_bene.pkl size=None download=https://osf.io/download/ndbsh/
+  - folder: /csv_backup/calib_tests_df/ size=None download=None
+    - file: /csv_backup/calib_tests_df/eth_ct1.csv size=None download=https://osf.io/download/68a73912876103d7fea44f27/
+    - file: /csv_backup/calib_tests_df/eth_ct1_old.csv size=None download=https://osf.io/download/68a73912876103d7fea44f2b/
+    - file: /csv_backup/calib_tests_df/eth_ct1_SP.csv size=None download=https://osf.io/download/68a73912876103d7fea44f29/
+    - file: /csv_backup/calib_tests_df/eth_ct2.csv size=None download=https://osf.io/download/68a73912876103d7fea44f2d/
+    - file: /csv_backup/calib_tests_df/eth_ct2_single_blocks.csv size=None download=https://osf.io/download/68a73912876103d7fea44f2f/
+    - file: /csv_backup/calib_tests_df/eth_ct3.csv size=None download=https://osf.io/download/68a73912876103d7fea44f31/
+    - file: /csv_backup/calib_tests_df/faze_ct1.csv size=None download=https://osf.io/download/68a73912876103d7fea44f33/
+    - file: /csv_backup/calib_tests_df/faze_ct1_SP.csv size=None download=https://osf.io/download/68a73912876103d7fea44f35/
+    - file: /csv_backup/calib_tests_df/faze_ct2.csv size=None download=https://osf.io/download/68a73912876103d7fea44f37/
+    - file: /csv_backup/calib_tests_df/faze_ct2_single_blocks.csv size=None download=https://osf.io/download/68a73912876103d7fea44f39/
+    - file: /csv_backup/calib_tests_df/faze_ct3.csv size=None download=https://osf.io/download/68a73912876103d7fea44f3b/
+    - file: /csv_backup/calib_tests_df/mpii_ct1.csv size=None download=https://osf.io/download/68a73912876103d7fea44f3d/
+    - file: /csv_backup/calib_tests_df/mpii_ct1_SP.csv size=None download=https://osf.io/download/68a73912876103d7fea44f3f/
+    - file: /csv_backup/calib_tests_df/mpii_ct2.csv size=None download=https://osf.io/download/68a73912876103d7fea44f41/
+    - file: /csv_backup/calib_tests_df/mpii_ct2_single_blocks.csv size=None download=https://osf.io/download/68a73912876103d7fea44f43/
+    - file: /csv_backup/calib_tests_df/mpii_ct3.csv size=None download=https://osf.io/download/68a73912876103d7fea44f45/
+  - folder: /csv_backup/example_trials/ size=None download=None
+    - folder: /csv_backup/example_trials/ETHXGAZE/ size=None download=None
+      - folder: /csv_backup/example_trials/ETHXGAZE/fixation/ size=None download=None
+        - file: /csv_backup/example_trials/ETHXGAZE/fixation/Fixation.csv size=None download=https://osf.io/download/69bb8869b9de593742bff638/
+      - folder: /csv_backup/example_trials/ETHXGAZE/smooth_pursuit/ size=None download=None
+        - file: /csv_backup/example_trials/ETHXGAZE/smooth_pursuit/Smooth Pursuit.csv size=None download=https://osf.io/download/69bb886ff042bd47e57c7505/
+      - folder: /csv_backup/example_trials/ETHXGAZE/zone_classification/ size=None download=None
+        - file: /csv_backup/example_trials/ETHXGAZE/zone_classification/Zone Classification.csv size=None download=https://osf.io/download/68b104ea021469abb96f96c4/
+    - folder: /csv_backup/example_trials/FAZE/ size=None download=None
+      - folder: /csv_backup/example_trials/FAZE/fixation/ size=None download=None
+        - file: /csv_backup/example_trials/FAZE/fixation/Fixation.csv size=None download=https://osf.io/download/68b5050fa5f9576f78bc360c/
+      - folder: /csv_backup/example_trials/FAZE/smooth_pursuit/ size=None download=None
+        - file: /csv_backup/example_trials/FAZE/smooth_pursuit/Smooth Pursuit.csv size=None download=https://osf.io/download/68b4c63b4876af8872781608/
+      - folder: /csv_backup/example_trials/FAZE/zone_classification/ size=None download=None
+        - file: /csv_backup/example_trials/FAZE/zone_classification/Zone Classification.csv size=None download=https://osf.io/download/68b5278931af9e3e21c3ebdb/
+    - file: /csv_backup/example_trials/Fixation_subject_data.csv size=None download=https://osf.io/download/68a68e31265ed3c917d7be95/
+    - folder: /csv_backup/example_trials/MPIIGAZE/ size=None download=None
+      - folder: /csv_backup/example_trials/MPIIGAZE/fixation/ size=None download=None
+        - file: /csv_backup/example_trials/MPIIGAZE/fixation/Fixation.csv size=None download=https://osf.io/download/69bb889cb69f9d2e1fbff600/
+      - folder: /csv_backup/example_trials/MPIIGAZE/smooth_pursuit/ size=None download=None
+        - file: /csv_backup/example_trials/MPIIGAZE/smooth_pursuit/Smooth Pursuit.csv size=None download=https://osf.io/download/69bb88a246a7b80ac07c7627/
+      - folder: /csv_backup/example_trials/MPIIGAZE/zone_classification/ size=None download=None
+        - file: /csv_backup/example_trials/MPIIGAZE/zone_classification/Zone Classification.csv size=None download=https://osf.io/download/69bb88aab06d443f5db4ee34/
+    - file: /csv_backup/example_trials/SP_subject_data.csv size=None download=https://osf.io/download/68a68e31265ed3c917d7be98/
+    - file: /csv_backup/example_trials/Zone_subject_data.csv size=None download=https://osf.io/download/68a68e31265ed3c917d7be9a/
+  - file: /csv_backup/fix_anova.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408a5/
+  - file: /csv_backup/fix_anova_rms.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408a7/
+  - file: /csv_backup/fix_anova_std.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408a9/
+  - file: /csv_backup/fix_df_eth.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408ab/
+  - file: /csv_backup/fix_df_eth.pkl size=None download=https://osf.io/download/685bd143acfc1dc0e71408ad/
+  - file: /csv_backup/fix_df_faze.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408af/
+  - file: /csv_backup/fix_df_faze.pkl size=None download=https://osf.io/download/685bd143acfc1dc0e71408b1/
+  - file: /csv_backup/fix_df_mpii.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408b3/
+  - file: /csv_backup/fix_df_mpii.pkl size=None download=https://osf.io/download/685bd143acfc1dc0e71408b5/
+  - file: /csv_backup/fv_anova_auc.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408b7/
+  - file: /csv_backup/fv_anova_avg_fixations.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408b9/
+  - file: /csv_backup/fv_anova_entropy.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408bb/
+  - file: /csv_backup/FV_df_eth.csv size=None download=https://osf.io/download/685bd143acfc1dc0e7140875/
+  - file: /csv_backup/FV_df_eth.pkl size=None download=https://osf.io/download/685bd143acfc1dc0e7140877/
+  - file: /csv_backup/FV_df_faze.csv size=None download=https://osf.io/download/685bd143acfc1dc0e7140879/
+  - file: /csv_backup/FV_df_faze.pkl size=None download=https://osf.io/download/685bd143acfc1dc0e714087b/
+  - file: /csv_backup/FV_df_mpii.csv size=None download=https://osf.io/download/685bd143acfc1dc0e714087d/
+  - file: /csv_backup/FV_df_mpii.pkl size=None download=https://osf.io/download/685bd143acfc1dc0e714087f/
+  - file: /csv_backup/judd_comparison_indices.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408bd/
+  - file: /csv_backup/sp_anova.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408bf/
+  - file: /csv_backup/sp_anova_durations.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408c1/
+  - file: /csv_backup/sp_anova_onsets.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408c3/
+  - file: /csv_backup/SP_df_eth size=None download=https://osf.io/download/685bd143acfc1dc0e7140881/
+  - file: /csv_backup/SP_df_eth.csv size=None download=https://osf.io/download/685bd143acfc1dc0e7140883/
+  - file: /csv_backup/SP_df_faze size=None download=https://osf.io/download/t29dv/
+  - file: /csv_backup/SP_df_faze.csv size=None download=https://osf.io/download/685bd143acfc1dc0e7140887/
+  - file: /csv_backup/SP_df_mpii size=None download=https://osf.io/download/hv86e/
+  - file: /csv_backup/SP_df_mpii.csv size=None download=https://osf.io/download/685bd143acfc1dc0e714088b/
+  - file: /csv_backup/subjects_list.pkl size=None download=https://osf.io/download/zqmnc/
+  - file: /csv_backup/zone_anova.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408c7/
+  - file: /csv_backup/zone_df_eth.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408c9/
+  - file: /csv_backup/Zone_df_eth.csv size=None download=https://osf.io/download/685bd143acfc1dc0e714088d/
+  - file: /csv_backup/Zone_df_eth.pkl size=None download=https://osf.io/download/yrqts/
+  - file: /csv_backup/zone_df_faze.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408cb/
+  - file: /csv_backup/Zone_df_faze.csv size=None download=https://osf.io/download/685bd143acfc1dc0e7140891/
+  - file: /csv_backup/Zone_df_faze.pkl size=None download=https://osf.io/download/685bd143acfc1dc0e7140893/
+  - file: /csv_backup/zone_df_mpii.csv size=None download=https://osf.io/download/685bd143acfc1dc0e71408cd/
+  - file: /csv_backup/Zone_df_mpii.csv size=None download=https://osf.io/download/685bd143acfc1dc0e7140895/
+  - file: /csv_backup/Zone_df_mpii.pkl size=None download=https://osf.io/download/685bd143acfc1dc0e7140897/
+- folder: /FreeView_Images/ size=None download=None
+  - file: /FreeView_Images/i05june05_static_street_boston_p1010806.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c21c/
+  - file: /FreeView_Images/i102423191.jpeg size=None download=https://osf.io/download/ts7fb/
+  - file: /FreeView_Images/i110996888.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c220/
+  - file: /FreeView_Images/i1126243635.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c222/
+  - file: /FreeView_Images/i1142164052.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c224/
+  - file: /FreeView_Images/i1158892521.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c226/
+  - file: /FreeView_Images/i117772445.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c228/
+  - file: /FreeView_Images/i12030916.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c22a/
+  - file: /FreeView_Images/i12049788.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c22c/
+  - file: /FreeView_Images/i132419257.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c22e/
+  - file: /FreeView_Images/i14020903.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c230/
+  - file: /FreeView_Images/i1508828.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c232/
+  - file: /FreeView_Images/i2057541.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c234/
+  - file: /FreeView_Images/i2234959271.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c236/
+  - file: /FreeView_Images/i40576393.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c238/
+  - file: /FreeView_Images/i4466881.jpeg size=None download=https://osf.io/download/68a0bd2402e62e269ed7c23a/
+  - folder: /FreeView_Images/.ipynb_checkpoints/ size=None download=None
+    - file: /FreeView_Images/.ipynb_checkpoints/i05june05_static_street_boston_p1010806-checkpoint.jpeg size=None download=https://osf.io/download/69bb8952cd4e38dd337c750e/
+    - file: /FreeView_Images/.ipynb_checkpoints/i110996888-checkpoint.jpeg size=None download=https://osf.io/download/69bb8952cd4e38dd337c7510/
+- folder: /FreeView_maps/ size=None download=None
+  - file: /FreeView_maps/i05june05_static_street_boston_p1010806_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b82/
+  - file: /FreeView_maps/i102423191_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b84/
+  - file: /FreeView_maps/i110996888_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b86/
+  - file: /FreeView_maps/i1126243635_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b88/
+  - file: /FreeView_maps/i1142164052_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b8a/
+  - file: /FreeView_maps/i1158892521_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b8c/
+  - file: /FreeView_maps/i117772445_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b8e/
+  - file: /FreeView_maps/i12030916_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b90/
+  - file: /FreeView_maps/i12049788_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b92/
+  - file: /FreeView_maps/i132419257_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b94/
+  - file: /FreeView_maps/i14020903_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b96/
+  - file: /FreeView_maps/i1508828_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b98/
+  - file: /FreeView_maps/i2057541_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b9a/
+  - file: /FreeView_maps/i2234959271_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b9c/
+  - file: /FreeView_maps/i40576393_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92b9e/
+  - file: /FreeView_maps/i4466881_fixMap.jpg size=None download=https://osf.io/download/689d5382f22c2b53d9e92ba0/
+  - folder: /FreeView_maps/.ipynb_checkpoints/ size=None download=None
+    - file: /FreeView_maps/.ipynb_checkpoints/i05june05_static_street_boston_p1010806_fixMap-checkpoint.jpg size=None download=https://osf.io/download/69bb895b6acac65f78b4ee69/
+- file: /Participant_Analysis.ipynb size=None download=https://osf.io/download/xtcvh/
+- folder: /Project_presentation/ size=None download=None
+  - folder: /Project_presentation/css/ size=None download=None
+    - file: /Project_presentation/css/layout.scss size=None download=https://osf.io/download/9nte4/
+    - folder: /Project_presentation/css/print/ size=None download=None
+      - file: /Project_presentation/css/print/paper.scss size=None download=https://osf.io/download/3cb6u/
+      - file: /Project_presentation/css/print/pdf.scss size=None download=https://osf.io/download/mtbu9/
+    - file: /Project_presentation/css/reveal.scss size=None download=https://osf.io/download/2bejq/
+    - folder: /Project_presentation/css/theme/ size=None download=None
+      - file: /Project_presentation/css/theme/README.md size=None download=https://osf.io/download/qc8ud/
+      - folder: /Project_presentation/css/theme/source/ size=None download=None
+        - file: /Project_presentation/css/theme/source/beige.scss size=None download=https://osf.io/download/69bb896db9de593742bff673/
+        - file: /Project_presentation/css/theme/source/black.scss size=None download=https://osf.io/download/69bb896db9de593742bff675/
+        - file: /Project_presentation/css/theme/source/blood.scss size=None download=https://osf.io/download/69bb896db9de593742bff677/
+        - file: /Project_presentation/css/theme/source/league.scss size=None download=https://osf.io/download/69bb896db9de593742bff679/
+        - file: /Project_presentation/css/theme/source/moon.scss size=None download=https://osf.io/download/69bb896db9de593742bff67b/
+        - file: /Project_presentation/css/theme/source/night.scss size=None download=https://osf.io/download/69bb896db9de593742bff67d/
+        - file: /Project_presentation/css/theme/source/serif.scss size=None download=https://osf.io/download/69bb896db9de593742bff67f/
+        - file: /Project_presentation/css/theme/source/simple.scss size=None download=https://osf.io/download/69bb896db9de593742bff681/
+        - file: /Project_presentation/css/theme/source/sky.scss size=None download=https://osf.io/download/69bb896db9de593742bff683/
+        - file: /Project_presentation/css/theme/source/solarized.scss size=None download=https://osf.io/download/69bb896db9de593742bff685/
+        - file: /Project_presentation/css/theme/source/white.scss size=None download=https://osf.io/download/69bb896db9de593742bff687/
+      - folder: /Project_presentation/css/theme/template/ size=None download=None
+        - file: /Project_presentation/css/theme/template/exposer.scss size=None download=https://osf.io/download/69bb89730503948ad6bff596/
+        - file: /Project_presentation/css/theme/template/mixins.scss size=None download=https://osf.io/download/69bb89730503948ad6bff598/
+        - file: /Project_presentation/css/theme/template/settings.scss size=None download=https://osf.io/download/69bb89730503948ad6bff59a/
+        - file: /Project_presentation/css/theme/template/theme.scss size=None download=https://osf.io/download/69bb89730503948ad6bff59c/
+  - folder: /Project_presentation/dist/ size=None download=None
+    - file: /Project_presentation/dist/reset.css size=None download=https://osf.io/download/ku92p/
+    - file: /Project_presentation/dist/reveal.css size=None download=https://osf.io/download/vapcy/
+    - file: /Project_presentation/dist/reveal.esm.js size=None download=https://osf.io/download/6dekp/
+    - file: /Project_presentation/dist/reveal.esm.js.map size=None download=https://osf.io/download/uv89w/
+    - file: /Project_presentation/dist/reveal.js size=None download=https://osf.io/download/35n8m/
+    - file: /Project_presentation/dist/reveal.js.map size=None download=https://osf.io/download/5kj3f/
+    - folder: /Project_presentation/dist/theme/ size=None download=None
+      - file: /Project_presentation/dist/theme/beige.css size=None download=https://osf.io/download/v3atj/
+      - file: /Project_presentation/dist/theme/black.css size=None download=https://osf.io/download/2hrwa/
+      - file: /Project_presentation/dist/theme/blood.css size=None download=https://osf.io/download/fzvu3/
+      - folder: /Project_presentation/dist/theme/fonts/ size=None download=None
+        - folder: /Project_presentation/dist/theme/fonts/league-gothic/ size=None download=None
+          - file: /Project_presentation/dist/theme/fonts/league-gothic/league-gothic.css size=None download=https://osf.io/download/69bb897c8aa37b8d8fbff5fa/
+          - file: /Project_presentation/dist/theme/fonts/league-gothic/league-gothic.eot size=None download=https://osf.io/download/69bb897c8aa37b8d8fbff5fc/
+          - file: /Project_presentation/dist/theme/fonts/league-gothic/league-gothic.ttf size=None download=https://osf.io/download/69bb897c8aa37b8d8fbff5fe/
+          - file: /Project_presentation/dist/theme/fonts/league-gothic/league-gothic.woff size=None download=https://osf.io/download/69bb897c8aa37b8d8fbff600/
+          - file: /Project_presentation/dist/theme/fonts/league-gothic/LICENSE size=None download=https://osf.io/download/69bb897c8aa37b8d8fbff5f8/
+        - folder: /Project_presentation/dist/theme/fonts/source-sans-pro/ size=None download=None
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/LICENSE size=None download=https://osf.io/download/69bb897ef042bd47e57c7519/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro.css size=None download=https://osf.io/download/69bb897ff042bd47e57c7533/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-italic.eot size=None download=https://osf.io/download/69bb897ef042bd47e57c751b/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-italic.ttf size=None download=https://osf.io/download/69bb897ef042bd47e57c751d/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-italic.woff size=None download=https://osf.io/download/69bb897ff042bd47e57c751f/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-regular.eot size=None download=https://osf.io/download/69bb897ff042bd47e57c7521/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-regular.ttf size=None download=https://osf.io/download/69bb897ff042bd47e57c7523/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-regular.woff size=None download=https://osf.io/download/69bb897ff042bd47e57c7525/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-semibold.eot size=None download=https://osf.io/download/69bb897ff042bd47e57c7527/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-semibolditalic.eot size=None download=https://osf.io/download/69bb897ff042bd47e57c752d/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-semibolditalic.ttf size=None download=https://osf.io/download/69bb897ff042bd47e57c752f/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-semibolditalic.woff size=None download=https://osf.io/download/69bb897ff042bd47e57c7531/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-semibold.ttf size=None download=https://osf.io/download/69bb897ff042bd47e57c7529/
+          - file: /Project_presentation/dist/theme/fonts/source-sans-pro/source-sans-pro-semibold.woff size=None download=https://osf.io/download/69bb897ff042bd47e57c752b/
+      - file: /Project_presentation/dist/theme/league.css size=None download=https://osf.io/download/7z4et/
+      - file: /Project_presentation/dist/theme/moon.css size=None download=https://osf.io/download/dtmbx/
+      - file: /Project_presentation/dist/theme/night.css size=None download=https://osf.io/download/8nsr4/
+      - file: /Project_presentation/dist/theme/serif.css size=None download=https://osf.io/download/grdn8/
+      - file: /Project_presentation/dist/theme/simple.css size=None download=https://osf.io/download/qzc5x/
+      - file: /Project_presentation/dist/theme/sky.css size=None download=https://osf.io/download/bdg94/
+      - file: /Project_presentation/dist/theme/solarized.css size=None download=https://osf.io/download/dgmyp/
+      - file: /Project_presentation/dist/theme/white.css size=None download=https://osf.io/download/eq6vp/
+  - file: /Project_presentation/.gitignore size=None download=https://osf.io/download/4umaq/
+  - file: /Project_presentation/gulpfile.js size=None download=https://osf.io/download/2dzjp/
+  - folder: /Project_presentation/images/ size=None download=None
+    - file: /Project_presentation/images/appearance_based.png size=None download=https://osf.io/download/68a6d810c05f3f632add15da/
+    - folder: /Project_presentation/images/blinks/ size=None download=None
+      - file: /Project_presentation/images/blinks/models.png size=None download=https://osf.io/download/68aad37048bdedb3e27816c9/
+      - file: /Project_presentation/images/blinks/overall.png size=None download=https://osf.io/download/68aad37048bdedb3e27816cb/
+      - file: /Project_presentation/images/blinks/single_trial.png size=None download=https://osf.io/download/68aad37048bdedb3e27816cd/
+    - file: /Project_presentation/images/blinks.png size=None download=https://osf.io/download/68a6d810c05f3f632add15dc/
+    - folder: /Project_presentation/images/calibration/ size=None download=None
+      - file: /Project_presentation/images/calibration/calibration_ETRA.pdf size=None download=https://osf.io/download/r8jwa/
+      - file: /Project_presentation/images/calibration/dev_calib1.png size=None download=https://osf.io/download/68aca9eb5a8366ed3dc3ec6b/
+      - file: /Project_presentation/images/calibration/dev_calib2.png size=None download=https://osf.io/download/68aca9eb5a8366ed3dc3ec6d/
+      - file: /Project_presentation/images/calibration/E_calib.gif size=None download=https://osf.io/download/68aca9eb5a8366ed3dc3ec65/
+      - file: /Project_presentation/images/calibration/SP_calib.png size=None download=https://osf.io/download/68aca9eb5a8366ed3dc3ec67/
+    - file: /Project_presentation/images/calib_results.png size=None download=https://osf.io/download/68a6d810c05f3f632add15df/
+    - file: /Project_presentation/images/eye1.png size=None download=https://osf.io/download/68a6d810c05f3f632add15e2/
+    - file: /Project_presentation/images/eye_infra.jpg size=None download=https://osf.io/download/68a6d810c05f3f632add15e4/
+    - file: /Project_presentation/images/eye_webcam.png size=None download=https://osf.io/download/68a6d810c05f3f632add15e6/
+    - folder: /Project_presentation/images/fixation/ size=None download=None
+      - file: /Project_presentation/images/fixation/fix.gif size=None download=https://osf.io/download/68aa91c44cbe3aa173781bad/
+      - file: /Project_presentation/images/fixation/overall.png size=None download=https://osf.io/download/68aa91c44cbe3aa173781baf/
+      - file: /Project_presentation/images/fixation/single_trial.png size=None download=https://osf.io/download/68aa91c44cbe3aa173781bb1/
+    - file: /Project_presentation/images/fixation.png size=None download=https://osf.io/download/68a6d810c05f3f632add15e8/
+    - folder: /Project_presentation/images/free_viewing/ size=None download=None
+      - file: /Project_presentation/images/free_viewing/overall.png size=None download=https://osf.io/download/68bc6f63b137522dbe83f5ac/
+      - file: /Project_presentation/images/free_viewing/overall_withGT.png size=None download=https://osf.io/download/68bc6f63b137522dbe83f5ae/
+      - file: /Project_presentation/images/free_viewing/single_trial.png size=None download=https://osf.io/download/68bc6f63b137522dbe83f5b0/
+      - file: /Project_presentation/images/free_viewing/step1.png size=None download=https://osf.io/download/68bc6f63b137522dbe83f5b2/
+      - file: /Project_presentation/images/free_viewing/step2.png size=None download=https://osf.io/download/68bc6f63b137522dbe83f5b4/
+      - file: /Project_presentation/images/free_viewing/step3.png size=None download=https://osf.io/download/68bc6f63b137522dbe83f5b6/
+    - file: /Project_presentation/images/free_viewing.png size=None download=https://osf.io/download/68a6d810c05f3f632add15eb/
+    - file: /Project_presentation/images/Gaze360.png size=None download=https://osf.io/download/68a6d810c05f3f632add15d6/
+    - file: /Project_presentation/images/legend.png size=None download=https://osf.io/download/68a6d810c05f3f632add15ee/
+    - file: /Project_presentation/images/model based1.png size=None download=https://osf.io/download/68a6d810c05f3f632add15f0/
+    - file: /Project_presentation/images/model based2.png size=None download=https://osf.io/download/68a6d810c05f3f632add15f2/
+    - file: /Project_presentation/images/overview_experiment.png size=None download=https://osf.io/download/68a6d810c05f3f632add15f4/
+    - file: /Project_presentation/images/participants.png size=None download=https://osf.io/download/68a6d810c05f3f632add15f6/
+    - file: /Project_presentation/images/result_sum.png size=None download=https://osf.io/download/68a6d810c05f3f632add15f8/
+    - file: /Project_presentation/images/rods_and_cones.png size=None download=https://osf.io/download/68a6d810c05f3f632add15fa/
+    - file: /Project_presentation/images/rtgene.gif size=None download=https://osf.io/download/68a6d810c05f3f632add15fc/
+    - folder: /Project_presentation/images/smooth_pursuit/ size=None download=None
+      - file: /Project_presentation/images/smooth_pursuit/overall2.png size=None download=https://osf.io/download/68c19ea8261fcd7e2883f5db/
+      - file: /Project_presentation/images/smooth_pursuit/overall.png size=None download=https://osf.io/download/68c19ea8261fcd7e2883f5d9/
+      - file: /Project_presentation/images/smooth_pursuit/single_trial.png size=None download=https://osf.io/download/68c19ea8261fcd7e2883f5dd/
+      - file: /Project_presentation/images/smooth_pursuit/SP_1.png size=None download=https://osf.io/download/68c19ea8261fcd7e2883f5d5/
+      - file: /Project_presentation/images/smooth_pursuit/SP_2.png size=None download=https://osf.io/download/68c19ea8261fcd7e2883f5d7/
+    - file: /Project_presentation/images/SP_calib.png size=None download=https://osf.io/download/68a6d810c05f3f632add15d8/
+    - file: /Project_presentation/images/task_seq2.png size=None download=https://osf.io/download/68a6d810c05f3f632add1601/
+    - file: /Project_presentation/images/task_seq.png size=None download=https://osf.io/download/68a6d810c05f3f632add15ff/
+    - file: /Project_presentation/images/webcam_based.png size=None download=https://osf.io/download/68a6d810c05f3f632add1603/
+    - folder: /Project_presentation/images/zone/ size=None download=None
+      - file: /Project_presentation/images/zone/1x2.png size=None download=https://osf.io/download/68c11434708f30d14283f5f6/
+      - file: /Project_presentation/images/zone/2x1.png size=None download=https://osf.io/download/68c11434708f30d14283f5f8/
+      - file: /Project_presentation/images/zone/2x2.png size=None download=https://osf.io/download/68c11434708f30d14283f5fa/
+      - file: /Project_presentation/images/zone/overall.png size=None download=https://osf.io/download/68c11434708f30d14283f5fc/
+      - file: /Project_presentation/images/zone/single_trial.png size=None download=https://osf.io/download/68c11434708f30d14283f5fe/
+    - file: /Project_presentation/images/zone_classification.gif size=None download=https://osf.io/download/68a6d810c05f3f632add1606/
+  - file: /Project_presentation/index.html size=None download=https://osf.io/download/zr75d/
+  - folder: /Project_presentation/js/ size=None download=None
+    - folder: /Project_presentation/js/components/ size=None download=None
+      - file: /Project_presentation/js/components/playback.js size=None download=https://osf.io/download/kr3en/
+    - file: /Project_presentation/js/config.js size=None download=https://osf.io/download/68a88b49a563ccaa8dc3ec0e/
+    - folder: /Project_presentation/js/controllers/ size=None download=None
+      - file: /Project_presentation/js/controllers/autoanimate.js size=None download=https://osf.io/download/kpuac/
+      - file: /Project_presentation/js/controllers/backgrounds.js size=None download=https://osf.io/download/5v3wp/
+      - file: /Project_presentation/js/controllers/controls.js size=None download=https://osf.io/download/nxqwj/
+      - file: /Project_presentation/js/controllers/focus.js size=None download=https://osf.io/download/2vwe4/
+      - file: /Project_presentation/js/controllers/fragments.js size=None download=https://osf.io/download/q6vmj/
+      - file: /Project_presentation/js/controllers/keyboard.js size=None download=https://osf.io/download/vxghw/
+      - file: /Project_presentation/js/controllers/location.js size=None download=https://osf.io/download/pc5w3/
+      - file: /Project_presentation/js/controllers/notes.js size=None download=https://osf.io/download/nqg2p/
+      - file: /Project_presentation/js/controllers/overview.js size=None download=https://osf.io/download/y7tqc/
+      - file: /Project_presentation/js/controllers/plugins.js size=None download=https://osf.io/download/bnwvf/
+      - file: /Project_presentation/js/controllers/pointer.js size=None download=https://osf.io/download/qwjzv/
+      - file: /Project_presentation/js/controllers/print.js size=None download=https://osf.io/download/vhkem/
+      - file: /Project_presentation/js/controllers/progress.js size=None download=https://osf.io/download/rz97p/
+      - file: /Project_presentation/js/controllers/slidecontent.js size=None download=https://osf.io/download/pw5vr/
+      - file: /Project_presentation/js/controllers/slidenumber.js size=None download=https://osf.io/download/p8gfr/
+      - file: /Project_presentation/js/controllers/touch.js size=None download=https://osf.io/download/zsj78/
+    - file: /Project_presentation/js/index.js size=None download=https://osf.io/download/nmqhp/
+    - file: /Project_presentation/js/reveal.js size=None download=https://osf.io/download/rktf7/
+    - folder: /Project_presentation/js/utils/ size=None download=None
+      - file: /Project_presentation/js/utils/color.js size=None download=https://osf.io/download/cpxjs/
+      - file: /Project_presentation/js/utils/constants.js size=None download=https://osf.io/download/ctnry/
+      - file: /Project_presentation/js/utils/device.js size=None download=https://osf.io/download/9cbft/
+      - file: /Project_presentation/js/utils/loader.js size=None download=https://osf.io/download/gdj89/
+      - file: /Project_presentation/js/utils/util.js size=None download=https://osf.io/download/87t45/
+  - folder: /Project_presentation/JsPsych_demo/ size=None download=None
+    - folder: /Project_presentation/JsPsych_demo/assets/ size=None download=None
+      - file: /Project_presentation/JsPsych_demo/assets/Credit-Card.png size=None download=https://osf.io/download/68ac63fb592edef196c3ee80/
+    - file: /Project_presentation/JsPsych_demo/card_calib.html size=None download=https://osf.io/download/8rc2z/
+    - folder: /Project_presentation/JsPsych_demo/jspsych/ size=None download=None
+      - file: /Project_presentation/JsPsych_demo/jspsych/extension-mouse-tracking.js size=None download=https://osf.io/download/56xey/
+      - file: /Project_presentation/JsPsych_demo/jspsych/extension-webgazer.js size=None download=https://osf.io/download/yx29d/
+      - file: /Project_presentation/JsPsych_demo/jspsych/jspsych.css size=None download=https://osf.io/download/wq9hj/
+      - file: /Project_presentation/JsPsych_demo/jspsych/jspsych.js size=None download=https://osf.io/download/s5d2x/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-animation.js size=None download=https://osf.io/download/eyt3r/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-audio-button-response.js size=None download=https://osf.io/download/x8gpy/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-audio-keyboard-response.js size=None download=https://osf.io/download/pwx7k/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-audio-slider-response.js size=None download=https://osf.io/download/7cu63/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-browser-check.js size=None download=https://osf.io/download/e6kas/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-call-function.js size=None download=https://osf.io/download/n56pv/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-canvas-button-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec38/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-canvas-keyboard-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec3a/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-canvas-slider-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec3c/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-categorize-animation.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec3e/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-categorize-html.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec40/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-categorize-image.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec42/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-cloze.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec44/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-external-html.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec46/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-free-sort.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec48/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-fullscreen.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec4a/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-html-audio-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec4c/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-html-button-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec4e/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-html-keyboard-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec50/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-html-slider-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec52/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-iat-html.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec54/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-iat-image.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec56/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-image-button-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec58/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-image-keyboard-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec5a/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-image-slider-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec5c/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-initialize-microphone.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec5e/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-instructions.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec60/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-maxdiff.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec62/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-preload.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec64/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-reconstruction.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec66/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-resize.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec68/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-same-different-html.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec6a/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-same-different-image.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec6c/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-serial-reaction-time.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec70/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-serial-reaction-time-mouse.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec6e/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-sketchpad.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec72/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-survey-html-form.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec74/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-survey.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec7e/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-survey-likert.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec76/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-survey-multi-choice.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec78/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-survey-multi-select.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec7a/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-survey-text.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec7c/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-video-button-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec80/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-video-keyboard-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec82/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-video-slider-response.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec84/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-virtual-chinrest.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec86/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-visual-search-circle.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec88/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-webgazer-calibrate.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec8a/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-webgazer-init-camera.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec8c/
+      - file: /Project_presentation/JsPsych_demo/jspsych/plugin-webgazer-validate.js size=None download=https://osf.io/download/68abf9ff40de69118dc3ec8e/
+  - file: /Project_presentation/LICENSE size=None download=https://osf.io/download/mvt2z/
+  - file: /Project_presentation/.npmignore size=None download=https://osf.io/download/rdp2c/
+  - file: /Project_presentation/package.json size=None download=https://osf.io/download/68a2b4bbfb6860fe94d7bed6/
+  - file: /Project_presentation/package-lock.json size=None download=https://osf.io/download/68a2b4bbfb6860fe94d7bed4/
+  - folder: /Project_presentation/plugin/ size=None download=None
+    - folder: /Project_presentation/plugin/external/ size=None download=None
+      - file: /Project_presentation/plugin/external/external.js size=None download=https://osf.io/download/69bb89d4f042bd47e57c7554/
+    - folder: /Project_presentation/plugin/highlight/ size=None download=None
+      - file: /Project_presentation/plugin/highlight/highlight.esm.js size=None download=https://osf.io/download/69bb89d746a7b80ac07c762a/
+      - file: /Project_presentation/plugin/highlight/highlight.js size=None download=https://osf.io/download/69bb89d746a7b80ac07c762c/
+      - file: /Project_presentation/plugin/highlight/monokai.css size=None download=https://osf.io/download/69bb89d746a7b80ac07c762e/
+      - file: /Project_presentation/plugin/highlight/plugin.js size=None download=https://osf.io/download/69bb89d746a7b80ac07c7630/
+      - file: /Project_presentation/plugin/highlight/zenburn.css size=None download=https://osf.io/download/69bb89d746a7b80ac07c7632/
+    - folder: /Project_presentation/plugin/markdown/ size=None download=None
+      - file: /Project_presentation/plugin/markdown/markdown.esm.js size=None download=https://osf.io/download/69bb89d90e158829efb4eede/
+      - file: /Project_presentation/plugin/markdown/markdown.js size=None download=https://osf.io/download/69bb89d90e158829efb4eee0/
+      - file: /Project_presentation/plugin/markdown/plugin.js size=None download=https://osf.io/download/69bb89d90e158829efb4eee2/
+    - folder: /Project_presentation/plugin/math/ size=None download=None
+      - file: /Project_presentation/plugin/math/katex.js size=None download=https://osf.io/download/69bb89dc4067d7dddf7c7536/
+      - file: /Project_presentation/plugin/math/math.esm.js size=None download=https://osf.io/download/69bb89dc4067d7dddf7c7538/
+      - file: /Project_presentation/plugin/math/mathjax2.js size=None download=https://osf.io/download/69bb89dc4067d7dddf7c753c/
+      - file: /Project_presentation/plugin/math/mathjax3.js size=None download=https://osf.io/download/69bb89dc4067d7dddf7c753e/
+      - file: /Project_presentation/plugin/math/math.js size=None download=https://osf.io/download/69bb89dc4067d7dddf7c753a/
+      - file: /Project_presentation/plugin/math/plugin.js size=None download=https://osf.io/download/69bb89dc4067d7dddf7c7540/
+    - folder: /Project_presentation/plugin/notes/ size=None download=None
+      - file: /Project_presentation/plugin/notes/notes.esm.js size=None download=https://osf.io/download/69bb89e0b69f9d2e1fbff64e/
+      - file: /Project_presentation/plugin/notes/notes.js size=None download=https://osf.io/download/69bb89e0b69f9d2e1fbff650/
+      - file: /Project_presentation/plugin/notes/plugin.js size=None download=https://osf.io/download/69bb89e0b69f9d2e1fbff652/
+      - file: /Project_presentation/plugin/notes/speaker-view.html size=None download=https://osf.io/download/69bb89e0b69f9d2e1fbff654/
+    - folder: /Project_presentation/plugin/search/ size=None download=None
+      - file: /Project_presentation/plugin/search/plugin.js size=None download=https://osf.io/download/69bb89e265bd092e24bff66a/
+      - file: /Project_presentation/plugin/search/search.esm.js size=None download=https://osf.io/download/69bb89e265bd092e24bff66c/
+      - file: /Project_presentation/plugin/search/search.js size=None download=https://osf.io/download/69bb89e265bd092e24bff66e/
+    - folder: /Project_presentation/plugin/zoom/ size=None download=None
+      - file: /Project_presentation/plugin/zoom/plugin.js size=None download=https://osf.io/download/69bb89e5ea34c2a56a7c7595/
+      - file: /Project_presentation/plugin/zoom/zoom.esm.js size=None download=https://osf.io/download/69bb89e5ea34c2a56a7c7597/
+      - file: /Project_presentation/plugin/zoom/zoom.js size=None download=https://osf.io/download/69bb89e5ea34c2a56a7c7599/
+  - folder: /Project_presentation/test/ size=None download=None
+    - folder: /Project_presentation/test/assets/ size=None download=None
+      - file: /Project_presentation/test/assets/external-script-a.js size=None download=https://osf.io/download/69bb89ea78f03f9274b4ee49/
+      - file: /Project_presentation/test/assets/external-script-b.js size=None download=https://osf.io/download/69bb89ea78f03f9274b4ee4b/
+      - file: /Project_presentation/test/assets/external-script-c.js size=None download=https://osf.io/download/69bb89ea78f03f9274b4ee4d/
+      - file: /Project_presentation/test/assets/external-script-d.js size=None download=https://osf.io/download/69bb89ea78f03f9274b4ee4f/
+    - file: /Project_presentation/test/simple.md size=None download=https://osf.io/download/69bb89e76acac65f78b4ee6c/
+    - file: /Project_presentation/test/test-auto-animate.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee6e/
+    - file: /Project_presentation/test/test-dependencies-async.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee70/
+    - file: /Project_presentation/test/test-dependencies.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee72/
+    - file: /Project_presentation/test/test-grid-navigation.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee74/
+    - file: /Project_presentation/test/test.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee86/
+    - file: /Project_presentation/test/test-iframe-backgrounds.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee76/
+    - file: /Project_presentation/test/test-iframes.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee78/
+    - file: /Project_presentation/test/test-markdown.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee7a/
+    - file: /Project_presentation/test/test-multiple-instances-es5.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee7c/
+    - file: /Project_presentation/test/test-multiple-instances.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee7e/
+    - file: /Project_presentation/test/test-pdf.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee80/
+    - file: /Project_presentation/test/test-plugins.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee82/
+    - file: /Project_presentation/test/test-state.html size=None download=https://osf.io/download/69bb89e76acac65f78b4ee84/
+- file: /Readme.md size=None download=https://osf.io/download/mabe8/
+- file: /requirements.txt size=None download=https://osf.io/download/67be3fac3350b05774f8cb84/
+- file: /Task_Analysis.ipynb size=None download=https://osf.io/download/kspgm/
+- file: /Task_ANOVA.ipynb size=None download=https://osf.io/download/kgn26/
+- file: /task_seq.png size=None download=https://osf.io/download/67be3fac3350b05774f8cb86/
