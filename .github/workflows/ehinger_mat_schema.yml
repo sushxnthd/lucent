@@ -1,0 +1,59 @@
+name: inspect-ehinger-mat-events
+
+on:
+  push:
+    branches: ['ehinger-prf-replication']
+    paths:
+      - '.github/workflows/ehinger_mat_schema.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ehinger-prf-replication
+      - name: Download one small raw MAT
+        run: curl -L --fail --retry 3 -o /tmp/etc_s001.mat https://ndownloader.figshare.com/files/13779200
+      - name: Inspect MAT
+        run: |
+          python -m pip install scipy numpy
+          python - <<'PY'
+          from scipy.io import loadmat
+          import numpy as np
+          from pathlib import Path
+
+          d=loadmat('/tmp/etc_s001.mat',squeeze_me=True,struct_as_record=False)
+          lines=['# Ehinger etc_s001.mat schema','']
+          def desc(v,depth=0,name='root'):
+              ind='  '*depth
+              lines.append(f'{ind}{name}: type={type(v).__name__} shape={getattr(v,"shape",None)} dtype={getattr(v,"dtype",None)}')
+              if depth>=8:return
+              if hasattr(v,'_fieldnames') and v._fieldnames:
+                  for fld in v._fieldnames:
+                      desc(getattr(v,fld),depth+1,fld)
+              elif isinstance(v,np.ndarray):
+                  if v.dtype==object:
+                      for i,item in enumerate(v.reshape(-1)[:40]): desc(item,depth+1,f'[{i}]')
+                  elif v.size<=100:
+                      lines.append(f'{ind}  values={np.asarray(v).reshape(-1).tolist()}')
+                  else:
+                      lines.append(f'{ind}  sample={np.asarray(v).reshape(-1)[:30].tolist()}')
+              elif isinstance(v,(str,int,float,bool,np.number)):
+                  lines.append(f'{ind}  value={v!r}')
+          for k,v in d.items():
+              if not k.startswith('__'): desc(v,0,k)
+          Path('results/EHINGER_MAT_SCHEMA.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:2000]))
+          PY
+      - name: Commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/EHINGER_MAT_SCHEMA.md
+          git commit -m 'Inspect Ehinger event MAT structure [skip ci]' || exit 0
+          git push origin HEAD:ehinger-prf-replication
