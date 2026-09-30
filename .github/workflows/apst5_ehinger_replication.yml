@@ -1,0 +1,40 @@
+name: apst5-ehinger-replication
+
+on:
+  push:
+    branches: ['ehinger-prf-replication']
+    paths:
+      - 'experiments/ehinger_human_prf.py'
+      - 'experiments/registrations/APST5_EHINGER_001.md'
+      - '.github/workflows/apst5_ehinger_replication.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ehinger-prf-replication
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - name: Install
+        run: python -m pip install numpy pandas
+      - name: Download public preprocessed luminance table
+        run: curl -L --fail --retry 3 -o /tmp/lum_binned.csv https://ndownloader.figshare.com/files/14184857
+      - name: Run preregistered independent replication
+        run: |
+          python experiments/ehinger_human_prf.py --csv /tmp/lum_binned.csv --output results/APST5_EHINGER_001.md
+      - name: Commit frozen result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/APST5_EHINGER_001.md
+          git commit -m 'APST5-EHINGER-001: frozen independent replication [skip ci]' || exit 0
+          git pull --rebase origin ehinger-prf-replication
+          git push origin HEAD:ehinger-prf-replication
