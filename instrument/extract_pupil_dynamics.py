@@ -107,16 +107,27 @@ def photometric_controls(
         if not np.isfinite(radius) or radius < 1.0:
             continue
 
-        yy, xx = np.mgrid[:height, :width]
-        mask = (
-            (xx - center[0]) ** 2
-            + (yy - center[1]) ** 2
-            <= (0.92 * radius) ** 2
-        )
-        values = gray[mask]
-        if values.size:
-            iris_medians.append(float(np.median(values)))
-            iris_radii.append(radius)
+        crop_radius = max(2, int(np.ceil(radius)))
+        cx, cy = map(int, np.round(center))
+        ix0 = max(0, cx - crop_radius)
+        ix1 = min(width, cx + crop_radius + 1)
+        iy0 = max(0, cy - crop_radius)
+        iy1 = min(height, cy + crop_radius + 1)
+
+        crop = gray[iy0:iy1, ix0:ix1]
+        if crop.size:
+            local_x = center[0] - ix0
+            local_y = center[1] - iy0
+            yy, xx = np.mgrid[: crop.shape[0], : crop.shape[1]]
+            mask = (
+                (xx - local_x) ** 2
+                + (yy - local_y) ** 2
+                <= (0.92 * radius) ** 2
+            )
+            values = crop[mask]
+            if values.size:
+                iris_medians.append(float(np.median(values)))
+                iris_radii.append(radius)
 
     right_eye = point(landmarks, 33, width, height)
     left_eye = point(landmarks, 263, width, height)
