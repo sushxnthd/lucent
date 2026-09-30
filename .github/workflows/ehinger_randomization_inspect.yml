@@ -1,0 +1,57 @@
+name: inspect-ehinger-randomization
+
+on:
+  push:
+    branches: ['pspm-luminance-calibration']
+    paths:
+      - '.github/workflows/ehinger_randomization_inspect.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pspm-luminance-calibration
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install scipy
+        run: python -m pip install scipy numpy
+      - name: Download and inspect randomization
+        run: |
+          curl -L --fail --retry 3 -o /tmp/stimuli_randomization.mat https://raw.githubusercontent.com/behinger/etcomp/master/experiment_ehinger2019/data/stimuli_randomization.mat
+          python - <<'PY'
+          from scipy.io import loadmat
+          from pathlib import Path
+          import numpy as np
+          d=loadmat('/tmp/stimuli_randomization.mat',squeeze_me=True,struct_as_record=False)
+          lines=['# Ehinger luminance randomization inspection','']
+          for k,v in d.items():
+              if k.startswith('__'): continue
+              lines.append(f'## {k}')
+              lines.append('')
+              lines.append(f'type={type(v).__name__} shape={getattr(v,"shape",None)} dtype={getattr(v,"dtype",None)}')
+              lines.append('')
+              try:
+                  lines.append('~~~text')
+                  lines.append(np.array2string(np.asarray(v),threshold=5000,max_line_width=200))
+                  lines.append('~~~')
+              except Exception as e:
+                  lines.append(f'print error: {e}')
+              lines.append('')
+          Path('results/EHINGER_RANDOMIZATION.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines))
+          PY
+      - name: Commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/EHINGER_RANDOMIZATION.md
+          git commit -m 'Inspect Ehinger luminance randomization [skip ci]' || exit 0
+          git pull --rebase origin pspm-luminance-calibration
+          git push origin HEAD:pspm-luminance-calibration
