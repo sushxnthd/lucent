@@ -1,0 +1,74 @@
+name: inspect-ehinger-lum-binned
+
+on:
+  push:
+    branches: ['ehinger-prf-replication']
+    paths:
+      - '.github/workflows/ehinger_lum_schema.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ehinger-prf-replication
+      - name: Download preprocessed luminance table
+        run: curl -L --fail --retry 3 -o /tmp/lum_binned.csv https://ndownloader.figshare.com/files/14184857
+      - name: Inspect schema
+        run: |
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+          import collections
+
+          path=Path('/tmp/lum_binned.csv')
+          lines=['# Ehinger lum_binned.csv schema','']
+          with path.open(newline='',encoding='utf-8',errors='replace') as fh:
+              reader=csv.reader(fh)
+              header=next(reader)
+              rows=[]
+              for i,row in enumerate(reader):
+                  if i<20: rows.append(row)
+                  if i>=200000: break
+
+          lines.append('Columns: '+repr(header))
+          lines.append('')
+          lines.append('First 20 rows:')
+          lines.append('')
+          lines.append('~~~text')
+          lines.extend([','.join(r) for r in rows])
+          lines.append('~~~')
+
+          # Lightweight unique-value audit over full file.
+          wanted={name:collections.Counter() for name in header if any(k in name.lower() for k in ('subject','sub','lum','color','block','time','et','eye','bin','tracker','condition','task'))}
+          n=0
+          with path.open(newline='',encoding='utf-8',errors='replace') as fh:
+              reader=csv.DictReader(fh)
+              for row in reader:
+                  n+=1
+                  for name,counter in wanted.items():
+                      if len(counter)<100:
+                          counter[row.get(name,'')]+=1
+          lines.append('')
+          lines.append(f'Rows: {n}')
+          lines.append('')
+          lines.append('## Selected unique values')
+          lines.append('')
+          for name,counter in wanted.items():
+              lines.append(f'- {name}: {counter.most_common(100)}')
+
+          Path('results/EHINGER_LUM_BINNED_SCHEMA.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:500]))
+          PY
+      - name: Commit schema
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/EHINGER_LUM_BINNED_SCHEMA.md
+          git commit -m 'Inspect independent luminance response table [skip ci]' || exit 0
+          git push origin HEAD:ehinger-prf-replication
