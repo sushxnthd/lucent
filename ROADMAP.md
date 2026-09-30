@@ -91,13 +91,60 @@ Full audit: [TEMPORAL-SCALE-AUDIT-001](results/TEMPORAL_SCALE_AUDIT_001.md)
 
 This only reduces a model-level camera-sampling risk. E002 still requires real captures.
 
+## Phase 0.97: public-human response and device bridge
+
+**Status: complete; mixed evidence**
+
+- [x] identify an open controlled-luminance human pupillometry dataset;
+- [x] freeze a participant-level equal-exposure probe test before outcome analysis;
+- [x] retain the failed confirmatory single-kernel E002 result;
+- [x] run the predeclared post-primary directional-kernel analysis;
+- [x] test complete held-out two-transition superposition adequacy;
+- [x] stress the human-calibrated E002 waveform at 50/30/24 Hz;
+- [x] identify an independent concurrent EyeLink/Pupil Labs luminance dataset;
+- [x] preregister cross-device held-out waveform transfer;
+- [x] test person-specific residual transfer against mismatched-participant negative controls.
+
+### PsPM-AOB_UW
+
+**Confirmatory primary:** not supported.
+
+Frozen E002 under one symmetric signed response kernel:
+
+- held-out P10 S **0.824**
+- held-out median S **1.059**
+- **27.3%** above S=1.25
+
+**Secondary directional model:** positive but explicitly post-primary.
+
+- design search selected frozen E002 **(1,2,8)** at rank 1;
+- held-out P10 S **1.264**;
+- held-out median S **1.836**;
+- **90.9%** above S=1.25;
+- full two-transition pooled R2 was positive for **17/22** participants;
+- 24/30 Hz sampling preserved essentially the same predicted separation.
+
+### Independent Ehinger concurrent-device dataset
+
+**Preregistered cross-device waveform criterion:** supported.
+
+- 15 participants;
+- blocks 1–3 calibration, 4–6 held out;
+- macro-r **0.9974**, 95% CI **[0.9948,0.9987]**;
+- **15/15** participants held-out r>0.70;
+- secondary leave-one-person-out residual transfer macro-r **+0.8910** versus mismatched-person null 95% **[-0.1941,+0.0846]**.
+
+**Conclusion:** the human bridge is substantially stronger than the original surrogate-only story, but it still stops one step short of Lucent's hardware claim. The decisive missing link is ordinary RGB phone capture under E002.
+
+Full synthesis: [APST5-HUMAN-CALIBRATION-001](results/APST5_HUMAN_CALIBRATION_001.md)
+
 ## Phase 1: phone observability pilot
 
 **Status: instrument implemented; real captures pending**
 
 The synchronized E002 instrument, fixed probe protocol, offline capture-quality gate, visible-light pupil extractor, and aggregate engineering decision rule are implemented and merged.
 
-The remaining step cannot be substituted with public-data analysis: collect repeated real captures on commodity phone hardware under the frozen protocol.
+Public human EyeLink data and an independent concurrent Pupil Labs/EyeLink dataset now reduce two upstream uncertainties: directional human pupil dynamics and transfer to a dedicated lower-cost video eye tracker. The remaining step still cannot be substituted with public-data analysis: collect repeated real captures on an **ordinary RGB phone front camera** under the frozen E002 protocol.
 
 The instrument can:
 
