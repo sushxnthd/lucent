@@ -1,0 +1,89 @@
+name: pspm-luminance-marker-map
+
+on:
+  push:
+    branches: ['pspm-luminance-calibration']
+    paths:
+      - '.github/workflows/pspm_luminance_marker_map.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pspm-luminance-calibration
+
+      - name: Download dataset
+        run: |
+          curl -L --fail --retry 3 -o /tmp/data.zip 'https://zenodo.org/records/8239465/files/Data.zip?download=1'
+          mkdir -p /tmp/pspm
+          unzip -q /tmp/data.zip -d /tmp/pspm
+
+      - name: Map released event and stimulus codes
+        run: |
+          python -m pip install scipy numpy
+          python - <<'PY'
+          from pathlib import Path
+          from collections import Counter,defaultdict
+          import numpy as np
+          from scipy.io import loadmat
+
+          root=Path('/tmp/pspm/Data')
+          lines=['# PsPM luminance marker / stimulus map','']
+          all_stim=Counter()
+          marker_names=Counter()
+          pairs=Counter()
+
+          for sid in range(1,24):
+              cog=root/f'AOB_UW_cogent_{sid:02d}_sn2.mat'
+              pup=root/f'AOB_UW_pupil_{sid:02d}_sn2.mat'
+              if not cog.exists(): continue
+              cd=loadmat(cog,squeeze_me=True,struct_as_record=False)
+              arr=np.asarray(cd['data'])
+              stim=arr[:,1].astype(float)
+              lines.append(f'## subject {sid:02d}')
+              lines.append('')
+              uniq,count=np.unique(stim,return_counts=True)
+              lines.append('Cogent stimulus counts: '+', '.join(f'{u:g}:{int(n)}' for u,n in zip(uniq,count)))
+              for u,n in zip(uniq,count): all_stim[float(u)]+=int(n)
+
+              if pup.exists():
+                  pd=loadmat(pup,squeeze_me=True,struct_as_record=False)
+                  markers=pd['data'].reshape(-1)[6]
+                  names=list(np.asarray(markers.markerinfo.name).reshape(-1))
+                  times=np.asarray(markers.data).reshape(-1)
+                  lines.append(f'Pupil markers: {len(names)}; first 20: '+', '.join(str(x) for x in names[:20]))
+                  for name in names: marker_names[str(name)]+=1
+                  if len(names)==len(stim):
+                      local=Counter((str(n),float(s)) for n,s in zip(names,stim))
+                      lines.append('Aligned marker->stim pairs: '+', '.join(f'{k[0]}->{k[1]:g}:{v}' for k,v in sorted(local.items())))
+                      pairs.update(local)
+                  else:
+                      lines.append(f'WARNING marker/stim length mismatch: {len(names)} vs {len(stim)}')
+              else:
+                  lines.append('Pupil luminance file missing.')
+              lines.append('')
+
+          lines.append('## Aggregate')
+          lines.append('')
+          lines.append('Cogent stimulus totals: '+', '.join(f'{k:g}:{v}' for k,v in sorted(all_stim.items())))
+          lines.append('Marker totals: '+', '.join(f'{k}:{v}' for k,v in sorted(marker_names.items())))
+          lines.append('Aligned pair totals: '+', '.join(f'{k[0]}->{k[1]:g}:{v}' for k,v in sorted(pairs.items())))
+
+          Path('results/PSPM_LUMINANCE_MARKER_MAP.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines))
+          PY
+
+      - name: Commit mapping
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/PSPM_LUMINANCE_MARKER_MAP.md
+          git commit -m 'Freeze released PsPM luminance event mapping [skip ci]' || exit 0
+          git pull --rebase origin pspm-luminance-calibration
+          git push origin HEAD:pspm-luminance-calibration
