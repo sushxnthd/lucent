@@ -2,6 +2,15 @@ name: human-calibration-reproduction
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'experiments/pspm_human_prf*.py'
+      - 'experiments/ehinger_device_transfer*.py'
+      - 'experiments/registrations/APST5_HUMAN_PRF*.md'
+      - 'experiments/registrations/EHINGER_DEVICE_TRANSFER*.md'
+      - 'results/APST5_HUMAN_PRF*.md'
+      - 'results/EHINGER_DEVICE_TRANSFER*.md'
+      - '.github/workflows/human_calibration_reproduction.yml'
 
 permissions:
   contents: read
