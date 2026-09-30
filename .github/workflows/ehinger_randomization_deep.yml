@@ -1,0 +1,71 @@
+name: inspect-ehinger-randomization-deep
+
+on:
+  push:
+    branches: ['pspm-luminance-calibration']
+    paths:
+      - '.github/workflows/ehinger_randomization_deep.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pspm-luminance-calibration
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install scipy numpy
+      - name: Inspect
+        run: |
+          curl -L --fail --retry 3 -o /tmp/random.mat https://raw.githubusercontent.com/behinger/etcomp/master/experiment_ehinger2019/data/stimuli_randomization.mat
+          python - <<'PY'
+          from scipy.io import loadmat
+          from pathlib import Path
+          import numpy as np
+          d=loadmat('/tmp/random.mat',squeeze_me=True,struct_as_record=False)
+          root=d['rand']
+          lines=['# Ehinger randomization deep inspection','']
+          def dump(obj,name,depth=0):
+              pad='  '*depth
+              lines.append(f'{pad}## {name}')
+              lines.append('')
+              fields=getattr(obj,'_fieldnames',None)
+              if fields:
+                  lines.append(f'{pad}fields: {fields}')
+                  lines.append('')
+                  for field in fields:
+                      value=getattr(obj,field)
+                      subfields=getattr(value,'_fieldnames',None)
+                      if subfields:
+                          dump(value,f'{name}.{field}',depth+1)
+                      else:
+                          arr=np.asarray(value)
+                          lines.append(f'{pad}- {field}: type={type(value).__name__} shape={arr.shape} dtype={arr.dtype}')
+                          lines.append(f'{pad}~~~text')
+                          lines.append(np.array2string(arr,threshold=10000,max_line_width=240))
+                          lines.append(f'{pad}~~~')
+                          lines.append('')
+              else:
+                  arr=np.asarray(obj)
+                  lines.append(f'{pad}type={type(obj).__name__} shape={arr.shape} dtype={arr.dtype}')
+                  lines.append(f'{pad}~~~text')
+                  lines.append(np.array2string(arr,threshold=10000,max_line_width=240))
+                  lines.append(f'{pad}~~~')
+          dump(root,'rand')
+          Path('results/EHINGER_RANDOMIZATION_DEEP.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines))
+          PY
+      - name: Commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/EHINGER_RANDOMIZATION_DEEP.md
+          git commit -m 'Inspect Ehinger randomization internals [skip ci]' || exit 0
+          git pull --rebase origin pspm-luminance-calibration
+          git push origin HEAD:pspm-luminance-calibration
