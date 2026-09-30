@@ -1,0 +1,56 @@
+name: inspect-screen-plr-biostudies
+
+on:
+  push:
+    branches: ['pspm-luminance-calibration']
+    paths:
+      - '.github/workflows/screen_plr_biostudies.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pspm-luminance-calibration
+
+      - name: Query BioStudies entry
+        run: |
+          python - <<'PY'
+          import json, urllib.request
+          from pathlib import Path
+
+          urls=[
+            'https://www.ebi.ac.uk/biostudies/api/v1/studies/S-EPMC5999086',
+            'https://www.ebi.ac.uk/biostudies/api/v1/studies?query=S-EPMC5999086',
+          ]
+          lines=['# Screen-PLR BioStudies inspection','']
+          for url in urls:
+              lines.append(f'## {url}')
+              lines.append('')
+              try:
+                  req=urllib.request.Request(url, headers={'User-Agent':'lucent-research/1.0'})
+                  with urllib.request.urlopen(req, timeout=60) as r:
+                      body=r.read().decode('utf-8', errors='replace')
+                  lines.append('~~~json')
+                  lines.extend(body.splitlines()[:1000])
+                  lines.append('~~~')
+              except Exception as e:
+                  lines.append(f'ERROR: {type(e).__name__}: {e}')
+              lines.append('')
+
+          Path('results/SCREEN_PLR_BIOSTUDIES_INSPECTION.md').write_text('\n'.join(lines), encoding='utf-8')
+          print('\n'.join(lines[:1100]))
+          PY
+
+      - name: Commit inspection
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/SCREEN_PLR_BIOSTUDIES_INSPECTION.md
+          git commit -m 'Inspect screen-PLR BioStudies entry [skip ci]' || exit 0
+          git push origin HEAD:pspm-luminance-calibration
