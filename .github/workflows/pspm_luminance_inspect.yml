@@ -1,0 +1,107 @@
+name: inspect-pspm-luminance
+
+on:
+  push:
+    branches: ['pspm-luminance-calibration']
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pspm-luminance-calibration
+
+      - name: Download public Zenodo dataset
+        run: |
+          curl -L --fail --retry 3 -o /tmp/pspm_data.zip 'https://zenodo.org/records/8239465/files/Data.zip?download=1'
+          curl -L --fail --retry 3 -o /tmp/pspm_readme.txt 'https://zenodo.org/records/8239465/files/README.txt?download=1'
+          mkdir -p /tmp/pspm
+          unzip -q /tmp/pspm_data.zip -d /tmp/pspm
+
+      - name: Inspect archive and likely luminance files
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, os
+
+          root=Path('/tmp/pspm')
+          files=sorted([p for p in root.rglob('*') if p.is_file()])
+          lines=[]
+          lines.append('# PsPM-AOB_UW structure inspection')
+          lines.append('')
+          lines.append('## README')
+          lines.append('')
+          lines.append('~~~text')
+          lines.extend(Path('/tmp/pspm_readme.txt').read_text(errors='replace').splitlines())
+          lines.append('~~~')
+          lines.append('')
+          lines.append(f'Files: {len(files)}')
+          lines.append('')
+          lines.append('## File tree')
+          lines.append('')
+          for p in files[:500]:
+              lines.append(f'- {p.relative_to(root)} ({p.stat().st_size:,} bytes)')
+
+          Path('results/PSPM_LUMINANCE_INSPECTION.md').write_text('\n'.join(lines), encoding='utf-8')
+          print('\n'.join(lines[:550]))
+          PY
+
+      - name: Inspect MAT/CSV schemas
+        run: |
+          python -m pip install scipy h5py numpy
+          python - <<'PY'
+          from pathlib import Path
+          import numpy as np
+          from scipy.io import loadmat
+
+          root=Path('/tmp/pspm')
+          candidates=[p for p in root.rglob('*') if p.is_file() and p.suffix.lower() in {'.mat','.csv','.txt','.tsv'}]
+          lines=['# PsPM-AOB_UW schema inspection','']
+          shown=0
+          for p in sorted(candidates):
+              name=str(p.relative_to(root))
+              lower=name.lower()
+              if not any(k in lower for k in ('lum','session2','s2','pupil','eye','subject','sub')):
+                  continue
+              lines.append(f'## {name}')
+              lines.append('')
+              try:
+                  if p.suffix.lower()=='.mat':
+                      try:
+                          d=loadmat(p, squeeze_me=True, struct_as_record=False)
+                          keys=[k for k in d if not k.startswith('__')]
+                          lines.append('Keys: '+', '.join(keys))
+                          for k in keys[:20]:
+                              v=d[k]
+                              lines.append(f'- {k}: type={type(v).__name__}, shape={getattr(v,"shape",None)}, dtype={getattr(v,"dtype",None)}')
+                      except Exception as e:
+                          lines.append(f'loadmat failed: {e}')
+                  else:
+                      raw=p.read_text(errors='replace').splitlines()[:15]
+                      lines.append('~~~text')
+                      lines.extend(raw)
+                      lines.append('~~~')
+              except Exception as e:
+                  lines.append(f'ERROR: {e}')
+              lines.append('')
+              shown += 1
+              if shown >= 80:
+                  break
+
+          Path('results/PSPM_LUMINANCE_SCHEMA.md').write_text('\n'.join(lines), encoding='utf-8')
+          print('\n'.join(lines[:1000]))
+          PY
+
+      - name: Commit inspection
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/PSPM_LUMINANCE_INSPECTION.md results/PSPM_LUMINANCE_SCHEMA.md
+          git commit -m 'Inspect public PsPM luminance/pupillometry dataset [skip ci]' || exit 0
+          git push origin HEAD:pspm-luminance-calibration
