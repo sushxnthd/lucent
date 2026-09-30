@@ -104,4 +104,5 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add results/PSPM_LUMINANCE_INSPECTION.md results/PSPM_LUMINANCE_SCHEMA.md
           git commit -m 'Inspect public PsPM luminance/pupillometry dataset [skip ci]' || exit 0
+          git pull --rebase origin pspm-luminance-calibration
           git push origin HEAD:pspm-luminance-calibration
