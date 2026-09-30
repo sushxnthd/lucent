@@ -1,0 +1,57 @@
+name: human-calibration-reproduction
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Download PsPM controlled-luminance data
+        run: |
+          curl -L --fail --retry 3 -o /tmp/pspm_data.zip 'https://zenodo.org/records/8239465/files/Data.zip?download=1'
+          mkdir -p /tmp/pspm
+          unzip -q /tmp/pspm_data.zip -d /tmp/pspm
+
+      - name: Reproduce primary human PRF test
+        run: python experiments/pspm_human_prf.py --data-root /tmp/pspm/Data --output results/APST5_HUMAN_PRF_001.md
+
+      - name: Reproduce directional secondary
+        run: python experiments/pspm_human_prf_directional.py --data-root /tmp/pspm/Data --output results/APST5_HUMAN_PRF_001_SECONDARY.md
+
+      - name: Reproduce secondary adequacy audit
+        run: python experiments/pspm_human_prf_adequacy.py --data-root /tmp/pspm/Data --output results/APST5_HUMAN_PRF_001_ADEQUACY.md
+
+      - name: Download Ehinger concurrent-device luminance table
+        run: curl -L --fail --retry 3 -o /tmp/lum_binned.csv https://ndownloader.figshare.com/files/14184857
+
+      - name: Reproduce Ehinger device transfer
+        run: python experiments/ehinger_device_transfer.py /tmp/lum_binned.csv --output results/EHINGER_DEVICE_TRANSFER_001.md
+
+      - name: Reproduce Ehinger specificity negative control
+        run: python experiments/ehinger_device_transfer_secondary.py /tmp/lum_binned.csv --output results/EHINGER_DEVICE_TRANSFER_001_SECONDARY.md
+
+      - name: Verify committed frozen outputs
+        run: |
+          git diff --exit-code -- \
+            results/APST5_HUMAN_PRF_001.md \
+            results/APST5_HUMAN_PRF_001_SECONDARY.md \
+            results/APST5_HUMAN_PRF_001_ADEQUACY.md \
+            results/EHINGER_DEVICE_TRANSFER_001.md \
+            results/EHINGER_DEVICE_TRANSFER_001_SECONDARY.md
