@@ -30,6 +30,25 @@ https://doi.org/10.1167/16.3.28
 
 Why it matters: provides a forward dynamical view of luminance and non-luminance pupil responses.
 
+## Public controlled-luminance calibration datasets
+
+### PsPM-AOB_UW public dataset
+
+Zenodo: https://doi.org/10.5281/zenodo.8239465
+
+Why it matters: provides repeated controlled screen-luminance transitions with 500 Hz left/right pupil diameter in millimeters. Lucent uses the released luminance recording to replace the hand-specified pupil-response surrogate with participant-specific empirical response functions in APST5-HUMAN-PRF-001.
+
+The preregistered single-kernel probe test failed. A predeclared post-primary brightening/darkening analysis selected the already frozen E002 timing on the design participants and exceeded its engineering separation threshold on held-out participants. That secondary result is kept separate from the failed primary.
+
+### Ehinger et al. Eye Tracking Comparison dataset
+
+Code: https://github.com/behinger/etcomp  
+Figshare collection: https://doi.org/10.6084/m9.figshare.c.4379810.v1
+
+Why it matters: provides concurrent EyeLink 1000 and Pupil Labs recordings during a controlled display-luminance task. EHINGER-DEVICE-TRANSFER-001 uses blocks 1–3 for device calibration and blocks 4–6 for held-out evaluation.
+
+The preregistered cross-device waveform criterion passed (macro-r 0.9974, 95% CI [0.9948,0.9987], 15/15 participant r>0.70). A secondary leave-one-person-out residual test also found person-specific cross-device agreement beyond mismatched-participant controls. Pupil Labs remains a dedicated eye tracker rather than an ordinary phone front camera.
+
 ## Screen-driven pupil response and state sensitivity
 
 ### Wang et al. (2018)

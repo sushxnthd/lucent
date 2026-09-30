@@ -20,6 +20,7 @@ dev = [
   "requests>=2.31",
   "h5py>=3.10",
   "mat73-reader==0.1.0",
+  "scipy>=1.11",
 ]
 
 [tool.setuptools.packages.find]

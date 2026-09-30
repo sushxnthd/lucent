@@ -241,6 +241,58 @@ It does **not** clear E002. Real RGB pupil extraction may be much noisier or sys
 
 Full result: [APST5-SIM-005](results/APST5_SIMULATION_005.md)
 
+## Human-calibrated active-response bridge
+
+The next audit replaced the hand-specified pupil surrogate with **public human controlled-luminance data**.
+
+### Confirmatory test: failed
+
+APST5-HUMAN-PRF-001 estimated participant-specific empirical pupil step responses from the PsPM-AOB_UW EyeLink dataset, searched all 84 equal-exposure timings on a design half, and evaluated on held-out participants.
+
+The preregistered single-kernel model **did not support** the frozen E002 sequence:
+
+- held-out P10 separation \(S\): **0.824**
+- held-out median \(S\): **1.059**
+- participants with \(S>1.25\): **27.3%**
+
+That negative result is retained.
+
+### Secondary asymmetry test
+
+A predeclared post-primary analysis then modeled **brightening and darkening with separate human response kernels**. This is secondary evidence, not a confirmatory rescue.
+
+The design-set search selected **exactly the already frozen E002 timing (1,2,8)**.
+
+| Human-calibrated directional model | Held-out P10 S | Median S | S>1.25 |
+| --- | ---: | ---: | ---: |
+| **frozen E002 (1,2,8)** | **1.264** | **1.836** | **90.9%** |
+| SIM-005 (1,2,9) | 1.238 | 1.844 | 81.8% |
+| evenly spaced (2,5,8) | 1.099 | 1.543 | 72.7% |
+
+A separate held-out adequacy audit found positive pooled two-transition \(R^2\) for **17/22 participants**, with median participant pooled \(R^2=0.3147\). Sampling the frozen E002 waveform at 50, 30, and 24 Hz left its held-out P10 separation essentially unchanged (**1.264, 1.263, 1.263**).
+
+### Independent lower-cost video-eye-tracker bridge
+
+EHINGER-DEVICE-TRANSFER-001 then used concurrent EyeLink 1000 and Pupil Labs recordings from an independent public controlled-luminance dataset.
+
+With blocks 1–3 used for participant-specific device calibration and blocks 4–6 held out:
+
+- **15/15** participants had held-out cross-device waveform \(r>0.70\);
+- Fisher-z macro-\(r\): **0.9974**
+- participant-bootstrap 95% CI: **[0.9948,0.9987]**
+- median held-out NRMSE: **0.0217**
+
+Because a generic stimulus-locked waveform could inflate that result, a secondary negative control subtracted leave-one-person-out group waveforms. Same-person residual dynamics still transferred across devices:
+
+- residual macro-\(r\): **+0.8910**
+- mismatched-person null median: **-0.0551**
+- null 95% interval: **[-0.1941,+0.0846]**
+- empirical \(p=0.000100\)
+
+This closes part of the model-to-hardware gap, but **Pupil Labs is a dedicated eye tracker, not an ordinary RGB phone camera**. E002 remains open.
+
+Full synthesis: [APST5-HUMAN-CALIBRATION-001](results/APST5_HUMAN_CALIBRATION_001.md)
+
 ## Why active probing is different
 
 Passive five-second face-video drowsiness inference is already prior art. Smartphone pupillometry is prior art. Controlled screen-evoked pupil responses are prior art. Active ocular probing is also prior art.
@@ -288,6 +340,7 @@ The repo is structured to make those claims harder to fake.
 | [REFERENCES.md](REFERENCES.md) | closest prior art and measurement literature |
 | [docs/PREREGISTRATION_TEMPLATE.md](docs/PREREGISTRATION_TEMPLATE.md) | freeze confirmatory analyses before final holdout |
 | [docs/FAILURE_MODES.md](docs/FAILURE_MODES.md) | shortcut and false-positive threat model |
+| [docs/EVIDENCE_LEDGER.md](docs/EVIDENCE_LEDGER.md) | explicit claim-by-claim evidence tier and boundary |
 | [docs/POSITIONING.md](docs/POSITIONING.md) | boundary versus ordinary drowsiness classification |
 | [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | questions that can kill or narrow the thesis |
 | [src/lucent/active_probe.py](src/lucent/active_probe.py) | pupil surrogate + information-design utilities |
@@ -296,6 +349,10 @@ The repo is structured to make those claims harder to fake.
 | [results/APST5_SIMULATION_002.md](results/APST5_SIMULATION_002.md) | personalization / temporal-compression result |
 | [results/APST5_SIMULATION_003.md](results/APST5_SIMULATION_003.md) | concurrent pupil + pursuit temporal-compression result |
 | [results/APST5_SIMULATION_004.md](results/APST5_SIMULATION_004.md) | multimodal redundancy stress test |
+| [results/APST5_HUMAN_CALIBRATION_001.md](results/APST5_HUMAN_CALIBRATION_001.md) | public-human active-response and device-transfer synthesis |
+| [results/APST5_HUMAN_PRF_001.md](results/APST5_HUMAN_PRF_001.md) | failed preregistered human-calibrated probe test |
+| [results/APST5_HUMAN_PRF_001_SECONDARY.md](results/APST5_HUMAN_PRF_001_SECONDARY.md) | secondary directional human-response result |
+| [results/EHINGER_DEVICE_TRANSFER_001.md](results/EHINGER_DEVICE_TRANSFER_001.md) | preregistered lower-cost eye-tracker transfer result |
 | [results/MTS_REALDATA_001.md](results/MTS_REALDATA_001.md) | public human-data temporal-locality analysis |
 | [results/MTS_TARGET_SMOOTHING_001.md](results/MTS_TARGET_SMOOTHING_001.md) | preregistered direct Temporal Alignment test |
 | [results/TEMPORAL_ALIGNMENT_001.md](results/TEMPORAL_ALIGNMENT_001.md) | synthesis across direct manipulation + independent boundary datasets |
@@ -321,6 +378,6 @@ The repo is structured to make those claims harder to fake.
 
 ## Status
 
-**Four reproduced computational results, one preregistered public-human-data temporal crossover that survives a nuisance audit, and two preregistered failed interaction replications; prospective active-smartphone validation pending.**
+**Five simulation/stress-test results, a mixed preregistered temporal-scale replication record, a failed confirmatory human active-response test with a positive directional secondary, and a preregistered cross-device pupil-waveform transfer result; ordinary-RGB-phone validation is still pending.**
 
-The current evidence supports a sharper target: a **3-second concurrent active ocular probe** is the most robust model-based candidate, while public human data independently suggest that the most recent ~2 seconds of passive ocular behavior can be more informative about the next vigilance response than longer history under a fixed immediate target. Neither result yet establishes a prospective smartphone fatigue measurement system. The next decisive step is an independent, synchronized phone study comparing passive, single-channel active, and concurrent active probes on held-out people and sessions.
+The current evidence now reaches beyond simulation: human controlled-luminance data show that brightening/darkening asymmetry materially changes probe ranking, and an independent lower-cost dedicated video eye tracker preserves luminance-evoked and person-specific pupil dynamics relative to EyeLink. The confirmatory human E002 model still failed, and none of this establishes ordinary RGB-phone observability or state prediction. **The next decisive step remains the frozen synchronized E002 phone capture study.**
