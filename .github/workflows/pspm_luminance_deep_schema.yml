@@ -1,0 +1,96 @@
+name: pspm-luminance-deep-schema
+
+on:
+  push:
+    branches: ['pspm-luminance-calibration']
+    paths:
+      - '.github/workflows/pspm_luminance_deep_schema.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  inspect:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pspm-luminance-calibration
+
+      - name: Download dataset
+        run: |
+          curl -L --fail --retry 3 -o /tmp/data.zip 'https://zenodo.org/records/8239465/files/Data.zip?download=1'
+          mkdir -p /tmp/pspm
+          unzip -q /tmp/data.zip -d /tmp/pspm
+
+      - name: Inspect nested MATLAB structures
+        run: |
+          python -m pip install scipy numpy
+          python - <<'PY'
+          from pathlib import Path
+          import numpy as np
+          from scipy.io import loadmat
+
+          root=Path('/tmp/pspm/Data')
+          files=[
+              root/'AOB_UW_pupil_01_sn2.mat',
+              root/'AOB_UW_cogent_01_sn2.mat',
+              root/'AOB_UW_pupil_01_sn1.mat',
+              root/'AOB_UW_cogent_01_sn1.mat',
+          ]
+
+          def describe(v, depth=0, name='root', lines=None, maxdepth=5):
+              if lines is None: lines=[]
+              ind='  '*depth
+              typ=type(v).__name__
+              shape=getattr(v,'shape',None)
+              dtype=getattr(v,'dtype',None)
+              lines.append(f'{ind}{name}: type={typ} shape={shape} dtype={dtype}')
+              if depth>=maxdepth: return lines
+              if hasattr(v,'_fieldnames') and v._fieldnames:
+                  for field in v._fieldnames:
+                      try: val=getattr(v,field)
+                      except Exception as e:
+                          lines.append(f'{ind}  {field}: ERROR {e}')
+                          continue
+                      describe(val,depth+1,field,lines,maxdepth)
+              elif isinstance(v,np.ndarray):
+                  if v.dtype==object:
+                      for i,item in enumerate(v.reshape(-1)[:12]):
+                          describe(item,depth+1,f'[{i}]',lines,maxdepth)
+                  elif v.size<=30:
+                      lines.append(f'{ind}  values={np.asarray(v).reshape(-1).tolist()}')
+                  else:
+                      flat=np.asarray(v).reshape(-1)
+                      finite=flat[np.isfinite(flat)] if np.issubdtype(flat.dtype,np.number) else []
+                      lines.append(f'{ind}  sample={flat[:12].tolist()}')
+                      if len(finite):
+                          lines.append(f'{ind}  min={float(np.min(finite))} max={float(np.max(finite))} mean={float(np.mean(finite))}')
+              elif isinstance(v,(str,int,float,bool,np.number)):
+                  lines.append(f'{ind}  value={v!r}')
+              return lines
+
+          lines=['# PsPM luminance deep MATLAB schema','']
+          for path in files:
+              lines.append(f'## {path.name}')
+              lines.append('')
+              d=loadmat(path,squeeze_me=True,struct_as_record=False)
+              for k,v in d.items():
+                  if k.startswith('__'): continue
+                  describe(v,0,k,lines,maxdepth=6)
+              lines.append('')
+
+          out=Path('results/PSPM_LUMINANCE_DEEP_SCHEMA.md')
+          out.write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:2500]))
+          PY
+
+      - name: Commit schema
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/PSPM_LUMINANCE_DEEP_SCHEMA.md
+          git commit -m 'Inspect PsPM luminance MATLAB internals [skip ci]' || exit 0
+          git pull --rebase origin pspm-luminance-calibration
+          git push origin HEAD:pspm-luminance-calibration
