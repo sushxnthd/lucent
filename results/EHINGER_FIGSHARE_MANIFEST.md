@@ -197,30 +197,6 @@
     "modified_date": "2019-01-26T08:49:45Z"
   },
   {
-    "id": 7445867,
-    "title": "VP15_raw",
-    "doi": "10.6084/m9.figshare.7445867.v1",
-    "handle": "",
-    "url": "https://api.figshare.com/v2/articles/7445867",
-    "published_date": "2019-01-26T08:49:41Z",
-    "thumb": "",
-    "defined_type": 3,
-    "defined_type_name": "dataset",
-    "group_id": null,
-    "url_private_api": "https://api.figshare.com/v2/account/articles/7445867",
-    "url_public_api": "https://api.figshare.com/v2/articles/7445867",
-    "url_private_html": "https://figshare.com/account/articles/7445867",
-    "url_public_html": "https://figshare.com/articles/dataset/VP15_raw/7445867",
-    "timeline": {
-      "posted": "2019-01-26T08:49:41",
-      "firstOnline": "2019-01-26"
-    },
-    "resource_title": null,
-    "resource_doi": null,
-    "created_date": "2019-01-26T08:49:41Z",
-    "modified_date": "2019-01-26T08:49:44Z"
-  },
-  {
     "id": 7447403,
     "title": "VP20_raw",
     "doi": "10.6084/m9.figshare.7447403.v1",
@@ -293,28 +269,28 @@
     "modified_date": "2019-01-26T08:49:43Z"
   },
   {
-    "id": 7447655,
-    "title": "VP23_raw",
-    "doi": "10.6084/m9.figshare.7447655.v1",
+    "id": 7445867,
+    "title": "VP15_raw",
+    "doi": "10.6084/m9.figshare.7445867.v1",
     "handle": "",
-    "url": "https://api.figshare.com/v2/articles/7447655",
-    "published_date": "2019-01-26T08:49:40Z",
+    "url": "https://api.figshare.com/v2/articles/7445867",
+    "published_date": "2019-01-26T08:49:41Z",
     "thumb": "",
     "defined_type": 3,
     "defined_type_name": "dataset",
     "group_id": null,
-    "url_private_api": "https://api.figshare.com/v2/account/articles/7447655",
-    "url_public_api": "https://api.figshare.com/v2/articles/7447655",
-    "url_private_html": "https://figshare.com/account/articles/7447655",
-    "url_public_html": "https://figshare.com/articles/dataset/VP23_raw/7447655",
+    "url_private_api": "https://api.figshare.com/v2/account/articles/7445867",
+    "url_public_api": "https://api.figshare.com/v2/articles/7445867",
+    "url_private_html": "https://figshare.com/account/articles/7445867",
+    "url_public_html": "https://figshare.com/articles/dataset/VP15_raw/7445867",
     "timeline": {
-      "posted": "2019-01-26T08:49:40",
+      "posted": "2019-01-26T08:49:41",
       "firstOnline": "2019-01-26"
     },
     "resource_title": null,
     "resource_doi": null,
-    "created_date": "2019-01-26T08:49:40Z",
-    "modified_date": "2019-01-26T08:49:42Z"
+    "created_date": "2019-01-26T08:49:41Z",
+    "modified_date": "2019-01-26T08:49:44Z"
   },
   {
     "id": 7449311,
@@ -379,6 +355,30 @@
     "url_public_api": "https://api.figshare.com/v2/articles/7448666",
     "url_private_html": "https://figshare.com/account/articles/7448666",
     "url_public_html": "https://figshare.com/articles/dataset/VP25_raw/7448666",
+    "timeline": {
+      "posted": "2019-01-26T08:49:40",
+      "firstOnline": "2019-01-26"
+    },
+    "resource_title": null,
+    "resource_doi": null,
+    "created_date": "2019-01-26T08:49:40Z",
+    "modified_date": "2019-01-26T08:49:42Z"
+  },
+  {
+    "id": 7447655,
+    "title": "VP23_raw",
+    "doi": "10.6084/m9.figshare.7447655.v1",
+    "handle": "",
+    "url": "https://api.figshare.com/v2/articles/7447655",
+    "published_date": "2019-01-26T08:49:40Z",
+    "thumb": "",
+    "defined_type": 3,
+    "defined_type_name": "dataset",
+    "group_id": null,
+    "url_private_api": "https://api.figshare.com/v2/account/articles/7447655",
+    "url_public_api": "https://api.figshare.com/v2/articles/7447655",
+    "url_private_html": "https://figshare.com/account/articles/7447655",
+    "url_public_html": "https://figshare.com/articles/dataset/VP23_raw/7447655",
     "timeline": {
       "posted": "2019-01-26T08:49:40",
       "firstOnline": "2019-01-26"
@@ -644,22 +644,6 @@
 - etc_s012.mat (23227 bytes) id=13783079 download=https://ndownloader.figshare.com/files/13783079
 - square_marker_cache (856690182 bytes) id=13783145 download=https://ndownloader.figshare.com/files/13783145
 
-### 7445867: VP15_raw
-
-- etc_s015.EDF (32616983 bytes) id=13783289 download=https://ndownloader.figshare.com/files/13783289
-- world.mp4 (28050611701 bytes) id=13783580 download=https://ndownloader.figshare.com/files/13783580
-- world.intrinsics (214 bytes) id=13783577 download=https://ndownloader.figshare.com/files/13783577
-- user_info.csv (46 bytes) id=13783574 download=https://ndownloader.figshare.com/files/13783574
-- surface_definitions (34 bytes) id=13783571 download=https://ndownloader.figshare.com/files/13783571
-- pupil_data (671646141 bytes) id=13783568 download=https://ndownloader.figshare.com/files/13783568
-- info.csv (452 bytes) id=13783565 download=https://ndownloader.figshare.com/files/13783565
-- eye1_timestamps.npy (3830248 bytes) id=13783562 download=https://ndownloader.figshare.com/files/13783562
-- eye1.mp4 (17575982245 bytes) id=13783559 download=https://ndownloader.figshare.com/files/13783559
-- eye0_timestamps.npy (3822008 bytes) id=13783556 download=https://ndownloader.figshare.com/files/13783556
-- eye0.mp4 (19837979113 bytes) id=13783379 download=https://ndownloader.figshare.com/files/13783379
-- etc_s015.mat (23227 bytes) id=13783292 download=https://ndownloader.figshare.com/files/13783292
-- world_timestamps.npy (1873224 bytes) id=13783583 download=https://ndownloader.figshare.com/files/13783583
-
 ### 7447403: VP20_raw
 
 - eye0.mp4 (14879760121 bytes) id=13785800 download=https://ndownloader.figshare.com/files/13785800
@@ -709,21 +693,21 @@
 - eye0_timestamps.npy (4422416 bytes) id=13786304 download=https://ndownloader.figshare.com/files/13786304
 - square_marker_cache (118759149 bytes) id=13786424 download=https://ndownloader.figshare.com/files/13786424
 
-### 7447655: VP23_raw
+### 7445867: VP15_raw
 
-- eye0.mp4 (12138866813 bytes) id=13786427 download=https://ndownloader.figshare.com/files/13786427
-- etc_s023.EDF (12831142 bytes) id=13786814 download=https://ndownloader.figshare.com/files/13786814
-- world_timestamps.npy (1477776 bytes) id=13786811 download=https://ndownloader.figshare.com/files/13786811
-- world.mp4 (22147865137 bytes) id=13786769 download=https://ndownloader.figshare.com/files/13786769
-- world.intrinsics (214 bytes) id=13786763 download=https://ndownloader.figshare.com/files/13786763
-- user_info.csv (46 bytes) id=13786760 download=https://ndownloader.figshare.com/files/13786760
-- surface_definitions (34 bytes) id=13786757 download=https://ndownloader.figshare.com/files/13786757
-- pupil_data (513347568 bytes) id=13786754 download=https://ndownloader.figshare.com/files/13786754
-- info.csv (453 bytes) id=13786751 download=https://ndownloader.figshare.com/files/13786751
-- eye1_timestamps.npy (3003416 bytes) id=13786748 download=https://ndownloader.figshare.com/files/13786748
-- eye1.mp4 (13051281037 bytes) id=13786442 download=https://ndownloader.figshare.com/files/13786442
-- eye0_timestamps.npy (3003592 bytes) id=13786439 download=https://ndownloader.figshare.com/files/13786439
-- etc_s023.mat (23227 bytes) id=13786817 download=https://ndownloader.figshare.com/files/13786817
+- etc_s015.EDF (32616983 bytes) id=13783289 download=https://ndownloader.figshare.com/files/13783289
+- world.mp4 (28050611701 bytes) id=13783580 download=https://ndownloader.figshare.com/files/13783580
+- world.intrinsics (214 bytes) id=13783577 download=https://ndownloader.figshare.com/files/13783577
+- user_info.csv (46 bytes) id=13783574 download=https://ndownloader.figshare.com/files/13783574
+- surface_definitions (34 bytes) id=13783571 download=https://ndownloader.figshare.com/files/13783571
+- pupil_data (671646141 bytes) id=13783568 download=https://ndownloader.figshare.com/files/13783568
+- info.csv (452 bytes) id=13783565 download=https://ndownloader.figshare.com/files/13783565
+- eye1_timestamps.npy (3830248 bytes) id=13783562 download=https://ndownloader.figshare.com/files/13783562
+- eye1.mp4 (17575982245 bytes) id=13783559 download=https://ndownloader.figshare.com/files/13783559
+- eye0_timestamps.npy (3822008 bytes) id=13783556 download=https://ndownloader.figshare.com/files/13783556
+- eye0.mp4 (19837979113 bytes) id=13783379 download=https://ndownloader.figshare.com/files/13783379
+- etc_s015.mat (23227 bytes) id=13783292 download=https://ndownloader.figshare.com/files/13783292
+- world_timestamps.npy (1873224 bytes) id=13783583 download=https://ndownloader.figshare.com/files/13783583
 
 ### 7449311: VP26_raw
 
@@ -772,3 +756,19 @@
 - eye1.mp4 (12408288193 bytes) id=13788002 download=https://ndownloader.figshare.com/files/13788002
 - eye0_timestamps.npy (3172168 bytes) id=13787996 download=https://ndownloader.figshare.com/files/13787996
 - etc_s025.mat (23227 bytes) id=13788236 download=https://ndownloader.figshare.com/files/13788236
+
+### 7447655: VP23_raw
+
+- eye0.mp4 (12138866813 bytes) id=13786427 download=https://ndownloader.figshare.com/files/13786427
+- etc_s023.EDF (12831142 bytes) id=13786814 download=https://ndownloader.figshare.com/files/13786814
+- world_timestamps.npy (1477776 bytes) id=13786811 download=https://ndownloader.figshare.com/files/13786811
+- world.mp4 (22147865137 bytes) id=13786769 download=https://ndownloader.figshare.com/files/13786769
+- world.intrinsics (214 bytes) id=13786763 download=https://ndownloader.figshare.com/files/13786763
+- user_info.csv (46 bytes) id=13786760 download=https://ndownloader.figshare.com/files/13786760
+- surface_definitions (34 bytes) id=13786757 download=https://ndownloader.figshare.com/files/13786757
+- pupil_data (513347568 bytes) id=13786754 download=https://ndownloader.figshare.com/files/13786754
+- info.csv (453 bytes) id=13786751 download=https://ndownloader.figshare.com/files/13786751
+- eye1_timestamps.npy (3003416 bytes) id=13786748 download=https://ndownloader.figshare.com/files/13786748
+- eye1.mp4 (13051281037 bytes) id=13786442 download=https://ndownloader.figshare.com/files/13786442
+- eye0_timestamps.npy (3003592 bytes) id=13786439 download=https://ndownloader.figshare.com/files/13786439
+- etc_s023.mat (23227 bytes) id=13786817 download=https://ndownloader.figshare.com/files/13786817
