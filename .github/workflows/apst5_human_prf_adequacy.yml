@@ -1,0 +1,49 @@
+name: apst5-human-prf-adequacy
+
+on:
+  push:
+    branches: ['pspm-luminance-calibration']
+    paths:
+      - 'experiments/pspm_human_prf_adequacy.py'
+      - 'experiments/registrations/APST5_HUMAN_PRF_001_SECONDARY_ADEQUACY.md'
+      - '.github/workflows/apst5_human_prf_adequacy.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pspm-luminance-calibration
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install analysis dependencies
+        run: python -m pip install numpy scipy
+
+      - name: Download public controlled-luminance dataset
+        run: |
+          curl -L --fail --retry 3 -o /tmp/pspm_data.zip 'https://zenodo.org/records/8239465/files/Data.zip?download=1'
+          mkdir -p /tmp/pspm
+          unzip -q /tmp/pspm_data.zip -d /tmp/pspm
+
+      - name: Run frozen secondary adequacy diagnostics
+        run: |
+          python experiments/pspm_human_prf_adequacy.py --data-root /tmp/pspm/Data --output results/APST5_HUMAN_PRF_001_ADEQUACY.md
+
+      - name: Commit result
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/APST5_HUMAN_PRF_001_ADEQUACY.md
+          git commit -m 'APST5-HUMAN-PRF-001: complete secondary adequacy diagnostics [skip ci]' || exit 0
+          git pull --rebase origin pspm-luminance-calibration
+          git push origin HEAD:pspm-luminance-calibration
