@@ -1,15 +1,13 @@
 name: inspect-ehinger-luminance-data
 
 on:
-  push:
-    branches: ['ehinger-prf-replication']
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   inspect:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
