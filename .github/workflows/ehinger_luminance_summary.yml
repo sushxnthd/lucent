@@ -1,0 +1,68 @@
+name: summarize-ehinger-luminance
+
+on:
+  push:
+    branches: ['pspm-luminance-calibration']
+    paths:
+      - '.github/workflows/ehinger_luminance_summary.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  summarize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pspm-luminance-calibration
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: python -m pip install pandas numpy
+      - name: Download
+        run: curl -L --fail --retry 3 -o /tmp/lum_binned.csv https://ndownloader.figshare.com/files/14184857
+      - name: Summarize
+        run: |
+          python - <<'PY'
+          import pandas as pd, numpy as np
+          from pathlib import Path
+          df=pd.read_csv('/tmp/lum_binned.csv')
+          lines=['# Ehinger luminance data summary','']
+          lines.append(f'Rows: {len(df):,}')
+          lines.append(f'Subjects ({df.subject.nunique()}): {sorted(df.subject.astype(str).unique())}')
+          lines.append(f'Eyetrackers: {df.eyetracker.value_counts(dropna=False).to_dict()}')
+          lines.append(f'Blocks: {sorted(df.block.dropna().unique().tolist())}')
+          lines.append(f'Luminance codes: {sorted(df.lum.dropna().unique().tolist())}')
+          lines.append(f'td range: {df.td.min():.4f}..{df.td.max():.4f}')
+          lines.append('')
+          lines.append('## Group counts')
+          lines.append('')
+          g=df.groupby(['subject','eyetracker','block','lum'],dropna=False).size().reset_index(name='rows')
+          lines.append('~~~text')
+          lines.append(g.to_string(index=False))
+          lines.append('~~~')
+          lines.append('')
+          lines.append('## Per group td ranges and pa_norm support')
+          lines.append('')
+          agg=df.groupby(['eyetracker','block','lum']).agg(
+          n=('pa_norm','size'),
+          finite=('pa_norm',lambda s: int(np.isfinite(s).sum())),
+          td_min=('td','min'),td_max=('td','max'),
+          pa_median=('pa_norm','median'),pa_sd=('pa_norm','std')).reset_index()
+          lines.append('~~~text')
+          lines.append(agg.to_string(index=False))
+          lines.append('~~~')
+          Path('results/EHINGER_LUMINANCE_SUMMARY.md').write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines[:300]))
+          PY
+      - name: Commit
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add results/EHINGER_LUMINANCE_SUMMARY.md
+          git commit -m 'Summarize independent Ehinger luminance dataset [skip ci]' || exit 0
+          git pull --rebase origin pspm-luminance-calibration
+          git push origin HEAD:pspm-luminance-calibration
