@@ -56,4 +56,5 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add results/EHINGER_MAT_SCHEMA.md
           git commit -m 'Inspect Ehinger event MAT structure [skip ci]' || exit 0
+          git pull --rebase origin ehinger-prf-replication
           git push origin HEAD:ehinger-prf-replication
