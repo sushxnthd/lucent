@@ -340,6 +340,7 @@ The repo is structured to make those claims harder to fake.
 | [REFERENCES.md](REFERENCES.md) | closest prior art and measurement literature |
 | [docs/PREREGISTRATION_TEMPLATE.md](docs/PREREGISTRATION_TEMPLATE.md) | freeze confirmatory analyses before final holdout |
 | [docs/FAILURE_MODES.md](docs/FAILURE_MODES.md) | shortcut and false-positive threat model |
+| [docs/EVIDENCE_LEDGER.md](docs/EVIDENCE_LEDGER.md) | explicit claim-by-claim evidence tier and boundary |
 | [docs/POSITIONING.md](docs/POSITIONING.md) | boundary versus ordinary drowsiness classification |
 | [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) | questions that can kill or narrow the thesis |
 | [src/lucent/active_probe.py](src/lucent/active_probe.py) | pupil surrogate + information-design utilities |
