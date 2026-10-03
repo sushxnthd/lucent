@@ -1,0 +1,42 @@
+name: E002 cloud data preflight
+on:
+  push:
+    branches: [research/e002-cloud-execution-015]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch public EyeDentify release
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _e002_data
+          curl -fL --retry 3 --retry-delay 2 \
+            "https://www.kaggle.com/api/v1/datasets/download/vijuls/PupilDiameterDatasets" \
+            -o _e002_data/eyedentify.zip
+          echo "bytes=$(stat -c%s _e002_data/eyedentify.zip)"
+          unzip -t _e002_data/eyedentify.zip
+          unzip -l _e002_data/eyedentify.zip | head -n 120 | tee _e002_data/archive_head.txt
+      - name: Inspect archive structure without outcome analysis
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _e002_extract
+          unzip -q _e002_data/eyedentify.zip -d _e002_extract
+          python - <<'PY'
+          from pathlib import Path
+          from collections import Counter
+          root=Path("_e002_extract")
+          files=[p for p in root.rglob("*") if p.is_file()]
+          print("file_count",len(files))
+          print("suffixes",Counter(p.suffix.lower() for p in files).most_common(20))
+          for p in files:
+              n=p.name.lower()
+              if n.endswith(".csv") or "session" in n or "readme" in n:
+                  print(p, p.stat().st_size)
+          PY
