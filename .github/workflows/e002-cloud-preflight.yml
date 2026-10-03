@@ -2,6 +2,8 @@ name: E002 cloud data preflight
 on:
   push:
     branches: [research/e002-cloud-execution-015]
+  pull_request:
+    branches: [research/rgb-reference-observability-002]
   workflow_dispatch:
 permissions:
   contents: read
