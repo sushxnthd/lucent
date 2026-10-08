@@ -1,0 +1,2 @@
+# E002-031
+Frozen pupil temporal-support audit. Count gate: 80%. Topology gate: maximum gap 250 ms, all 250 ms bins occupied. Dataset: MCFW-Gaze v3. No RGB or fatigue claims. Participant-held-out split 001-009 train, 010-012 development, 013-015 test. No post-hoc retuning.
