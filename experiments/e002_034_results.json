@@ -1,0 +1,18 @@
+{
+  "experiment": "E002-034",
+  "data": "synthetic_only",
+  "trials_per_regime": 500,
+  "metric": "mean centered log waveform RMSE",
+  "scale_dominant": {"raw": 0.027040, "ratio": 0.012655, "selector": 0.012655},
+  "noise_dominant": {"raw": 0.012054, "ratio": 0.038024, "selector": 0.012054},
+  "crossover": {"raw": 0.018146, "ratio": 0.023402, "selector": 0.018172},
+  "positive_segmentation_correlation": {"raw": 0.019879, "ratio": 0.012816, "selector": 0.012816},
+  "low_fps_scale": {"raw": 0.027574, "ratio": 0.019704, "selector": 0.019802},
+  "lighting_iris_bias": {"raw": 0.015423, "ratio": 0.030644, "selector": 0.030644, "false_ratio_decisions": 500},
+  "unseen_pupil_coupled_iris_bias": {"raw": 0.009229, "ratio": 0.032825, "selector": 0.032825, "false_ratio_decisions": 500},
+  "unseen_correlated_scale_segmentation": {"raw": 0.023143, "ratio": 0.020389, "selector": 0.020389},
+  "independent_two_world_proof": {"world_A_raw": 0.04347705771678831, "world_A_ratio": 0, "world_B_raw": 0, "world_B_ratio": 0.04347705771678831},
+  "tests_passed_local": 12,
+  "human_rgb_evaluated": false,
+  "state_validity_evaluated": false
+}
