@@ -1,0 +1,2 @@
+# E002-031
+Exploratory MCFW-Gaze metadata audit: image_84_1 has 2908-9854 samples across all 15 participants, versus approximately 609 in ordinary five-second image trials. Eleven of the 15 long records pass an 80% bilateral sample-validity gate. Raw timestamps remain unverified.
