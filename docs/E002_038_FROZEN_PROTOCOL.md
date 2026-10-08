@@ -1,0 +1,1 @@
+E002-038 uses the previously frozen E002-031 15-participant five-image raw pupil-support protocol. No RGB or fatigue inference claims.
