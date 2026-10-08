@@ -45,7 +45,7 @@ def run(n=500,seed=20261008):
                 accepted+=1
                 s=score(curves(ms));ratios.append(s);passes+=s>1.25
             rows.append(dict(dropout=p,mechanism=mechanism,accepted=accepted,trials=n,falseO4Passes=passes,rate=passes/accepted if accepted else None,medianO4=float(np.median(ratios)) if ratios else None))
-    return dict(experiment='E002-020',data='SYNTHETIC IDENTICAL LATENT WAVEFORMS',seed=seed,periodic=periodic,maskOnlyLabelAccuracy=1.0,nonperiodic=rows,
+    return dict(experiment='E002-020',data='SYNTHETIC IDENTICAL LATENT WAVEFORMS',seed=seed,periodic=periodic,maskOnlyLabelAccuracy=float(np.mean([int(m[1]==(i>=3)) for i,m in enumerate([ma]*3+[mb]*3)])),nonperiodic=rows,
       caution='No human effect; exact randomization assumes label exchangeability, violated by condition-specific masks. Monte Carlo rates describe only this constructed null.')
 if __name__=='__main__':
     z=run()
