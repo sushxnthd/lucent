@@ -1,0 +1,4 @@
+# E002-066 frozen same-PTS pixel gate
+Frozen SHA256 (local protocol): `70157f4efe3871b6c0585dfd32e5ed44da924eacb595d18671cf56002fb131b9`
+
+Data: P_54 dot-test original public Eye of the Typer WebM; ZIP local header 18952891652, compressed bytes 2902701, uncompressed bytes 2906313. Expected 632 decoded frames and 280 adjacent same-PTS pairs. Hypothesis: some same-PTS frames contain different pixels. Primary gate: >=10% nonidentical full-resolution grayscale decoded adjacent pairs. Secondary gate: >=5% with mean absolute grayscale pixel difference >=0.5 in 8-bit units. These were frozen before inspecting the pixels. Do not treat this as independent physiological information. P_01 reserved for participant replication. Original source: https://webgazer.cs.brown.edu/data/ .
