@@ -1,0 +1,27 @@
+{
+  "experiment": "E002-064",
+  "classification": "source-code deterministic pairing audit",
+  "protocol_sha256": "be2daf0d820b6d48523afebe1d36f434b4cb2fdcfc2a40b165f8ba383f89aa29",
+  "upstream_blob_sha": "20f88872f77e8d82361f8ab3598ec4bc7e9d7963",
+  "tests_passed": 10,
+  "independent_grid_checks": 2,
+  "synthetic_only": true,
+  "grids": [
+    {
+      "reference_hz": 40,
+      "frames": 150,
+      "different_assignments": 100,
+      "published_mean_error_ms": 14.566666666666656,
+      "nearest_mean_error_ms": 6.255555555555556
+    },
+    {
+      "reference_hz": 120,
+      "frames": 150,
+      "different_assignments": 150,
+      "published_mean_error_ms": 6.233333333333322,
+      "nearest_mean_error_ms": 2.100000000000013
+    }
+  ],
+  "human_rgb_reference_waveform_scored": false,
+  "behavioral_state_validated": false
+}
