@@ -1,0 +1,3 @@
+# Lucent E002-048: RGBE-Gaze ingestion audit
+
+Published source processes TCP receive chunks as lines rather than validating complete Gazepoint records. Controlled synthetic fragmentation demonstrates incomplete records can pass its presence-only filter. The published reference timestamp construction also anchors the first retained valid device sample to a separate first-receive host timestamp. No original RGBE-Gaze participant recordings were tested; no human data corruption or actual clock offset is claimed. The E002-044 frozen evaluation and earlier PupilSense negative result remain unchanged.
