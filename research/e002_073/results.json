@@ -1,0 +1,19 @@
+{
+  "experiment": "E002-073",
+  "source": "Zenodo 20492528",
+  "license": "CC-BY-4.0",
+  "archive_bytes_http": 137446558,
+  "archive_md5_verified": false,
+  "central_directory_entries": 9797,
+  "jpeg_count": 4895,
+  "png_count": 4895,
+  "exact_stem_pairs": 4895,
+  "csv_rows": 4895,
+  "nonzero_pupil_area_rows": 4893,
+  "sub_values": {"0": 4895},
+  "source_group_unique": 4895,
+  "source_name_unique": 4895,
+  "capture_series_prefixes": 26,
+  "person_disjoint_gate": "NOT_EVALUABLE",
+  "five_second_state_validation": false
+}
