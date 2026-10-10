@@ -1,0 +1,7 @@
+# E002-074 preregistration (before human pixel evaluation)
+Frozen local protocol SHA256: 6e6beb77bdc62200cd18ebace7c4d938daf911fb9c95fa58b94b3494cf0e53c5. The full frozen protocol is in the E002-074 reproduction package.
+Source: MEYELens Zenodo 20492528 original ZIP, require 137446558 bytes and MD5 a30eafe5e71cef9de1e08b91988f88b6.
+Select 64 paired original JPEG/PNG by ascending SHA256(normalized stem), no participant heldout claim. Require CSV red-mask pixel counts and exact image/mask pairing.
+For source pupil red-channel binary masks, equivalent radius R=sqrt(area/pi). At target r in [2,3,4,6,10] pixels, 48x48 output and 4x4 within-pixel nearest-source supersampling, use 16 translations {0,.25,.5,.75}^2. Compare integrated area equivalent-radius jitter range/r against thresholded occupancy (>=0.5) jitter range/r.
+Frozen gates: G1 full ZIP integrity and 64 valid image/mask/CSV matches; G2 at r=3 median integrated jitter <= half hard-mask median; G3 >=90% images have integrated jitter <=0.05 at r=3. Secondary report original-image median gray(nonpupil visible eye)-median gray(pupil), no pass gate.
+Report all radii, subgroup anomalies, 2000 seeded bootstrap CI of median paired difference, and 8x supersampling sensitivity on first 16 samples. Preserve every failure. This is an oracle-mask geometric upper bound, NOT an RGB segmentation or 5-second physiology/state result.
