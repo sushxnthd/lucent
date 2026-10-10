@@ -1,0 +1,1 @@
+E002-074 frozen protocol is committed. Executable source is preserved in the ChatGPT research package pending cloud execution. No human waveform or fatigue result is claimed.
