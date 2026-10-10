@@ -1,0 +1,1 @@
+Freeze 2026-10-10. Verify Zenodo 20492528 ZIP length 137446558 and MD5 a30eafe5e71cef9de1e08b91988f88b6. Inspect archive member names, CSV columns and image-mask pairs. No model scores are evaluated in this phase.
