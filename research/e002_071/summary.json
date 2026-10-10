@@ -1,0 +1,27 @@
+{
+  "id": "E002-071",
+  "date": "2026-10-10",
+  "kind": "synthetic geometry audit",
+  "protocol_sha256": "b3d2761d51fa77fd9fa25825e97822322ad7c73301ff5b8d4a5715bb976b8676",
+  "radius_px": [
+    2,
+    3,
+    4,
+    6,
+    10,
+    20
+  ],
+  "false_range_over_5pct_signal": [
+    2.9085,
+    2.194,
+    0.965,
+    0.695,
+    0.183,
+    0.123
+  ],
+  "nominal_cert_threshold_r_over_b": 60.5,
+  "adversarial_cert_threshold_r_over_b": 121,
+  "independent_raster_cases": 384,
+  "independent_mismatches": 0,
+  "source": "deterministic synthetic, not human data"
+}
