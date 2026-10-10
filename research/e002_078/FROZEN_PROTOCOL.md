@@ -1,0 +1,8 @@
+# E002-078 — frozen human-mask subpixel audit
+Protocol frozen 2026-10-10, local SHA256: 8eda8f11fa14ac4e4010da2d802ce3d9f777ffa473c6ba5f8f96c2500c1251f6.
+
+Selection (before mask-pixel extraction): MEYELens official Zenodo 20492528 ZIP, eight distinct previously unaudited capture-series stems: eye 16_frame_000001_pic_1325; eye 18_frame_000001_pic_1655; eye 2_frame_000008_pic_2948; eye 20_frame_000008_pic_2022; eye 21_frame_000008_pic_2181; eye 22_frame_000001_pic_2417; eye 23_frame_000001_pic_2590; eye 24_frame_000001_pic_2753. Series are NOT verified participants.
+
+Source pupil mask red>0. Source equivalent radius R=sqrt(A/pi), centroid of red pixel centers. Target r={2,3,4,6,10}, scale s=R/r. Phases {0.07,0.31,0.56,0.83} squared (16), output grid indices -N..N, N=ceil(1.8r)+3. Out-of-image source pixels=0. Baseline: binary point sampling at output pixel centers. Fractional estimator: average 4x4 subpixel queries, offsets (k+0.5)/4-0.5 in each axis. Apparent radius sqrt(sum occupancy/pi); false phase range=(max radius-min radius)/r.
+
+Frozen gates: G1 all eight original masks fetched, CRC/size checked, decoded 640x480 and nonempty; G2 fractional median false range < nearest median over 40 cases; G3 fractional improves >=30/40 cases, ties fail; G4 report >5% false variation frequencies at r=2,3 descriptively. No retuning or replacement. Class DISCRIMINATION/CAPABILITY-BUILDING. These are annotated static human masks, NOT true webcam pupil waveforms, iris normalization, participant holdouts, or fatigue inference. Fractional occupancy is prior art. All failures preserved.
