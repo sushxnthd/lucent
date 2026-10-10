@@ -1,0 +1,1 @@
+E002-071 synthetic circle rasterization and bounded measurement-error audit. The detailed reproducibility package is maintained separately. No human data were used.
