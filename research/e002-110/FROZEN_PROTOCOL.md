@@ -1,0 +1,1 @@
+E002-110 frozen protocol: independent Python replication of E002-106 and E002-109 from original Zenodo 18429496 IR CSVs; three participants; predeclared tolerances 1e-5 area contrast, 0.01 center-y held-out ratio, 0.01 active retention. Do not retune. Not an RGB or fatigue validation.
