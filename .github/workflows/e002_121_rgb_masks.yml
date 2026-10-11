@@ -1,0 +1,14 @@
+name: E002-121 public RGB mask spatial audit
+on:
+  push:
+    branches: [research/e002-121-public-rgb-mask-preflight]
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy pillow requests
+      - run: python research/e002-121/run.py
