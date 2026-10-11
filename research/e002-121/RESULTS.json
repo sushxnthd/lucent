@@ -1,0 +1,136 @@
+{
+  "experiment": "E002-121",
+  "status": "ORACLE_MASK_SPATIAL_CEILING_SCORED",
+  "dataset": "https://zenodo.org/api/records/20492528",
+  "claim_boundary": "Original human RGB annotations only; no paired tracker waveform, no RGB segmenter, no behavioral state",
+  "record": {
+    "id": 20492528,
+    "title": "Human Eye-Region and Pupil Segmentation Dataset for MEYELens",
+    "license": {
+      "id": "cc-by-4.0"
+    },
+    "files": [
+      {
+        "key": "human_eyeregion_pupil_segmentation_dataset.zip",
+        "size": 137446558,
+        "checksum": "md5:a30eafe5e71cef9de1e08b91988f88b6"
+      }
+    ]
+  },
+  "archive": {
+    "filename": "human_eyeregion_pupil_segmentation_dataset.zip",
+    "bytes": 137446558,
+    "sha256": "049df72454682c1c77c50c8236bb607919a6e333528bc2b89c567b625e459700",
+    "md5": "a30eafe5e71cef9de1e08b91988f88b6"
+  },
+  "inventory": {
+    "jpg": 4895,
+    "png": 4895,
+    "matched": 4895,
+    "examples": [
+      [
+        "human_sclera_pupil_segmentation_dataset_zenodo/fullFrames/eye 22_frame_000071_pic_2487.jpg",
+        "human_sclera_pupil_segmentation_dataset_zenodo/annotation/png/eye 22_frame_000071_pic_2487.png"
+      ],
+      [
+        "human_sclera_pupil_segmentation_dataset_zenodo/fullFrames/eye 9_frame_000161_pic_4227.jpg",
+        "human_sclera_pupil_segmentation_dataset_zenodo/annotation/png/eye 9_frame_000161_pic_4227.png"
+      ],
+      [
+        "human_sclera_pupil_segmentation_dataset_zenodo/fullFrames/camera0_20250717_153932_332_frame_000112_pic_112.jpg",
+        "human_sclera_pupil_segmentation_dataset_zenodo/annotation/png/camera0_20250717_153932_332_frame_000112_pic_112.png"
+      ],
+      [
+        "human_sclera_pupil_segmentation_dataset_zenodo/fullFrames/eye 4_frame_000069_pic_3218.jpg",
+        "human_sclera_pupil_segmentation_dataset_zenodo/annotation/png/eye 4_frame_000069_pic_3218.png"
+      ],
+      [
+        "human_sclera_pupil_segmentation_dataset_zenodo/fullFrames/eye 15_frame_000114_pic_1253.jpg",
+        "human_sclera_pupil_segmentation_dataset_zenodo/annotation/png/eye 15_frame_000114_pic_1253.png"
+      ]
+    ]
+  },
+  "csv_files": [
+    "human_sclera_pupil_segmentation_dataset_zenodo/annotation/annotations.csv"
+  ],
+  "n_scored": 480,
+  "excluded": {},
+  "summary": {
+    "32x16": {
+      "soft_error": {
+        "median": 0.0007701242715082574,
+        "p90": 0.0017808534551387223
+      },
+      "hard_error": {
+        "median": 0.014941287250384787,
+        "p90": 0.023759884969153353
+      },
+      "soft_range": {
+        "median": 0.0007416813081949358,
+        "p90": 0.001823505650593793
+      },
+      "hard_range": {
+        "median": 0.037898963152947995,
+        "p90": 0.06417439597991588
+      },
+      "soft_beats_hard_fraction": 1,
+      "median_error_delta_ci95": [
+        -0.014881330022175607,
+        -0.013387252766528052
+      ]
+    },
+    "64x32": {
+      "soft_error": {
+        "median": 0.0005964897532989358,
+        "p90": 0.0015444615608390807
+      },
+      "hard_error": {
+        "median": 0.005441089553253765,
+        "p90": 0.008367641443560917
+      },
+      "soft_range": {
+        "median": 0.0004537530810848345,
+        "p90": 0.0013061615803935
+      },
+      "hard_range": {
+        "median": 0.014191278611483782,
+        "p90": 0.02295532382656207
+      },
+      "soft_beats_hard_fraction": 1,
+      "median_error_delta_ci95": [
+        -0.004876001493176366,
+        -0.0044155932331011866
+      ]
+    },
+    "128x64": {
+      "soft_error": {
+        "median": 0.00042067526880862696,
+        "p90": 0.0011336624504465391
+      },
+      "hard_error": {
+        "median": 0.0017648328502102711,
+        "p90": 0.002948965172268248
+      },
+      "soft_range": {
+        "median": 0.0003501209071410938,
+        "p90": 0.0008995992762158622
+      },
+      "hard_range": {
+        "median": 0.00468596319869051,
+        "p90": 0.008046882258453694
+      },
+      "soft_beats_hard_fraction": 0.9520833333333333,
+      "median_error_delta_ci95": [
+        -0.00136538484049286,
+        -0.0011965637743139024
+      ]
+    },
+    "gates": {
+      "G0_access": true,
+      "G1_32x16": true,
+      "G2_generality": true,
+      "G3_waveform_state": "UNTESTED"
+    }
+  },
+  "sample_sha256": "a0d3af5426ce91b1550cba114bf53d8cc5ad8d5635251cc0492a1e8ddefbc322"
+}
