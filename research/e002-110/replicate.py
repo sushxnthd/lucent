@@ -56,7 +56,7 @@ def read_runs(raw):
 
 def arrays(run,channel):
     w=run[:100];t=np.array([float(r['timestamp']) for r in w]);t-=t[0]
-    a=np.array([float(r['pupilSize']) for r in w]);p=np.array([float(r[channel]) for r in w])
+    a=np.array([float(r['pupilSize']) if r['pupilSize'] else np.nan for r in w]);p=np.array([float(r[channel]) if r[channel] else np.nan for r in w])
     valid=np.isfinite(t)&np.isfinite(a)&np.isfinite(p)&(a>0)
     if sum(valid)<80:raise ValueError('Insufficient valid frames')
     t,a,p=t[valid],a[valid],p[valid]

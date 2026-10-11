@@ -21,3 +21,10 @@ def test_slope():
     X=np.c_[np.ones(100),t,np.sin(2*np.pi*t),np.cos(2*np.pi*t)]
     p=np.sin(2*np.pi*.73*t);a=1500-4*p+20*np.sin(2*np.pi*t)
     assert abs(r.slope([(X,t,a,p)])+4)<1e-8
+
+def test_missing_center_sample_is_excluded():
+    t=np.arange(100)/20
+    w=[{'timestamp':str(t[i]),'pupilSize':'1500','pupCntr_y':'40'} for i in range(100)]
+    w[5]['pupCntr_y']=''
+    X,t,a,p=r.arrays(w,'pupCntr_y')
+    assert len(t)==99 and np.isfinite(p).all()
