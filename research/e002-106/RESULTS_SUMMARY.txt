@@ -1,0 +1,1 @@
+E002-106 original IR dataset frozen result: PASS 3/3. Off-target forward/reference medians: 0.77917, 0.79377, 0.75109. Reverse/reference: 1.14485, 1.14050, 1.12690. Active retained: 0.94212, 0.96851, 0.93070. Same three original participants; no RGB or fatigue validation. Wolfram original-data calculation, Python original-data rerun pending. See frozen protocol in this branch.
