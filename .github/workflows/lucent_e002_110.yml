@@ -1,0 +1,12 @@
+name: lucent-e002-110
+on:
+  push:
+    branches: [research/e002-110-independent-original-replication]
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install numpy requests pytest
+      - run: cd research/e002-110 && python -m pytest -q test_replicate.py
+      - run: cd research/e002-110 && python replicate.py
