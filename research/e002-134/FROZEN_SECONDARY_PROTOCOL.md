@@ -1,0 +1,3 @@
+# E002-134B frozen post-G2 prediction, 2026-10-12
+
+E002-134 original Gaussian-pulse G2 FAILED because noncompact Gaussian tails cross second boundaries; preserve that result. New prospective test uses triangular pulses x_c(t)=max(0,1-|t-c|/0.08) at c=0.35,1.35,2.35 s on 270 samples at 90Hz. F averages positions j,j+90,j+180; C averages 3 consecutive 90Hz samples for each 30fps frame. B1 max pairwise difference among F outputs <1e-12; B2 min pairwise Euclidean distance among C outputs >0.1; B3 nonzero vector [v,-v,0] maps to zero within 1e-12. This is an elementary operator counterexample, not physiological validation. No changes to original G2.
