@@ -1,0 +1,3 @@
+# E002-134 results
+
+Official EyeDentify source averages corresponding rows across three one-second tracker groups and pairs the result with webcam frames by index. Three released human CSVs each had a single timestamp across 42-89 frames. Deterministic test: ramp amplitude ratio 1/3, 1Hz sine folded/correct correlation approximately 0. Original Gaussian equivalence gate FAILED due noncompact tails; separately frozen compact-support replication PASSED (max folded difference 1.39e-15; correct pairwise L2 1.755). This is a label-timebase limitation, not physiological validation. Earlier RGB/reference scores cannot establish genuine synchronized waveform fidelity without raw tracker timestamps.
