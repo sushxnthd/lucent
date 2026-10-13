@@ -1,0 +1,20 @@
+name: E002-155 mask audit
+on:
+  push:
+    branches: [research/e002-155-human-aperture-drift]
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install numpy pillow requests
+      - run: python research/e002-155/run.py
+      - run: python research/e002-155/check.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-155-results
+          path: research/e002-155/
