@@ -1,0 +1,20 @@
+{
+  "sources": [
+    {
+      "name": "Eyeblink8 published summary",
+      "url": "https://www.mdpi.com/2078-2489/9/4/93",
+      "location": "Table 3"
+    },
+    {
+      "name": "Eyeblink8 original description",
+      "url": "https://www.blinkingmatters.com/research"
+    },
+    {
+      "name": "mEBAL2 blink reference eligibility",
+      "url": "https://github.com/BiDAlab/mEBAL2/blob/master/README.md",
+      "access": "signed license required; no native pupil diameter reference"
+    }
+  ],
+  "raw_data_sha256": null,
+  "reason": "No original participant data downloaded; published summary only"
+}
