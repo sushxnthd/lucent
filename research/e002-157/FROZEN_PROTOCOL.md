@@ -1,0 +1,5 @@
+# E002-157 frozen protocol
+Date 2026-10-13. Post-hoc exploratory reuse of E002-155 human mask pairs; no tracker reference.
+Hypothesis: absolute change in eye-mask bounding-box width can reject visible-eye denominator drift.
+Input: E002-155 PAIRS.csv, source SHA256 ec150e35dc84e120f1a0418a003989f4948595a8034ecbc68088954cfe0ce730.
+For lag 1,5,15,30, leave out each filename group; train 80th percentile threshold of |(dE-dD)/2| on other groups, retain heldout rows below threshold. Failure is |dD| > -2 log(0.95). Report coverage, retained failure risk, unconditional risk, relative reduction, group outcomes. Bootstrap groups B=2000 seed=1572026. Gates: >=20 groups, >=1000 lag1 pairs; lag1 coverage>=0.70; lag1 retained risk<=0.05; lag1 relative reduction>=0.30; lag30 retained risk<=0.05; >=80% lag1 groups with >=30 retained pairs have risk<=0.05; independent checker passes. Report width-stable failures. No retuning. Group names are not participant IDs. No human RGB segmenter or physiology validated.
