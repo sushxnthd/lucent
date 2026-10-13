@@ -2,6 +2,8 @@ name: E002-155 mask audit
 on:
   push:
     branches: [research/e002-155-human-aperture-drift]
+  pull_request:
+    branches: [research/e002-128-original-human-holdout]
 jobs:
   audit:
     runs-on: ubuntu-latest
