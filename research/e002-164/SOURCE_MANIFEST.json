@@ -1,0 +1,24 @@
+{
+  "id": "E002-164",
+  "date": "2026-10-13",
+  "sources": [
+    {
+      "repository": "vijulshah/eyedentify",
+      "path": "data_creation/eyedentify/tobii_and_webcam_data_alignment.py",
+      "git_blob_sha1": "f46d7ae369a62596f7044ca647d361c38fcb16ea"
+    },
+    {
+      "repository": "vijulshah/webcam-based-pupil-diameter-estimation",
+      "path": "data_creation/eyedentify/tobii_and_webcam_data_alignment.py",
+      "git_blob_sha1": "f46d7ae369a62596f7044ca647d361c38fcb16ea"
+    },
+    {
+      "repository": "vijulshah/webcam-based-pupil-diameter-estimation",
+      "path": "data_creation/eyedentify/run_data_alignment.py",
+      "git_blob_sha1": "a4952e047c69f101a4ad581a1f0a8ff0c3055893"
+    }
+  ],
+  "source_code_verified": true,
+  "released_kaggle_csv_verified": false,
+  "original_human_images_included": false
+}
