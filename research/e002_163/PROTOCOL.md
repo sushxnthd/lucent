@@ -1,0 +1,5 @@
+# E002-163 frozen exploratory protocol
+
+Source: E002-159 PAIRS.csv SHA256 ec150e35dc84e120f1a0418a003989f4948595a8034ecbc68088954cfe0ce730.
+
+Define A=dPn/2, B=dq, C=(dPn+dE-dD)/2. Threshold +/-log(1.05). For lags 1,5,15,30 report rate of C-class discordance conditional on A and B class agreement, with separate active and neutral consensus. Report descriptive 26-group bootstrap at lags 1 and 30 (3000 resamples, seed 1632026). No tuning. Independently verify exact common-mode identity: adding h to both A and B preserves A-B but may alter their common classification. This is exploratory reuse of human masks, not an independent physiological waveform reference. Preserve negative results and limit claims to mask geometry. Product decision: two-reference agreement alone cannot certify a pupil response.
