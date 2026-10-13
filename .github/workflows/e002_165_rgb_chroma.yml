@@ -1,7 +1,8 @@
 name: E002-165 original RGB channel provenance
 on:
   push:
-    branches: [research/e002-165-rgb-channel-provenance]
+    branches:
+      - 'research/e002-165-*'
 jobs:
   pixel-audit:
     runs-on: ubuntu-latest
