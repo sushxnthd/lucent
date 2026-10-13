@@ -1,0 +1,33 @@
+{
+  "status": "DIRECT_PIXEL_HUMAN_PROVENANCE_CONFIRMED",
+  "source_sha256": "049df72454682c1c77c50c8236bb607919a6e333528bc2b89c567b625e459700",
+  "source_md5": "a30eafe5e71cef9de1e08b91988f88b6",
+  "n": 480,
+  "groups": 26,
+  "gray_images": 441,
+  "chromatic_images": 39,
+  "gray_fraction": 0.91875,
+  "chromatic_groups": {
+    "eye": 14,
+    "eye 2": 4,
+    "eye 3": 9,
+    "eye 4": 12
+  },
+  "all_groups_single_color_class": true,
+  "source_modes": {
+    "RGB": 480
+  },
+  "gray_nonzero_channel_auc_differences": 0,
+  "chromatic_nonzero_channel_auc_differences": 3,
+  "chromatic_auc_identical": 36,
+  "median_luminance_auc_gray": 0.8946056524844404,
+  "median_luminance_auc_chromatic": 0.6953550183609866,
+  "group_fixed_effect_rank": 26,
+  "group_plus_color_rank": 26,
+  "frozen_95pct_monochrome_gate": false,
+  "independent_check": "PASS",
+  "physiological_waveform": "NOT_EVALUABLE",
+  "ci_run": 38446057045,
+  "ci_artifact": 11838745981,
+  "ci_artifact_sha256": "1d229f3fd8cf6dfe9fc08ae7a05a1ac68c3d699cc5db1e534fbf07f67a46cef8"
+}
