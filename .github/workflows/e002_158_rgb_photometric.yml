@@ -1,0 +1,17 @@
+name: E002-158 RGB photometric
+on:
+  push:
+    branches: [research/e002-158-rgb-photometric-discrimination]
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install numpy pillow scipy requests
+      - run: python research/e002-158/run.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-158-results
+          path: research/e002-158/
