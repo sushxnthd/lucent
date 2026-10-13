@@ -1,0 +1,40 @@
+{
+  "cases": {
+    "counter_absent": {
+      "column_2_delta": 200000.0,
+      "column_2_initial": "94841050736",
+      "column_2_key": "TIME_TICK",
+      "distinct_matched_tracker_samples": 1,
+      "fields": 48,
+      "frame_count": 251,
+      "gate_accepts": false,
+      "gate_reason": "expected_49_columns_with_CNT",
+      "left_mm_col_42_value": "1",
+      "left_mm_column_42_key": "LPMMV",
+      "matched_first_record": 251
+    },
+    "counter_enabled": {
+      "column_2_delta": 0.01999999999998181,
+      "column_2_initial": "706.70380",
+      "column_2_key": "TIME",
+      "distinct_matched_tracker_samples": 251,
+      "fields": 49,
+      "frame_count": 251,
+      "gate_accepts": true,
+      "gate_reason": "provisional_schema_only_requires_field_name_validation",
+      "left_mm_col_42_value": "3.20000",
+      "left_mm_column_42_key": "LPMM",
+      "matched_first_record": 1
+    },
+    "counter_present_shifted": {
+      "classification": "adversarial_fixture; not observed in released data",
+      "column_2_key": "TIME",
+      "fields": 49,
+      "gate_accepts": true,
+      "gate_reason": "provisional_schema_only_requires_field_name_validation",
+      "left_mm_column_42_key": "LPMMV"
+    }
+  },
+  "classification": "source-level conditional audit; synthetic fixtures",
+  "experiment": "E002-168"
+}

@@ -1,0 +1,17 @@
+name: E002-168 reference schema/timebase
+on:
+  push:
+    branches:
+      - 'research/e002-168-rgbe-schema-timebase'
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Execute deterministic audit and compare frozen result
+        run: |
+          python research/e002-168/audit.py > /tmp/e002_168_results.json
+          diff -u research/e002-168/RESULTS.json /tmp/e002_168_results.json
+      - name: Independent checker
+        run: python research/e002-168/independent_check.py /tmp/e002_168_results.json

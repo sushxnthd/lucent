@@ -1,0 +1,20 @@
+{
+  "experiment":"E002-168",
+  "source_repository":"https://github.com/GuangrongZhao/RGBE-Gaze",
+  "source_revision":"153979be846fd8a2f483e9af53a9ef52a623533f",
+  "source_blobs":{
+    "data_acquisition_scripts/python/GazepointAPI_collect_transform.py":"575f6431d5ece91fd142ff2f259c5b1153b99965",
+    "data_acquisition_scripts/python/extracker-txt2.py":"c033cac83edd6de0ed226c36436bf5af75fd665f",
+    "matlab_preprocess/wcs_3d_gaze.m":"c7b4c561d9bc42476f9f61a4e2b776cdfcdc3008",
+    "matlab_preprocess/pupil_depth_wcs_3d_gaze.m":"4f58b10bde84f75b2604342305f89ae087106cbc",
+    "matlab_preprocess/A1_makehdf5data_for_sample.m":"a53986a8c4b089ba5ead3130daa749af8d46b5eb"
+  },
+  "original_tracker":"Gazepoint GP3 HD",
+  "original_rgb":"FLIR BFS-U3-16S2C industrial RGB; not a phone",
+  "gazepoint_api":"https://www.gazept.com/dl/Gazepoint_API_v2.0.pdf",
+  "dataset_participant_bytes_accessed":false,
+  "fixture_is_synthetic":true,
+  "human_waveform_evaluated":false,
+  "previous_CI":{"run_id":38454520974,"conclusion":"success"},
+  "current_CI":"pending"
+}
