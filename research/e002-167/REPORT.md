@@ -1,0 +1,5 @@
+# E002-167 — TCP record-boundary reference integrity
+
+The official RGBE-Gaze source enables GP3 HD pupil-mm fields and original tracker timestamps, but writes one host timestamp per TCP recv chunk and converts text lines to CSV rows. TCP does not guarantee one recv per tracker record. In an exhaustive deterministic split test of the upstream 696-byte example REC, 621/695 splits generated a wrong-width row, 62/695 dropped the row, and 12/695 preserved it. A CRLF-delimited two-record chunk is a positive control and passes; the independently checked record-delimited XML reconstruction survives every split. The example's mm validity flags are both zero. This is source-code falsification, not a claim of observed released-data corruption, a human waveform result, or a new physiological theorem.
+
+The next decisive action is actual released gazepoint.csv/raw REC and FLIR timestamp inspection. Source access through OneDrive did not yield a downloadable participant file in this run. Do not treat processed gaze HDF5 as pupil-mm reference. See FROZEN_PROTOCOL.md, RESULTS.json, LEDGERS.md and executable checks. Local independent check PASS; GitHub Actions result pending.

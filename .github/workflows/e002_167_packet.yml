@@ -1,0 +1,18 @@
+name: E002-167 RGBE reference packet audit
+on:
+  push:
+    branches:
+      - research/e002-167-rgbe-packet-invariance
+  workflow_dispatch:
+jobs:
+  reference-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          cd research/e002-167
+          python audit.py
+          python independent_check.py

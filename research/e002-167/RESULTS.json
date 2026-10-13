@@ -1,0 +1,21 @@
+{
+  "id": "E002-167",
+  "classification": "SOURCE_CODE_ELIGIBILITY_NOT_HUMAN",
+  "fixture_bytes": 696,
+  "fixture_fields": 48,
+  "split_boundaries": 695,
+  "exact": 12,
+  "missing_row": 62,
+  "wrong_width": 621,
+  "source_mismatches": 683,
+  "repair_passes": 695,
+  "CRLF_coalescence_source_rows": 2,
+  "no_delimiter_coalescence_source_rows": 1,
+  "fixture_LPMMV": 0,
+  "fixture_RPMMV": 0,
+  "wildcard": "CNT changes positions 42/44 from validity flags to pupil mm",
+  "actual_released_csv": "NOT_INSPECTED",
+  "human_waveform": "NOT_EVALUABLE",
+  "local_independent_checker": "PASS",
+  "ci": "NOT_YET_CONFIRMED"
+}

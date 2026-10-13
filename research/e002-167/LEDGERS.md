@@ -1,0 +1,5 @@
+# E002-167 SCIENCE / PRODUCT
+
+SCIENCE: RGBE-Gaze acquisition requests Gazepoint pupil diameter in mm and TIME/TIME_TICK. Its published TCP chunk-to-CSV extractor is not invariant to arbitrary chunk boundaries. In a 696-byte upstream fixture, 683 of 695 single-split positions change/drop the extracted 48-field record; an independent XML parser confirms. This is a deterministic source test, not a measured fragmentation rate or evidence that released CSVs are corrupt. The example mm validity flags are zero. Without CNT, positional columns 42/44 are validity flags; with CNT they are pupil-mm values. Actual CSV schema and paired RGB physiology remain unverified.
+
+PRODUCT: Treat RGBE-Gaze as a candidate, not yet certified reference. Admit only after checking actual raw gazepoint.csv and frame timestamp files for named mm fields, validity, complete record counts, monotonic tracker TIME/TIME_TICK, and camera clock alignment. If raw REC is available, reconstruct by complete XML records. FLIR RGB is not ordinary phone RGB. No fatigue score. Two inaccessible data attempts force dataset switch.

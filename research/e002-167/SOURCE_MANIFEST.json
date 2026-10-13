@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-14",
+  "dataset": "RGBE-Gaze",
+  "upstream_revision": "153979be846fd8a2f483e9af53a9ef52a623533f",
+  "readme_blob": "fd90748380c97b3513346cb0897645e2dc1d715e",
+  "acquisition_blob": "575f6431d5ece91fd142ff2f259c5b1153b99965",
+  "extractor_blob": "c033cac83edd6de0ed226c36436bf5af75fd665f",
+  "matlab_pupil_blob": "4f58b10bde84f75b2604342305f89ae087106cbc",
+  "fixture_sha256": "6e264386017e18b7b5272de26cf66c1f674e8b36527733c570f579c74270477a",
+  "raw_dataset_files_accessed": false,
+  "reference_eligible": false,
+  "reason": "Need released file row schema and timestamps"
+}
