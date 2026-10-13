@@ -1,0 +1,87 @@
+{
+  "experiment": "E002-169",
+  "source": "https://www.mdpi.com/2078-2489/9/4/93 Table 3",
+  "model": "homogeneous Poisson; perfect event counting",
+  "window_seconds": 5,
+  "rows": [
+    {
+      "video": 1,
+      "gt_blinks": 38,
+      "rate_per_minute": 4.4,
+      "mean": 0.3666666666666667,
+      "p_zero": 0.6930406200864415,
+      "crlb_relative_sd": 1.6514456476895407,
+      "seconds_for_20pct_sd": 340.9090909090909
+    },
+    {
+      "video": 2,
+      "gt_blinks": 88,
+      "rate_per_minute": 14.3,
+      "mean": 1.1916666666666667,
+      "p_zero": 0.3037146509214855,
+      "crlb_relative_sd": 0.916057224828689,
+      "seconds_for_20pct_sd": 104.8951048951049
+    },
+    {
+      "video": 3,
+      "gt_blinks": 65,
+      "rate_per_minute": 12.7,
+      "mean": 1.0583333333333333,
+      "p_zero": 0.34703371813667144,
+      "crlb_relative_sd": 0.9720503535125016,
+      "seconds_for_20pct_sd": 118.11023622047244
+    },
+    {
+      "video": 4,
+      "gt_blinks": 31,
+      "rate_per_minute": 10.3,
+      "mean": 0.8583333333333334,
+      "p_zero": 0.4238679405067094,
+      "crlb_relative_sd": 1.0793741444417317,
+      "seconds_for_20pct_sd": 145.63106796116503
+    },
+    {
+      "video": 8,
+      "gt_blinks": 30,
+      "rate_per_minute": 5.3,
+      "mean": 0.44166666666666665,
+      "p_zero": 0.6429639210462974,
+      "crlb_relative_sd": 1.5047095877265575,
+      "seconds_for_20pct_sd": 283.0188679245283
+    },
+    {
+      "video": 9,
+      "gt_blinks": 41,
+      "rate_per_minute": 16.2,
+      "mean": 1.3499999999999999,
+      "p_zero": 0.25924026064589156,
+      "crlb_relative_sd": 0.8606629658238704,
+      "seconds_for_20pct_sd": 92.5925925925926
+    },
+    {
+      "video": 10,
+      "gt_blinks": 72,
+      "rate_per_minute": 14.2,
+      "mean": 1.1833333333333333,
+      "p_zero": 0.30625618134802807,
+      "crlb_relative_sd": 0.9192771195538434,
+      "seconds_for_20pct_sd": 105.63380281690141
+    },
+    {
+      "video": 11,
+      "gt_blinks": 43,
+      "rate_per_minute": 17.6,
+      "mean": 1.4666666666666668,
+      "p_zero": 0.2306931822549628,
+      "crlb_relative_sd": 0.8257228238447704,
+      "seconds_for_20pct_sd": 85.22727272727272
+    }
+  ],
+  "example_12_per_minute": {
+    "mean": 1,
+    "p_zero": 0.36787944117144233,
+    "crlb_relative_sd": 1,
+    "seconds_for_20pct_sd": 125
+  },
+  "reference": "published summary only; no original event timestamps or video"
+}
