@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-13",
+  "dataset": "EVE",
+  "dataset_access": "not yet granted",
+  "human_results": "NOT_EVALUABLE",
+  "source_repo": "https://github.com/swook/EVE",
+  "dataset_doc_sha": "9b04b892e248c2030168c627357e4cb66c87104a",
+  "loader_sha": "8b03f60068cc40f2d2ffacac46a1638a31e2117d",
+  "video_reader_sha": "a03d78504526532f8c8a894ca082f7d6037f59cf",
+  "synchronization_note": "Only Basler camera has author-certified reliable tracker sync."
+}
