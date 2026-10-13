@@ -1,0 +1,58 @@
+{
+  "id": "E002-163",
+  "date": "2026-10-13",
+  "classification": "EXPLORATORY_REUSED_HUMAN_MASKS_NOT_PHYSIOLOGICAL_REFERENCE",
+  "input_sha256": "ec150e35dc84e120f1a0418a003989f4948595a8034ecbc68088954cfe0ce730",
+  "n_pairs": 17903,
+  "n_groups": 26,
+  "frame_gaps": {
+    "1": {
+      "pairs": 4781,
+      "consensus": 4420,
+      "raw_discord": 162,
+      "active_consensus": 1046,
+      "active_discord": 115,
+      "active_opposite": 10,
+      "neutral_hidden": 47,
+      "bootstrap_ci95": [
+        0.018572469,
+        0.06189968
+      ]
+    },
+    "5": {
+      "pairs": 4669,
+      "consensus": 4092,
+      "raw_discord": 302,
+      "active_consensus": 2515,
+      "active_discord": 208,
+      "active_opposite": 29,
+      "neutral_hidden": 94
+    },
+    "15": {
+      "pairs": 4415,
+      "consensus": 3740,
+      "raw_discord": 377,
+      "active_consensus": 2525,
+      "active_discord": 275,
+      "active_opposite": 35,
+      "neutral_hidden": 102
+    },
+    "30": {
+      "pairs": 4038,
+      "consensus": 3345,
+      "raw_discord": 357,
+      "active_consensus": 2388,
+      "active_discord": 236,
+      "active_opposite": 31,
+      "neutral_hidden": 121,
+      "bootstrap_ci95": [
+        0.064790576,
+        0.159559835
+      ]
+    }
+  },
+  "independent_checker": "PASS_LOCAL",
+  "ci": "NOT_RUN",
+  "physiological_reference": "NONE",
+  "smallest_claim": "Two normalizations can agree on human mask-derived response classes yet disagree with raw annotated pupil-radius change; shared pupil error is not detectable by normalization consensus."
+}
