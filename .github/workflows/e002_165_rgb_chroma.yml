@@ -1,0 +1,21 @@
+name: E002-165 original RGB channel provenance
+on:
+  push:
+    branches: [research/e002-165-rgb-channel-provenance]
+jobs:
+  pixel-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install numpy pillow scipy requests
+      - run: python research/e002-165/chroma_audit.py
+      - run: python research/e002-165/independent_check.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-165-pixel-provenance
+          path: |
+            research/e002-165/RESULTS.json
+            research/e002-165/RAW_CHROMA.csv
+            research/e002-165/SHA256SUMS
