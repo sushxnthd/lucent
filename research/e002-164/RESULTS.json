@@ -7,25 +7,30 @@
   "folded_slope_per_rgb_second": 0.3,
   "slope_retention": 0.3333333333333333,
   "harmonics": {
-    "1": {
-      "max_abs": 0.9993908270190958,
-      "rms": 0.7071067811865476
-    },
     "0.3333333333333333": {
       "max_abs": 3.7007434154171886e-16,
       "rms": 1.2950289930282705e-16
+    },
+    "0.5": {
+      "max_abs": 0.3333333333333333,
+      "rms": 0.23570226039551584
     },
     "0.6666666666666666": {
       "max_abs": 5.921189464667501e-16,
       "rms": 2.5707919530063423e-16
     },
-    "0.5": {
-      "max_abs": 0.3333333333333333,
-      "rms": 0.23570226039551584
+    "1.0": {
+      "max_abs": 0.9993908270190958,
+      "rms": 0.7071067811865476
     }
   },
   "opposite_trends_same_output": true,
   "equal_length_session_mean_preserved": true,
+  "missingness_wildcard": {
+    "raw_mean": 2.6,
+    "folded_mean": 2.3333333333333335,
+    "difference": 0.26666666666666666
+  },
   "released_csv_lineage": "UNVERIFIED",
   "five_second_human_waveform": "NOT_RUN"
 }
