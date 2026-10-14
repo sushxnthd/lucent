@@ -1,0 +1,17 @@
+{
+  "run": "E002-195",
+  "documentation": "https://webgazer.cs.brown.edu/data/",
+  "archive": "https://webgazer.cs.brown.edu/data/WebGazerETRA2018Dataset_Release20180420.zip",
+  "sdk_validity": "https://developer.tobiipro.com/tobii.research/python/reference/1.6.2.37-alpha-gcca303b/classtobii__research_1_1PupilData.html",
+  "reference_fields": [
+    "right_pupil_validity",
+    "right_pupil_diameter",
+    "left_pupil_validity",
+    "left_pupil_diameter",
+    "system_time_stamp",
+    "true_time"
+  ],
+  "archive_bytes_verified": false,
+  "local_attempt": "DNS blocked",
+  "human_waveform_result": "NONE"
+}

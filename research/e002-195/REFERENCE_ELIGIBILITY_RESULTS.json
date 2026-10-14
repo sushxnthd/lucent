@@ -1,0 +1,18 @@
+{
+  "run": "E002-195",
+  "type": "DOCUMENTATION_ILLUSTRATIVE_ROW",
+  "right": {
+    "validity": 1,
+    "diameter_mm": -1,
+    "eligible": false
+  },
+  "left": {
+    "validity": 0,
+    "diameter_mm": -1,
+    "eligible": false
+  },
+  "true_time_minus_system_time_ms": "10.499000",
+  "original_archive_bytes_verified": false,
+  "human_waveform_result": "NONE",
+  "note": "The example proves that flag-only filtering is unsafe for this published example, not prevalence in archive."
+}
