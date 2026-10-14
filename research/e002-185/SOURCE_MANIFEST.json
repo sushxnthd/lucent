@@ -1,0 +1,15 @@
+{
+  "run": "E002-185",
+  "source": "https://zenodo.org/records/17046553",
+  "published": "2025-09-03",
+  "archive_md5": "59dbd3de85b2eee54345c7d14c9629c9",
+  "archive_size_approx_mb": 75.2,
+  "record_claim": "10 participants measured using Tobii Pro Spectrum and webcam",
+  "rgb_face_video_verified": false,
+  "native_pupil_diameter_verified": false,
+  "original_bytes_acquired": false,
+  "eligibility": "NOT_VERIFIED",
+  "local_network_error": "DNS resolution failure",
+  "container_download": "failed",
+  "actions": "not_run"
+}
