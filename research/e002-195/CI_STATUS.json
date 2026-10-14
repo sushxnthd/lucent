@@ -1,0 +1,9 @@
+{
+  "branch": "research/e002-195-eott-byte-range-preflight",
+  "commit": "d8aa94577e4f4439e632549990d8c573cd63dfcd",
+  "workflow_committed": false,
+  "workflow_runs_confirmed": 0,
+  "reason": "GitHub safety checks blocked executable/workflow content writes; preserve local evidence package",
+  "scientific_gate": "NOT_RUN",
+  "infrastructure_gate": "LOCAL_DNS_BLOCKED"
+}

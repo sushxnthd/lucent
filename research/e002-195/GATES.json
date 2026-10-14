@@ -1,0 +1,8 @@
+{
+  "documentation_pupil_field_provenance": "PASS_ILLUSTRATIVE_EXAMPLE",
+  "positive_finite_diameter_gate": "FAIL_FOR_DOCUMENTATION_SAMPLE_RIGHT_EYE",
+  "native_time_archive_bytes": "NOT_ACQUIRED",
+  "human_waveform_gate": "NOT_RUN",
+  "participant_device_lighting_glasses_holdout": "NOT_RUN",
+  "product_capability": "NOT_UNLOCKED"
+}
