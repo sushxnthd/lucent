@@ -1,0 +1,1 @@
+Run check.py in GitHub Actions to test the exact law. The original human-mask PAIRS.csv is not stored on this branch; run.py requires the SHA256-matching source from the E002-173 reproducibility package. Local full independent checker validated 89,515 configurations. No physiological waveform test has been executed.
