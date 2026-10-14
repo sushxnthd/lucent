@@ -1,0 +1,1 @@
+{"run":"E002-173","source_pairs":17903,"filename_groups":26,"epsilon":0.01,"lag1_joint_coverage":0.41748588161472494,"lag30_joint_coverage":0.4556711243189698,"lag1_group_bootstrap_ci95":[0.362466618111192,0.46750567361254386],"checker":"PASS_89515_corner_enumerations","physiological_validation":false}
