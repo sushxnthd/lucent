@@ -1,0 +1,3 @@
+SCIENCE: Sharp conditional four-radius uncertainty interval verified by 89,515 independent 16-corner checks. At hypothetical 1% per-radius error, 41.75% of lag-1 mask pairs are jointly class-certified. This is not physiological accuracy.
+
+PRODUCT: Require measured boundary-error calibration and rejection before using rapid pupil changes. The 50% coverage target is missed in retrospective sensitivity, but real RGB error is unknown. Do not claim five-second fatigue inference.
