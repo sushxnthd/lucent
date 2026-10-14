@@ -1,0 +1,1 @@
+Freeze 2026-10-14: verify original EOTT source bytes via bounded HTTP Range; do not infer human observability without synchronized tracker data.
