@@ -1,2 +1,3 @@
-# E002-184
-Cloud byte-range provenance probe pending. No physiological result claimed.
+# E002-184 — 2026-10-14
+
+Original EOTT source bytes: NOT VERIFIED. The public HTML source is reachable through an independent cloud fetch, but the archive returned content_too_large; this is not a physiological failure. Local environment DNS blocked direct Range requests. Bounded Range ZIP-index probe is committed and its offline positive/negative fixtures passed. GitHub Actions workflow publication was blocked; no run or human waveform result. Next route: a public cloud executor able to issue HTTP Range requests, or a different original paired dataset. SCIENCE: no new physiological result. PRODUCT: do not use derived gaze-only CSV as pupil-waveform ground truth.
