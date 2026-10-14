@@ -1,0 +1,15 @@
+{
+  "run": "E002-184",
+  "date": "2026-10-14",
+  "dataset": "Eye of the Typer",
+  "original_archive": "https://webgazer.cs.brown.edu/data/WebGazerETRA2018Dataset_Release20180420.zip",
+  "original_archive_sha256": null,
+  "original_bytes_acquired": false,
+  "source_page_independent_fetch": "HTTP content extracted",
+  "archive_independent_fetch": "content_too_large",
+  "local_direct_request": "DNS resolution failure",
+  "source_archive_index": "unverified",
+  "fixture_positive": "pass",
+  "fixture_negative": "pass",
+  "physiological_waveforms_evaluated": 0
+}
