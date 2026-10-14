@@ -1,0 +1,250 @@
+{
+  "run": "E002-177",
+  "classification": "synthetic exact-model mechanism; no human RGB",
+  "construction": "h(u)=Phi(Phi^{-1}(u)-deltaR/s)",
+  "cases": [
+    {
+      "radius_px": 6,
+      "delta_radius_px": -0.45,
+      "blur_px": 0.8,
+      "points_checked": 91,
+      "max_abs_residual": 1.6653345369377348e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 6,
+      "delta_radius_px": -0.45,
+      "blur_px": 1.5,
+      "points_checked": 133,
+      "max_abs_residual": 1.6653345369377348e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 6,
+      "delta_radius_px": -0.45,
+      "blur_px": 2.5,
+      "points_checked": 189,
+      "max_abs_residual": 2.220446049250313e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 6,
+      "delta_radius_px": 0.45,
+      "blur_px": 0.8,
+      "points_checked": 91,
+      "max_abs_residual": 2.3314683517128287e-15,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 6,
+      "delta_radius_px": 0.45,
+      "blur_px": 1.5,
+      "points_checked": 133,
+      "max_abs_residual": 4.440892098500626e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 6,
+      "delta_radius_px": 0.45,
+      "blur_px": 2.5,
+      "points_checked": 189,
+      "max_abs_residual": 2.220446049250313e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 9,
+      "delta_radius_px": -0.45,
+      "blur_px": 0.8,
+      "points_checked": 91,
+      "max_abs_residual": 4.440892098500626e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 9,
+      "delta_radius_px": -0.45,
+      "blur_px": 1.5,
+      "points_checked": 157,
+      "max_abs_residual": 3.3306690738754696e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 9,
+      "delta_radius_px": -0.45,
+      "blur_px": 2.5,
+      "points_checked": 213,
+      "max_abs_residual": 2.220446049250313e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 9,
+      "delta_radius_px": 0.45,
+      "blur_px": 0.8,
+      "points_checked": 91,
+      "max_abs_residual": 2.3314683517128287e-15,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 9,
+      "delta_radius_px": 0.45,
+      "blur_px": 1.5,
+      "points_checked": 157,
+      "max_abs_residual": 4.440892098500626e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 9,
+      "delta_radius_px": 0.45,
+      "blur_px": 2.5,
+      "points_checked": 213,
+      "max_abs_residual": 2.220446049250313e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 12,
+      "delta_radius_px": -0.45,
+      "blur_px": 0.8,
+      "points_checked": 91,
+      "max_abs_residual": 4.440892098500626e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 12,
+      "delta_radius_px": -0.45,
+      "blur_px": 1.5,
+      "points_checked": 169,
+      "max_abs_residual": 3.3306690738754696e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 12,
+      "delta_radius_px": -0.45,
+      "blur_px": 2.5,
+      "points_checked": 237,
+      "max_abs_residual": 2.220446049250313e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 12,
+      "delta_radius_px": 0.45,
+      "blur_px": 0.8,
+      "points_checked": 91,
+      "max_abs_residual": 2.3314683517128287e-15,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 12,
+      "delta_radius_px": 0.45,
+      "blur_px": 1.5,
+      "points_checked": 169,
+      "max_abs_residual": 4.440892098500626e-16,
+      "monotonic": true,
+      "pass": true
+    },
+    {
+      "radius_px": 12,
+      "delta_radius_px": 0.45,
+      "blur_px": 2.5,
+      "points_checked": 237,
+      "max_abs_residual": 2.220446049250313e-16,
+      "monotonic": true,
+      "pass": true
+    }
+  ],
+  "gamma_cases": [
+    {
+      "gamma": 1,
+      "blur_px": 0.8,
+      "edge_shift_px": 0,
+      "as_fraction_of_5pct_change_at_R9": 0
+    },
+    {
+      "gamma": 1,
+      "blur_px": 1.5,
+      "edge_shift_px": 0,
+      "as_fraction_of_5pct_change_at_R9": 0
+    },
+    {
+      "gamma": 1,
+      "blur_px": 2.5,
+      "edge_shift_px": 0,
+      "as_fraction_of_5pct_change_at_R9": 0
+    },
+    {
+      "gamma": 1.2,
+      "blur_px": 0.8,
+      "edge_shift_px": 0.12327283327700789,
+      "as_fraction_of_5pct_change_at_R9": 0.273939629504462
+    },
+    {
+      "gamma": 1.2,
+      "blur_px": 1.5,
+      "edge_shift_px": 0.2311365623943898,
+      "as_fraction_of_5pct_change_at_R9": 0.5136368053208662
+    },
+    {
+      "gamma": 1.2,
+      "blur_px": 2.5,
+      "edge_shift_px": 0.38522760399064965,
+      "as_fraction_of_5pct_change_at_R9": 0.8560613422014436
+    },
+    {
+      "gamma": 1.6,
+      "blur_px": 0.8,
+      "edge_shift_px": 0.30484614791968484,
+      "as_fraction_of_5pct_change_at_R9": 0.6774358842659663
+    },
+    {
+      "gamma": 1.6,
+      "blur_px": 1.5,
+      "edge_shift_px": 0.571586527349409,
+      "as_fraction_of_5pct_change_at_R9": 1.2701922829986865
+    },
+    {
+      "gamma": 1.6,
+      "blur_px": 2.5,
+      "edge_shift_px": 0.9526442122490151,
+      "as_fraction_of_5pct_change_at_R9": 2.1169871383311447
+    },
+    {
+      "gamma": 2.2,
+      "blur_px": 0.8,
+      "edge_shift_px": 0.48962159956723394,
+      "as_fraction_of_5pct_change_at_R9": 1.0880479990382976
+    },
+    {
+      "gamma": 2.2,
+      "blur_px": 1.5,
+      "edge_shift_px": 0.9180404991885636,
+      "as_fraction_of_5pct_change_at_R9": 2.040089998196808
+    },
+    {
+      "gamma": 2.2,
+      "blur_px": 2.5,
+      "edge_shift_px": 1.530067498647606,
+      "as_fraction_of_5pct_change_at_R9": 3.4001499969946796
+    }
+  ],
+  "summary": {
+    "gauge_cases": 18,
+    "gauge_pass": 18,
+    "max_abs_residual": 2.3314683517128287e-15,
+    "gamma_2p2_s1p5_px": 0.9180404991885636,
+    "physiological_rgb_gate": "NOT_TESTED"
+  }
+}
