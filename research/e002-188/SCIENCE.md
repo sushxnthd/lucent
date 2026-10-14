@@ -1,0 +1,1 @@
+EVE default loader uses 10Hz frame sampling from native 30fps webcam input. Source commit: 82757eb2ffb4dd198db36dbfea71601098b597f0. Synthetic independent test: 90 frames become 30; 3Hz and 7Hz cosines alias; 1-frame events can be missed. No human RGB result. Do not use default loader to certify rapid ocular measurements.
