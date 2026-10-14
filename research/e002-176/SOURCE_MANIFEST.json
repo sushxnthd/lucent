@@ -1,0 +1,11 @@
+{
+  "run": "E002-176",
+  "doi": "10.5281/zenodo.20300972",
+  "url": "https://zenodo.org/records/20300972/files/dataset.zip?download=1",
+  "published_md5": "5e04a7b5e50f7508775e1daea527246b",
+  "sha256": null,
+  "source_downloaded": false,
+  "paired_frontal_rgb": false,
+  "protocol_frozen": "2026-10-14",
+  "ci_state": "PENDING"
+}

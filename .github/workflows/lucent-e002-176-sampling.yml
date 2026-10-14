@@ -1,0 +1,31 @@
+name: Lucent E002-176 reference sampling boundary
+on:
+  push:
+    branches:
+      - research/e002-176-reference-sampling-boundary
+  workflow_dispatch:
+jobs:
+  sample:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check numpy scipy
+      - name: Original-data sampling test
+        run: python research/e002-176/run.py
+      - name: Independent checker
+        if: always()
+        run: |
+          if test -f research/e002-176/results/RESULTS.json; then
+            python research/e002-176/independent_check.py research/e002-176/results/RESULTS.json
+          else
+            echo 'Original data acquisition or parser failed'; exit 1
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-176-results
+          path: research/e002-176/results/
