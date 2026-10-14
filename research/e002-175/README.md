@@ -1,0 +1,1 @@
+MCFW-Gaze source metadata audit. Scientific scope: check numeric ranges of published data-quality fractions. This branch does not validate webcam pupillometry.
