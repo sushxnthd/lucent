@@ -1,0 +1,1 @@
+Four-radius error law: if every positive measured radius has independent relative error at most e, true log-change differs from observed log-change by at most 2*log((1+e)/(1-e)). Both endpoints are attainable. At e=0.01219693616, an observed 5% increase can represent zero true change. This is conditional interval arithmetic, not a physiological impossibility.
