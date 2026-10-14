@@ -1,0 +1,1 @@
+Basler sync: reliable. Webcam sync: imprecise. Source docs only.
