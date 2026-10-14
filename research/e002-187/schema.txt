@@ -1,0 +1,1 @@
+54 participants. 4 cameras. Fields left_p and right_p. Frame timestamps.
