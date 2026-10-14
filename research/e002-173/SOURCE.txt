@@ -1,0 +1,2 @@
+PAIRS.csv SHA256 ec150e35dc84e120f1a0418a003989f4948595a8034ecbc68088954cfe0ce730
+Source: E002-159, 17903 human-annotation pairs, 26 filename groups. Previously examined. No eye-tracker ground truth.
