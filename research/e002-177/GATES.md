@@ -1,0 +1,11 @@
+# E002-177 prespecified gates (frozen before evaluation)
+
+Active question: ordinary-RGB normalized pupil/iris waveform versus independent native-timestamp tracker pupil diameter. Frontier: MEYE (2021), js-mEye (2025), Lucent E002-172/173; human prospective cross-device waveform validation unresolved. Scalar: participant-bootstrap 95% lower Pearson r >0.30, with frozen lag/amplitude/NRMSE/coverage. Strongest confounds: nonlinear tone mapping, gaze geometry, occlusion. Falsification: prospective held-out participant/device/lighting/glasses failure or nuisance control matches signal. Physiological publishability: >=8 untouched participants, >0.10 nuisance advantage, independent checker, prior-art audit, all frozen gates. Product relevance: independently calibrated rejection with useful accepted coverage. Kill: three nondiscriminating runs or prospective failure; no fatigue inference.
+
+Auxiliary exact-model question: Let I_R(x)=Phi((x-R)/s), where Phi is standard Gaussian CDF, R>0 and blur s>0. With an unknown strictly increasing camera tone map h, can I_R and I_R' be indistinguishable? Verify construction h(u)=Phi(Phi^{-1}(u)+(R-R')/s) on the finite intensity range. This is a restricted-model impossibility, not a theorem about arbitrary natural images.
+
+Frozen grid: R=6,9,12 pixels; delta R=-0.45,+0.45 pixels; s=0.8,1.5,2.5 pixels; radial x=0..32 at 0.125 pixel spacing. Max numerical residual <=1e-12 on nonsaturated samples; independently check h is increasing. Analytic proof takes priority over floating-point tails.
+
+Gamma confound: h(u)=u^gamma, gamma=1,1.2,1.6,2.2; s=0.8,1.5,2.5. Half-contrast edge shift equals s*Phi^{-1}(2^(-1/gamma)); verify with independent bisection. Report shift relative to a 5% response at R=9 pixels. Control: known affine brightness normalization does not shift half-contrast. Wildcard: fixed gamma across two frames with identical blur must cancel additive bias in the same profile model.
+
+Success: algebraic equivalence plus independent checker, with explicit assumptions and direct camera-calibration/rejection consequence. Kill if proof or checker fails. No original human measurements, real camera gamma inference, or physiological breakthrough claim.
