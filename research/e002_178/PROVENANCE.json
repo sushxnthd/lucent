@@ -1,0 +1,1 @@
+{"run":"E002-178","date":"2026-10-14","input":"synthetic deterministic","human_data":false,"grid":{"R":[6,9,12],"blur":[0.8,1.5,2.5],"gamma":[1.2,1.6,2.2]},"witness_quantiles":4096,"protocol_sha256_local":"469035199086f3fa809c6579b819f941c9807c93eb1343f8293c11aa4b9f5951","local_checker":"PASS","github_actions":"NOT_CONFIRMED","source_dataset_sha256":null}
