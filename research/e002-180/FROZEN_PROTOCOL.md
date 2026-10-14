@@ -1,0 +1,8 @@
+# E002-180 — EyeDentify timestamp provenance gate (frozen before numerical tests)
+
+Primary Lucent kernel: ordinary RGB dimensionless pupil/iris waveform vs native-time independently synchronized tracker pupil diameter, held-out participant/device/lighting/glasses. Primary scalar: participant-bootstrap 95% lower bound on waveform Pearson r; separate lag, amplitude, NRMSE and accepted coverage. Strongest confounds: gaze geometry, local tone mapping/blur and reference time aliasing. Success requires >=8 untouched participants, correlation lower bound >0.30, nuisance advantage >0.10, all frozen auxiliary gates and independent checker. Product gate: calibrated uncertainty/rejection at useful coverage. Kill/reformulate after 3 nondiscriminating runs or prospective failure.
+
+Auxiliary E002-180 question: Does the publicly released EyeDentify preprocessing source preserve 3-second within-session tracker waveform timing for webcam-frame comparison?
+Source: vijulshah/eyedentify, data_creation/eyedentify/tobii_and_webcam_data_alignment.py, Git blob 9a0? (exact blob SHA will be recorded in SOURCE_MANIFEST). Audit published source, not unretrieved release archive.
+
+Frozen decisive tests: (1) a 270-sample 90-Hz three-second tracker input vs 90-frame 30-Hz webcam; (2) output dimension and rank; (3) 1/3-Hz exact cancellation; (4) 1-Hz alias to 1/3 Hz; (5) duplicate timestamps and a linear ramp's slope; (6) independent implementation checks. Do not tune tests to outcomes. Pass gate only if per-frame reference retains a native timestamp or an independently justified frame-time interpolation, without across-second averaging. Source-level fail does not establish that released files use the same implementation. No fatigue inference.
