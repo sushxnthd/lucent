@@ -1,0 +1,86 @@
+[
+  {
+    "id": "js_meye_2025",
+    "rgb_video": null,
+    "tracker_diameter": true,
+    "native_unfolded_time": null,
+    "schema_verified": null,
+    "verified_paired_access": false,
+    "participant_holdout": null,
+    "prior_art_collision": true,
+    "source": "https://link.springer.com/article/10.3758/s13428-025-02901-1",
+    "evidence": "Published 2025-11-24; consumer webcam pupil measurements correlated at least moderately with concurrent EyeLink 1000. Original paired data available on request. RGB pixel channels, raw timestamps and heldout participant structure not verified."
+  },
+  {
+    "id": "eyedentify_2025",
+    "rgb_video": true,
+    "tracker_diameter": true,
+    "native_unfolded_time": false,
+    "schema_verified": null,
+    "verified_paired_access": false,
+    "participant_holdout": true,
+    "prior_art_collision": true,
+    "source": "https://github.com/vijulshah/eyedentify",
+    "evidence": "Webcam/Tobii dataset; documented timefold source implementation E002-162/164; released labels' lineage unknown; raw unfolded waveform not acquired."
+  },
+  {
+    "id": "rgbe_gaze_2024",
+    "rgb_video": true,
+    "tracker_diameter": true,
+    "native_unfolded_time": null,
+    "schema_verified": false,
+    "verified_paired_access": false,
+    "participant_holdout": true,
+    "prior_art_collision": false,
+    "source": "https://github.com/GuangrongZhao/RGBE-Gaze",
+    "evidence": "RGB and Gazepoint acquisition, 66 participants; raw recordings inaccessible on two paths; source-level packet/schema risks E002-167/168, not proven corruption of released data."
+  },
+  {
+    "id": "meye_2021_zenodo",
+    "rgb_video": false,
+    "tracker_diameter": false,
+    "native_unfolded_time": false,
+    "schema_verified": null,
+    "verified_paired_access": false,
+    "participant_holdout": null,
+    "prior_art_collision": true,
+    "source": "https://zenodo.org/records/4488164",
+    "evidence": "Linked public release contains 11,897 IR grayscale stills and segmentation masks, not synchronized EyeLink waveforms described in 2021 paper."
+  },
+  {
+    "id": "eyeblink8",
+    "rgb_video": true,
+    "tracker_diameter": false,
+    "native_unfolded_time": null,
+    "schema_verified": true,
+    "verified_paired_access": false,
+    "participant_holdout": null,
+    "prior_art_collision": false,
+    "source": "https://github.com/heshipstech/blinklab/blob/main/analysis/blinklab/eyeblink8.py",
+    "evidence": "Blink event tags, not independent pupil diameter waveform."
+  },
+  {
+    "id": "cohface",
+    "rgb_video": true,
+    "tracker_diameter": false,
+    "native_unfolded_time": null,
+    "schema_verified": null,
+    "verified_paired_access": false,
+    "participant_holdout": true,
+    "prior_art_collision": false,
+    "source": "https://www.idiap.ch/en/scientific-research/data/cohface",
+    "evidence": "Webcam RGB synchronized to BVP/breathing, not pupil diameter."
+  },
+  {
+    "id": "lpw",
+    "rgb_video": false,
+    "tracker_diameter": false,
+    "native_unfolded_time": null,
+    "schema_verified": true,
+    "verified_paired_access": false,
+    "participant_holdout": true,
+    "prior_art_collision": false,
+    "source": "https://www.mpi-inf.mpg.de/departments/computer-vision-and-machine-learning/research/gaze-based-human-computer-interaction/labelled-pupils-in-the-wild-lpw/",
+    "evidence": "Head-mounted eye-camera recordings and ellipse labels, not independently synchronized ordinary frontal RGB/tracker pupil mm."
+  }
+]

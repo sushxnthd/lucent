@@ -1,0 +1,22 @@
+{
+  "run": "E002-174",
+  "date": "2026-10-14",
+  "classification": "primary literature collision and paired-data eligibility",
+  "data_scope": "source descriptions only; no original human videos or tracker traces acquired",
+  "prior_actions": {
+    "id": 38490787340,
+    "conclusion": "success"
+  },
+  "sources": {
+    "js_meye_doi": "10.3758/s13428-025-02901-1",
+    "js_meye_repo_commit": "33642f3c664634f8310f7ac29154cfff3d4ec21f",
+    "js_meye_readme_blob": "feb2773a83db899fe49c1933da0b5adf9b60c56a",
+    "meye_zenodo_doi": "10.5281/zenodo.4488164"
+  },
+  "limitations": [
+    "shortlist non-exhaustive",
+    "unknowns not physiological failures",
+    "no native paired data hashes",
+    "no new waveform experiment"
+  ]
+}
