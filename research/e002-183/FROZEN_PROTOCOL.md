@@ -1,0 +1,3 @@
+# E002-183 frozen protocol (2026-10-14)
+
+Pair: original EOTT webcam frames versus raw same-eye Tobii pupil diameter and timestamps. Primary scalar: held-out participant-bootstrap lower 95% waveform correlation. Confounds: photometric drift, gaze, occlusion, and recording offset. Success requires >=8 untouched participants, lower r>0.30, nuisance gain>0.10, lag<=100ms, NRMSE<=0.75, coverage>=75%. Fail-closed on unverified source timing. Two failed EOTT access paths trigger source switch. No fatigue inference.
