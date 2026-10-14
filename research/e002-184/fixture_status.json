@@ -1,0 +1,10 @@
+{
+  "run": "E002-184",
+  "fixture_positive": "PASS",
+  "fixture_negative": "PASS",
+  "synthetic_triplets": 8,
+  "synthetic_participants": 9,
+  "original_human_waveforms": 0,
+  "cloud_workflow": "BLOCKED",
+  "source_data_access": "NOT_VERIFIED"
+}
