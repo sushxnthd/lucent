@@ -1,0 +1,26 @@
+{
+  "run_id": "E002-175",
+  "date": "2026-10-14",
+  "dataset": "MCFW-Gaze v3",
+  "doi": "10.5281/zenodo.20300972",
+  "publisher": "Zenodo",
+  "source_url": "https://zenodo.org/records/20300972",
+  "files": [
+    {
+      "name": "data_loss_per_trial.csv",
+      "md5": "369d9446b62fd00888a6d51e152697bd",
+      "url": "https://zenodo.org/records/20300972/files/data_loss_per_trial.csv?download=1"
+    },
+    {
+      "name": "data_quality_validation.csv",
+      "md5": "ec1d4b585300d9de18142ea54bdaeaeb",
+      "url": "https://zenodo.org/records/20300972/files/data_quality_validation.csv?download=1"
+    }
+  ],
+  "rgb_paired": false,
+  "tracker_pupil_mm": true,
+  "source_participants": 15,
+  "hypothesis": "Published proportion fields are numerically admissible in [0,1]",
+  "decision": "One verified out-of-range value rejects use of the corresponding summary field as a probability, not the raw tracker data.",
+  "source_sha256": "to be populated by executable after byte-level acquisition"
+}
