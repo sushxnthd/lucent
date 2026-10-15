@@ -1,0 +1,31 @@
+name: E002-206 original-human edge-aware pupil reference
+on:
+  push:
+    branches: [research/e002-206-original-human-edge-coverage]
+jobs:
+  original-human:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Synthetic preflight
+        run: python research/e002-206/preflight.py
+      - name: Verified original source
+        run: python research/e002-203/raw_semantics.py
+      - name: Source checker
+        run: python research/e002-203/raw_semantics_checker.py
+      - name: Human reference gate
+        run: python research/e002-206/human_edge_coverage.py
+      - name: Independent checker
+        run: python research/e002-206/independent_checker.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-206-human-edge-reference
+          path: |
+            research/e002-203/results/
+            research/e002-206/results/
+          if-no-files-found: warn
