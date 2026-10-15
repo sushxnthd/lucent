@@ -1,0 +1,25 @@
+name: E002-204 original human validity
+on:
+  push:
+    branches:
+      - research/e002-204-native-pupil-reference-audit
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python research/e002-203/raw_semantics.py
+      - if: always()
+        run: python research/e002-203/raw_semantics_checker.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-204-source-audit
+          path: research/e002-203/results/
