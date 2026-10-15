@@ -1,0 +1,27 @@
+{
+  "run": "E002-206-source-verified-pupil-marginal-ceiling",
+  "source_csv_blob_sha": "ffad6b33fce22aa31633055c2af7042d4855a0a6",
+  "source_record": "https://zenodo.org/records/20300972",
+  "source_archive_md5": "5e04a7b5e50f7508775e1daea527246b",
+  "source_metadata_md5": "369d9446b62fd00888a6d51e152697bd",
+  "original_human_verification": "https://github.com/sushxnthd/lucent/actions/runs/38695030636",
+  "raw_semantics": {
+    "n_eye_records": 30,
+    "pupil_valid_exact_matches": 30,
+    "positive_pupil_valid_exact_matches": 30,
+    "pupil_available_disagreements": 27
+  },
+  "cohort": "participant_001..015 / image_01_1.tsv",
+  "sampling_window_n": 600,
+  "required_valid_n": 570,
+  "required_participant_fraction": 0.75,
+  "required_participants": 12,
+  "upper_bounds": {
+    "left_eye": 11,
+    "right_eye": 10,
+    "oracle_one_fixed_eye_per_trial": 11,
+    "simultaneous_binocular": 10
+  },
+  "conclusion": "75% accepted-window coverage is impossible for this 15-trial selected cohort under any fixed-eye-per-window policy; actual temporal gap gate can only lower coverage.",
+  "limitations": "Source-specific trial counts; not all trials or participants; no RGB video analysis; not a physiological impossibility."
+}

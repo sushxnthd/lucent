@@ -2,6 +2,11 @@ name: E002-206 original-human edge-aware pupil reference
 on:
   push:
     branches: [research/e002-206-original-human-edge-coverage]
+    paths:
+      - research/e002-206/human_edge_coverage.py
+      - research/e002-206/independent_checker.py
+      - research/e002-206/preflight.py
+  workflow_dispatch:
 jobs:
   original-human:
     runs-on: ubuntu-latest

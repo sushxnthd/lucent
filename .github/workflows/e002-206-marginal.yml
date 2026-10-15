@@ -1,0 +1,17 @@
+name: E002-206 verified human pupil marginal ceiling
+on:
+  push:
+    branches: [research/e002-206-original-human-edge-coverage]
+    paths:
+      - research/e002-206/marginal_bound.py
+  workflow_dispatch:
+jobs:
+  marginal-bound:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independently count original-human pupil-valid ceilings
+        run: python research/e002-206/marginal_bound.py
