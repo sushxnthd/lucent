@@ -1,0 +1,42 @@
+{
+  "run": "E002-211",
+  "science": {
+    "status": "conditional synthetic mechanism verified",
+    "law": "Equal-prior Gaussian binary accuracy Phi(L2_difference/(2*noise_SD))",
+    "radius_pair_px": [
+      6,
+      6.2
+    ],
+    "blur_pair_px": [
+      4,
+      3.9169635406811745
+    ],
+    "matched_image_l2": 0.024260253946439922,
+    "one_frame_oracle_accuracy": 0.7279107160718792,
+    "monte_carlo_accuracy": 0.72454,
+    "paired_human_count": 0,
+    "prior_art": [
+      "EyeDentify WACV 2025",
+      "EVE ECCV 2020",
+      "Klingner ETRA 2010",
+      "Yap Raveendran 2004",
+      "classical Gaussian detection"
+    ]
+  },
+  "product": {
+    "decision": "Do not certify small pupil changes without blur, contrast and noise calibration",
+    "unlock": "candidate finite-SNR rejection rule, pending human validation",
+    "primary_gates": "not run",
+    "coverage_75_percent": "unverified",
+    "fatigue_inference": "not permitted"
+  },
+  "wildcard": {
+    "structured_noise_accuracy": 0.6068959616023955,
+    "activated": false
+  },
+  "blockers": [
+    "EVE authorized data unavailable",
+    "ordinary webcam timebase uncalibrated",
+    "workflow write blocked twice"
+  ]
+}
