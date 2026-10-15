@@ -1,0 +1,30 @@
+{
+  "run": "E002-204",
+  "primary_question": "RGB anatomical pupil/iris waveform vs synchronized same-eye tracker pupil diameter under participant/device/lighting/glasses holdouts",
+  "nested_question": "Do source-defined trial validity counts equal original pupil-validity or gaze-validity, and what is native-time reference coverage?",
+  "signal": "ordinary RGB pupil/anatomical iris ratio",
+  "reference": "native-time same-eye Tobii pupil diameter",
+  "frontier": "webcam pupillometry exists; prospective multi-device waveform holdouts unverified",
+  "scalar": "participant-bootstrap 95% lower waveform Pearson r; nested 0-30 predicate match count and 0-15 same-eye 5s gate",
+  "confound": "photometric pupil boundary bias, blur, gaze geometry, clock offsets; nested gaze-vs-pupil validity",
+  "falsification": "source predicate mismatch invalidates pupil interpretation; frozen human RGB gates fail nuisance controls",
+  "publishable": "untouched >=8 human paired participants, device/condition holdouts, independent checker, prior-art collision and unseen mechanism prediction",
+  "product": "calibrated abstention with >=75% coverage; same-eye fixed reference",
+  "kill": "3 nondiscriminating primary runs; 2 blocked attempts per dataset path",
+  "source": {
+    "record": "https://zenodo.org/records/20300972",
+    "archive_md5": "5e04a7b5e50f7508775e1daea527246b",
+    "metadata_md5": "369d9446b62fd00888a6d51e152697bd"
+  },
+  "frozen": {
+    "selection": "participant_001..015/image_01_1.tsv",
+    "window_seconds": 5,
+    "min_samples": 570,
+    "min_valid_fraction": 0.95,
+    "max_gap_seconds": 0.026
+  },
+  "science": "metadata semantics unverified; original RGB waveform not tested",
+  "product_ledger": "do not use gaze validity as pupil reference or demand binocular validity for same-eye task",
+  "wildcard": "compare source gaze validity to pupil validity on gaze-invalid samples",
+  "smallest_claim": "frozen executable reference preflight; not a physiological measurement result"
+}

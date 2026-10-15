@@ -1,0 +1,18 @@
+{
+  "branch": "research/e002-204-native-pupil-reference-audit",
+  "base": "research/e002-203-original-tsv-crosscheck",
+  "committed_code": true,
+  "original_human_tsv_executed": "UNVERIFIED",
+  "actions_run_id": null,
+  "actions_logs": "NOT_AVAILABLE_VIA_CURRENT_CONNECTOR",
+  "local_zenodo_archive_download": "DNS_FAILURE",
+  "human_rgb_waveform": "NOT_TESTED",
+  "failure_type": "DATA_ACCESS_OR_CI_VISIBILITY_NOT_SCIENCE",
+  "gates": {
+    "source_semantics": "OPEN",
+    "native_time_reference": "OPEN",
+    "rgb_waveform": "OPEN",
+    "device_holdout": "OPEN",
+    "independent_checker": "CODE_PRESENT_NOT_RUN_ON_HUMANS"
+  }
+}
