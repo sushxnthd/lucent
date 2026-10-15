@@ -1,0 +1,6 @@
+ try:
+  r=R();out["archive_size_bytes"]=r.size
+  with zipfile.ZipFile(r) as z:
+   infos=z.infolist();out["entries"]=len(infos)
+   manifest="".join(f"{i.filename}\t{i.file_size}\t{i.CRC}\n" for i in infos)
+   out["directory_manifest_sha256"]=hashlib.sha256(manifest.encode()).hexdigest()

@@ -1,0 +1,7 @@
+  with urllib.request.urlopen(q,timeout=90) as r:
+   h=r.headers.get("Content-Range","")
+   if r.status!=206 or not re.fullmatch(r"bytes 0-0/\d+",h):raise ValueError("no ranges")
+   self.size=int(h.split("/")[-1]);self.pos=0
+ def readable(self):return True
+ def seekable(self):return True
+ def tell(self):return self.pos

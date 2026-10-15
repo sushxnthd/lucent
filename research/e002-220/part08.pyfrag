@@ -1,0 +1,5 @@
+ path=Path("research/e002-220/RESULTS.json")
+ path.parent.mkdir(parents=True,exist_ok=True)
+ path.write_text(json.dumps(out,indent=2,sort_keys=True)+"\n")
+ print(json.dumps({"status":out["source_status"],"entries":out.get("entries"),"errors":out["errors"],"subjects":[{"participant":x["participant"],"videos":len(x["video_candidates"]),"trackers":len(x["tracker_candidates"]),"logs":len(x["browser_log_candidates"])} for x in out["subjects"]]}))
+if __name__=="__main__":run()

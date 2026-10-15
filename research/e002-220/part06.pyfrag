@@ -1,0 +1,5 @@
+   for pid in ("P_33","P_54"):
+    items=[i for i in infos if f"/{pid}/" in "/"+i.filename]
+    video=[i for i in items if i.filename.endswith(("-study-dot_test.webm","-study-dot_test.mp4"))]
+    tracker=[i for i in items if i.filename.endswith("/"+pid+".txt")]
+    logs=[i for i in items if re.search(r"/\d{12,15}\.txt$",i.filename)]

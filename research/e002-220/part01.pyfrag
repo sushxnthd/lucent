@@ -1,0 +1,7 @@
+ with urllib.request.urlopen(q,timeout=90) as r:
+  b=r.read(n+1);h=r.headers.get("Content-Range","")
+  if r.status!=206 or len(b)!=n or not h.startswith(f"bytes {a}-"):raise ValueError("bad range")
+ return b
+class R(io.RawIOBase):
+ def __init__(self):
+  q=urllib.request.Request(URL,headers={"Range":"bytes=0-0"})

@@ -1,0 +1,4 @@
+def brief(i):
+ return {"path":i.filename,"bytes":i.file_size,"compressed":i.compress_size,"crc32":f"{i.CRC:08x}","zip_method":i.compress_type}
+def run():
+ out={"run":"E002-220","source":URL,"source_status":"blocked","subjects":[],"errors":[],"human_waveform_evaluated":False,"lag_certified":False}

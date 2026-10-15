@@ -1,0 +1,6 @@
+import io,json,hashlib,re,urllib.request,zipfile
+from pathlib import Path
+URL="https://webgazer.cs.brown.edu/data/WebGazerETRA2018Dataset_Release20180420.zip"
+def rg(a,n):
+ if n<1 or n>10000000:raise ValueError("budget")
+ q=urllib.request.Request(URL,headers={"Range":f"bytes={a}-{a+n-1}"})
