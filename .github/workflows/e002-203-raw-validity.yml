@@ -1,0 +1,30 @@
+name: E002-203 original TSV validity semantics
+on:
+  pull_request:
+    paths:
+      - 'research/e002-203/**'
+      - '.github/workflows/e002-203-raw-validity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Original MD5-verified archive and source validity semantic audit
+        run: python research/e002-203/raw_semantics.py
+      - name: Independent checker (even on failure)
+        if: always()
+        run: python research/e002-203/raw_semantics_checker.py
+      - name: Preserve raw provenance and negative gates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-203-original-human-validity
+          path: research/e002-203/results/
+          if-no-files-found: warn
