@@ -1,0 +1,571 @@
+{
+  "run": "E002-203",
+  "source_validity_to_pupil_validity": "NOT_TESTED",
+  "rgb_tracker_waveform": "NOT_TESTED",
+  "metrics": {
+    "binocular": {
+      "guaranteed": 4,
+      "max_possible": 10,
+      "records": [
+        {
+          "participant": "participant_001",
+          "n": 609,
+          "left": 559,
+          "right": 330,
+          "lower": 271,
+          "upper": 330,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_002",
+          "n": 610,
+          "left": 607,
+          "right": 592,
+          "lower": 579,
+          "upper": 592,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_003",
+          "n": 609,
+          "left": 557,
+          "right": 548,
+          "lower": 487,
+          "upper": 548,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_004",
+          "n": 610,
+          "left": 571,
+          "right": 578,
+          "lower": 529,
+          "upper": 571,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_005",
+          "n": 605,
+          "left": 578,
+          "right": 534,
+          "lower": 502,
+          "upper": 534,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_006",
+          "n": 609,
+          "left": 586,
+          "right": 587,
+          "lower": 555,
+          "upper": 586,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_007",
+          "n": 610,
+          "left": 585,
+          "right": 591,
+          "lower": 556,
+          "upper": 585,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_008",
+          "n": 611,
+          "left": 611,
+          "right": 611,
+          "lower": 600,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_009",
+          "n": 610,
+          "left": 538,
+          "right": 518,
+          "lower": 436,
+          "upper": 518,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_010",
+          "n": 610,
+          "left": 580,
+          "right": 583,
+          "lower": 543,
+          "upper": 580,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_011",
+          "n": 608,
+          "left": 605,
+          "right": 608,
+          "lower": 597,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_012",
+          "n": 610,
+          "left": 570,
+          "right": 609,
+          "lower": 559,
+          "upper": 570,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_013",
+          "n": 608,
+          "left": 581,
+          "right": 577,
+          "lower": 542,
+          "upper": 577,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_014",
+          "n": 609,
+          "left": 594,
+          "right": 595,
+          "lower": 571,
+          "upper": 594,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_015",
+          "n": 608,
+          "left": 558,
+          "right": 561,
+          "lower": 503,
+          "upper": 558,
+          "decision": "impossible"
+        }
+      ]
+    },
+    "left": {
+      "guaranteed": 9,
+      "max_possible": 11,
+      "records": [
+        {
+          "participant": "participant_001",
+          "n": 609,
+          "left": 559,
+          "right": 330,
+          "lower": 550,
+          "upper": 559,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_002",
+          "n": 610,
+          "left": 607,
+          "right": 592,
+          "lower": 597,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_003",
+          "n": 609,
+          "left": 557,
+          "right": 548,
+          "lower": 548,
+          "upper": 557,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_004",
+          "n": 610,
+          "left": 571,
+          "right": 578,
+          "lower": 561,
+          "upper": 571,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_005",
+          "n": 605,
+          "left": 578,
+          "right": 534,
+          "lower": 573,
+          "upper": 578,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_006",
+          "n": 609,
+          "left": 586,
+          "right": 587,
+          "lower": 577,
+          "upper": 586,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_007",
+          "n": 610,
+          "left": 585,
+          "right": 591,
+          "lower": 575,
+          "upper": 585,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_008",
+          "n": 611,
+          "left": 611,
+          "right": 611,
+          "lower": 600,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_009",
+          "n": 610,
+          "left": 538,
+          "right": 518,
+          "lower": 528,
+          "upper": 538,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_010",
+          "n": 610,
+          "left": 580,
+          "right": 583,
+          "lower": 570,
+          "upper": 580,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_011",
+          "n": 608,
+          "left": 605,
+          "right": 608,
+          "lower": 597,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_012",
+          "n": 610,
+          "left": 570,
+          "right": 609,
+          "lower": 560,
+          "upper": 570,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_013",
+          "n": 608,
+          "left": 581,
+          "right": 577,
+          "lower": 573,
+          "upper": 581,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_014",
+          "n": 609,
+          "left": 594,
+          "right": 595,
+          "lower": 585,
+          "upper": 594,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_015",
+          "n": 608,
+          "left": 558,
+          "right": 561,
+          "lower": 550,
+          "upper": 558,
+          "decision": "impossible"
+        }
+      ]
+    },
+    "right": {
+      "guaranteed": 8,
+      "max_possible": 10,
+      "records": [
+        {
+          "participant": "participant_001",
+          "n": 609,
+          "left": 559,
+          "right": 330,
+          "lower": 321,
+          "upper": 330,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_002",
+          "n": 610,
+          "left": 607,
+          "right": 592,
+          "lower": 582,
+          "upper": 592,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_003",
+          "n": 609,
+          "left": 557,
+          "right": 548,
+          "lower": 539,
+          "upper": 548,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_004",
+          "n": 610,
+          "left": 571,
+          "right": 578,
+          "lower": 568,
+          "upper": 578,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_005",
+          "n": 605,
+          "left": 578,
+          "right": 534,
+          "lower": 529,
+          "upper": 534,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_006",
+          "n": 609,
+          "left": 586,
+          "right": 587,
+          "lower": 578,
+          "upper": 587,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_007",
+          "n": 610,
+          "left": 585,
+          "right": 591,
+          "lower": 581,
+          "upper": 591,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_008",
+          "n": 611,
+          "left": 611,
+          "right": 611,
+          "lower": 600,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_009",
+          "n": 610,
+          "left": 538,
+          "right": 518,
+          "lower": 508,
+          "upper": 518,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_010",
+          "n": 610,
+          "left": 580,
+          "right": 583,
+          "lower": 573,
+          "upper": 583,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_011",
+          "n": 608,
+          "left": 605,
+          "right": 608,
+          "lower": 600,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_012",
+          "n": 610,
+          "left": 570,
+          "right": 609,
+          "lower": 599,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_013",
+          "n": 608,
+          "left": 581,
+          "right": 577,
+          "lower": 569,
+          "upper": 577,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_014",
+          "n": 609,
+          "left": 594,
+          "right": 595,
+          "lower": 586,
+          "upper": 595,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_015",
+          "n": 608,
+          "left": 558,
+          "right": 561,
+          "lower": 553,
+          "upper": 561,
+          "decision": "impossible"
+        }
+      ]
+    },
+    "oracle_fixed_eye": {
+      "guaranteed": 10,
+      "max_possible": 11,
+      "records": [
+        {
+          "participant": "participant_001",
+          "n": 609,
+          "left": 559,
+          "right": 330,
+          "lower": 550,
+          "upper": 559,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_002",
+          "n": 610,
+          "left": 607,
+          "right": 592,
+          "lower": 597,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_003",
+          "n": 609,
+          "left": 557,
+          "right": 548,
+          "lower": 548,
+          "upper": 557,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_004",
+          "n": 610,
+          "left": 571,
+          "right": 578,
+          "lower": 568,
+          "upper": 578,
+          "decision": "possible"
+        },
+        {
+          "participant": "participant_005",
+          "n": 605,
+          "left": 578,
+          "right": 534,
+          "lower": 573,
+          "upper": 578,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_006",
+          "n": 609,
+          "left": 586,
+          "right": 587,
+          "lower": 578,
+          "upper": 587,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_007",
+          "n": 610,
+          "left": 585,
+          "right": 591,
+          "lower": 581,
+          "upper": 591,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_008",
+          "n": 611,
+          "left": 611,
+          "right": 611,
+          "lower": 600,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_009",
+          "n": 610,
+          "left": 538,
+          "right": 518,
+          "lower": 528,
+          "upper": 538,
+          "decision": "impossible"
+        },
+        {
+          "participant": "participant_010",
+          "n": 610,
+          "left": 580,
+          "right": 583,
+          "lower": 573,
+          "upper": 583,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_011",
+          "n": 608,
+          "left": 605,
+          "right": 608,
+          "lower": 600,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_012",
+          "n": 610,
+          "left": 570,
+          "right": 609,
+          "lower": 599,
+          "upper": 600,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_013",
+          "n": 608,
+          "left": 581,
+          "right": 577,
+          "lower": 573,
+          "upper": 581,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_014",
+          "n": 609,
+          "left": 594,
+          "right": 595,
+          "lower": 586,
+          "upper": 595,
+          "decision": "guaranteed"
+        },
+        {
+          "participant": "participant_015",
+          "n": 608,
+          "left": 558,
+          "right": 561,
+          "lower": 553,
+          "upper": 561,
+          "decision": "impossible"
+        }
+      ]
+    }
+  }
+}

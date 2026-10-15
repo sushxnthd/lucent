@@ -1,0 +1,14 @@
+{
+  "source": "MCFW-Gaze v3, derived from E002-202",
+  "publisher": "Zenodo",
+  "record": "https://zenodo.org/records/20300972",
+  "csv_md5": "369d9446b62fd00888a6d51e152697bd",
+  "csv_bytes": 820609,
+  "e002_202_results_sha256": "839d802e294cf2d137c2e29aa178954d9cc49269725b2e91ac3dad11034f6bd5",
+  "source_tsvs_available": false,
+  "pupil_semantics": "UNVERIFIED",
+  "rgb_paired_data_available": false,
+  "protocol": "w=600, valid>=570, 15 image_01_1 records",
+  "local_checker": "PASS",
+  "github_actions": "NOT_RUN"
+}
