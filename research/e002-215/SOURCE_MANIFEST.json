@@ -1,0 +1,10 @@
+{
+  "run": "E002-215",
+  "source": "research/e002-214/DERIVED_PARTICIPANT.csv",
+  "source_git_blob_sha1": "7c0e15e5ca1155d3dd0acd0915fcb699487694db",
+  "original_source_commit": "aa9bddf498a3b6e4104c2c000d2cc0c06a816aae",
+  "participant_count": 51,
+  "source_type": "third_party_participant_aggregates",
+  "untouched_human_evaluation": false,
+  "remote_CI": "not_observed"
+}
