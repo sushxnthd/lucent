@@ -8,7 +8,7 @@ SRC=ROOT.parent/"e002-214"/"DERIVED_PARTICIPANT.csv"
 EXPECTED="7c0e15e5ca1155d3dd0acd0915fcb699487694db"
 def rows():
     raw=SRC.read_bytes()
-    digest=hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\\0"+raw).hexdigest()
+    digest=hashlib.sha1(b"blob "+str(len(raw)).encode()+bytes([0])+raw).hexdigest()
     if digest!=EXPECTED: raise RuntimeError("SOURCE_HASH_MISMATCH "+digest)
     with SRC.open(newline="") as f: out=[{k:float(v) for k,v in row.items()} for row in csv.DictReader(f)]
     if len(out)!=51 or len({r["participant"] for r in out})!=51: raise RuntimeError("COHORT_INTEGRITY")
