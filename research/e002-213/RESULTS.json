@@ -1,0 +1,56 @@
+{
+  "run": "E002-213",
+  "date": "2026-10-15",
+  "data": "SYNTHETIC_ONLY",
+  "configurations": 90,
+  "read_noise_sd": 0.02,
+  "raw_csv_sha256": "3215d936599a70eedf6004c3339af83958d69d7dda59e160f3b5f08f4eba4db0",
+  "independent_checker": {
+    "status": "PASS",
+    "rows_checked": 90,
+    "method": "independent SVD nuisance regression with half-step finite differences",
+    "adversarial_mutation_rejected": true
+  },
+  "cases": [
+    {
+      "radius_px": 3,
+      "blur_px": 4,
+      "known_crlb_sd_px": 0.032805787539132,
+      "full_nuisance_crlb_sd_px": 9.798999710023784,
+      "full_information_retention": 0.000011208240629598932
+    },
+    {
+      "radius_px": 5,
+      "blur_px": 3,
+      "known_crlb_sd_px": 0.020674208544281637,
+      "full_nuisance_crlb_sd_px": 0.2262319603389294,
+      "full_information_retention": 0.008351218910661165
+    },
+    {
+      "radius_px": 5,
+      "blur_px": 5,
+      "known_crlb_sd_px": 0.026715278425829745,
+      "full_nuisance_crlb_sd_px": 2.438538488026371,
+      "full_information_retention": 0.0001200218123458483
+    },
+    {
+      "radius_px": 8,
+      "blur_px": 3,
+      "known_crlb_sd_px": 0.017068729868988438,
+      "full_nuisance_crlb_sd_px": 0.05139955344892803,
+      "full_information_retention": 0.11027668913214775
+    }
+  ],
+  "failed_gates": [
+    "human RGB/reference not run",
+    "prospective holdout not run",
+    "75% coverage unverified",
+    "illustrative 0.25px precision failed in r3 blur4 case"
+  ],
+  "source_audit": {
+    "zenodo_19442493": "restricted; gaze logs, no verified pupil video",
+    "EVE": "request only, webcam timebase unverified",
+    "EyeDentify": "folded native timebase"
+  },
+  "scientific_classification": "standard local efficient Fisher bound; synthetic demonstration only"
+}
