@@ -1,0 +1,13 @@
+{
+  "source_run": 38710569017,
+  "run_status": "completed",
+  "run_conclusion": "success",
+  "source_branch": "research/e002-206-original-human-edge-coverage",
+  "source_head_sha": "92fd678675e6a0d2d55190ea64c612ab33a9c1c6",
+  "artifact_id": 11960866574,
+  "artifact_sha256": "c4231ca5424fb8030663fafd88d79e654293587c2d0a7aecde4ca3b7110c2f84",
+  "dataset_md5": "5e04a7b5e50f7508775e1daea527246b",
+  "metadata_md5": "369d9446b62fd00888a6d51e152697bd",
+  "raw_semantics_matches": 30,
+  "independent_replay": "PASS"
+}
