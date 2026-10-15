@@ -1,0 +1,14 @@
+{
+  "run":"E002-220",
+  "source":"Brown EOTT original ZIP, CRC-verified member extraction",
+  "window_video_seconds":[5,10],
+  "frozen_unique_pts_gate":0.9,
+  "P_33":{"packets":150,"unique_pts":145,"fraction":0.9666666666666667,"gate":"PASS"},
+  "P_54":{"packets":149,"unique_pts":83,"fraction":0.5570469798657718,"gate":"FAIL"},
+  "human_rgb_waveform_evaluated":false,
+  "native_reference_sync_certified":false,
+  "lag_certified":false,
+  "actions_run":38813725051,
+  "source_hashes":"MEMBER_HASHES.json in Actions artifact",
+  "artifact_sha256":"7b5c295c2a9f66365aaff745f827275bb634a447a2a9abbb91ea2e3de543ac77"
+}

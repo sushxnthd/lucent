@@ -1,4 +1,4 @@
-name: E002-220 source verification
+name: E002-220 original source verification
 on: push
 jobs:
   audit:
@@ -11,6 +11,7 @@ jobs:
       - run: python3 research/e002-220/count.py
       - run: python3 research/e002-220/pts.py
       - run: python3 research/e002-220/check_members.py
+      - run: python3 research/e002-220/check_results.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -1,0 +1,1 @@
+PRODUCT E002-220: Reject the P_54 recording for 100-ms lag certification using its recorded packet PTS. Retain P_33 only as a conditional development source pending independent exposure-clock calibration, native-reference matching, and nuisance-controlled waveform evaluation. No fatigue feature or APST-5 claim.

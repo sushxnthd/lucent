@@ -1,0 +1,1 @@
+CI E002-220: runs 38812997407, 38813165449, 38813417218 and 38813725051 succeeded. Run 38813612492 failed solely because ffprobe was absent on the runner; installed ffmpeg in follow-up commit 6bf883244216e5994934b653d637b37f8b5132b6 and reran successfully. Artifacts preserve hashes and derived timing counts.

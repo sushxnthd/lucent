@@ -1,0 +1,1 @@
+SCIENCE E002-220: CRC-verified source files recovered for two development recordings. The prespecified unique-PTS gate passes for P_33 (145/150) and fails for P_54 (83/149). Packet PTS are not exposure times. No waveform, synchronization, or fatigue certification.
