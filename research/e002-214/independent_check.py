@@ -5,7 +5,7 @@ ROOT=pathlib.Path(__file__).resolve().parent
 PIN="aa9bddf498a3b6e4104c2c000d2cc0c06a816aae"
 EXPECTED={"left":"509e14d61455dc6ee119a0fc2ba9e7448eedc9fc","right":"9f55dd52fc6c11c9903ec9c7b0c735192cd4a790"}
 def load(eye):
-    url=f"https://raw.githubusercontent.com/CondadosAI/pupil-diameter-webcam/{pin}/output/per_participant_{eye}_eye.csv"
+    url=f"https://raw.githubusercontent.com/CondadosAI/pupil-diameter-webcam/{PIN}/output/per_participant_{eye}_eye.csv"
     raw=urllib.request.urlopen(url,timeout=45).read()
     prefix=b"blob "+str(len(raw)).encode()+b"\x00"
     assert hashlib.sha1(prefix+raw).hexdigest()==EXPECTED[eye],"SOURCE_DRIFT"
