@@ -14,10 +14,14 @@ jobs:
       - uses: actions/checkout@v4
       - name: Inspect public release without decoding images
         run: python3 research/e002-217/probe.py
+      - name: Enumerate dataset files without downloading them
+        run: python3 research/e002-217/list_files.py
       - name: Independent admission and mutation check
         run: python3 research/e002-217/check.py
       - uses: actions/upload-artifact@v4
         with:
           name: e002-217-provenance-manifest
-          path: research/e002-217/RELEASE_PROBE.json
+          path: |
+            research/e002-217/RELEASE_PROBE.json
+            research/e002-217/FILE_LIST.json
           if-no-files-found: error
