@@ -1,0 +1,29 @@
+{
+  "run": "E002-222",
+  "source_run_id": 38819094753,
+  "source_commit": "db7541cfd00e3f77bf956f839267e8250a58bc97",
+  "source_artifact_id": 12012272000,
+  "artifact_sha256": "c3751a3348544e81a829faede704996ee0cf41c6c3225601e5979db833ed548e",
+  "new_source_execution": false,
+  "participants": {
+    "P_33": {
+      "video_packets_5s": 150,
+      "unique_packet_pts": 145,
+      "extra_packets_sharing_pts": 5,
+      "unique_fraction": 0.966667,
+      "p05_p95_diameter_span_mm": {"left": 0.25248, "right": 0.26422},
+      "median_valid_reference_gap_ms": {"left": 24.99008, "right": 24.99008}
+    },
+    "P_54": {
+      "video_packets_5s": 149,
+      "unique_packet_pts": 83,
+      "extra_packets_sharing_pts": 66,
+      "unique_fraction": 0.557047,
+      "p05_p95_diameter_span_mm": {"left": 0.56422, "right": 0.42536},
+      "median_valid_reference_gap_ms": {"left": 24.99986, "right": 24.99914}
+    }
+  },
+  "exposure_sync_certified": false,
+  "rgb_waveform_tested": false,
+  "status": "derived from verified previous Actions artifact; new audit not executed"
+}
