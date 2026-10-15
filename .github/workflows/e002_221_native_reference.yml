@@ -12,6 +12,7 @@ jobs:
       - run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
       - run: python3 research/e002-220/extract.py
       - run: python3 research/e002-221/analyze.py
+      - run: python3 research/e002-221/valid_only.py
       - run: python3 research/e002-221/check.py
       - uses: actions/upload-artifact@v4
         if: always()
