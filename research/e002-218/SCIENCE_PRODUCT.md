@@ -1,1 +1,3 @@
 SCIENCE: Public release inventory is unresolved until bounded probes return. PRODUCT: No native-time waveform admission, no fatigue inference. Active signal/reference: RGB pupil/iris temporal waveform versus native-time same-eye tracker pupil diameter. Scalar: held-out participant-bootstrap lower Pearson bound. Confounds: photometry, geometry, defocus, timing. Falsification: untouched human waveform failure. Publishable: at least eight untouched participants with independent checking and holdouts. Product: 75% prospective acceptance. Kill: three nondiscriminating runs.
+
+Execution note: bounded archive central-directory request and four 200-file listing pages; any access failure is logged as infrastructure, not physiology.
