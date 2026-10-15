@@ -1,0 +1,150 @@
+{
+  "run": "E002-210",
+  "kind": "EXACT_THEOREM_AND_SYNTHETIC_CONTROLS",
+  "human_RGB_tracker_pairs": 0,
+  "cases": [
+    {
+      "apparent_ms": 40,
+      "offset_bound_ms": 50,
+      "certificate": {
+        "admit": true,
+        "reason": "PASS",
+        "interval_ms": [
+          -10,
+          90
+        ],
+        "worst_ms": 90
+      }
+    },
+    {
+      "apparent_ms": 40,
+      "offset_bound_ms": 70,
+      "certificate": {
+        "admit": false,
+        "reason": "LAG_NOT_CERTIFIABLE",
+        "interval_ms": [
+          -30,
+          110
+        ],
+        "worst_ms": 110
+      }
+    },
+    {
+      "apparent_ms": -80,
+      "offset_bound_ms": 15,
+      "certificate": {
+        "admit": true,
+        "reason": "PASS",
+        "interval_ms": [
+          -95,
+          -65
+        ],
+        "worst_ms": 95
+      }
+    },
+    {
+      "apparent_ms": 0,
+      "offset_bound_ms": null,
+      "certificate": {
+        "admit": false,
+        "reason": "UNBOUNDED_CLOCK_ERROR",
+        "interval_ms": null
+      }
+    },
+    {
+      "apparent_ms": 0,
+      "offset_bound_ms": 100,
+      "certificate": {
+        "admit": true,
+        "reason": "PASS",
+        "interval_ms": [
+          -100,
+          100
+        ],
+        "worst_ms": 100
+      }
+    },
+    {
+      "apparent_ms": 100,
+      "offset_bound_ms": 1,
+      "certificate": {
+        "admit": false,
+        "reason": "LAG_NOT_CERTIFIABLE",
+        "interval_ms": [
+          99,
+          101
+        ],
+        "worst_ms": 101
+      }
+    }
+  ],
+  "frequency_table": [
+    {
+      "frequency_hz": 0.5,
+      "clock_bound_ms": 25,
+      "max_error_in_signal_amplitudes": 0.07851963151813722
+    },
+    {
+      "frequency_hz": 0.5,
+      "clock_bound_ms": 50,
+      "max_error_in_signal_amplitudes": 0.1569181914556899
+    },
+    {
+      "frequency_hz": 0.5,
+      "clock_bound_ms": 100,
+      "max_error_in_signal_amplitudes": 0.31286893008046174
+    },
+    {
+      "frequency_hz": 1,
+      "clock_bound_ms": 25,
+      "max_error_in_signal_amplitudes": 0.1569181914556899
+    },
+    {
+      "frequency_hz": 1,
+      "clock_bound_ms": 50,
+      "max_error_in_signal_amplitudes": 0.31286893008046174
+    },
+    {
+      "frequency_hz": 1,
+      "clock_bound_ms": 100,
+      "max_error_in_signal_amplitudes": 0.6180339887498948
+    },
+    {
+      "frequency_hz": 2,
+      "clock_bound_ms": 25,
+      "max_error_in_signal_amplitudes": 0.31286893008046174
+    },
+    {
+      "frequency_hz": 2,
+      "clock_bound_ms": 50,
+      "max_error_in_signal_amplitudes": 0.6180339887498948
+    },
+    {
+      "frequency_hz": 2,
+      "clock_bound_ms": 100,
+      "max_error_in_signal_amplitudes": 1.1755705045849463
+    },
+    {
+      "frequency_hz": 4,
+      "clock_bound_ms": 25,
+      "max_error_in_signal_amplitudes": 0.6180339887498948
+    },
+    {
+      "frequency_hz": 4,
+      "clock_bound_ms": 50,
+      "max_error_in_signal_amplitudes": 1.1755705045849463
+    },
+    {
+      "frequency_hz": 4,
+      "clock_bound_ms": 100,
+      "max_error_in_signal_amplitudes": 1.902113032590307
+    }
+  ],
+  "EVE_admission": {
+    "basler_reference_clock": "DOCUMENTED_RELIABLE",
+    "webcam_reference_clock": "UNBOUNDED_BY_PUBLIC_DOCUMENTATION",
+    "webcam_lag_certificate": "REJECT_UNTIL_BOUND_ESTABLISHED",
+    "pupil_labels": "left_p/right_p IN HDF; NATIVE_TRACKER_TIMEBASE_UNVERIFIED",
+    "access": "ON_REQUEST_NOT_OBTAINED"
+  }
+}

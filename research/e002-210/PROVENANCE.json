@@ -1,0 +1,19 @@
+{
+  "run": "E002-210",
+  "date_utc": "2026-10-15",
+  "upstream": {
+    "url": "https://github.com/swook/EVE/blob/master/DATASET.md",
+    "git_blob_sha": "9b04b892e248c2030168c627357e4cb66c87104a",
+    "method": "GitHub fetch_file"
+  },
+  "dataset_downloaded": false,
+  "human_pairs_evaluated": 0,
+  "local_checker": "PASS",
+  "remote_actions": "NOT_VERIFIED",
+  "failed_gates": [
+    "WEBCAM_CLOCK_UNBOUNDED",
+    "EVE_ACCESS_REQUIRED",
+    "NATIVE_TRACKER_TIMEBASE_UNVERIFIED"
+  ],
+  "smallest_claim": "conditional source-specific lag certification boundary"
+}

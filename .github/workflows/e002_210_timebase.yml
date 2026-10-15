@@ -1,0 +1,16 @@
+name: E002-210 timebase independent verification
+on:
+  push:
+    branches:
+      - 'research/e002-210-*'
+  workflow_dispatch:
+jobs:
+  exact-timebase:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Independent exact and adversarial checks
+        run: |
+          cd research/e002-210
+          python3 independent_check.py
+          python3 timebase_certificate.py > /tmp/e002-210-results.json
