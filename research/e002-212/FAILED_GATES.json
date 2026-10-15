@@ -1,0 +1,9 @@
+{
+  "human_RGB_tracker_pair": "NOT_RUN",
+  "native_sync": "NOT_VERIFIED",
+  "held_out_participants": 0,
+  "device_lighting_glasses_holdouts": "NOT_RUN",
+  "waveform_correlation_lag_amplitude_NRMSE": "NOT_RUN",
+  "prospective_coverage_75pct": "NOT_RUN",
+  "synthetic_independent_checker": "PASS"
+}
