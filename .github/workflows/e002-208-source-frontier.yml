@@ -1,10 +1,24 @@
-name: E002-208 source audit
-on: [workflow_dispatch]
+name: E002-208 original-human source frontier
+on:
+  push:
+    branches: [research/e002-208-full-trial-pairing-frontier]
+    paths: ['.github/workflows/e002-208-source-frontier.yml', 'research/e002-208/*.py']
+  workflow_dispatch:
 jobs:
-  source:
+  original-human:
     runs-on: ubuntu-latest
+    timeout-minutes: 180
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - run: python research/e002-203/raw_semantics.py
       - run: python research/e002-208/source_frontier.py
       - run: python research/e002-208/source_checker.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-208-original-human
+          path: research/e002-208/results/SOURCE_FRONTIER.json
+          if-no-files-found: warn
