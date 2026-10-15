@@ -1,4 +1,4 @@
-name: E002-220 archive provenance
+name: E002-220 original source verification
 on:
   push:
     branches: ['research/e002-220-*']
@@ -9,12 +9,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 research/e002-220/source.py
-      - run: python3 research/e002-220/source2.py
       - run: python3 research/e002-220/extract.py
-      - run: python3 research/e002-220/check.py
+      - run: python3 research/e002-220/count.py
+      - run: python3 research/e002-220/pts.py
       - run: python3 research/e002-220/check_members.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: e002-220-source-manifest
+          name: e002-220-native-pair-preflight
           path: research/e002-220/*.json
