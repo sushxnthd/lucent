@@ -5,16 +5,16 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - run: python3 research/e002-220/source.py
       - run: python3 research/e002-220/source2.py
+      - run: python3 research/e002-220/extract.py
       - run: python3 research/e002-220/check.py
+      - run: python3 research/e002-220/check_members.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: e002-220-source-manifest
-          path: |
-            research/e002-220/RESULTS.json
-            research/e002-220/ROOT_LOGS.json
-            research/e002-220/DERIVED_SHA256.txt
+          path: research/e002-220/*.json
