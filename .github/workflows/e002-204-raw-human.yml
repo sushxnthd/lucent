@@ -1,0 +1,31 @@
+name: E002-204 original human reference semantics execution
+on:
+  push:
+    branches:
+      - research/e002-204-raw-semantics-execution
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reference-semantic-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fail-closed synthetic parser controls
+        run: python research/e002-204/preflight.py
+      - name: MD5-verified original 15-participant TSV audit
+        run: python research/e002-203/raw_semantics.py
+      - name: Independent nonempty integrity gate
+        if: always()
+        run: python research/e002-203/raw_semantics_checker.py
+      - name: Preserve raw human results and failed gates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-204-raw-human-reference-semantic-audit
+          path: research/e002-203/results/
+          if-no-files-found: warn
