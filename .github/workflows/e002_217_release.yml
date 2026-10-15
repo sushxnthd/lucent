@@ -1,0 +1,23 @@
+name: E002-217 author-linked release provenance
+on:
+  push:
+    branches:
+      - research/e002-217-release-provenance
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect public release without decoding images
+        run: python3 research/e002-217/probe.py
+      - name: Independent admission and mutation check
+        run: python3 research/e002-217/check.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-217-provenance-manifest
+          path: research/e002-217/RELEASE_PROBE.json
+          if-no-files-found: error
