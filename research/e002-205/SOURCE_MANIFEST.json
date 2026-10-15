@@ -1,0 +1,15 @@
+{
+  "run": "E002-205",
+  "base_branch": "research/e002-204-native-pupil-reference-audit",
+  "base_commit": "78b7fc33b193af7edf9a2c6536b2bc20cd93ba0c",
+  "source_path": "research/e002-204/native_window.py",
+  "source_blob_sha": "d7cfbea86c38f98bcdceac12ac16b04127bbef88",
+  "source_dataset": "MCFW-Gaze v3",
+  "source_dataset_url": "https://zenodo.org/records/20300972",
+  "archive_md5": "5e04a7b5e50f7508775e1daea527246b",
+  "metadata_md5": "369d9446b62fd00888a6d51e152697bd",
+  "dataset_downloaded": false,
+  "experiment": "synthetic deterministic falsification",
+  "original_human_observability": "NOT_TESTED",
+  "rgb_waveform": "NOT_TESTED"
+}

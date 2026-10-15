@@ -1,0 +1,29 @@
+name: E002-205 reference edge-censoring preflight
+on:
+  push:
+    branches:
+      - research/e002-205-reference-edge-censoring
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  adversarial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Replay actual E002-204 gate against synthetic boundary counterexamples
+        run: python research/e002-205/edge_gate.py
+      - name: Independently verify hashes and sharp bounds
+        if: always()
+        run: python research/e002-205/checker.py
+      - name: Preserve derived results and failed gates
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-205-edge-gate
+          path: research/e002-205/results/
+          if-no-files-found: warn

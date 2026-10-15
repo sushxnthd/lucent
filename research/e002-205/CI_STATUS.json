@@ -1,0 +1,12 @@
+{
+  "local_adversarial_9_cases": "PASS",
+  "local_independent_checker": "PASS",
+  "local_adversarial_mutation": "REJECTED",
+  "github_original_E204_code_replay": "PENDING_CI",
+  "github_actions_run_id": null,
+  "github_actions_state": "UNVERIFIED",
+  "original_human_reference": "NOT_EXECUTED_THIS_RUN",
+  "rgb_waveform": "NOT_TESTED",
+  "source_download": "NOT_NEEDED_SYNTHETIC",
+  "claim": "interior-only reference gap fails to bound edge censoring"
+}
