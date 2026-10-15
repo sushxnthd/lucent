@@ -1,0 +1,1 @@
+Local synthetic replay PASS. Independent checker PASS. Corruption test rejected. GitHub branch readback verified. E002-211 Actions run count 0. Workflow publication blocked twice. Prior E002-210 Actions run 38734803962 success.
