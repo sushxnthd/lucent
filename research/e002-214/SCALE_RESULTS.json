@@ -1,0 +1,33 @@
+{
+  "run": "E002-214-wildcard",
+  "source_commit": "aa9bddf498a3b6e4104c2c000d2cc0c06a816aae",
+  "source_blob_sha": {
+    "All_Smiles_Ahead": "a23fa7a4202a74094e8f74795ca3ba709e477595",
+    "And_it_was_all_Yellow": "3fd586507655c40fe7e2b98041f5069424ac1e50",
+    "Blink_It_Like_Brian": "d1f997b264d5e1b22c598043ee5b63137a231fd1",
+    "Funny_Talks": "4aa693bc51f36da6be09764baa26da92c1a81310",
+    "I_like_to_move_it_move_it": "ef3736f0b0f91935385df92778e79ae01e1bc3f2",
+    "Infinite_Blue": "d89f21cb23eb53292e506c34383ed4bf9490c429",
+    "Red_Ross": "7dd76649df705ad59533fdfba3600e5d775eeae8",
+    "focus_pocus": "99852be62b4bd315b9ed9a15db40db37150dd078"
+  },
+  "source_clips": 8,
+  "source_rows": 864,
+  "unique_frames": 96,
+  "scales_per_frame_min": 9,
+  "scales_per_frame_max": 9,
+  "descriptive_threshold_mm": 0.25,
+  "frames_left_swing_gt_025": 90,
+  "frames_right_swing_gt_025": 73,
+  "frames_either_eye_swing_gt_025": 94,
+  "frames_both_eyes_swing_gt_025": 69,
+  "global_max_left_mm": 0.667861223,
+  "global_max_right_mm": 0.802765846,
+  "limitations": [
+    "Derived outputs of third-party fixed model on digitally rescaled human frames, not original recordings.",
+    "Nine rescalings of each identical frame; underlying eye is fixed by construction.",
+    "Original inference/checkpoint not independently rerun.",
+    "No physiological waveform, independent tracker synchronization, participant/device holdout.",
+    "Threshold 0.25 mm is a descriptive stress-test, not frozen measurement gate."
+  ]
+}
