@@ -1,0 +1,39 @@
+{
+  "dataset": "SYNTHETIC_ONLY",
+  "date": "2026-10-15",
+  "exact_one_frame_accuracy": 0.7279107160718792,
+  "gates": {
+    "human_rgb_reference": false,
+    "independent_mc_within_5_se": true,
+    "moment_match_tolerance": 0.00001,
+    "product_75pct_single_frame_for_case": false,
+    "prospective_holdout": false
+  },
+  "matched_control_l2": 0.024260253946439922,
+  "matched_second_moment_max_abs_error": 2.0320271687523928e-8,
+  "model": "antialiased 2D uniform dark disk + isotropic Gaussian PSF + pixel integration + iid spatial Gaussian sensor noise; temporal equicorrelation optional",
+  "monte_carlo_one_frame_accuracy": 0.72454,
+  "monte_carlo_standard_error": 0.0019979078477247144,
+  "prespecified_case": {
+    "accuracy_150_iid": 0.9999999999999449,
+    "accuracy_150_rho_0p2": 0.9096268476989011,
+    "accuracy_150_rho_0p8": 0.7509652361723371,
+    "accuracy_one_frame": 0.7279107160718792,
+    "contrast_0": 0.6,
+    "contrast_1": 0.5619146722164411,
+    "dr_px": 0.2,
+    "image_l2": 0.024260253946439922,
+    "moment2_0": 25.050031695427855,
+    "moment2_1": 25.05003169539221,
+    "moment2_abs_error": 3.5644376339405426e-11,
+    "noise_floor_for_75pct_one_frame": 0.017984153161250557,
+    "noise_sd": 0.02,
+    "r0_px": 6,
+    "r1_px": 6.2,
+    "sigma0_px": 4,
+    "sigma1_px": 3.9169635406811745
+  },
+  "run": "E002-211",
+  "smallest_supported_claim": "Exact equal-prior Gaussian binary discrimination ceiling under specified blur/contrast/noise model. Not a human waveform result.",
+  "uncompensated_control_l2": 0.20945434154572765
+}
