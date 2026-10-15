@@ -26,7 +26,11 @@ if __name__=="__main__":
     import timebase_certificate as model
     results = model.run()
     check(results)
-    corrupted = json.loads(json.dumps(results))
+    stored = json.loads(Path(__file__).with_name("RESULTS.json").read_text())
+    check(stored)
+    assert stored["cases"] == results["cases"]
+    assert all(abs(a["max_error_in_signal_amplitudes"]-b["max_error_in_signal_amplitudes"]) < 1e-12 for a,b in zip(stored["frequency_table"],results["frequency_table"]))
+    corrupted = json.loads(json.dumps(stored))
     corrupted["cases"][1]["certificate"]["admit"] = True
     try:
         check(corrupted)
