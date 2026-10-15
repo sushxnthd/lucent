@@ -1,0 +1,15 @@
+{
+  "run": "E002-212",
+  "type": "exact_geometry_synthetic",
+  "projective_cases": 28,
+  "lid_cases": 32,
+  "independent_max_abs_error": 8.27e-14,
+  "rho": 0.4,
+  "lid_normalized": 0.25,
+  "visible_ratio_relative_bias": 0.323538,
+  "kappa_5pct_limit": 0.1994145483992924,
+  "inverse_pass": 25,
+  "inverse_reject": 7,
+  "paired_human_waveform_n": 0,
+  "physiology_claim": false
+}
