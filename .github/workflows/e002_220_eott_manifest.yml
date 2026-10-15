@@ -1,13 +1,11 @@
-name: E002-220 original source verification
-on:
-  push:
-    branches: ['research/e002-220-*']
+name: E002-220 source verification
+on: push
 jobs:
   audit:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
+      - run: sudo apt-get install -y ffmpeg
       - run: python3 research/e002-220/source.py
       - run: python3 research/e002-220/extract.py
       - run: python3 research/e002-220/count.py
