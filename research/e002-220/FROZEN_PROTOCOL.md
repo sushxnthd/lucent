@@ -1,0 +1,3 @@
+# E002-220 Frozen Protocol
+
+EOTT ordinary RGB versus native Tobii diameter. Development only: P_33 and P_54. Preserve P_01, P_02 and P_07 for untouched evaluation. Audit ZIP CRC, video packet PTS and tracker timestamps, and browser start events. Admit only if at least 90% video PTS are unique and 90% of frames match a positive valid reference within 75ms. These checks do not certify actual exposure-time lag. Do not infer fatigue. The product must abstain on clock ambiguity. Future waveform threshold: frozen correlation, lag, amplitude, NRMSE and nuisance gates; 75% prospective coverage; eight untouched people for publication.
