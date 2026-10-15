@@ -1,0 +1,21 @@
+{
+  "run": "E002-211",
+  "dataset": "synthetic_only",
+  "no_human_data": true,
+  "seed": 211,
+  "source_branch": "research/e002-210-clock-alias-wildcard",
+  "target_branch": "research/e002-211-blur-contrast-identifiability",
+  "model": "80x80 antialiased circular pupil, 4x supersampling, Gaussian PSF, pixel integration, matched darkness and second moment",
+  "files_git_blob_sha1": {
+    "experiment.py": "ef7d1203327c2ec4ccca84317eb1624fce67937f",
+    "independent_check.py": "b724468bdb94f1e9e7db1b43d9b1e1de1d8ed459",
+    "RAW_SYNTHETIC.csv": "68f3dbe239d7c2c78be513669f48d841e350014e",
+    "RESULTS.json": "93789e4b28decdced23b65d5c2c8c8e8a95221ce",
+    "LEDGERS.json": "bb6a3842df15cafa5d64144d75a3fedb04f5d4d8",
+    "PROVENANCE.json": "b550b6b64c472ab103a1343104e639a2ab478b8c",
+    "CI_STATUS.txt": "a4dd9c96a86483716bfc2557407e7be60f5f56b2"
+  },
+  "previous_actions_run_id": 38734803962,
+  "branch_actions_runs": 0,
+  "protocol": "See research/e002-211/LEDGERS.json and KERNEL in local reproducibility archive"
+}
