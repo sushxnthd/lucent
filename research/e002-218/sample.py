@@ -55,3 +55,6 @@ else:
 print(json.dumps({'status':report['status'],'windows':len(report['samples']),
                   'sampled_entries':sum(x.get('parsed_entries',0) for x in report['samples']),
                   'nonimage_entries':sum(sum(v for k,v in x.get('extension_counts',{}).items() if k not in ('.png','.jpg','.jpeg','.bmp')) for x in report['samples'])}))
+
+# Independent, bounded public CSV schema check after directory sampling.
+import csv_probe
