@@ -1,0 +1,26 @@
+{
+  "science": {
+    "observed": "original-human tracker reference admission",
+    "source_run": 38710569017,
+    "accepted_participants": 4,
+    "total_participants": 15,
+    "required": 12,
+    "reference_only": true,
+    "rgb_waveform": "UNVERIFIED"
+  },
+  "product": {
+    "decision": "REJECT_SELECTED_15_TRIAL_COHORT_FOR_COVERAGE_CERTIFICATION",
+    "next": "test predeclared alternate source trials with full temporal gap checks; preserve all participants",
+    "five_second_fatigue": "NOT_SUPPORTED"
+  },
+  "kernel": {
+    "signal": "normalized RGB pupil-to-iris waveform",
+    "reference": "synchronized same-eye tracker diameter",
+    "metric": "held-out participant-bootstrap lower Pearson correlation",
+    "confound": "illumination and gaze geometry",
+    "falsification": "frozen waveform gates fail vs nuisance controls",
+    "publishable": "8 untouched paired participants and holdouts",
+    "product_threshold": "75% accepted participant coverage",
+    "kill": "prospective waveform failure or 3 nondiscriminating runs"
+  }
+}
