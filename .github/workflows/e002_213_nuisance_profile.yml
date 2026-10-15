@@ -1,0 +1,27 @@
+name: E002-213 nuisance-profile synthetic verification
+on:
+  push:
+    branches:
+      - 'research/e002-213-*'
+  workflow_dispatch:
+jobs:
+  nuisance-information:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install scientific dependencies
+        run: python -m pip install numpy scipy
+      - name: Reproduce all 90 synthetic observability cases
+        run: python research/e002-213/experiment.py
+      - name: Independent SVD check
+        run: python research/e002-213/independent_check.py
+      - name: Hash and preserve synthetic evidence
+        run: sha256sum research/e002-213/RAW_SYNTHETIC.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-213-synthetic-raw
+          path: research/e002-213/RAW_SYNTHETIC.csv
