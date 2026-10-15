@@ -1,0 +1,18 @@
+name: E002-220 archive provenance
+on:
+  push:
+    branches: ['research/e002-220-*']
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 research/e002-220/source.py
+      - run: python3 research/e002-220/check.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-220-source-manifest
+          path: |
+            research/e002-220/RESULTS.json
+            research/e002-220/DERIVED_SHA256.txt
