@@ -1,0 +1,28 @@
+{
+  "run": "E002-219",
+  "actions_run": 38805040718,
+  "artifact_sha256": "fce97923f656d831012bc9064528ed7cc66e6109b478b033f56fd1fc47d9de5d",
+  "source": "vijuls/PupilDiameterDatasets",
+  "human_waveform_evaluated": false,
+  "native_time_certified": false,
+  "samples": [
+    {
+      "member": "eyedentify/eyedentify/left_eyes/20/50/session_data.csv",
+      "sha256": "5f3294cd8ccd3d6995e3ebef465542749f14810105f088076f50766e9e5fb908",
+      "rows": 89,
+      "unique_timestamps": 1
+    },
+    {
+      "member": "eyedentify/eyedentify/left_eyes_depth_maps/25/9/session_data.csv",
+      "sha256": "98e10c58c3294453f47634bfb1ce6f6adb638025dbb9079e8a26581fe5888d29",
+      "rows": 83,
+      "unique_timestamps": 1
+    },
+    {
+      "member": "eyedentify/eyedentify/right_eyes/41/5/session_data.csv",
+      "sha256": "cce4fdcd9b1b2160e88e0563bb2e4bd49dd2b40a9f852e67970cfbca229aa218",
+      "rows": 89,
+      "unique_timestamps": 1
+    }
+  ]
+}
