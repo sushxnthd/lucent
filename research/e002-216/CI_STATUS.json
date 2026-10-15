@@ -1,0 +1,9 @@
+{
+  "run": "E002-216",
+  "github_write_through": "pending_tree_commit",
+  "local_independent_checker": "PASS",
+  "local_mutation_rejection": "PASS",
+  "source_code_audit": "verified Git blob",
+  "remote_actions": "not yet observed",
+  "generated_raw_data": "synthetic, no human samples"
+}

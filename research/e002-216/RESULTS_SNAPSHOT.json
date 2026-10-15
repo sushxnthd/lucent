@@ -1,0 +1,27 @@
+{
+  "run": "E002-216",
+  "synthetic_only": true,
+  "fold_map_shape": [
+    90,
+    270
+  ],
+  "exact_rank": 90,
+  "exact_nullity": 180,
+  "collision_max_abs_error": 2.220446049250313e-16,
+  "ramp_start_error_seconds": 1,
+  "ramp_end_error_seconds": -0.9777777777777779,
+  "ramp_rmse_seconds": 0.5774215426013151,
+  "frequencies": [
+    {
+      "f_hz": 0.3333333333333333,
+      "label_rms": 1.2950289930282705e-16,
+      "perfect_webcam_r": null,
+      "fold_gain": 1.3343220141622404e-16
+    },
+    {
+      "f_hz": 1,
+      "perfect_webcam_r": 6.873942043851698e-19,
+      "fold_gain": 1
+    }
+  ]
+}

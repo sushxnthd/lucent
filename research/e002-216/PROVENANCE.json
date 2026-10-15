@@ -1,0 +1,16 @@
+{
+  "run": "E002-216",
+  "date_utc": "2026-10-15",
+  "source_repo": "vijulshah/eyedentify",
+  "alignment_path": "data_creation/eyedentify/tobii_and_webcam_data_alignment.py",
+  "alignment_git_blob_sha1": "f46d7ae369a62596f7044ca647d361c38fcb16ea",
+  "entrypoint_git_blob_sha1": "a4952e047c69f101a4ad581a1f0a8ff0c3055893",
+  "config_git_blob_sha1": "4fe6dd495e1acd27271993de1cf7fc0993ecb061",
+  "readme_git_blob_sha1": "d1216a249781862e66be8c1f7addba59ff36042b",
+  "human_dataset_retrieved": false,
+  "raw_tobii_retrieved": false,
+  "synthetic_only": true,
+  "training_overlap": "not applicable",
+  "source_to_distributed_file_lineage": "unverified",
+  "licensing": "Official repository CC BY-NC 4.0; no dataset redistributed"
+}

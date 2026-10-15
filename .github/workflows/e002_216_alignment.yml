@@ -1,0 +1,21 @@
+name: E002-216 EyeDentify source-alignment audit
+on:
+  push:
+    branches: ['research/e002-216-eyedentify-temporal-alias']
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python research/e002-216/run.py
+      - run: python research/e002-216/independent_check.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-216-synthetic-evidence
+          path: |
+            research/e002-216/RESULTS.json
+            research/e002-216/RAW_SYNTHETIC.csv

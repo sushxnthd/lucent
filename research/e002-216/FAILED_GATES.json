@@ -1,0 +1,9 @@
+{
+  "run": "E002-216",
+  "native_time_reference_certification": "FAIL for source-defined fold; code-to-distributed-file lineage unverified",
+  "untouched_human_rgb_waveform": "NOT_RUN",
+  "five_second_reference": "NOT_AVAILABLE in three-second EyeDentify session",
+  "participant_device_lighting_glasses_holdouts": "NOT_RUN",
+  "remote_actions": "NOT_YET_VERIFIED",
+  "next_decisive_action": "recover raw tracker timestamp/video frame pairs or switch paired source"
+}
