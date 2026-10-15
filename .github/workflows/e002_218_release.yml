@@ -2,7 +2,7 @@ name: E002-218 public archive central-directory audit
 on:
   push:
     branches:
-      - research/e002-218-audit-verified
+      - 'research/e002-218-*'
   workflow_dispatch:
 permissions:
   contents: read
