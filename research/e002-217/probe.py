@@ -43,7 +43,7 @@ def run():
         with urllib.request.urlopen(req(URL_META),timeout=30) as f: b=f.read(5_000_001)
         if len(b)>5_000_000: raise ValueError("metadata too large")
         j=json.loads(b)
-        out["metadata"]={"status":"ok","sha256":digest(b),
+        out["metadata"]={"status":"ok","sha256":digest(b),"top_level_keys":sorted(j.keys()),"key_shapes":{k:(len(v) if isinstance(v,(list,dict)) else type(v).__name__) for k,v in j.items()},
             "title":j.get("title"),"totalBytes":j.get("totalBytes"),"lastUpdated":j.get("lastUpdated"),
             "resources":[{"name":x.get("name"),"totalBytes":x.get("totalBytes"),"size":x.get("size")} for x in j.get("resources",[])][:100]}
     except Exception as e:
