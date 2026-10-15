@@ -1,0 +1,1 @@
+Reject asymmetrically lid-clipped area ratios; correct only with calibrated geometry. No fatigue claim.
