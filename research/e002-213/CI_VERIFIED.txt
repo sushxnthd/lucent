@@ -1,0 +1,10 @@
+E002-213 CI VERIFIED 2026-10-15
+Workflow: https://github.com/sushxnthd/lucent/actions/runs/38756164741
+Job: 116495042430
+Status: success; all steps completed, including 90-case experiment and SVD checker.
+Independent SVD checker: PASS 90 synthetic cases.
+Raw synthetic CSV SHA256 in GitHub Actions logs: 3215d936599a70eedf6004c3339af83958d69d7dda59e160f3b5f08f4eba4db0
+Raw CSV SHA256 locally:                         3215d936599a70eedf6004c3339af83958d69d7dda59e160f3b5f08f4eba4db0
+Remote artifact: e002-213-synthetic-raw, artifact ID 11982509475, SHA256 archive digest 03a7673598eccb74863fa886d83298798a2d04471cb9dddbbf1a9a8117b9c884.
+Human observations: 0; paired waveform: NOT RUN; independent participant/device holdout: NOT RUN.
+No claims about actual RGB pupil physiology or fatigue.
