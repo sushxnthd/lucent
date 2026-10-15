@@ -1,0 +1,26 @@
+name: E002-218 public archive central-directory audit
+on:
+  push:
+    branches:
+      - research/e002-218-audit-verified
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check source syntax
+        run: python3 -m py_compile research/e002-218/probe.py research/e002-218/check.py
+      - name: Inventory public release using bounded metadata requests
+        run: python3 research/e002-218/probe.py
+      - name: Independent provenance admission and false-claim checks
+        run: python3 research/e002-218/check.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-218-bounded-release-manifest
+          path: research/e002-218/PROVENANCE.json
+          if-no-files-found: warn
