@@ -8,6 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 research/e002-220/source.py
+      - run: python3 research/e002-220/source2.py
       - run: python3 research/e002-220/check.py
       - uses: actions/upload-artifact@v4
         if: always()
@@ -15,4 +16,5 @@ jobs:
           name: e002-220-source-manifest
           path: |
             research/e002-220/RESULTS.json
+            research/e002-220/ROOT_LOGS.json
             research/e002-220/DERIVED_SHA256.txt
