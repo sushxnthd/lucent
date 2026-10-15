@@ -1,0 +1,24 @@
+{
+  "source": "vijuls/PupilDiameterDatasets",
+  "member": "eyedentify/eyedentify/left_eyes/20/50/session_data.csv",
+  "sha256": "5f3294cd8ccd3d6995e3ebef465542749f14810105f088076f50766e9e5fb908",
+  "rows": 89,
+  "unique_timestamps": 1,
+  "columns": [
+    "#timestamp",
+    "session_id",
+    "right_pupil",
+    "left_pupil",
+    "pupil_diameter",
+    "gaze_x",
+    "gaze_y",
+    "left_gaze_x",
+    "left_gaze_y",
+    "right_gaze_x",
+    "right_gaze_y",
+    "frame_path"
+  ],
+  "actions_run": 38804885596,
+  "native_time_certified": false,
+  "human_waveform_evaluated": false
+}
