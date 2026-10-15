@@ -1,5 +1,6 @@
 import struct
 from member import get
+from zip64 import resolve
 def scan(url,offset):
  b=get(url,offset,524288);p=b.find(bytes.fromhex("504b0102"))
  while p>=0 and p+46<len(b) and b[p:p+4]==bytes.fromhex("504b0102"):
@@ -11,6 +12,7 @@ def scan(url,offset):
   if end>len(b):break
   raw=b[p+46:p+46+n]
   if raw.endswith(b"/session_data.csv"):
-   if 0xffffffff in (csize,usize,local):raise ValueError("ZIP64 entry needs separate parser")
+   extra=b[p+46+n:p+46+n+e]
+   usize,csize,local=resolve(extra,usize,csize,local)
    yield (raw,flags,method,crc,csize,usize,local)
   p=end
