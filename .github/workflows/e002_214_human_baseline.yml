@@ -1,0 +1,25 @@
+name: E002-214 external-human aggregate frontier
+on:
+  push:
+    branches: [research/e002-214-human-baseline-coverage-frontier]
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pinned source and frozen result audit
+        run: python research/e002-214/run.py
+      - name: Independent checker and mutation
+        run: python research/e002-214/independent_check.py
+      - name: Preserve derived CI evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-214-derived-provenance
+          path: research/e002-214/ci_output/
+          if-no-files-found: warn

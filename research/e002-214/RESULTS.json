@@ -1,0 +1,82 @@
+{
+  "run": "E002-214",
+  "source_repo": "CondadosAI/pupil-diameter-webcam",
+  "source_commit": "aa9bddf498a3b6e4104c2c000d2cc0c06a816aae",
+  "source_blob_sha_left": "509e14d61455dc6ee119a0fc2ba9e7448eedc9fc",
+  "source_blob_sha_right": "9f55dd52fc6c11c9903ec9c7b0c735192cd4a790",
+  "participants": 51,
+  "source_rows_left": 211988,
+  "source_rows_right": 211919,
+  "thresholds_are_exploratory": true,
+  "frontier": [
+    {
+      "min_r": 0,
+      "any_eye": 50,
+      "both_eyes": 50
+    },
+    {
+      "min_r": 0.3,
+      "any_eye": 49,
+      "both_eyes": 45
+    },
+    {
+      "min_r": 0.4,
+      "any_eye": 46,
+      "both_eyes": 41
+    },
+    {
+      "min_r": 0.5,
+      "any_eye": 45,
+      "both_eyes": 39
+    },
+    {
+      "min_r": 0.6,
+      "any_eye": 42,
+      "both_eyes": 34
+    },
+    {
+      "min_r": 0.65,
+      "any_eye": 36,
+      "both_eyes": 31
+    },
+    {
+      "min_r": 0.7,
+      "any_eye": 35,
+      "both_eyes": 23
+    },
+    {
+      "min_r": 0.75,
+      "any_eye": 24,
+      "both_eyes": 16
+    },
+    {
+      "min_r": 0.8,
+      "any_eye": 16,
+      "both_eyes": 11
+    },
+    {
+      "min_r": 0.85,
+      "any_eye": 7,
+      "both_eyes": 4
+    },
+    {
+      "min_r": 0.9,
+      "any_eye": 0,
+      "both_eyes": 0
+    }
+  ],
+  "threshold_75pct_oracle_r": 0.6221923818956646,
+  "required_participants_75pct": 39,
+  "diagnostic_r07_oracle": 35,
+  "diagnostic_r07_both": 23,
+  "diagnostic_r07_and_amp075_125_oracle": 19,
+  "negative_r_left": 1,
+  "negative_r_right": 1,
+  "limitations": [
+    "Third-party derived per-participant aggregates; original images and checkpoint not rerun.",
+    "Checkpoint training split undocumented; possible in-sample overlap.",
+    "Correlations pooled across multiple three-second stimulus trials, not continuous five-second waveforms.",
+    "No native RGB/tracker timestamp or clock uncertainty; no lag, NRMSE, glasses, lighting or device holdout.",
+    "Thresholds 0.7 and amplitude 0.75-1.25 are exploratory diagnostics, not Lucent frozen human gates."
+  ]
+}
