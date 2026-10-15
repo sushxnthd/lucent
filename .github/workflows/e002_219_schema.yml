@@ -16,6 +16,7 @@ jobs:
       - run: cd research/e002-218 && PYTHONPATH=. python3 ../e002-219/run.py > ../e002-219/RESULTS.json
       - run: python3 research/e002-219/check.py
       - run: cd research/e002-218 && PYTHONPATH=. python3 ../e002-219/multi.py > ../e002-219/MULTI_RESULTS.json
+      - run: python3 research/e002-219/verify_multi.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
