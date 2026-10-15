@@ -1,0 +1,10 @@
+name: E002-208 source audit
+on: [workflow_dispatch]
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python research/e002-203/raw_semantics.py
+      - run: python research/e002-208/source_frontier.py
+      - run: python research/e002-208/source_checker.py
