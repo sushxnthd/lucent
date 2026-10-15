@@ -1,0 +1,24 @@
+name: E002-219 bounded ZIP CSV schema
+on:
+  push:
+    branches: ['research/e002-219-*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 research/e002-218/probe.py
+      - run: python3 -m py_compile research/e002-219/*.py
+      - run: cd research/e002-218 && PYTHONPATH=. python3 ../e002-219/run.py > ../e002-219/RESULTS.json
+      - run: python3 research/e002-219/check.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-219-schema-provenance
+          path: |
+            research/e002-218/PROVENANCE.json
+            research/e002-219/RESULTS.json
