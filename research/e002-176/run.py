@@ -38,8 +38,8 @@ def read(f):
  t=col(rd.fieldnames,["systemtimestamp","devicetimestamp","timestamp"])
  l=col(rd.fieldnames,["leftpupildiameter","pupildiameterleft","leftpupildiametermm"])
  r=col(rd.fieldnames,["rightpupildiameter","pupildiameterright","rightpupildiametermm"])
- lv=col(rd.fieldnames,["leftpupilvalidity","leftpupildiametervalidity","pupilvalidityleft"])
- rv=col(rd.fieldnames,["rightpupilvalidity","rightpupildiametervalidity","pupilvalidityright"])
+ lv=col(rd.fieldnames,["leftpupilvalidity","leftpupildiametervalidity","pupilvalidityleft","leftpupilvalid"])
+ rv=col(rd.fieldnames,["rightpupilvalidity","rightpupildiametervalidity","pupilvalidityright","rightpupilvalid"])
  if not all([t,l,r,lv,rv]):raise ValueError("AMBIGUOUS_SCHEMA:"+str(rd.fieldnames[:70]))
  rows=[]
  for row in rd:
