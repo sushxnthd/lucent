@@ -1,0 +1,1 @@
+Public source: Zenodo 17046553, 2025-09-03; reported 10 webcam+Tobii participants, MD5 59dbd3de85b2eee54345c7d14c9629c9. Archive download failed; content/timing/pupil fields NOT inspected. Synthetic-only geometric results; no original human frames used.
