@@ -6,11 +6,20 @@ rows=list(csv.DictReader(p.open()))
 r=json.loads(Path('research/e002-229/RESULTS.json').read_text())
 assert len(rows)==120
 for person in ('P_33','P_54'):
+ frames={}
+ for x in rows:
+  if x['participant']!=person:continue
+  i=int(x['frame_index']);e=x['eye']
+  assert e not in frames.setdefault(i,{})
+  frames[i][e]=x
+ assert len(frames)==30
  for eye in ('iris_468','iris_473'):
-  a=[x for x in rows if x['participant']==person and x['eye']==eye]
-  assert len(a)==30
-  counts=[sum(float(x['iris_diameter_px'])>=12 for x in a),sum(float(x['center_ring_contrast'])>0 for x in a),sum(float(x['iris_diameter_px'])>=12 and float(x['center_ring_contrast'])>0 for x in a)]
-  assert counts==r[person][eye]
-assert r['P_33']['iris_473'][0]==23
-assert r['P_54']['bilateral']==[30,5]
+  a=[frames[i][eye] for i in range(30)]
+  g=lambda x:float(x['iris_diameter_px'])>=12
+  c=lambda x:float(x['center_ring_contrast'])>0
+  assert [sum(g(x) for x in a),sum(c(x) for x in a),sum(g(x) and c(x) for x in a)]==r[person][eye]
+  assert all(len(frames[i])==2 for i in range(30))
+  bilateral=[sum(all(g(x) for x in f.values()) for f in frames.values()),sum(all(g(x) and c(x) for x in f.values()) for f in frames.values())]
+  assert bilateral==r[person]['bilateral']
+assert r['P_33']['iris_473'][0]==23 and r['P_54']['bilateral']==[30,5]
 print('independent count checker PASS')
