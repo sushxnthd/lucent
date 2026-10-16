@@ -1,2 +1,2 @@
 # E002-229
-Original human RGB preflight audit. Source: GitHub Actions run 38866995557. Human physiological observability remains untested.
+Original human RGB preflight audit. E002-228 Actions run 38866995557, artifact 12031733076. Frozen geometry gate: P_33 iris_473 23/30 (<80%). Exploratory intensity contrast: P_54 eyes 10/30 and 12/30 positive despite geometry 30/30. These are descriptive development results, not pupil waveform or fatigue inference. Source CSV SHA256: 087ca1cf7ce8cc1e24d9652ae5faa6e6a783abcaff716683d353a5544884e6fb.
