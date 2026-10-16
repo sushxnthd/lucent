@@ -1,7 +1,7 @@
 name: E002-228 original human RGB
 on:
   push:
-    branches: [research/e002-228-original-human-rgb-preflight]
+    branches: ['research/e002-228-*']
 jobs:
   original-rgb:
     runs-on: ubuntu-latest
