@@ -1,0 +1,41 @@
+{
+  "fatigue_inference_authorized": false,
+  "frozen_detector_sha256": "569e750d17ea7dab30ad8d4582137eaef06db4fa648006d6e3b0703f9dfe2220",
+  "human_waveform_evaluated": false,
+  "n_images": 240,
+  "n_pairs": 120,
+  "raw_images_sha256": "d2e9e3217c146b7b0bf182968132eaec6e27c6d2b2fe4d9c8133e59efc7dbae0",
+  "raw_pairs_sha256": "d28ea1c241f05d7630d38c6c85611b6749e7e056088f338ffb9ffb78b1adee86",
+  "run": "E002-240",
+  "seed": 240617,
+  "summary": {
+    "nuisance_base": {
+      "admitted": 28,
+      "bad_admitted": 23,
+      "false_change_admitted": 16,
+      "pairs": 60,
+      "true_detect_admitted": 0
+    },
+    "nuisance_dual": {
+      "admitted": 3,
+      "bad_admitted": 2,
+      "false_change_admitted": 0,
+      "pairs": 60,
+      "true_detect_admitted": 0
+    },
+    "true_change_base": {
+      "admitted": 24,
+      "bad_admitted": 18,
+      "false_change_admitted": 0,
+      "pairs": 60,
+      "true_detect_admitted": 10
+    },
+    "true_change_dual": {
+      "admitted": 6,
+      "bad_admitted": 4,
+      "false_change_admitted": 0,
+      "pairs": 60,
+      "true_detect_admitted": 5
+    }
+  }
+}
