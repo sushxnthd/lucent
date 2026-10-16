@@ -1,0 +1,28 @@
+name: E002-228 original human RGB
+on:
+  push:
+    branches: [research/e002-228-original-human-rgb-preflight]
+jobs:
+  original-rgb:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - run: pip install numpy==1.26.4 mediapipe==0.10.21
+      - run: python research/e002-220/source.py
+      - run: python research/e002-220/extract.py
+      - run: python research/e002-225/visibility.py
+      - run: python research/e002-228/check.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-228-original-human-rgb
+          path: |
+            research/e002-220/*.json
+            research/e002-225/*.csv
+            research/e002-225/*.json
+            research/e002-228/*.json
