@@ -1,0 +1,1 @@
+{"source_run":38866995557,"source_artifact":12031733076,"P_33":{"iris_468":[30,30,30],"iris_473":[23,25,21],"bilateral":[23,21]},"P_54":{"iris_468":[30,10,10],"iris_473":[30,12,12],"bilateral":[30,5]},"count_order":"geometry>=12px,contrast>0,joint","n_frames_per_person":30,"frozen_gate_failure":"P_33 iris_473","contrast_test":"exploratory","physiological_waveform":false}
