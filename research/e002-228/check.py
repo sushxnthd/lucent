@@ -15,3 +15,10 @@ for person in ('P_33','P_54'):
   if f<.8:fail.append([person,eye,f])
 Path('research/e002-228/FAILED_GATES.json').write_text(json.dumps(fail))
 print('INDEPENDENT_GATE_CHECK_PASS',len(rows),'SCIENTIFIC_GATE_FAILURES',fail)
+
+# E002-244 original-human boundary preflight; scientific estimator unchanged.
+import runpy,sys
+sys.path.insert(0,"research/e002-234")
+runpy.run_path("research/e002-234/run.py",run_name="__main__")
+runpy.run_path("research/e002-234/check.py",run_name="__main__")
+Path("research/e002-228/E002_244_RAW.json").write_text(json.dumps({"raw_csv":Path("research/e002-234/RAW_BOUNDARY.csv").read_text(),"result":json.loads(Path("research/e002-234/RESULTS.json").read_text())}))
