@@ -1,1 +1,1 @@
-Original human run pending on existing E002-228 workflow; scientific E002-234 source unchanged. Raw CSV and results will be uploaded as E002_244_RAW.json.
+E002-244 original-human boundary execution: SUCCESS. GitHub Actions 38980388974 at e7f7bbefe7aebcc2d0e23ecfd9aac5f930427a9b. Artifact 12081166008 holds original human raw/derived results (90-day retention). Independent byte/hash/frame-linkage/accounting check passed. 36/120 eye frames admitted; no native-time reference waveform compared. See RESULTS.json and PROVENANCE.md.
