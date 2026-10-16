@@ -1,0 +1,2 @@
+FAILED_GATE: Initial floating-point identity assertion tolerance 1e-14 failed at maximum difference 2.2412627309620348e-14. Corrected tolerance to 1e-12, consistent with rounding. Independent arithmetic checker passed. This is not a scientific falsification.
+CI: Existing E002-220 manifest workflow passed on parent E002-222; it did not run E002-222/audit.py. New workflow write blocked, no E002-223 remote experiment run claimed.

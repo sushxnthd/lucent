@@ -1,0 +1,3 @@
+SCIENCE: Under u=t+delta and y(u)=F(s(u-delta-tau)), pairs (delta+c,tau-c) are observationally identical. Only delta+tau may be identified. This is a standard structural nonidentifiability, not novel. No human waveform result.
+PRODUCT: Do not certify physiological lag without independent exposure-clock anchor. Within-camera event intervals may remain usable if relative timestamps pass separate gates. No fatigue inference.
+FAIL: No new native exposure anchor recovered; E002-222 audit.py remains unexecuted in remote CI.

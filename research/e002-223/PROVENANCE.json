@@ -1,0 +1,1 @@
+{"run":"E002-223","parent":"research/e002-222-eott-clock-anchor-audit","parent_sha":"3e617e0bf6a41c3427929d72eb54081a8ecc3598","human_source_accessed":false,"parent_source_artifact_sha256":"c3751a3348544e81a829faede704996ee0cf41c6c3225601e5979db833ed548e","new_ci":"not executed","local_checker":"passed","provenance":"E002-222 DERIVED_FROM_E002_221.json"}
