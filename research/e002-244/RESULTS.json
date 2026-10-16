@@ -1,0 +1,19 @@
+{
+  "run": "E002-244",
+  "eye_frames": 120,
+  "admitted": 36,
+  "P_33": [
+    21,
+    12
+  ],
+  "P_54": [
+    3,
+    0
+  ],
+  "P_54_geometry": 60,
+  "P_54_placebo": 4,
+  "raw_sha256": "d6b2bf2bd8da1b89a37115990c733a9eb988a791f6dcb18b0db02b51b413c56c",
+  "actions_run": 38980388974,
+  "artifact_id": 12081166008,
+  "human_waveform_tested": false
+}
