@@ -1,0 +1,2 @@
+Source: E002-240 RAW_PAIRS.csv from user-supplied E002-241 ZIP. SHA-256 d28ea1c241f05d7630d38c6c85611b6749e7e056088f338ffb9ffb78b1adee86.
+Full 120-pair CSV, frozen generator, E002-242 independent scipy and binomial-root checkers, raw and derived results, SHA256SUMS are in /mnt/data/lucent_e002_242_stratified_inference_repair.zip (local evidence package). GitHub currently stores the 16 derived cell counts, an executable independent checker and protocol. No human data processed. Remote CI not yet executed.
