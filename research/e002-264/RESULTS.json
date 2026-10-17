@@ -1,0 +1,101 @@
+{
+  "centered_inversion_upper_bound": 0.35,
+  "data_type": "exact algebra and deterministic synthetic examples only",
+  "exact_counterexample": {
+    "exact_cross_ratio": "169/729",
+    "identical_image_quadruple": [
+      "-1",
+      "-8/73",
+      "16/29",
+      "1"
+    ],
+    "interpretation_A_decentration": "0",
+    "interpretation_A_radius": "7/20",
+    "interpretation_B_decentration": "468/2117",
+    "interpretation_B_radius": "700/2117",
+    "perspective_parameter": "1/4"
+  },
+  "failure_gate": "single-chord cross ratio cannot identify radius without a decentration bound",
+  "formula_q": "((1-r)^2-d^2)/((1+r)^2-d^2)",
+  "human_data_evaluated": false,
+  "identified_intervals": [
+    {
+      "max_decentration_over_iris_radius": 0,
+      "maximal_relative_overstatement_percent": 0,
+      "true_radius_lower": 0.35,
+      "true_radius_upper": 0.35
+    },
+    {
+      "max_decentration_over_iris_radius": 0.05,
+      "maximal_relative_overstatement_percent": 0.284787,
+      "true_radius_lower": 0.349003245279,
+      "true_radius_upper": 0.35
+    },
+    {
+      "max_decentration_over_iris_radius": 0.1,
+      "maximal_relative_overstatement_percent": 1.137794,
+      "true_radius_lower": 0.346017721356,
+      "true_radius_upper": 0.35
+    },
+    {
+      "max_decentration_over_iris_radius": 0.2,
+      "maximal_relative_overstatement_percent": 4.52976,
+      "true_radius_lower": 0.334145839366,
+      "true_radius_upper": 0.35
+    },
+    {
+      "max_decentration_over_iris_radius": 0.3,
+      "maximal_relative_overstatement_percent": 10.113619,
+      "true_radius_lower": 0.314602334089,
+      "true_radius_upper": 0.35
+    },
+    {
+      "max_decentration_over_iris_radius": 0.5,
+      "maximal_relative_overstatement_percent": 27.438975,
+      "true_radius_lower": 0.253963586815,
+      "true_radius_upper": 0.35
+    }
+  ],
+  "product_gate": "reject quantitative radius claim if independent decentration bound unavailable",
+  "q": 0.231824417009602,
+  "run": "E002-264",
+  "source_parent": "E002-263",
+  "wildcard_constant_q_varying_radius": [
+    {
+      "cross_ratio": 0.23182441701,
+      "decentration": 0,
+      "measured_centered_radius": 0.35,
+      "true_radius": 0.35
+    },
+    {
+      "cross_ratio": 0.23182441701,
+      "decentration": 0.04,
+      "measured_centered_radius": 0.35,
+      "true_radius": 0.349361986
+    },
+    {
+      "cross_ratio": 0.23182441701,
+      "decentration": 0.08,
+      "measured_centered_radius": 0.35,
+      "true_radius": 0.347449887
+    },
+    {
+      "cross_ratio": 0.23182441701,
+      "decentration": 0.12,
+      "measured_centered_radius": 0.35,
+      "true_radius": 0.344269508
+    },
+    {
+      "cross_ratio": 0.23182441701,
+      "decentration": 0.16,
+      "measured_centered_radius": 0.35,
+      "true_radius": 0.339830424
+    },
+    {
+      "cross_ratio": 0.23182441701,
+      "decentration": 0.2,
+      "measured_centered_radius": 0.35,
+      "true_radius": 0.334145839
+    }
+  ]
+}

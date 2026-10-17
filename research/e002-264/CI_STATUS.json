@@ -1,0 +1,9 @@
+{
+  "branch": "research/e002-264-decentration-identifiability",
+  "local_primary": "passed",
+  "local_independent": "passed",
+  "local_mutation": "passed",
+  "remote_workflow": "not yet executed",
+  "inherited_parent_workflow": "E002-263 passed on its own branch",
+  "human_waveform": "not evaluated"
+}

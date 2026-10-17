@@ -1,0 +1,13 @@
+{
+  "run": "E002-264",
+  "scientific_gate": "one_chord_radius_identifiability_without_decentration_bound",
+  "result": "FAIL",
+  "exact_counterexample": "(-1,-8/73,16/29,1) corresponds to r=7/20,d=0 under one projectivity and r=700/2117,d=468/2117 under another",
+  "product_consequence": "uncalibrated four-boundary cross-ratio cannot certify quantitative pupil radius",
+  "not_inferred": [
+    "ordinary RGB physiological impossibility",
+    "fatigue estimation accuracy",
+    "human waveforms"
+  ],
+  "status": "retained as negative evidence"
+}

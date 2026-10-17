@@ -1,0 +1,41 @@
+{
+  "run": "E002-264",
+  "date_utc": "2026-10-17",
+  "data_class": "exact rational algebra and deterministic synthetic numerical examples",
+  "human_data_accessed": false,
+  "raw_human_data_sha256": null,
+  "participant_count": 0,
+  "upstream_repository": "sushxnthd/lucent",
+  "parent_branch": "research/e002-263-projective-ocular-invariant",
+  "parent_commit": "7d136b28e1037e730470903ff0bc9426985f9b88",
+  "parent_projective_source_git_blob": "4bb08dc69c17d0c9c449c359b948c04c69f3ac7d",
+  "prior_art": [
+    "https://arxiv.org/abs/1902.04541",
+    "https://pubmed.ncbi.nlm.nih.gov/12091457/",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC8516786/"
+  ],
+  "frozen_protocol_source": "research/e002-261-crossmodal-blink-clock",
+  "immutable_test_constants": {
+    "r0": "7/20",
+    "perspective_t": "1/4",
+    "max_decentration_grid": [
+      0,
+      0.05,
+      0.1,
+      0.2,
+      0.3,
+      0.5
+    ]
+  },
+  "source_sha256_primary": "6dd09ffd662aa66a6408a79f61132f4e822f8300f4c678c835220d387abdb808",
+  "science_gate": {
+    "single_chord_radius_identifiable_without_center_bound": false,
+    "conditional_sharp_interval_proved": true,
+    "human_waveform_gate": "not run"
+  },
+  "product_gate": {
+    "single_chord_absolute_radius_without_center_bound": "reject",
+    "interval_estimator": "conditional research only",
+    "five_second_fatigue": "not authorized"
+  }
+}

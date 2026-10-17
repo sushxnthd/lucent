@@ -1,0 +1,12 @@
+{
+  "run": "E002-264",
+  "branch": "research/e002-264-decentration-identifiability",
+  "parent_commit": "7d136b28e1037e730470903ff0bc9426985f9b88",
+  "parent_projective_code_git_blob": "4bb08dc69c17d0c9c449c359b948c04c69f3ac7d",
+  "primary_code_git_blob": "1928e8875a774d9ae8d879ce08d7ad26ca4d6e29",
+  "independent_code_git_blob": "2bc5101013736dc26aa56fc63205de55d23e6e5f",
+  "frozen_results_git_blob": "1edd72ff0ccec41438ea78a6f15c96623e41a1d1",
+  "external_human_dataset_used": false,
+  "source_type": "exact rational projective geometry and deterministic numeric examples",
+  "caveat": "Git blob identity is not a physiological dataset hash"
+}

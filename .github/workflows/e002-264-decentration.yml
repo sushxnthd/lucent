@@ -1,0 +1,14 @@
+name: E002-264 exact geometry verification
+on:
+  push:
+    branches: ['research/e002-264-decentration-identifiability']
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run algebra checks
+        run: |
+          python research/e002-264/decentration_bound.py
+          python research/e002-264/independent_check.py
