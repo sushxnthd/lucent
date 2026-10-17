@@ -1,9 +1,18 @@
 {
   "branch": "research/e002-264-decentration-identifiability",
+  "commit_tested": "a3094164ef3ec89d6c8335da38e1e89dce288422",
   "local_primary": "passed",
   "local_independent": "passed",
   "local_mutation": "passed",
-  "remote_workflow": "not yet executed",
-  "inherited_parent_workflow": "E002-263 passed on its own branch",
-  "human_waveform": "not evaluated"
+  "remote_workflow": "completed",
+  "remote_conclusion": "success",
+  "remote_run_id": 39053745801,
+  "remote_run_url": "https://github.com/sushxnthd/lucent/actions/runs/39053745801",
+  "remote_job": "verify",
+  "remote_steps": [
+    "checkout: success",
+    "algebra checks: success"
+  ],
+  "human_waveform": "not evaluated",
+  "other_inherited_workflows": "not used to certify E002-264"
 }
