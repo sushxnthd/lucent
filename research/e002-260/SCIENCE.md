@@ -1,0 +1,5 @@
+E002-260 science ledger. The WACV 2025 EyeDentify primary paper Section 3.4.1 and Figure 2 explicitly describe row-wise averaging of three one-second Tobii groups to align with webcam frames. The pinned upstream code independently confirms this design. Actual released labels were not inspected.
+
+Idealized equal-block operator: z[i]=(x[i]+x[i+90]+x[i+180])/3, i=0..89; frame i corresponds to x[3i]. Rank=90; nullity=180. For any L-Lipschitz x(t), maximum label-vs-native-frame error is at most L times one second. This bound is sharp at i=0 for x(t)=Lt. Exact synthetic linear drift MSE at L=1: 4051/12150, RMS 0.5774215426. Independent rational checker and corruption rejection passed.
+
+This is a conditional reference-processing result, not a novel general theorem or an RGB observability claim. Human waveform evaluation and actual dataset-label provenance remain unresolved.

@@ -1,0 +1,1 @@
+E002-260: WACV primary paper corroborates the source-described three-block mean. Released dataset bytes were not inspected. The mathematical example is synthetic.
