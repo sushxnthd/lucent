@@ -1,0 +1,14 @@
+{
+  "frozen_waveform_human_validation": "NOT_RUN",
+  "independent_exposure_synchronization": "NOT_CERTIFIED",
+  "participant_device_lighting_glasses_holdout": "NOT_RUN",
+  "lucent_radial_edge_detector": "RETIRED",
+  "exploratory_oracle_nrmse_le_0p5": {
+    "left": "2/51",
+    "right": "2/51",
+    "either": "4/51",
+    "both": "0/51"
+  },
+  "product_75pct_accurate_windows": "NOT_ESTABLISHED",
+  "general_rgb_impossibility": "NOT_ESTABLISHED"
+}

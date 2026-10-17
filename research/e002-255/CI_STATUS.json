@@ -1,0 +1,8 @@
+{
+  "branch": "research/e002-255-eyedentify-calibration-bound",
+  "local_synthetic_identity": "PASS",
+  "source_participant_summaries": "READ_VIA_GITHUB_CONNECTOR",
+  "source_replay_on_runner": "PENDING",
+  "remote_ci": "PENDING",
+  "prospective_human_waveform": "NOT_RUN"
+}

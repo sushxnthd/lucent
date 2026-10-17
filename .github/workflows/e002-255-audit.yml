@@ -1,0 +1,32 @@
+name: Lucent E002-255 public-human calibration-bound audit
+on:
+  push:
+    branches:
+      - research/e002-255-eyedentify-calibration-bound
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Synthetic regression identity
+        run: python3 research/e002-255/test_identity.py
+      - name: Download pinned human participant summaries and audit
+        run: python3 research/e002-255/audit.py
+      - name: Independent human aggregate checker
+        run: python3 research/e002-255/independent_check.py
+      - name: Preserve hashes
+        run: |
+          cd research/e002-255
+          sha256sum audit.py independent_check.py test_identity.py CI_RESULTS.json CI_SOURCE_HASHES.json > SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lucent-e002-255-pinned-human-aggregate-audit
+          path: |
+            research/e002-255/CI_RESULTS.json
+            research/e002-255/CI_SOURCE_HASHES.json
+            research/e002-255/SHA256SUMS.txt
+          retention-days: 30
