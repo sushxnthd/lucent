@@ -1,0 +1,1 @@
+E002-257: Eye-specific absolute-scale bias audit on pinned third-party participant summaries. Human waveform observability remains unresolved. The source-pinned analysis and negative gates will be retained in this isolated branch.
