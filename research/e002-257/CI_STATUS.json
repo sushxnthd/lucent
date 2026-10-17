@@ -1,0 +1,11 @@
+{
+  "branch": "research/e002-257-eye-specific-bias",
+  "commit_before_status_record": "d1584c01cd2c21c7202e069062daa2597a1275ad",
+  "local_synthetic_test": "PASS_ON_FULL_REFERENCE_IMPLEMENTATION",
+  "committed_compact_test": "PENDING_REMOTE",
+  "source_git_blob": "VERIFIED_CONNECTOR",
+  "human_JS_aggregate": "EXECUTED",
+  "independent_human_Python": "PENDING_REMOTE",
+  "actions": "UNVERIFIED_PR_ONLY_RUN_QUERY_EMPTY",
+  "waveform": "NOT_RUN"
+}
