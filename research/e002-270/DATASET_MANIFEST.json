@@ -1,0 +1,19 @@
+{
+  "run": "E002-270",
+  "data_type": "synthetic",
+  "paired_human_data_access": "not obtained",
+  "original_eve_bytes_inspected": false,
+  "upstream_e002_269_scorer_git_blob": "fc26b98ef367bb44ba22ab7ca6f3f387200e6424",
+  "upstream_e002_268_guard_git_blob": "2521c4a1d0f9eec457dcd03dcab49bafc386f144",
+  "run_script_git_blob": "3e836492c3e5c15820d8312a87c95775a590c6ff",
+  "independent_checker_git_blob": "455d112f9657bf4d576ae76b1877aa0d80f1fc3f",
+  "readme_git_blob": "36b09f22b07646794a634b38961e4ae41ca42ea0",
+  "reference_range_mm_for_sensitivity_only": [
+    2.5,
+    3.5
+  ],
+  "source_byte_hash_status": "synthetic deterministic generator; no human source bytes",
+  "clock_status": "ideal synthetic clock, no independently measured clock error",
+  "code_exec": "local deterministic run + independent checker",
+  "remote_ci": "unverified"
+}

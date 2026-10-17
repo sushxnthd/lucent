@@ -1,0 +1,15 @@
+{
+  "run": "E002-270",
+  "human_paired_data": "NOT_ACCESSED",
+  "native_clock_provenance": "NOT_VERIFIED",
+  "untouched_participant_holdout": "NOT_EVALUATED",
+  "device_lighting_glasses_holdouts": "NOT_EVALUATED",
+  "optical_calibration": "NOT_EVALUATED",
+  "conditional_reference_metric_certifies_full_grid": "FAIL",
+  "full_grid_mse_identified_without_reference_range": "FAIL_UNBOUNDED",
+  "synthetic_adversarial_falsification": "PASS",
+  "independent_checker": "PASS_LOCAL",
+  "remote_ci": "NOT_VERIFIED",
+  "product_certificate": "DISABLED",
+  "breakthrough": "NOT_ESTABLISHED"
+}

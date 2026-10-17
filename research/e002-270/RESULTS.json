@@ -1,0 +1,47 @@
+{
+  "run": "E002-270",
+  "kind": "SYNTHETIC_LOCAL_REPLAY",
+  "frozen_gates": {
+    "r_min": 0.75,
+    "amplitude_min": 0.75,
+    "amplitude_max": 1.25,
+    "nrmse_max": 0.7
+  },
+  "trials": [
+    {
+      "missing_fraction": 0.05,
+      "masked_r": 1,
+      "masked_nrmse": 0,
+      "full_r": 0.6423605648696078,
+      "full_nrmse": 2.10818510677892,
+      "targeted_pass": true,
+      "placebo_pass": false,
+      "full_pass": false
+    },
+    {
+      "missing_fraction": 0.1,
+      "masked_r": 1,
+      "masked_nrmse": 0,
+      "full_r": 0.5898344571738445,
+      "full_nrmse": 2.9814239699997205,
+      "targeted_pass": true,
+      "placebo_pass": false,
+      "full_pass": false
+    },
+    {
+      "missing_fraction": 0.2,
+      "masked_r": 1,
+      "masked_nrmse": 0,
+      "full_r": 0.2664024721020555,
+      "full_nrmse": 4.21637021355784,
+      "targeted_pass": true,
+      "placebo_pass": false,
+      "full_pass": false
+    }
+  ],
+  "independent_checker": "PASS_LOCAL",
+  "product_certificate": false,
+  "human_evidence": false,
+  "remote_ci": "UNVERIFIED",
+  "note": "Rounded summary from local deterministic script. Exact full-precision output is regenerated as RESULTS_REPLAY.json by run.py."
+}

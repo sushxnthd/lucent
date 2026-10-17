@@ -1,0 +1,20 @@
+{
+  "run": "E002-270",
+  "kind": "DETERMINISTIC_SYNTHETIC_FIXTURE",
+  "fps": 60,
+  "N": 300,
+  "timestamps": "i/60 seconds for i=0..299",
+  "reference": "3 + 0.24*sin(2*pi*0.6*t) mm",
+  "predicted": "reference + 1.6 mm for i in [120,120+missing), otherwise reference",
+  "missing_frames": [
+    15,
+    30,
+    60
+  ],
+  "targeted_validity": "valid exactly outside the injected RGB artifact",
+  "placebo_validity": "invalid for first missing frames; artifact remains visible",
+  "full_validity": "all 300 valid",
+  "random_seed": "none",
+  "human_source_bytes": 0,
+  "source_code_blob": "3e836492c3e5c15820d8312a87c95775a590c6ff"
+}
