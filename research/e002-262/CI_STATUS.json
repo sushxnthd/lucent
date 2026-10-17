@@ -1,11 +1,14 @@
 {
-  "run": 39041052897,
+  "run": "E002-262",
+  "source_workflow": 39041052897,
+  "independent_workflow": 39041238368,
+  "independent_commit": "c72c0660a0ae77728062f4f3a75c9b093e52595b",
   "conclusion": "success",
-  "commit": "9550afaf656b6293b0571e24f646f7690a898377",
-  "source_integrity": "pass",
-  "original_E002_220": "pass",
-  "reference_event_gate": "fail",
+  "source_hashes": "verified",
+  "original_source_steps": "pass",
+  "event_gate": "FAIL (scientific: zero candidate gaps)",
+  "independent_source_replay": "pass",
   "mutation": "detected",
-  "independent_replay": "pending new CI",
-  "physiological_waveform": "not executed"
+  "human_waveform": "not executed",
+  "scope": "original-human Tobii reference timing only"
 }
