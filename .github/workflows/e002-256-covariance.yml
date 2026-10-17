@@ -1,0 +1,20 @@
+name: Lucent E002-256 covariance audit
+on:
+  push:
+    branches: [research/e002-256-within-person-covariance]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 research/e002-256/decompose.py
+      - run: python3 research/e002-256/independent_check.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-256-human-aggregate
+          path: |
+            research/e002-256/CI_RESULTS.json
+            research/e002-256/CI_SOURCE_HASHES.json

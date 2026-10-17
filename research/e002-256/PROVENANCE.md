@@ -1,0 +1,3 @@
+# E002-256 provenance
+
+Public third-party participant-level human aggregates from CondadosAI/pupil-diameter-webcam, commit aa9bddf498a3b6e4104c2c000d2cc0c06a816aae. Left blob 509e14d61455dc6ee119a0fc2ba9e7448eedc9fc; right blob 9f55dd52fc6c11c9903ec9c7b0c735192cd4a790; summary blob 4d51cd922ce11aa040cfc491bce09bab249d5ede. Original EyeDentify/PupilSense data and weights CC BY-NC 4.0; none redistributed. 51 participants per eye. GitHub connector reads verified these identities. Derived aggregate computations were executed, but no raw human video, untouched holdout, independently certified exposure timing, or five-second waveform. Source-byte SHA256 requires remote replay. No personal spend or user laptop.

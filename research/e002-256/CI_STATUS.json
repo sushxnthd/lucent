@@ -1,0 +1,8 @@
+{
+  "source_rows": "READ_VIA_GITHUB_CONNECTOR",
+  "human_covariance_reconstruction": "EXECUTED",
+  "source_blobs": "VERIFIED_VIA_GITHUB_CONNECTOR",
+  "independent_checker": "PENDING_REMOTE",
+  "remote_actions": "PENDING",
+  "source_sha256": "PENDING_REMOTE"
+}

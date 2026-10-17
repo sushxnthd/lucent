@@ -1,0 +1,27 @@
+{
+  "run": "E002-256",
+  "classification": "post-hoc third-party human aggregate covariance",
+  "source_commit": "aa9bddf498a3b6e4104c2c000d2cc0c06a816aae",
+  "left": {
+    "n": 211988,
+    "participants": 51,
+    "pooled_r_reconstructed": 0.8755227815806301,
+    "participant_centered_r": 0.7050738102920833,
+    "between_participant_r": 0.9423733770491721,
+    "between_fraction_of_pooled_covariance": 0.7813192941697432,
+    "between_fraction_of_prediction_variance": 0.7584454087724426,
+    "between_fraction_of_reference_variance": 0.6947389644326408
+  },
+  "right": {
+    "n": 211919,
+    "participants": 51,
+    "pooled_r_reconstructed": 0.8586579815960982,
+    "participant_centered_r": 0.6737150925899902,
+    "between_participant_r": 0.91824497342654,
+    "between_fraction_of_pooled_covariance": 0.8290318357023795,
+    "between_fraction_of_prediction_variance": 0.8253143255912854,
+    "between_fraction_of_reference_variance": 0.7281927254896297
+  },
+  "prospective_human_waveform": "NOT_RUN",
+  "remote_ci": "PENDING"
+}
