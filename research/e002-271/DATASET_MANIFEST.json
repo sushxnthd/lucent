@@ -1,0 +1,17 @@
+{
+  "candidate": "Zenodo 17046553",
+  "doi": "10.5281/zenodo.17046553",
+  "published": "2025-09-03",
+  "described_participants": 10,
+  "described_devices": ["Tobii Pro Spectrum", "webcam"],
+  "expected_archive_md5": "59dbd3de85b2eee54345c7d14c9629c9",
+  "source_bytes_verified": false,
+  "archive_contents_verified": false,
+  "rgb_eye_video_verified": false,
+  "native_pupil_reference_verified": false,
+  "same_eye_verified": false,
+  "clock_alignment_verified": false,
+  "holdout_human_results": false,
+  "prior_art": ["Barry and Wang 2023 Scientific Reports", "EVE ECCV 2020", "EyeDentify WACV 2025"],
+  "admission": "REJECT_PENDING_PROVENANCE"
+}
