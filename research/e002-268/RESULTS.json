@@ -1,0 +1,20 @@
+{
+  "run": "E002-268",
+  "type": "synthetic_counterexample_only",
+  "source_csv_sha256": "ada76e94707a34f3fb86c6148ec1c2008e8851cc992f6abc35c267b15d758ebb",
+  "source_csv_rows": 5400,
+  "test_participants": 8,
+  "test_windows": 16,
+  "oracle_admitted": 8,
+  "oracle_passed": 8,
+  "oracle_coverage": 0.5,
+  "oracle_conditional_accuracy": 1,
+  "blind_admitted": 16,
+  "blind_passed": 8,
+  "blind_coverage": 1,
+  "blind_conditional_accuracy": 0.5,
+  "rgb_nuisance_identical_between_paired_sessions": true,
+  "source_hash_metadata_spoof_accepted": true,
+  "human_result": null,
+  "remote_ci": "not_run"
+}

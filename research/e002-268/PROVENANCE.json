@@ -1,0 +1,15 @@
+{
+  "run": "E002-268",
+  "date_utc": "2026-10-17/18",
+  "parent_branch": "research/e002-267-frozen-waveform-admission",
+  "parent_commit": "bca3b4e60e4c9b9082b86d5afe13ba41f1212672",
+  "evaluated_code": "research/e002-267/evaluate.py",
+  "evaluated_code_git_blob_sha": "c97fcdc77ca27235e5dc8186529cdbd3e87f6bd4",
+  "data_type": "synthetic_only",
+  "human_source_dataset_sha256": null,
+  "synthetic_csv_sha256": "ada76e94707a34f3fb86c6148ec1c2008e8851cc992f6abc35c267b15d758ebb",
+  "local_audit": "PASS (functional transcription; exact repository replay pending)",
+  "independent_checker": "PASS",
+  "remote_exact_source_replay": "PENDING",
+  "claim": "Reference-dependent admission can inflate deployable accuracy; source hash field is not verified against bytes."
+}

@@ -1,0 +1,10 @@
+{
+  "run": "E002-268",
+  "human_paired_data": "NOT_ACCESSED",
+  "human_waveform": "NOT_EVALUATED",
+  "reference_blind_admission_in_E002_267": "FAIL_ORACLE_LEAKAGE",
+  "source_bytes_hash_verification_in_E002_267": "FAIL_SELF_ATTESTED",
+  "human_holdouts": "NOT_EVALUATED",
+  "optical_calibration": "NOT_EVALUATED",
+  "field_breakthrough": "NOT_ESTABLISHED"
+}
