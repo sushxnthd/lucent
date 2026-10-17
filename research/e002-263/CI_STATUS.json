@@ -1,13 +1,13 @@
 {
   "branch": "research/e002-263-projective-ocular-invariant",
-  "initial_commit": "854a97c1bc4fbf9750fa1677e25f8609a822d2ba",
-  "initial_workflow_run": 39048282735,
-  "initial_workflow_conclusion": "failure",
-  "experiment_step": "success",
-  "independent_checker_step": "success",
-  "failed_step": "byte comparison of regenerated JSON",
-  "cause": "Python serializes 0.0 while checked-in JSON serialized 0; numeric values match",
-  "science_gate_failure": false,
-  "followup": "compare semantic JSON values, not text bytes",
-  "followup_workflow_conclusion": "pending"
+  "initial_run": 39048282735,
+  "initial_conclusion": "failure",
+  "failure_type": "CI-only deterministic JSON serialization mismatch (0 vs 0.0)",
+  "reproduction": "passed",
+  "independent_checker": "passed",
+  "fix_commit": "68859e5e111a98065b9078320b2d0bdb21ccb214",
+  "verified_run": 39048458817,
+  "verified_conclusion": "success",
+  "human_waveform_result": false,
+  "science_gate": "conditional synthetic projective geometry only"
 }
