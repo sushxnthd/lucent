@@ -1,0 +1,9 @@
+{
+  "error_class": "URLError",
+  "human_waveform_evaluated": false,
+  "rgb_reference_clock_certified": false,
+  "run": "E002-271",
+  "source": "10.5281/zenodo.17046553",
+  "source_md5_expected": "59dbd3de85b2eee54345c7d14c9629c9",
+  "status": "ACCESS_BLOCKED"
+}
