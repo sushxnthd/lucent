@@ -1,0 +1,1 @@
+P_33: same-eye temporal covering radii 0.5 s and 0.9167 s. P_54: 3 s and undefined (no admitted frames). Nominal 6 fps; reference waveform not evaluated. Source E002-244.
