@@ -1,0 +1,34 @@
+{
+  "seed": 2562026,
+  "replicates": 5000,
+  "bootstrap_unit": "participant",
+  "method": "percentile cluster bootstrap, 51 participants sampled with replacement; descriptive uncertainty only",
+  "left": {
+    "between_cov_fraction_95pct": [
+      0.6901510077786929,
+      0.8367864944195569
+    ],
+    "centered_r_95pct": [
+      0.6499906099633725,
+      0.7531461144266324
+    ],
+    "fraction_above_half": 1
+  },
+  "right": {
+    "between_cov_fraction_95pct": [
+      0.7592573768931536,
+      0.8703825589647365
+    ],
+    "centered_r_95pct": [
+      0.6202554054406507,
+      0.7189117140771787
+    ],
+    "fraction_above_half": 1
+  },
+  "limits": [
+    "third-party checkpoint training overlap unknown",
+    "not within-session",
+    "not untouched prospective holdout",
+    "participant bootstrap does not fix stimulus or exposure confounding"
+  ]
+}

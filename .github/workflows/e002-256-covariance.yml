@@ -8,13 +8,23 @@ permissions:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
-      - run: python3 research/e002-256/decompose.py
-      - run: python3 research/e002-256/independent_check.py
+      - name: Reconstruct pinned human aggregate covariance
+        run: python3 research/e002-256/decompose.py
+      - name: Independent uncentered-moment checker
+        run: python3 research/e002-256/independent_check.py
+      - name: Participant-cluster bootstrap
+        run: node research/e002-256/bootstrap.mjs
+      - name: Hash derived evidence
+        run: sha256sum research/e002-256/decompose.py research/e002-256/independent_check.py research/e002-256/bootstrap.mjs research/e002-256/CI_RESULTS.json research/e002-256/CI_SOURCE_HASHES.json research/e002-256/CI_BOOTSTRAP.json > research/e002-256/SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
         with:
           name: e002-256-human-aggregate
           path: |
             research/e002-256/CI_RESULTS.json
             research/e002-256/CI_SOURCE_HASHES.json
+            research/e002-256/CI_BOOTSTRAP.json
+            research/e002-256/SHA256SUMS.txt
+          retention-days: 30
