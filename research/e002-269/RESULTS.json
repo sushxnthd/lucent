@@ -1,0 +1,154 @@
+{
+  "run": "E002-269",
+  "source_type": "synthetic",
+  "test_participants": 8,
+  "test_windows": 16,
+  "blind_admitted": 16,
+  "scorable_admitted": 16,
+  "unscorable_admitted": 0,
+  "passed": 8,
+  "conditional_accuracy": 0.5,
+  "blind_coverage": 1,
+  "participant_bootstrap_accuracy_ci95": [
+    0.5,
+    0.5
+  ],
+  "participant_bootstrap_mean_r_ci95": [
+    1,
+    1
+  ],
+  "product_certificate": false,
+  "statistical_candidate": false,
+  "synthetic_csv_sha256": "ada76e94707a34f3fb86c6148ec1c2008e8851cc992f6abc35c267b15d758ebb",
+  "result_representation": "summary; run_fixture.py generates full precision",
+  "windows": [
+    {
+      "participant": "p02",
+      "session": "a",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": true
+    },
+    {
+      "participant": "p02",
+      "session": "b",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": false
+    },
+    {
+      "participant": "p03",
+      "session": "a",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": false
+    },
+    {
+      "participant": "p03",
+      "session": "b",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": true
+    },
+    {
+      "participant": "p04",
+      "session": "a",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": true
+    },
+    {
+      "participant": "p04",
+      "session": "b",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": false
+    },
+    {
+      "participant": "p05",
+      "session": "a",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": false
+    },
+    {
+      "participant": "p05",
+      "session": "b",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": true
+    },
+    {
+      "participant": "p06",
+      "session": "a",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": true
+    },
+    {
+      "participant": "p06",
+      "session": "b",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": false
+    },
+    {
+      "participant": "p07",
+      "session": "a",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": false
+    },
+    {
+      "participant": "p07",
+      "session": "b",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": true
+    },
+    {
+      "participant": "p08",
+      "session": "a",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": true
+    },
+    {
+      "participant": "p08",
+      "session": "b",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": false
+    },
+    {
+      "participant": "p09",
+      "session": "a",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": false
+    },
+    {
+      "participant": "p09",
+      "session": "b",
+      "window": 0,
+      "admitted": true,
+      "scorable": true,
+      "accurate": true
+    }
+  ]
+}
