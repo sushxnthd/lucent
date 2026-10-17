@@ -1,7 +1,13 @@
 {
-  "status": "not_run_yet",
   "branch": "research/e002-263-projective-ocular-invariant",
-  "prior_262_run": 39041329879,
-  "prior_262_conclusion": "success",
-  "workflow_new": true
+  "initial_commit": "854a97c1bc4fbf9750fa1677e25f8609a822d2ba",
+  "initial_workflow_run": 39048282735,
+  "initial_workflow_conclusion": "failure",
+  "experiment_step": "success",
+  "independent_checker_step": "success",
+  "failed_step": "byte comparison of regenerated JSON",
+  "cause": "Python serializes 0.0 while checked-in JSON serialized 0; numeric values match",
+  "science_gate_failure": false,
+  "followup": "compare semantic JSON values, not text bytes",
+  "followup_workflow_conclusion": "pending"
 }
