@@ -1,0 +1,10 @@
+{
+  "human_provenance": "NOT_EVALUATED",
+  "human_waveform": "NOT_EVALUATED",
+  "nuisance_calibration": "NOT_EVALUATED",
+  "participant_device_lighting_glasses_holdouts": "NOT_EVALUATED",
+  "human_positive_control": "NOT_EVALUATED",
+  "product_certificate": "NOT_EVALUATED",
+  "workflow_write": "BLOCKED_BY_CONNECTOR_SAFETY",
+  "synthetic_fixture_not_human": "ENFORCED"
+}
