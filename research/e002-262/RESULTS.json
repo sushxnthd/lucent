@@ -1,0 +1,47 @@
+{
+  "clock_sync_certified": false,
+  "human_waveform_evaluated": false,
+  "method": "consecutive gaps in union of native valid left/right Tobii timestamps; threshold 100ms, sensitivity 150ms",
+  "mutation_test": "DETECTED",
+  "participants": {
+    "P_33": {
+      "bilateral_valid_free_gaps_ge100ms": [],
+      "bilateral_valid_free_gaps_ge150ms": [],
+      "either_valid_unique_times": 200,
+      "left_valid": 200,
+      "max_any_valid_spacing_ms": 30.119,
+      "median_any_valid_spacing_ms": 24.966,
+      "reference_rows": 600,
+      "right_valid": 199,
+      "session_start_epoch_s": 1492456828.724,
+      "source_sha256": {
+        "events": "8d05ddea2108fafb836aa1f26c3f40be0e0d9562e3183d3c93ce6fefb451cc62",
+        "tracker": "3536d3d41ff8b2356fc35ce7f985c2000d671137ed33b8207669c72ca607265d"
+      },
+      "two_event_clock_gate": "FAIL",
+      "valid_fraction_left": 0.333333,
+      "valid_fraction_right": 0.331667
+    },
+    "P_54": {
+      "bilateral_valid_free_gaps_ge100ms": [],
+      "bilateral_valid_free_gaps_ge150ms": [],
+      "either_valid_unique_times": 200,
+      "left_valid": 199,
+      "max_any_valid_spacing_ms": 26.705,
+      "median_any_valid_spacing_ms": 24.993,
+      "reference_rows": 600,
+      "right_valid": 195,
+      "session_start_epoch_s": 1493130049.332,
+      "source_sha256": {
+        "events": "f03b60c1ceab65794de07a205b9f1c405dc2d16aa7f29e850974819237369937",
+        "tracker": "359838799cd8f02aab75e14f18ad571a33827165cf446558854462bea660e8f5"
+      },
+      "two_event_clock_gate": "FAIL",
+      "valid_fraction_left": 0.331667,
+      "valid_fraction_right": 0.325
+    }
+  },
+  "run": "E002-262",
+  "source": "Brown EOTT original P_33/P_54",
+  "warning": "tracker invalidity is not itself a blink; two gaps are only a necessary preflight, never sufficient synchronization"
+}

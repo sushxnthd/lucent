@@ -1,0 +1,11 @@
+{
+  "run": 39041052897,
+  "conclusion": "success",
+  "commit": "9550afaf656b6293b0571e24f646f7690a898377",
+  "source_integrity": "pass",
+  "original_E002_220": "pass",
+  "reference_event_gate": "fail",
+  "mutation": "detected",
+  "independent_replay": "pending new CI",
+  "physiological_waveform": "not executed"
+}

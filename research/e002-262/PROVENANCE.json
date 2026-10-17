@@ -1,0 +1,13 @@
+{
+  "run": "E002-262",
+  "date": "2026-10-17",
+  "original_human_dataset": "Brown ETRA2018 Eye of the Typer",
+  "upstream_run": 38819094753,
+  "validated_workflow": "https://github.com/sushxnthd/lucent/actions/runs/39041052897",
+  "failed_initial_run": "https://github.com/sushxnthd/lucent/actions/runs/39040920585",
+  "reference_pins": {
+    "P_33": "3536d3d41ff8b2356fc35ce7f985c2000d671137ed33b8207669c72ca607265d",
+    "P_54": "359838799cd8f02aab75e14f18ad571a33827165cf446558854462bea660e8f5"
+  },
+  "no_human_video_waveform": true
+}
