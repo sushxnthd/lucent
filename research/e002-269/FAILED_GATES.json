@@ -1,0 +1,11 @@
+{
+  "human_waveform": "NOT_EVALUATED",
+  "independent_human_clock": "NOT_VERIFIED",
+  "evidence_source_human": "NOT_ACCESSED",
+  "participant_device_lighting_glasses_human_holdouts": "NOT_EVALUATED",
+  "field_breakthrough": "NOT_ESTABLISHED",
+  "synthetic_original_oracle_admission": "FAIL",
+  "synthetic_reference_blind_admission": "PASS",
+  "local_tests": "PASS_5_OF_5",
+  "remote_dedicated_CI": "NOT_VERIFIED"
+}

@@ -1,0 +1,12 @@
+{
+  "run": "E002-269",
+  "kind": "SYNTHETIC_ONLY",
+  "fixture_sha256": "ada76e94707a34f3fb86c6148ec1c2008e8851cc992f6abc35c267b15d758ebb",
+  "source_rows": 5400,
+  "generator": "research/e002-268/audit.py:make_rows",
+  "human_paired_windows": 0,
+  "eve_dataset_bytes_inspected": false,
+  "eve_access": "REQUEST_ONLY_NOT_OBTAINED",
+  "upstream_evaluator_blob": "c97fcdc77ca27235e5dc8186529cdbd3e87f6bd4",
+  "upstream_guard_blob": "2521c4a1d0f9eec457dcd03dcab49bafc386f144"
+}
