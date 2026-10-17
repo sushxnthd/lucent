@@ -12,3 +12,6 @@ try:check(bad)
 except AssertionError:pass
 else:raise AssertionError("mutation escaped")
 print("Independent arithmetic and mutation checks PASS")
+# E002-262 isolated research branch only: original E002-220 workflow remains unchanged.
+import subprocess,sys
+subprocess.run([sys.executable,"research/e002-262/event_anchor.py"],check=True)
