@@ -1,0 +1,31 @@
+{
+  "run": "E002-257",
+  "classification": "posthoc_third_party_human_aggregate_JS",
+  "source_commit": "aa9bddf498a3b6e4104c2c000d2cc0c06a816aae",
+  "paired_participants": 51,
+  "left": {
+    "raw_nrmse_median": 0.7320347449692418,
+    "offset_oracle_nrmse_median": 0.6928821072382492,
+    "bias_sd_median": 0.23644282653602924,
+    "raw_nrmse_le_0p7": 16
+  },
+  "right": {
+    "raw_nrmse_median": 1.0609537874348913,
+    "offset_oracle_nrmse_median": 0.7232369480147601,
+    "bias_sd_median": 0.7833093954746311,
+    "raw_nrmse_le_0p7": 1
+  },
+  "paired": {
+    "right_worse": 46,
+    "right_better": 5,
+    "median_right_minus_left_raw_nrmse": 0.289212128731161,
+    "sign_p": 2.3280151140170346e-9,
+    "descriptive_bootstrap_CI_95": [
+      0.25185067624617175,
+      0.39333105548087854
+    ]
+  },
+  "source_blob_verified": true,
+  "independent_python_human_replay": "PENDING",
+  "human_waveform": "NOT_RUN"
+}

@@ -1,0 +1,63 @@
+name: Lucent E002-257 source-pinned human bias audit
+on:
+  push:
+    branches: [research/e002-257-eye-specific-bias]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Synthetic identity and mutation test
+        run: python3 research/e002-257/test_synthetic.py
+      - name: Reproduce E002-256 pinned covariance
+        run: python3 research/e002-256/decompose.py
+      - name: Independent E002-256 moment checker
+        run: python3 research/e002-256/independent_check.py
+      - name: Reproduce E002-256 participant bootstrap
+        run: node research/e002-256/bootstrap.mjs
+      - name: Reconstruct E002-257 paired human bias
+        run: python3 research/e002-257/audit.py
+      - name: Independent E002-257 raw moment checker
+        run: python3 research/e002-257/independent_check.py
+      - name: Check output paths and manifest pins
+        run: |
+          python3 - <<'PY'
+          import json,pathlib,re
+          a=pathlib.Path('research/e002-256')
+          b=pathlib.Path('research/e002-257')
+          for p in [a/'RESULTS.json',a/'SOURCE_MANIFEST.json',a/'CI_BOOTSTRAP.json',b/'RESULTS.json',b/'SOURCE_MANIFEST.json']:
+              assert p.is_file() and p.stat().st_size>0, f'MISSING_OUTPUT {p}'
+              json.loads(p.read_text())
+          m=json.loads((b/'SOURCE_MANIFEST.json').read_text())
+          for eye,pin in [('left','509e14d61455dc6ee119a0fc2ba9e7448eedc9fc'),('right','9f55dd52fc6c11c9903ec9c7b0c735192cd4a790')]:
+              x=m['files'][eye]
+              assert x['git_blob']==pin and re.fullmatch('[0-9a-f]{64}',x['sha256'])
+          assert json.loads((b/'RESULTS.json').read_text())['human_waveform']=='NOT_RUN'
+          print('PINNED_MANIFEST_AND_OUTPUT_PATHS_PASS')
+          PY
+      - name: Preserve hashes even on failure
+        if: always()
+        run: |
+          sha256sum research/e002-257/*.py research/e002-256/decompose.py research/e002-256/independent_check.py research/e002-256/bootstrap.mjs > research/e002-257/CODE_SHA256SUMS.txt
+          for p in research/e002-256/RESULTS.json research/e002-256/SOURCE_MANIFEST.json research/e002-256/CI_BOOTSTRAP.json research/e002-257/RESULTS.json research/e002-257/SOURCE_MANIFEST.json; do
+            if test -f "$p"; then sha256sum "$p"; else printf 'MISSING %s\n' "$p"; fi
+          done > research/e002-257/DERIVED_SHA256SUMS.txt
+      - name: Upload positive and negative evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lucent-e002-257-human-bias
+          path: |
+            research/e002-256/RESULTS.json
+            research/e002-256/SOURCE_MANIFEST.json
+            research/e002-256/CI_BOOTSTRAP.json
+            research/e002-257/RESULTS.json
+            research/e002-257/SOURCE_MANIFEST.json
+            research/e002-257/CODE_SHA256SUMS.txt
+            research/e002-257/DERIVED_SHA256SUMS.txt
+            research/e002-257/FAILED_GATES.json
+          retention-days: 30
