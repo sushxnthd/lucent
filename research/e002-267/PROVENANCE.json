@@ -1,0 +1,13 @@
+{
+  "run": "E002-267",
+  "date_utc": "2026-10-17/18",
+  "parent_branch": "research/e002-266-temporal-optical-drift-certificate",
+  "frozen_protocol": "research/e002-261/EVE_FROZEN_WAVEFORM_PROTOCOL.md",
+  "source": "https://ait.ethz.ch/eve",
+  "source_access": "not granted",
+  "human_data_sha256": null,
+  "local_test": "7 synthetic tests passed; independent replay and mutation test passed for local full evaluator",
+  "repository_test": "not yet remotely executed",
+  "workflow_write": "blocked",
+  "claim": "evaluation plumbing only, no human measurement"
+}
