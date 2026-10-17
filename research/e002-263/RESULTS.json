@@ -7,12 +7,12 @@
   "true_pupil_over_iris_radius": 0.35,
   "rows": [
     {
-      "k": 0,
+      "k": 0.0,
       "exact_projective_cross_ratio_estimate": 0.35,
       "naive_projected_radius_ratio": 0.35,
-      "naive_relative_bias_percent": 0,
+      "naive_relative_bias_percent": 0.0,
       "noise_sigma_px": 0.5,
-      "fixed_iris_span_px": 120,
+      "fixed_iris_span_px": 120.0,
       "n": 4000,
       "accepted": 4000,
       "invalid": 0,
@@ -25,7 +25,7 @@
       "naive_projected_radius_ratio": 0.337654507,
       "naive_relative_bias_percent": -3.527,
       "noise_sigma_px": 0.5,
-      "fixed_iris_span_px": 120,
+      "fixed_iris_span_px": 120.0,
       "n": 4000,
       "accepted": 4000,
       "invalid": 0,
@@ -38,7 +38,7 @@
       "naive_projected_radius_ratio": 0.311804009,
       "naive_relative_bias_percent": -10.913,
       "noise_sigma_px": 0.5,
-      "fixed_iris_span_px": 120,
+      "fixed_iris_span_px": 120.0,
       "n": 4000,
       "accepted": 4000,
       "invalid": 0,
@@ -51,7 +51,7 @@
       "naive_projected_radius_ratio": 0.270793037,
       "naive_relative_bias_percent": -22.631,
       "noise_sigma_px": 0.5,
-      "fixed_iris_span_px": 120,
+      "fixed_iris_span_px": 120.0,
       "n": 4000,
       "accepted": 4000,
       "invalid": 0,
@@ -64,7 +64,7 @@
       "naive_projected_radius_ratio": 0.189898668,
       "naive_relative_bias_percent": -45.743,
       "noise_sigma_px": 0.5,
-      "fixed_iris_span_px": 120,
+      "fixed_iris_span_px": 120.0,
       "n": 4000,
       "accepted": 4000,
       "invalid": 0,
@@ -77,7 +77,7 @@
       "naive_projected_radius_ratio": 0.13671875,
       "naive_relative_bias_percent": -60.938,
       "noise_sigma_px": 0.5,
-      "fixed_iris_span_px": 120,
+      "fixed_iris_span_px": 120.0,
       "n": 4000,
       "accepted": 4000,
       "invalid": 0,
@@ -87,9 +87,9 @@
   ],
   "off_center_probe": [
     {
-      "center_shift_over_iris_radius": 0,
+      "center_shift_over_iris_radius": 0.0,
       "cr_estimate": 0.35,
-      "absolute_error": 0
+      "absolute_error": 0.0
     },
     {
       "center_shift_over_iris_radius": 0.03,
@@ -109,9 +109,9 @@
   ],
   "nonprojective_probe": [
     {
-      "arbitrary_nonlinear_coefficient": 0,
+      "arbitrary_nonlinear_coefficient": 0.0,
       "cr_estimate": 0.35,
-      "absolute_error": 0
+      "absolute_error": 0.0
     },
     {
       "arbitrary_nonlinear_coefficient": 0.01,
