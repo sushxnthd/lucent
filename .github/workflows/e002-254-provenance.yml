@@ -1,0 +1,12 @@
+name: E002-254 provenance static checks
+on:
+  push:
+    branches:
+      - research/e002-254-native-reference-clock-certification
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 -m py_compile research/e002-254/verify.py research/e002-254/mutation.py
+      - run: python3 -c "import json; x=json.load(open('research/e002-254/RESULTS.json')); assert x['clock_sync_certified'] is False and x['human_waveform_tested'] is False"
