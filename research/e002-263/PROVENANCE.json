@@ -1,0 +1,20 @@
+{
+  "run": "E002-263",
+  "date": "2026-10-17",
+  "parent_commit": "ca4f7d346bb59818b628b6a5a60235a79a3607d5",
+  "source": "synthetic deterministic four-boundary geometry; no human images",
+  "dataset_access": "none; EVE restricted",
+  "reference_provenance": {
+    "eve_dataset_md_git_blob": "9b04b892e248c2030168c627357e4cb66c87104a",
+    "eve_repo_commit": "82757eb2ffb4dd198db36dbfea71601098b597f0"
+  },
+  "local_sha256": {
+    "projective_probe_py": "c03d0e9e87bfda836f45f8bceb49223db396b50a2220df73bd154384fd050d91",
+    "independent_check_py": "bc50f3b341e61ced20e8e1840a2c3a90b1f746b2eb4aadce8737144e0382a294",
+    "RESULTS_json": "6d70d961dfe6f16e63620085086a3d6d3fb7e3e01f3b1eb26a0e088df6a14d7f"
+  },
+  "execution": "python3 projective_probe.py && python3 independent_check.py",
+  "human_waveform_result": false,
+  "claimed_novelty": "none",
+  "workflow_state": "pending new branch push; verify Actions separately"
+}

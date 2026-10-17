@@ -1,0 +1,19 @@
+name: E002-263 projective observable falsification
+on:
+  push:
+    branches: ['research/e002-263-projective-ocular-invariant']
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reproduce deterministic synthetic experiment
+        run: python research/e002-263/projective_probe.py
+      - name: Independent exact algebra and mutation test
+        run: python research/e002-263/independent_check.py
+      - name: Compare frozen results against checked-in baseline
+        run: git diff --exit-code -- research/e002-263/RESULTS.json
