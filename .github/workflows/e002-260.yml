@@ -1,0 +1,16 @@
+name: E002-260 Exact Folding Audit
+on:
+  push:
+    branches:
+      - research/e002-260-primary-paper-folding-bound
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact operator and independent verification
+        run: |
+          python3 research/e002-260/run.py
+          python3 research/e002-260/independent_check.py
+          python3 research/e002-260/mutation_test.py
