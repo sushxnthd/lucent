@@ -1,0 +1,3 @@
+# E002-267 CI and execution status
+
+Local implementation (complete reproducibility package) passed seven synthetic unit tests, independent numeric replay and deliberate result-corruption rejection. The repository copy is a compact equivalent evaluator and seven synthetic tests; **no remote E002-267 test execution is claimed**. A new dedicated workflow write was blocked by connector safety checks. Inherited E002-220 source-verification workflow may run on push, but is not an E002-267 test. Preserve this distinction. To run in any independent Python 3.11 environment: `python3 -m unittest discover -s research/e002-267 -p 'test_*.py' -v`. No human data was used.
