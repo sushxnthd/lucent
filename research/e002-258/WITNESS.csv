@@ -1,0 +1,9 @@
+world,session,frame,rgb,reference
+same_direction,A,0,-11,-71
+same_direction,A,1,-9,-3
+same_direction,B,0,9,3
+same_direction,B,1,11,71
+opposite_direction,A,0,-11,-17
+opposite_direction,A,1,-9,-69
+opposite_direction,B,0,9,69
+opposite_direction,B,1,11,17
