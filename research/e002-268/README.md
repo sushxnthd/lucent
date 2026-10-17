@@ -29,3 +29,7 @@ Human paired data: NOT_ACCESSED. Human waveform: NOT_EVALUATED. Reference-blind 
 
 ## Wildcard (~10%)
 Checked a second provenance channel: an arbitrary 64-character zero source hash is accepted by the existing validator. No allegation about any real dataset; this is a software guardrail defect.
+
+
+## E002-268 mitigation
+Added `strict_gate.py` and `test_strict_gate.py`: admission is computed only from RGB-side quality and all reference-dependent exclusions remain in the denominator as unscorable. In the synthetic fixture this reports 16/16 blind admission, 8/16 certified, 8 unscorable. For human provenance, raw source bytes and clock-evidence bytes must match declared SHA-256; integrity alone does not establish synchronization validity. The guard is **fail-closed**: it never emits a product certificate until a wholly reference-blind bootstrap and independent holdout audit replace the tainted old path. Two regression tests passed locally. The 0.005 RGB-SD threshold is an illustrative synthetic guard, not a calibrated physiological threshold and must not be used for real human certification.

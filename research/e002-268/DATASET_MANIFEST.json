@@ -1,0 +1,16 @@
+{
+  "run": "E002-268",
+  "dataset": "deterministic_synthetic_oracle_admission_fixture",
+  "modality": "synthetic RGB ratio and synthetic pupil diameter",
+  "human_participants": 0,
+  "synthetic_participants": 10,
+  "synthetic_test_participants": 8,
+  "frames_per_session": 300,
+  "frame_rate_hz": 60,
+  "source_generator": "research/e002-268/audit.py",
+  "generated_csv_sha256": "ada76e94707a34f3fb86c6148ec1c2008e8851cc992f6abc35c267b15d758ebb",
+  "original_evaluator_git_blob_sha": "c97fcdc77ca27235e5dc8186529cdbd3e87f6bd4",
+  "reference_access": "synthetic_only",
+  "original_human_data_sha256": null,
+  "not_suitable_for_human_claims": true
+}
