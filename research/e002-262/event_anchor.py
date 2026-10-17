@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-"""Original-human bilateral eye-tracker validity-event preflight; not blink truth."""
-import json,hashlib,math,copy
+"""E002-262 original-human reference blink-clock admission.
+Valid-free gaps, NOT consecutive invalid Tobii rows, are event candidates.
+No physiological waveform or RGB blink claim.
+"""
+import json,hashlib,math,copy,statistics
 from pathlib import Path
 PINS={
 "P_33":{"tracker":"3536d3d41ff8b2356fc35ce7f985c2000d671137ed33b8207669c72ca607265d","events":"8d05ddea2108fafb836aa1f26c3f40be0e0d9562e3183d3c93ce6fefb451cc62"},
@@ -15,16 +18,10 @@ def walk(x):
 def valid(x,e):
  d=x.get(e+"_pupil_diameter")
  return x.get(e+"_pupil_validity")==1 and isinstance(d,(int,float)) and math.isfinite(d) and d>0
-def runs(rows,eye=None):
- out=[];cur=[]
- for x in rows:
-  bad=(not valid(x,"left") and not valid(x,"right")) if eye is None else not valid(x,eye)
-  if bad:
-   if cur and x["true_time"]-cur[-1]["true_time"]>.1:out.append(cur);cur=[]
-   cur.append(x)
-  elif cur:out.append(cur);cur=[]
- if cur:out.append(cur)
- return [{"first":round(z[0]["true_time"],5),"last":round(z[-1]["true_time"],5),"n":len(z)} for z in out if len(z)>=2]
+def gaps(t,threshold=.1):
+ t=sorted(set(t))
+ return [{"start_epoch":round(a,5),"end_epoch":round(b,5),"gap_ms":round((b-a)*1000,3)}
+         for a,b in zip(t,t[1:]) if b-a>=threshold]
 def audit(p):
  raw={k:Path("/tmp/"+p+"_"+k).read_bytes() for k in ("tracker","events")}
  for k in raw:assert hashlib.sha256(raw[k]).hexdigest()==PINS[p][k],"SOURCE_SHA_FAIL"
@@ -42,27 +39,36 @@ def audit(p):
  t0=min(float(x["epoch"])/1000 for x in start)
  win=[x for x in rows if t0+5<=x["true_time"]<t0+10]
  assert win,"NO_REFERENCE_WINDOW"
- both=runs(win)
+ left=[float(x["true_time"]) for x in win if valid(x,"left")]
+ right=[float(x["true_time"]) for x in win if valid(x,"right")]
+ either=sorted(set(left+right))
+ primary=gaps(either,.1)
+ all_dt=[(b-a)*1000 for a,b in zip(either,either[1:])]
  return {"source_sha256":PINS[p],"session_start_epoch_s":t0,"reference_rows":len(win),
-         "left_valid":sum(valid(x,"left") for x in win),
-         "right_valid":sum(valid(x,"right") for x in win),
-         "both_invalid_samples":sum(not valid(x,"left") and not valid(x,"right") for x in win),
-         "bilateral_invalid_episodes_ge2":both,
-         "unilateral_invalid_episodes_ge2":{"left":runs(win,"left"),"right":runs(win,"right")},
-         "two_event_clock_gate":"PASS" if len(both)>=2 else "FAIL"}
+         "left_valid":len(left),"right_valid":len(right),"either_valid_unique_times":len(either),
+         "valid_fraction_left":round(len(left)/len(win),6),
+         "valid_fraction_right":round(len(right)/len(win),6),
+         "median_any_valid_spacing_ms":round(statistics.median(all_dt),3) if all_dt else None,
+         "max_any_valid_spacing_ms":round(max(all_dt),3) if all_dt else None,
+         "bilateral_valid_free_gaps_ge100ms":primary,
+         "bilateral_valid_free_gaps_ge150ms":gaps(either,.15),
+         "two_event_clock_gate":"PASS" if len(primary)>=2 else "FAIL"}
 def check(o):
  for v in o["participants"].values():
   n=v["reference_rows"];a=v["left_valid"];b=v["right_valid"]
   assert 0<=a<=n and 0<=b<=n
-  assert 0<=v["both_invalid_samples"]<=min(n-a,n-b)
-  assert v["two_event_clock_gate"]==("PASS" if len(v["bilateral_invalid_episodes_ge2"])>=2 else "FAIL")
+  assert v["either_valid_unique_times"]>=max(a,b) or v["either_valid_unique_times"]>=min(a,b)
+  assert v["two_event_clock_gate"]==("PASS" if len(v["bilateral_valid_free_gaps_ge100ms"])>=2 else "FAIL")
  assert o["human_waveform_evaluated"] is False
 if __name__=="__main__":
  o={"run":"E002-262","source":"Brown EOTT original P_33/P_54",
     "participants":{p:audit(p) for p in PINS},
     "human_waveform_evaluated":False,"clock_sync_certified":False,
-    "scope":"reference-only five-second validity preflight; invalidity is not independently confirmed blink"}
- check(o);bad=copy.deepcopy(o);bad["participants"]["P_33"]["two_event_clock_gate"]="PASS"
+    "method":"consecutive gaps in union of native valid left/right Tobii timestamps; threshold 100ms, sensitivity 150ms",
+    "warning":"tracker invalidity is not itself a blink; two gaps are only a necessary preflight, never sufficient synchronization"}
+ check(o);bad=copy.deepcopy(o)
+ v=bad["participants"]["P_33"]
+ v["two_event_clock_gate"]="FAIL" if v["two_event_clock_gate"]=="PASS" else "PASS"
  try:check(bad)
  except AssertionError:o["mutation_test"]="DETECTED"
  else:raise AssertionError("MUTATION_ESCAPED")

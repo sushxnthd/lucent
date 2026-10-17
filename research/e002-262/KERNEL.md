@@ -1,13 +1,13 @@
-# E002-262: Human bilateral-event clock preflight
-Date: 2026-10-17. Pre-outcome gate, source pins and prior data are frozen.
-Question: Can the native Tobii reference independently supply at least two candidate binocular blink-loss episodes during original-human five-second RGB windows, allowing any subsequent RGB/event clock calibration?
-Signal/reference: RGB eyelid closure (not evaluated) / Tobii bilateral validity-loss timestamps. Primary kernel remains normalized RGB pupil/iris dynamics / same-eye Tobii pupil diameter.
-Frontier: E002-254 found nearest-reference matching insensitive to ±1s offsets. E002-261 EVE Basler is a synchronized positive control, but registration pending.
-Scalar: number of distinct bilateral invalidity episodes of >=2 consecutive samples, with <=100ms intra-episode gaps, within start+5..10 seconds. >=2 only admits clock offset+drift estimation; does not prove synchronization or that losses are blinks.
-Strongest confounds: tracker dropout unrelated to blink, eyelid occlusion without invalidity, webcam exposure timestamps, lighting/gaze.
-Decisive falsification: fewer than two reference candidates in a window, or RGB candidate mismatch after independent detection.
-Publishable success: untouched human within-session waveform, native timing provenance, nuisance controls, independent replay, holdouts, mechanism-derived prediction.
-Product relevance: a rejected clock gate prevents spurious rapid ocular claims. Final threshold >=75% accurate accepted windows.
-Kill: if both original windows fail event admission, retire them for crossmodal blink clock certification and switch to EVE or other independently synchronized human data. Do not pursue fatigue.
-SCIENCE: preflight counts and negative gates only; validity dropout is not a proven blink.
-PRODUCT: reject unsuitable data rather than inventing synchronization. No app/UI build.
+# E002-262: Original-human clock-anchor admission (corrected before outcome)
+Date 2026-10-17. Frozen source P_33/P_54, start+5..10s.
+Question: Does the native same-session Tobii record contain at least two distinct bilateral valid-free gaps of >=100 ms, permitting a subsequent independent RGB eyelid-event clock test?
+Signal/reference: RGB eyelid closure times (not yet evaluated) versus native Tobii valid-free event times; primary kernel RGB pupil/iris ratio waveform vs same-eye Tobii pupil diameter.
+Frontier: E002-254 proved nearest-valid coverage is insensitive to ±1s offsets. EVE Basler positive control access pending.
+Scalar: count of >=100ms intervals between consecutive timestamps in UNION of valid left/right Tobii measurements. >=2 is a necessary, not sufficient, clock offset+drift anchor gate. 150ms sensitivity threshold.
+Strongest confound: regular 120Hz invalid Tobii records with valid ~40Hz sampling, tracking loss unrelated to blink, browser start not exposure time.
+Decisive falsification: <2 bilateral valid-free gaps; or RGB event mismatch.
+Publishable: independent synchronized human waveform, prospective frozen correlation/lag/amplitude/NRMSE, participant/device holdout, nuisance controls, independent checker.
+Product: reject unsynchronizable clips; require >=75% prospectively accurate admitted windows.
+Kill: if both original clips lack event anchors, retire their blink-clock certification path and prioritize EVE/other verified synchronization. No fatigue claim.
+SCIENCE: The initial >=2 consecutive invalid-row proxy failed scientific validity: periodic invalid samples are not sustained signal loss. This correction is pre-outcome and preserved in history.
+PRODUCT: Only valid-free gaps can even be considered for an event anchor; no deployment changes until waveform results.
