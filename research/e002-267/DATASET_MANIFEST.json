@@ -1,0 +1,12 @@
+{
+  "dataset": "EVE",
+  "source": "https://ait.ethz.ch/eve",
+  "camera": "Basler visible-color 60Hz",
+  "reference": "Tobii same-eye pupil diameter",
+  "original_native_time_samples": "unverified",
+  "access": "request required, not granted",
+  "human_data_bytes": 0,
+  "human_sha256": null,
+  "license": "CC BY-NC-SA 4.0 plus terms",
+  "synthetic_fixture_only": true
+}

@@ -1,0 +1,16 @@
+{
+  "run": "E002-267",
+  "data_type": "synthetic_only",
+  "local_full_evaluator_tests": "7/7 passed",
+  "independent_checker": "passed",
+  "mutation_test": "corrupted correlation rejected",
+  "test_windows": 2,
+  "admitted": 2,
+  "passed": 2,
+  "product_gate_pass": false,
+  "positive_control_gate_pass": false,
+  "participant_count": 2,
+  "human_waveform_results": null,
+  "synthetic_csv_sha256": "24a3923c21a1db0a966eb2d480a1c3e075d3aafcd9493783e43a725aa3e5a142",
+  "remote_evaluator_ci": "not executed"
+}
