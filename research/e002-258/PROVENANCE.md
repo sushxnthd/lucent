@@ -1,0 +1,2 @@
+# Provenance
+Synthetic WITNESS.csv SHA-256: a23b91de262748ddcc9e80134dfd9847203db408ba480189a07ed2ca9cbe997a. Context: CondadosAI/pupil-diameter-webcam pinned commit aa9bddf498a3b6e4104c2c000d2cc0c06a816aae; EyeDentify official source https://github.com/vijulshah/eyedentify documents 3-second color-block sessions. No human data fetched this run. Exact and independent checks plus negative test passed locally. Remote Actions pending. No user laptop or spend.
