@@ -1,0 +1,1 @@
+E002-262: reference-only binocular invalidity gate; no physiological inference.
