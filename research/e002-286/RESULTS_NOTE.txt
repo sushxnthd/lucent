@@ -1,0 +1,1 @@
+Reference-only holdout: 09=2, 10=0, 11=18, 12=2 eligible events. No RGB inference.
