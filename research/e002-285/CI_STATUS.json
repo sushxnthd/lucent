@@ -1,0 +1,8 @@
+{
+  "run": "E002-285",
+  "local_experiment": "passed on full local reproducibility package",
+  "local_independent_checker": "passed 8 cases, 250 randomized LP checks, 3 mutation rejections",
+  "remote_experiment": "not yet executed",
+  "inherited_workflow": "not evidence for this run",
+  "note": "Do not interpret synthetic passes as human observability"
+}

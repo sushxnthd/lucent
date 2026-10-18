@@ -1,0 +1,7 @@
+{
+  "case_checks": 8,
+  "randomized_lp_checks": 250,
+  "mutations_rejected": 3,
+  "all_pass": true,
+  "evidence_type": "synthetic mathematical checker, not human"
+}

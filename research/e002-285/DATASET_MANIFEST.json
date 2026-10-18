@@ -1,0 +1,26 @@
+{
+  "run": "E002-285",
+  "date": "2026-10-18",
+  "kind": "deterministic synthetic orthographic geometry",
+  "participants": 0,
+  "paired_human_reference": false,
+  "devices": [],
+  "synthetic_cases": 8,
+  "randomized_checker_cases": 250,
+  "personal_spend": 0,
+  "user_laptop_used": false,
+  "external_dataset_downloads": [],
+  "parent": "E002-284",
+  "raw_files": [
+    "raw_cases.csv",
+    "exact_counterexample.json",
+    "checker_results.json"
+  ],
+  "regenerate": "python research/e002-285/experiment.py && python research/e002-285/independent_check.py",
+  "failed_gates": [
+    "no empirical depth coherence",
+    "no human RGB/reference",
+    "no device/participant holdout",
+    "field novelty unestablished"
+  ]
+}

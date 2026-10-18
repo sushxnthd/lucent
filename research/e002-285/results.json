@@ -1,0 +1,311 @@
+{
+  "run": "E002-285",
+  "data_type": "deterministic synthetic; no human RGB/reference",
+  "model": "u_t=h_t*cos(theta_t)+z_t*sin(theta_t)+e_t",
+  "theorem": "delta>2(S+E) iff fixed closure vs no-change disjoint",
+  "cases": [
+    {
+      "case": "static_30_coherent",
+      "theta0_deg": 30,
+      "theta1_deg": 30,
+      "Z_mm": 0.7,
+      "D_mm": 0.08,
+      "eps_mm": 0.05,
+      "closure_mm": 0.5,
+      "geometric_bound_mm": 0.04618802153517004,
+      "noise_bound_mm": 0.11547005383792515,
+      "critical_mm": 0.32331615074619036,
+      "lp_critical_mm": 0.32331615074619036,
+      "margin_mm": 0.17668384925380964,
+      "status": "distinguishable"
+    },
+    {
+      "case": "static_30_unconstrained",
+      "theta0_deg": 30,
+      "theta1_deg": 30,
+      "Z_mm": 0.7,
+      "D_mm": 1.4,
+      "eps_mm": 0.05,
+      "closure_mm": 0.5,
+      "geometric_bound_mm": 0.808290376865476,
+      "noise_bound_mm": 0.11547005383792515,
+      "critical_mm": 1.8475208614068024,
+      "lp_critical_mm": 1.8475208614068024,
+      "margin_mm": -1.3475208614068024,
+      "status": "ambiguous"
+    },
+    {
+      "case": "static_30_moderate_depth",
+      "theta0_deg": 30,
+      "theta1_deg": 30,
+      "Z_mm": 0.7,
+      "D_mm": 0.4,
+      "eps_mm": 0.05,
+      "closure_mm": 0.5,
+      "geometric_bound_mm": 0.23094010767585033,
+      "noise_bound_mm": 0.11547005383792515,
+      "critical_mm": 0.6928203230275509,
+      "lp_critical_mm": 0.6928203230275509,
+      "margin_mm": -0.19282032302755092,
+      "status": "ambiguous"
+    },
+    {
+      "case": "pitch_30_to_40_coherent",
+      "theta0_deg": 30,
+      "theta1_deg": 40,
+      "Z_mm": 0.7,
+      "D_mm": 0.08,
+      "eps_mm": 0.05,
+      "closure_mm": 0.5,
+      "geometric_bound_mm": 0.229412574926528,
+      "noise_bound_mm": 0.12300539138557652,
+      "critical_mm": 0.7048359326242091,
+      "lp_critical_mm": 0.7048359326242091,
+      "margin_mm": -0.20483593262420907,
+      "status": "ambiguous"
+    },
+    {
+      "case": "pitch_minus_10_to_25",
+      "theta0_deg": -10,
+      "theta1_deg": 25,
+      "Z_mm": 0.7,
+      "D_mm": 0.08,
+      "eps_mm": 0.05,
+      "closure_mm": 0.5,
+      "geometric_bound_mm": 0.44984424720442445,
+      "noise_bound_mm": 0.10594022654241185,
+      "critical_mm": 1.1115689474936725,
+      "lp_critical_mm": 1.1115689474936725,
+      "margin_mm": -0.6115689474936725,
+      "status": "ambiguous"
+    },
+    {
+      "case": "frontal",
+      "theta0_deg": 0,
+      "theta1_deg": 0,
+      "Z_mm": 0.7,
+      "D_mm": 0.08,
+      "eps_mm": 0.05,
+      "closure_mm": 0.5,
+      "geometric_bound_mm": 0,
+      "noise_bound_mm": 0.1,
+      "critical_mm": 0.2,
+      "lp_critical_mm": 0.2,
+      "margin_mm": 0.3,
+      "status": "distinguishable"
+    },
+    {
+      "case": "pose_15_to_20_coherent",
+      "theta0_deg": 15,
+      "theta1_deg": 20,
+      "Z_mm": 0.7,
+      "D_mm": 0.08,
+      "eps_mm": 0.05,
+      "closure_mm": 0.5,
+      "geometric_bound_mm": 0.08865066467904559,
+      "noise_bound_mm": 0.10497269764429976,
+      "critical_mm": 0.3872467246466907,
+      "lp_critical_mm": 0.3872467246466907,
+      "margin_mm": 0.11275327535330931,
+      "status": "distinguishable"
+    },
+    {
+      "case": "unseen_synthetic_pose_heldout",
+      "theta0_deg": -17,
+      "theta1_deg": 31,
+      "Z_mm": 0.53,
+      "D_mm": 0.11,
+      "eps_mm": 0.035,
+      "closure_mm": 0.75,
+      "geometric_bound_mm": 0.480493389257697,
+      "noise_bound_mm": 0.07743138037958675,
+      "critical_mm": 1.1158495392745675,
+      "lp_critical_mm": 1.1158495392745675,
+      "margin_mm": -0.36584953927456754,
+      "status": "ambiguous"
+    }
+  ],
+  "collisions": {
+    "static_30_unconstrained": {
+      "no_closure": {
+        "h": [
+          5,
+          5
+        ],
+        "z": [
+          0.18944305707784595,
+          -0.18944305707784595
+        ],
+        "e": [
+          0.013531646934131857,
+          -0.013531646934131857
+        ]
+      },
+      "closure": {
+        "h": [
+          5.249999999999999,
+          4.749999999999999
+        ],
+        "z": [
+          -0.18944305707784595,
+          0.18944305707784595
+        ],
+        "e": [
+          -0.013531646934131857,
+          0.013531646934131857
+        ]
+      },
+      "identical_observations": [
+        4.438380194395248,
+        4.221873843449139
+      ],
+      "max_difference": 1.7763568394002505e-15
+    },
+    "static_30_moderate_depth": {
+      "no_closure": {
+        "h": [
+          5,
+          5
+        ],
+        "z": [
+          -0.2165063509461096,
+          -0.5051814855409225
+        ],
+        "e": [
+          0.03608439182435161,
+          -0.03608439182435161
+        ]
+      },
+      "closure": {
+        "h": [
+          4.833333333333332,
+          4.333333333333332
+        ],
+        "z": [
+          0.2165063509461096,
+          0.5051814855409225
+        ],
+        "e": [
+          -0.03608439182435161,
+          0.03608439182435161
+        ]
+      },
+      "identical_observations": [
+        4.25795823527349,
+        4.0414518843273814
+      ],
+      "max_difference": 2.6645352591003757e-15
+    },
+    "pitch_30_to_40_coherent": {
+      "no_closure": {
+        "h": [
+          5,
+          5
+        ],
+        "z": [
+          -0.4398186665169352,
+          -0.4965694621965397
+        ],
+        "e": [
+          0.035469247299752836,
+          -0.035469247299752836
+        ]
+      },
+      "closure": {
+        "h": [
+          4.574053866889514,
+          4.074053866889514
+        ],
+        "z": [
+          0.4398186665169352,
+          0.4965694621965397
+        ],
+        "e": [
+          -0.035469247299752836,
+          0.035469247299752836
+        ]
+      },
+      "identical_observations": [
+        4.145686932963479,
+        3.475564270646493
+      ],
+      "max_difference": 4.440892098500626e-16
+    },
+    "pitch_minus_10_to_25": {
+      "no_closure": {
+        "h": [
+          5,
+          5
+        ],
+        "z": [
+          -0.3148702568465662,
+          -0.3148702568465662
+        ],
+        "e": [
+          0.02249073263189759,
+          -0.02249073263189759
+        ]
+      },
+      "closure": {
+        "h": [
+          5.15671562027978,
+          4.65671562027978
+        ],
+        "z": [
+          0.3148702568465662,
+          0.3148702568465662
+        ],
+        "e": [
+          -0.02249073263189759,
+          0.02249073263189759
+        ]
+      },
+      "identical_observations": [
+        5.001206143995862,
+        4.375978281929008
+      ],
+      "max_difference": 8.881784197001252e-16
+    },
+    "unseen_synthetic_pose_heldout": {
+      "no_closure": {
+        "h": [
+          5,
+          5
+        ],
+        "z": [
+          -0.3562308232509747,
+          -0.3562308232509747
+        ],
+        "e": [
+          0.023524677007139838,
+          -0.023524677007139838
+        ]
+      },
+      "closure": {
+        "h": [
+          5.267020506338979,
+          4.517020506338979
+        ],
+        "z": [
+          0.3562308232509747,
+          0.3562308232509747
+        ],
+        "e": [
+          -0.023524677007139838,
+          0.023524677007139838
+        ]
+      },
+      "identical_observations": [
+        4.909200269890989,
+        4.078839389072616
+      ],
+      "max_difference": 8.881784197001252e-16
+    }
+  },
+  "failed_gates": [
+    "no empirical Z/D/eps",
+    "no human paired reference",
+    "no device/participant holdout",
+    "no field-level novelty"
+  ]
+}
