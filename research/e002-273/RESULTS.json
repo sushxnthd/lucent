@@ -1,0 +1,31 @@
+{
+  "archive_bytes_verified": false,
+  "archive_member_listing_verified": false,
+  "clock_alignment_verified": false,
+  "decision": "REJECT_FOR_RGB_WAVEFORM_CERTIFICATION_PENDING_RAW_RGB_PROOF",
+  "documented_modality": "face-derived features in JSON/TSV.gz",
+  "documented_v2_affected_subjects": 24,
+  "documented_v2_forced_surrogate_sidecars": 22,
+  "documented_v2_repaired_sidecars": 91,
+  "human_waveform_evaluated": false,
+  "publisher_v2_videostream_md5_unverified": "b7efc90ca02bc4e571fa90fe2634f0f4",
+  "raw_rgb_eye_frames_verified": false,
+  "run": "E002-273",
+  "same_eye_reference_verified": false,
+  "source": "10.5281/zenodo.19408373",
+  "source_git_blob_shas": {
+    "data/raw/README.md": "3cbb2b243fe934eb42ba0a28b1c5dc9dd4cba365",
+    "scripts/prepare_zenodo_upload.py": "1b29a7e7b4646c7674ab48e23a7326761da79bb2"
+  },
+  "source_only_excludes_rgb_archive_members": false,
+  "source_provenance_status": "CONNECTOR_OBSERVED_BLOB_IDS_NOT_REPLAYED",
+  "upstream_commit": "f1759103f501282a41a04d6b474a3e89d6f36a6b",
+  "upstream_repository": "itubrainlab/AFFEC",
+  "upstream_source_bytes_verified": false,
+  "wildcard_nonexclusion": true,
+  "wildcard_probe": {
+    "mock_json_selected": true,
+    "mock_mp4_selected": true,
+    "mock_tsvgz_selected": true
+  }
+}

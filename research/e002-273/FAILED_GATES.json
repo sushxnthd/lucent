@@ -1,0 +1,17 @@
+{
+  "run": "E002-273",
+  "scientific_gates": {
+    "raw_rgb_eye_frames": "FAIL_NOT_VERIFIED",
+    "original_archive_hash": "FAIL_NOT_VERIFIED",
+    "archive_member_listing": "FAIL_NOT_VERIFIED",
+    "same_eye_native_reference": "FAIL_NOT_VERIFIED",
+    "exposure_clock": "FAIL_NOT_VERIFIED",
+    "human_waveform": "NOT_RUN",
+    "participant_device_lighting_glasses_holdout": "NOT_RUN"
+  },
+  "infrastructure": {
+    "remote_dedicated_ci": "PENDING",
+    "upstream_bytes_replay": "NOT_RUN_LOCAL_NETWORK_BLOCKED"
+  },
+  "negative_result": "AUTHOR_DOCUMENTED_FEATURE_STREAM_NOT_RAW_RGB_CERTIFIED"
+}

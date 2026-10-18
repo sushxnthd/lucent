@@ -1,0 +1,20 @@
+{
+  "run": "E002-273",
+  "dataset": "AFFEC v2",
+  "zenodo_doi": "10.5281/zenodo.19408373",
+  "publisher_date": "2026-04-03",
+  "source_commit": "f1759103f501282a41a04d6b474a3e89d6f36a6b",
+  "source_blobs": {
+    "data/raw/README.md": "3cbb2b243fe934eb42ba0a28b1c5dc9dd4cba365",
+    "scripts/prepare_zenodo_upload.py": "1b29a7e7b4646c7674ab48e23a7326761da79bb2"
+  },
+  "videostream_zip_md5_publisher_unverified": "b7efc90ca02bc4e571fa90fe2634f0f4",
+  "raw_archive_bytes": false,
+  "raw_video_verified": false,
+  "reference_clock_verified": false,
+  "source_urls": [
+    "https://github.com/itubrainlab/AFFEC/blob/f1759103f501282a41a04d6b474a3e89d6f36a6b/data/raw/README.md",
+    "https://github.com/itubrainlab/AFFEC/blob/f1759103f501282a41a04d6b474a3e89d6f36a6b/scripts/prepare_zenodo_upload.py",
+    "https://zenodo.org/records/19408373"
+  ]
+}
