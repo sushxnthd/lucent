@@ -1,0 +1,12 @@
+{
+  "seed": 2772026,
+  "python": "3.13.5",
+  "numpy": "2.3.5",
+  "scipy": "1.17.0",
+  "blobs": {
+    "experiment.py": "a2b5de052f9209362573532fb4f98d04ff73f37d",
+    "independent_check.py": "718fe49e7a8bfdbeea9865f3dccdba6425b999c1",
+    "RESULTS.json": "d213a189f11324aa8342b015fe0a385f2e744b3e"
+  },
+  "human_dataset": false
+}
