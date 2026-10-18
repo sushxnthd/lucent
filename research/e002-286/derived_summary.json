@@ -1,0 +1,50 @@
+{
+  "source": "marcus-nystrom/BlinkDetector",
+  "device": "Tobii Spectrum 600Hz",
+  "condition": "Center",
+  "truth": "55% of p90 7-sample-median left-eye openness; 30-600ms, valid-neighbor",
+  "n": [
+    34,
+    0,
+    31,
+    1,
+    38,
+    0,
+    42,
+    1,
+    2,
+    0,
+    18,
+    2
+  ],
+  "coverage10": [
+    0.892693,
+    null,
+    0.770917,
+    1,
+    0.590255,
+    null,
+    0.688616,
+    0.367188,
+    0.457031,
+    null,
+    0.965712,
+    0.808594
+  ],
+  "coverage30": [
+    1,
+    null,
+    1,
+    1,
+    0.998766,
+    null,
+    1,
+    1,
+    1,
+    null,
+    1,
+    1
+  ],
+  "note": "ideal reference-only phase coverage, no RGB",
+  "gate": "3/12 zero eligible events; human RGB not tested"
+}
