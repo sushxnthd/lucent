@@ -1,0 +1,23 @@
+{
+  "run": "E002-274",
+  "dataset": "EVE ECCV 2020",
+  "upstream_repo": "swook/EVE",
+  "upstream_commit": "82757eb2ffb4dd198db36dbfea71601098b597f0",
+  "source_blobs": {
+    "src/core/config_default.py": "34e4b2fe80f52ae734b2c462c1f3e3324a375edb",
+    "src/datasources/eve_sequences.py": "8b03f60068cc40f2d2ffacac46a1638a31e2117d",
+    "src/datasources/common.py": "a03d78504526532f8c8a894ca082f7d6037f59cf"
+  },
+  "source_blob_sha_provenance": "GitHub connector fetch_file reported these exact SHAs at pinned commit; offline executable has not rehashed source bytes",
+  "dataset_downloaded": false,
+  "raw_human_frames_verified": false,
+  "native_reference_verified": false,
+  "source_byte_replay_verified": false,
+  "reference_same_eye_clock_verified": false,
+  "source_links": [
+    "https://github.com/swook/EVE/blob/82757eb2ffb4dd198db36dbfea71601098b597f0/src/core/config_default.py",
+    "https://github.com/swook/EVE/blob/82757eb2ffb4dd198db36dbfea71601098b597f0/src/datasources/eve_sequences.py",
+    "https://github.com/swook/EVE/blob/82757eb2ffb4dd198db36dbfea71601098b597f0/src/datasources/common.py",
+    "https://github.com/swook/EVE/blob/82757eb2ffb4dd198db36dbfea71601098b597f0/DATASET.md"
+  ]
+}

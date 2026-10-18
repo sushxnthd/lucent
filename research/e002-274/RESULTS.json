@@ -1,0 +1,43 @@
+{
+  "run": "E002-274",
+  "raw_basler_hz": 60,
+  "published_loader_hz": 10,
+  "published_loader_basler_stride": 6,
+  "basler_frames_per_second": 60,
+  "published_loader_frames_per_second": 10,
+  "discarded_frame_fraction": 0.8333333333333334,
+  "loader_nyquist_hz": 5,
+  "selected_frame_indices_first_second": [
+    0,
+    6,
+    12,
+    18,
+    24,
+    30,
+    36,
+    42,
+    48,
+    54
+  ],
+  "synthetic_blink_like_event_width_ms": 40,
+  "synthetic_raw_min_aperture": 0.2,
+  "synthetic_downsampled_min_aperture": 1,
+  "face_timestamp_suffix_issue_in_source": true,
+  "physiological_waveform_tested": false,
+  "product_gate": "REJECT_10HZ_PUBLISHED_LOADER_FOR_60HZ_WAVEFORM_CERTIFICATION",
+  "smallest_supported_claim": "EVE published default training loader selects 1 in 6 Basler frames; it is not the native 60-Hz evaluation stream.",
+  "upstream_commit": "82757eb2ffb4dd198db36dbfea71601098b597f0",
+  "source_bytes_verified": false,
+  "source_blob_sha_actual": {
+    "src/core/config_default.py": null,
+    "src/datasources/eve_sequences.py": null,
+    "src/datasources/common.py": null
+  },
+  "source_blob_sha_expected": {
+    "src/core/config_default.py": "34e4b2fe80f52ae734b2c462c1f3e3324a375edb",
+    "src/datasources/eve_sequences.py": "8b03f60068cc40f2d2ffacac46a1638a31e2117d",
+    "src/datasources/common.py": "a03d78504526532f8c8a894ca082f7d6037f59cf"
+  },
+  "result_kind": "offline_fixture_replay",
+  "human_waveform_result": false
+}

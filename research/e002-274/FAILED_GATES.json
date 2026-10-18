@@ -1,0 +1,16 @@
+{
+  "run": "E002-274",
+  "failed_scientific_gates": [
+    "EVE dataset raw human frames not obtained",
+    "Native-rate pupil reference samples not verified",
+    "Same-eye exposure/reference clock not independently verified",
+    "No untouched human waveform evaluation",
+    "No participant/device/lighting/glasses holdout",
+    "No empirically calibrated nuisance rejection"
+  ],
+  "blocked_infrastructure_gates": [
+    "Offline runtime has no network for raw GitHub byte replay",
+    "Dedicated GitHub Actions workflow not yet verified"
+  ],
+  "not_scientific_failures": true
+}
