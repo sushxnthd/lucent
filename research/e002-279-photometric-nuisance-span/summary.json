@@ -1,0 +1,78 @@
+{
+  "kernel": "E002-279",
+  "date": "2026-10-18",
+  "evidence": "synthetic-only",
+  "model": "z=X beta + A s + e, ||e||inf<=epsilon",
+  "fps": 30,
+  "frames": 120,
+  "epsilon": 0.001,
+  "amplitude": 0.02,
+  "physiology_lag_s": 0.24,
+  "time_constant_s": 0.32,
+  "rows": [
+    [
+      "step",
+      0,
+      0.1941876435,
+      0.0102993167792
+    ],
+    [
+      "step",
+      0.12,
+      0.13648925,
+      0.0146531674741
+    ],
+    [
+      "step",
+      0.24,
+      0,
+      null
+    ],
+    [
+      "double",
+      0,
+      0.271474,
+      0.00736719939746
+    ],
+    [
+      "double",
+      0.12,
+      0.185144,
+      0.0108024176258
+    ],
+    [
+      "double",
+      0.24,
+      0,
+      null
+    ],
+    [
+      "random",
+      0,
+      0.329064,
+      0.00607784829157
+    ],
+    [
+      "random",
+      0.12,
+      0.222437,
+      0.00899132714623
+    ],
+    [
+      "random",
+      0.24,
+      0,
+      null
+    ]
+  ],
+  "independent_lp_checks": 9,
+  "mutations_rejected": 3,
+  "adversarial": "Reduced nuisance model false-certifies artifact-only signal; complete model does not.",
+  "human_data": null,
+  "unmet_gates": [
+    "calibrated RGB noise",
+    "real RGB/eye reference",
+    "participant/device holdout",
+    "independent waveform result"
+  ]
+}

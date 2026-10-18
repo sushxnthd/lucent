@@ -1,0 +1,24 @@
+name: Lucent E002-279 Nuisance Span
+on:
+  push:
+    branches: ["research/e002-279-photometric-nuisance-span"]
+  workflow_dispatch:
+jobs:
+  independent-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install numpy scipy
+      - name: Run experiment and independent checker
+        run: |
+          cd research/e002-279-photometric-nuisance-span
+          python experiment.py
+          python independent_check.py
+          sha256sum experiment.py independent_check.py results.json summary.json DATASET_MANIFEST.json > SHA256SUMS.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-279-raw-derived-and-hashes
+          path: research/e002-279-photometric-nuisance-span/*.json
