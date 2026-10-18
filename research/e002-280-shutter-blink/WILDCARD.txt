@@ -1,0 +1,1 @@
+Exploratory, not human evidence: under a stationary Poisson model at 12 blinks/min, a five-second window has 36.79% probability of zero blinks and a blink-count rate estimator CV of 100%. The event detector may be useful, but five-second blink-rate fatigue inference is not supported. This assumption is not validated for real blink sequences.
