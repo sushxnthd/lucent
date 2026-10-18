@@ -1,0 +1,111 @@
+[
+  {
+    "name": "10fps_0p4Hz",
+    "fps": 10,
+    "frequency_hz": 0.4,
+    "exposure_s": 0.03333333333333333,
+    "phase_rad": 0,
+    "critical_log_amplitude": 0.014799660515259315,
+    "critical_pair": [
+      9,
+      16
+    ],
+    "test_amplitude": 0.0048,
+    "guaranteed_separation": false
+  },
+  {
+    "name": "24fps_1p2Hz",
+    "fps": 24,
+    "frequency_hz": 1.2,
+    "exposure_s": 0.016666666666666666,
+    "phase_rad": 0,
+    "critical_log_amplitude": 0.00736508064201128,
+    "critical_pair": [
+      96,
+      104
+    ],
+    "test_amplitude": 0.0048,
+    "guaranteed_separation": false
+  },
+  {
+    "name": "30fps_1p2Hz",
+    "fps": 30,
+    "frequency_hz": 1.2,
+    "exposure_s": 0.016666666666666666,
+    "phase_rad": 0,
+    "critical_log_amplitude": 0.007299013230100971,
+    "critical_pair": [
+      108,
+      117
+    ],
+    "test_amplitude": 0.0048,
+    "guaranteed_separation": false
+  },
+  {
+    "name": "60fps_1p2Hz",
+    "fps": 60,
+    "frequency_hz": 1.2,
+    "exposure_s": 0.008333333333333333,
+    "phase_rad": 0,
+    "critical_log_amplitude": 0.00729541160768219,
+    "critical_pair": [
+      141,
+      159
+    ],
+    "test_amplitude": 0.0048,
+    "guaranteed_separation": false
+  },
+  {
+    "name": "10fps_5Hz_alias",
+    "fps": 10,
+    "frequency_hz": 5,
+    "exposure_s": 0.016666666666666666,
+    "phase_rad": 0,
+    "critical_log_amplitude": null,
+    "critical_pair": null,
+    "test_amplitude": 0.0048,
+    "guaranteed_separation": false
+  },
+  {
+    "name": "24fps_4Hz_half_exposure",
+    "fps": 24,
+    "frequency_hz": 4,
+    "exposure_s": 0.020833333333333332,
+    "phase_rad": 0,
+    "critical_log_amplitude": 0.004671988398988036,
+    "critical_pair": [
+      101,
+      103
+    ],
+    "test_amplitude": 0.0048,
+    "guaranteed_separation": true
+  },
+  {
+    "name": "24fps_4Hz_full_exposure",
+    "fps": 24,
+    "frequency_hz": 4,
+    "exposure_s": 0.041666666666666664,
+    "phase_rad": 0,
+    "critical_log_amplitude": 0.004836798304624553,
+    "critical_pair": [
+      101,
+      103
+    ],
+    "test_amplitude": 0.0048,
+    "guaranteed_separation": false
+  },
+  {
+    "name": "10fps_5Hz_phase_shift",
+    "fps": 10,
+    "frequency_hz": 5,
+    "exposure_s": 0.016666666666666666,
+    "phase_rad": 0.37,
+    "critical_log_amplitude": 0.011748291959251532,
+    "critical_pair": [
+      26,
+      27
+    ],
+    "test_amplitude": 0.0048,
+    "guaranteed_separation": false
+  }
+]

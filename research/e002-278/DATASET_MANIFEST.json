@@ -1,0 +1,35 @@
+{
+  "run": "E002-278",
+  "date": "2026-10-18",
+  "base_branch": "research/e002-277-temporal-aperture-coherence",
+  "evidence": "exact conditional theorem and deterministic synthetic instrument; no human data",
+  "input_dataset": "none",
+  "human_reference": "none",
+  "paired_RGB": "none",
+  "L_log_per_second": 0.012,
+  "eps_log_per_sample": 0.0015,
+  "amplitude_log": 0.0048,
+  "exposure_model": "rectangular average of log-template; not pixel-level exposure model",
+  "science_gates": {
+    "mathematical_checker": "local passed; remote not yet run",
+    "human_waveform": "not evaluated",
+    "optical_nuisance_calibration": "not evaluated",
+    "novelty_priority": "not established"
+  },
+  "product_gates": {
+    "anatomical_radius": "rejected without calibration",
+    "known_probe_detection": "conditional",
+    "fatigue_inference": "blocked"
+  },
+  "local_artifact_sha256": {
+    "results.json": "4276bdd32fdf4c01b9fe215fbb09bc139dead3d84c55c42cbfe39f09a360d717",
+    "raw_synthetic_witness.json": "3c11ea84ac2a5ff9e2e8f22d30479027e0cfc1f8f491638f776baac52e98f30b"
+  },
+  "limitations": [
+    "No real image edge detection",
+    "No empirically calibrated L or eps",
+    "No untouched human evaluation",
+    "Illustrative boundary crossing selected after exploratory threshold grid",
+    "No dedicated CI run yet"
+  ]
+}
