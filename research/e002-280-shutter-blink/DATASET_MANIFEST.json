@@ -1,0 +1,44 @@
+{
+  "run_id": "E002-280",
+  "date": "2026-10-18",
+  "human_dataset_loaded": false,
+  "synthetic_only": true,
+  "seed": 280,
+  "phase_grid": 4096,
+  "cases": 5,
+  "model": "global monotone photometric transfer after exposure; rectangular closure; bounded noise",
+  "sources": [
+    {
+      "kind": "parent_run",
+      "branch": "research/e002-279-photometric-nuisance-span",
+      "commit": "a137c91053845dc3a6d6901335a654542e1b83e0",
+      "package_sha256": "e4f5a128799999ea825a08e8f87a7c15403d77f725bc7aff171742e0e4a80581"
+    },
+    {
+      "kind": "prior_art",
+      "url": "https://mlanthology.org/eccv/1994/zabih1994eccv-non/"
+    },
+    {
+      "kind": "prior_art",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6427357/"
+    },
+    {
+      "kind": "prior_art",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11133197/"
+    }
+  ],
+  "files": [
+    "experiment.py",
+    "checker.py",
+    "results.json",
+    "raw_phase_runs.json",
+    "README.md"
+  ],
+  "failed_gates": [
+    "no synchronized human reference",
+    "no empirical camera error or contrast calibration",
+    "no participant/device/lighting/glasses holdout",
+    "spatially varying illumination can fake rank flips"
+  ],
+  "ci": "not yet verified"
+}
