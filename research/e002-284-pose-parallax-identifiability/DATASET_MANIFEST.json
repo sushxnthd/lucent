@@ -1,0 +1,24 @@
+{
+  "run": "E002-284",
+  "date": "2026-10-18",
+  "human_data": false,
+  "paired_rgb_reference": false,
+  "kind": "synthetic deterministic orthographic geometry",
+  "user_laptop_used": false,
+  "personal_spend": 0,
+  "parent_commit": "b4e14c6570fe103744e40fdb4cc1d0f9b974fdd1",
+  "data_access_attempts": 0,
+  "checks": [
+    "independent LP in experiment.py",
+    "independent 16-vertex checker",
+    "exact observational collisions",
+    "3 corruption mutations"
+  ],
+  "failed_gates": [
+    "no empirical depth/noise bounds",
+    "no untouched human paired data",
+    "no participant/device holdouts",
+    "novelty unestablished"
+  ],
+  "ci_status": "inherited workflow not equivalent to new science checker; inspect branch actions"
+}
