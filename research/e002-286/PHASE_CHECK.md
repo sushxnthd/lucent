@@ -1,0 +1,1 @@
+Held-out reference traces: 10-Hz mean detection fractions for 09=.45703, 11=.96571, 12=.80859. Theory: .45834, .96574, .80833. Subject 10 produced zero eligible events. These are mathematical phase checks, not camera validation.
