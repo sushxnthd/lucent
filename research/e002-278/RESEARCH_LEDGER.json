@@ -1,0 +1,75 @@
+{
+  "run": "E002-278",
+  "timestamp_utc": "2026-10-18",
+  "science": {
+    "claim": "Exact conditional finite-sample response-vs-artifact separation for known template under Lipschitz nuisance and bounded sample errors.",
+    "boundary": "|a(s_j-s_i)| <= 2L*dt+4eps for every pair iff the response and zero-response observation sets overlap.",
+    "proof": "McShane-type Lipschitz interval extension, constructive witness, independently checked locally with linear programming.",
+    "illustrative_crossing": {
+      "fps": 24,
+      "signal_hz": 4,
+      "amplitude_log": 0.0048,
+      "half_exposure_Acrit": 0.004671988398988036,
+      "full_exposure_Acrit": 0.004836798304624553
+    },
+    "novelty": "Mathematics is established Lipschitz/set-membership theory. Application to RGB pupil measurement is conditional and not yet empirically validated.",
+    "human_observability": "UNRESOLVED",
+    "exact_theorem": "conditional, yes",
+    "field_level_breakthrough": "not established"
+  },
+  "product": {
+    "allow": "Known-probe amplitude certification only with independent real-device bounds on ALL residual optical/gaze/aperture/photometric effects, exposure and clock.",
+    "reject": "Uncalibrated anatomical pupil waveform, generic fatigue inference, automatic transfer from synthetic to consumer RGB.",
+    "abstain": "If A<=Acrit or nuisance bounds unavailable.",
+    "gate": "75% accurate admitted windows at >=50% reference-blind coverage on untouched human paired data.",
+    "current_gate": "NOT EVALUATED"
+  },
+  "prior_art": [
+    {
+      "work": "Hayes and Petrov 2016 pupil foreshortening",
+      "doi": "10.3758/s13428-015-0588-x"
+    },
+    {
+      "work": "Petersch and Dierkes 2022 gaze-angle dependency",
+      "doi": "10.3758/s13428-021-01657-8"
+    },
+    {
+      "work": "Bergamin and Kardon 2003 sample-rate pupil light reflex",
+      "pmid": "12657591"
+    },
+    {
+      "work": "McShane-Whitney Lipschitz extension classical theory",
+      "url": "https://doi.org/10.1016/j.exmath.2025.125701"
+    },
+    {
+      "work": "Lauricella and Fagiano set membership identification",
+      "url": "https://arxiv.org/abs/2001.07628"
+    }
+  ],
+  "provenance": {
+    "dataset": "none",
+    "synthetic_raw": "research/e002-278/RAW_SYNTHETIC.json",
+    "derived": "research/e002-278/RESULTS.json",
+    "executable": "research/e002-278/experiment.py",
+    "independent_checker": "research/e002-278/independent_check.py",
+    "local_results_sha256": "4276bdd32fdf4c01b9fe215fbb09bc139dead3d84c55c42cbfe39f09a360d717",
+    "local_raw_sha256": "3c11ea84ac2a5ff9e2e8f22d30479027e0cfc1f8f491638f776baac52e98f30b",
+    "note": "Local package scripts and results were independently generated; local hashes are not hashes of remote Git blobs."
+  },
+  "ci": {
+    "dedicated_workflow": ".github/workflows/lucent-e002-278.yml",
+    "workflow_committed": true,
+    "workflow_execution": "UNVERIFIED; GitHub connector exposes PR-triggered runs only and returned no runs for this push commit.",
+    "local_checker": "PASS",
+    "remote_checker": "UNVERIFIED",
+    "inherited_workflow": "not evidence of E002-278 execution"
+  },
+  "failed_gates": [
+    "no real RGB edge measurements",
+    "no calibrated nuisance bounds",
+    "no human holdout",
+    "no novelty priority",
+    "no independent remote Actions confirmation"
+  ],
+  "next_action": "Measure L and eps from controlled camera optical/gaze/lighting sweeps, then preregister reference-blind paired human waveform test. Avoid another purely synthetic kernel without new mechanism."
+}
