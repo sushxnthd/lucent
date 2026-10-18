@@ -1,0 +1,2 @@
+# E002-286 missingness-only negative control
+Within valid eye-openness samples, using invalid left-pupil tracking as closure proxy: holdout 09 sample-level precision 0.396 recall 0.994; 10 precision 0.957 recall 0.890; 11 precision 0.781 recall 0.999; 12 precision 0.815 recall 0.999. This is not event-level precision, not RGB and not fatigue validation. Missingness can be caused by other nuisances; subject 09 is an explicit false-positive warning. Eye-openness validity fractions: 09 0.9076; 10 0.8735; 11 0.9977; 12 0.9766.
