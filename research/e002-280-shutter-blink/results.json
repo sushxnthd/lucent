@@ -1,0 +1,119 @@
+{
+  "human_data": false,
+  "model": {
+    "q": 0.8076923076923077,
+    "R0": 0.25,
+    "Rref": 0.75,
+    "Delta": 0.65,
+    "noise": 0.01,
+    "min_slope": 0.8
+  },
+  "cases": [
+    {
+      "camera": "30fps_half",
+      "fps": 30,
+      "exposure": 0.016666666666666666,
+      "critical_ms": 43.589743589743584,
+      "tests": {
+        "below": {
+          "duration_ms": 42.589743589743584,
+          "detected": 3973,
+          "total": 4096,
+          "worst_fraction": 0.7776923076923077
+        },
+        "above": {
+          "duration_ms": 44.58974358974359,
+          "detected": 4096,
+          "total": 4096,
+          "worst_fraction": 0.8376923076923077
+        }
+      }
+    },
+    {
+      "camera": "10fps_short",
+      "fps": 10,
+      "exposure": 0.016666666666666666,
+      "critical_ms": 110.25641025641026,
+      "tests": {
+        "below": {
+          "duration_ms": 109.25641025641026,
+          "detected": 4055,
+          "total": 4096,
+          "worst_fraction": 0.7776923076923081
+        },
+        "above": {
+          "duration_ms": 111.25641025641026,
+          "detected": 4096,
+          "total": 4096,
+          "worst_fraction": 0.8376923076923082
+        }
+      }
+    },
+    {
+      "camera": "60fps_half",
+      "fps": 60,
+      "exposure": 0.008333333333333333,
+      "critical_ms": 21.794871794871792,
+      "tests": {
+        "below": {
+          "duration_ms": 20.794871794871792,
+          "detected": 3850,
+          "total": 4096,
+          "worst_fraction": 0.7476923076923077
+        },
+        "above": {
+          "duration_ms": 22.794871794871796,
+          "detected": 4096,
+          "total": 4096,
+          "worst_fraction": 0.8676923076923078
+        }
+      }
+    },
+    {
+      "camera": "30fps_full",
+      "fps": 30,
+      "exposure": 0.03333333333333333,
+      "critical_ms": 53.84615384615385,
+      "tests": {
+        "below": {
+          "duration_ms": 52.84615384615385,
+          "detected": 3973,
+          "total": 4096,
+          "worst_fraction": 0.7926923076923077
+        },
+        "above": {
+          "duration_ms": 54.84615384615385,
+          "detected": 4096,
+          "total": 4096,
+          "worst_fraction": 0.8226923076923077
+        }
+      }
+    },
+    {
+      "camera": "unseen_24fps_quarter",
+      "fps": 24,
+      "exposure": 0.010416666666666666,
+      "critical_ms": 48.07692307692307,
+      "tests": {
+        "below": {
+          "duration_ms": 47.07692307692307,
+          "detected": 3997,
+          "total": 4096,
+          "worst_fraction": 0.7596923076923077
+        },
+        "above": {
+          "duration_ms": 49.07692307692307,
+          "detected": 4096,
+          "total": 4096,
+          "worst_fraction": 0.8556923076923078
+        }
+      }
+    }
+  ],
+  "failed_gates": [
+    "no synchronized human reference",
+    "uncalibrated photometric slope and noise",
+    "local illumination false positives",
+    "no device/participant holdout"
+  ]
+}
