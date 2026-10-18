@@ -1,3 +1,3 @@
 # E002-281 rolling-shutter flicker boundary
 
-Conditional synthetic measurement-science study; no human results. See forthcoming evidence files.
+Exact conditional H formula is in BOUNDARY.txt. Scripts experiment.py, sweep.py, checker.py reproduce synthetic results. No human validation. The next scientific gate is independently calibrated human no-blink reference with camera holdouts.
