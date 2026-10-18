@@ -1,0 +1,1 @@
+E002-281 conditional law: b=abs(a*sinc(pi*f*T)); gamma=pi*f*delta; u=b*abs(sin(gamma))/sqrt(1-b*b*cos(gamma)^2); H=2*atanh(u). A two-frame open-eye log-ratio change has worst-case magnitude 2H+4eta when illumination phases and per-patch log errors vary independently. If threshold C is no larger than this value, an artifact-only false event is possible. No human evidence.
