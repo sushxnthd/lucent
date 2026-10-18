@@ -1,0 +1,39 @@
+{
+  "run": "E002-276",
+  "date_utc": "2026-10-18",
+  "source_type": "synthetic-only",
+  "public_human_dataset": null,
+  "source_data_sha256": null,
+  "reference": "simulated radius=20 pixels",
+  "signal": "ideal known-angle radial edge samples",
+  "generator": "numpy.default_rng(2762026)",
+  "trials_per_angle": 4000,
+  "angles_rad": [
+    0.12,
+    0.2,
+    0.35,
+    0.5,
+    0.65,
+    0.8,
+    1,
+    1.2,
+    1.57,
+    0.58,
+    0.93
+  ],
+  "seed": 2762026,
+  "code_blob_sha": "908be677cda54f94fcca2bdcc1b1b8c2c7f52d83",
+  "checker_blob_sha": "6afeb82ed6ba8e69f3607d6ec74db2f359b72b9e",
+  "results_blob_sha": "03660c398c650562a76ddaaa06ed603e08df9f1f",
+  "gates": {
+    "exact_analytic": "PASS",
+    "synthetic_prediction": "PASS",
+    "exact_bias_gauge": "PASS",
+    "human_waveform": "NOT_TESTED",
+    "optical_calibration": "NOT_TESTED",
+    "device_holdout": "NOT_TESTED",
+    "photometric_controls": "NOT_TESTED",
+    "CI": "NOT_YET_VERIFIED"
+  },
+  "smallest_claim": "Conditional Gaussian known-angle aperture information law; no RGB physiology certification."
+}

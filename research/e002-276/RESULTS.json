@@ -1,0 +1,105 @@
+{
+  "metadata": {
+    "seed": 2762026,
+    "n": 60,
+    "sigma_px": 0.5,
+    "radius_px": 20,
+    "tolerance_px": 1,
+    "repetitions": 4000,
+    "human_data": false
+  },
+  "transition": {
+    "alpha_rad": 0.6791739525634053,
+    "total_arc_degrees": 77.827602074203
+  },
+  "rows": [
+    {
+      "alpha": 0.12,
+      "sd_px": 29.055325813132164,
+      "p_pred": 0.02745545079530064,
+      "p_observed": 0.031,
+      "split": "development"
+    },
+    {
+      "alpha": 0.2,
+      "sd_px": 10.433658111062877,
+      "p_pred": 0.07635526019858664,
+      "p_observed": 0.08225,
+      "split": "development"
+    },
+    {
+      "alpha": 0.35,
+      "sd_px": 3.3796226302633894,
+      "p_pred": 0.2326866937000865,
+      "p_observed": 0.23075,
+      "split": "development"
+    },
+    {
+      "alpha": 0.5,
+      "sd_px": 1.635874039698346,
+      "p_pred": 0.4589950435505076,
+      "p_observed": 0.462,
+      "split": "development"
+    },
+    {
+      "alpha": 0.65,
+      "sd_px": 0.9524694488750859,
+      "p_pred": 0.7062370311201998,
+      "p_observed": 0.70625,
+      "split": "development"
+    },
+    {
+      "alpha": 0.8,
+      "sd_px": 0.6165811605124182,
+      "p_pred": 0.8951637818290025,
+      "p_observed": 0.88775,
+      "split": "development"
+    },
+    {
+      "alpha": 1,
+      "sd_px": 0.3828820578181988,
+      "p_pred": 0.990992525767666,
+      "p_observed": 0.9915,
+      "split": "development"
+    },
+    {
+      "alpha": 1.2,
+      "sd_px": 0.25746613873286034,
+      "p_pred": 0.999897250584522,
+      "p_observed": 1,
+      "split": "development"
+    },
+    {
+      "alpha": 1.57,
+      "sd_px": 0.14330994910476844,
+      "p_pred": 0.9999999999970034,
+      "p_observed": 1,
+      "split": "development"
+    },
+    {
+      "alpha": 0.58,
+      "sd_px": 1.2058538009898354,
+      "p_pred": 0.5930584996884257,
+      "p_observed": 0.61175,
+      "split": "holdout"
+    },
+    {
+      "alpha": 0.93,
+      "sd_px": 0.44756946892275606,
+      "p_pred": 0.9745360037692801,
+      "p_observed": 0.973,
+      "split": "holdout"
+    }
+  ],
+  "wildcard": {
+    "antipodal_sd": 0.06454972243679027,
+    "single_arc_sd": 18.580608074594007
+  },
+  "exact_gauge": {
+    "r1": 20,
+    "b1": 0,
+    "r2": 19,
+    "b2": 1,
+    "same_apparent_radius": true
+  }
+}
