@@ -1,0 +1,2 @@
+# CI and provenance state
+Parent E002-276 branch commit 06dbe1ec52a3cd8dcff27d41c4342795ee47337a inherited E002-220 workflow run 39097586337: passed, but it did not execute E002-276. This E002-277 run was executed in a separate container with Python, numpy, scipy. Local independent checker: PASS, 10 conditions, 4 mutation rejections. Dedicated remote E002-277 CI: not yet confirmed. Reproduce with python research/e002-277/experiment.py && python research/e002-277/independent_check.py. Do not treat inherited workflow green as evidence for this experiment.

@@ -1,0 +1,15 @@
+{
+  "scientific_gates": {
+    "untouched_human": false,
+    "participant_holdout": false,
+    "device_holdout": false,
+    "lighting_holdout": false,
+    "glasses_holdout": false,
+    "reference_clock_calibrated": false,
+    "real_image_bias_coherence_calibrated": false,
+    "product_75pct_at_50pct_coverage": false,
+    "independent_synthetic_checker": true,
+    "synthetic_mechanism_holdout": true
+  },
+  "interpretation": "No anatomical or fatigue claim. Conditional synthetic model only."
+}

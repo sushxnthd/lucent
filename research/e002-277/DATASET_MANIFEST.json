@@ -1,0 +1,18 @@
+{
+  "experiment": "E002-277",
+  "date": "2026-10-18",
+  "dataset": "synthetic; no downloaded human video",
+  "human_reference": false,
+  "source_data_sha256": null,
+  "source_data_reason": "No human recordings used; source is deterministic RNG seed 2772026",
+  "reference": "known simulated true pupil-radius difference",
+  "dependency_versions": "Python3, numpy, scipy; versions must be captured by replay",
+  "parent_branch": "research/e002-276-aperture-information-boundary",
+  "parent_commit": "06dbe1ec52a3cd8dcff27d41c4342795ee47337a",
+  "prior_art": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC9046372/",
+    "https://pubmed.ncbi.nlm.nih.gov/23468182/",
+    "https://pubmed.ncbi.nlm.nih.gov/25953668/",
+    "https://arxiv.org/abs/2007.09600"
+  ]
+}
