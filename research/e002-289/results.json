@@ -1,0 +1,37 @@
+{
+  "study": "E002-289",
+  "synthetic_only": true,
+  "prior_art_replication_count": 300,
+  "max_conic_ratio_error": 3.0531133177191805e-16,
+  "arc_cases": [
+    [
+      "no_translation",
+      13.392656735609632,
+      42.038733292854
+    ],
+    [
+      "moderate_translation",
+      15.170603242285367,
+      49.33479101278482
+    ],
+    [
+      "free_translation",
+      16.345469555812702,
+      54.81278246399501
+    ],
+    [
+      "high_pixel_noise",
+      18.103866990231673,
+      64.84933658745628
+    ],
+    [
+      "synthetic_holdout_not_human",
+      11.755114082840352,
+      43.74716394390915
+    ]
+  ],
+  "independent_LP_cases": 300,
+  "max_LP_disagreement": 0,
+  "human_evidence": false,
+  "field_level_novelty": false
+}

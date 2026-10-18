@@ -1,0 +1,2 @@
+# Future human unseen prediction (not yet tested)
+Before opening human holdout, calibrate epsilon, u, kappa, candidate radii a,b without using holdout outcomes. Predict visible-arc crossing L*=sqrt(a^2-v^2) from protocol and select one participant/device/lighting regime that crosses it. If L<=L*, predict ABSTAIN under the restricted contour model; if L>L* and all nuisance assumptions hold, predict CONDITIONAL SEPARABILITY. A valid human violation refutes this gate. No prospective human result is claimed.
