@@ -1,0 +1,23 @@
+name: Lucent E002-278 Measurement Boundary
+on:
+  push:
+    branches:
+      - research/e002-278-set-membership-sampling-boundary
+  workflow_dispatch:
+jobs:
+  deterministic-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: python -m pip install numpy scipy
+      - name: Generate exact synthetic evidence
+        run: python research/e002-278/experiment.py
+      - name: Independently check threshold and LP
+        run: python research/e002-278/independent_check.py
