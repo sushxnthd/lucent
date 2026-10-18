@@ -1,0 +1,15 @@
+{
+  "human_data": false,
+  "synthetic_only": true,
+  "five_feature_d": 0.0,
+  "six_feature_d": 0.21739130434782608,
+  "unbounded_optical_d": 0.0,
+  "calibrated_critical_amplitude": 0.152,
+  "heldout_d": 0.25896796470362554,
+  "heldout_critical_amplitude": 0.13722962962962965,
+  "holdout_below": "ambiguous",
+  "holdout_above": "distinguishable",
+  "local_expanded_randomized_checks": 400,
+  "local_exact_checker_mutation_rejections": 3,
+  "remote_ci": "not run"
+}

@@ -1,0 +1,8 @@
+# Primary prior art and access evidence (2026-10-19)
+
+- Scharf & Friedlander, *Matched subspace detectors*, IEEE Transactions on Signal Processing 42(8), 2146-2157 (1994). DOI 10.1109/78.301849. Primary text: https://mountainscholar.org/items/06a68de8-560b-47ac-93a8-c9839b17aab3 . **Nullspace invariance is established prior art.**
+- Wang, Chern & Alexa, *Center of circle after perspective transformation* (2019), https://arxiv.org/abs/1902.04541 . **Two-conic pupil/iris radius invariant is established prior art.**
+- Daza et al., *mEBAL2 database and benchmark: Image-based multispectral eyeblink detection*, Pattern Recognition Letters 182, 83-89 (2024), DOI 10.1016/j.patrec.2024.04.011. Official dataset https://github.com/BiDAlab/mEBAL2 . Paired RGB/NIR at 30 Hz, EEG-candidate/manual-refined blink labels. Signed agreement and credentials required; not a high-rate anatomical aperture reference.
+- IT University of Copenhagen, *AFFEC Multimodal Dataset* (2025), https://zenodo.org/records/14794876 . Face-analysis features 40 Hz and pupil measurements 149 Hz. Inspected archive listing does not establish raw RGB availability; large archives were inaccessible to the compute runtime.
+
+**Novelty:** The theorem and LP certificate are classical. A field contribution would require a calibrated ocular forward model, real human holdouts and a new empirically predictive boundary. None established here.
