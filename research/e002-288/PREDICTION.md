@@ -1,0 +1,1 @@
+Frozen model-internal synthetic prediction: for a fully exposed five-second instrument with response f(c)=c^3 and observed mean y=27/125, eta=0, exact anatomical dose lies in [27/25,3] seconds. Constant c=3/5 attains upper; binary closure c=1 during 27/125 of each exposure attains lower. Verified by deterministic LP grid. This is not a human/device holdout.

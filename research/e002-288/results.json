@@ -1,0 +1,58 @@
+{
+  "evidence": "synthetic only",
+  "cases": [
+    [
+      "affine",
+      1,
+      0.25,
+      0,
+      1,
+      1.25,
+      1.25
+    ],
+    [
+      "quadratic",
+      2,
+      0.25,
+      0,
+      1,
+      1.25,
+      2.5
+    ],
+    [
+      "quadratic_noise",
+      2,
+      0.25,
+      0.01,
+      1,
+      1.2,
+      2.5495097567963927
+    ],
+    [
+      "quadratic_half",
+      2,
+      0.25,
+      0.01,
+      0.5,
+      0.6,
+      3.774754878398196
+    ],
+    [
+      "cubic_holdout",
+      3,
+      0.216,
+      0,
+      1,
+      1.08,
+      3
+    ]
+  ],
+  "exact_collision": {
+    "mom2": "1/5",
+    "mom3": "2/15",
+    "meanA": "2/5",
+    "meanB": "3/10"
+  },
+  "independent_checker": "symbolic and rational pass; 3 mutations rejected in full local package",
+  "human_reference": false
+}
