@@ -1,0 +1,97 @@
+{
+  "format": "run-length missed indices; all other indices detected",
+  "phase_count": 4096,
+  "phase_start": "index/(4096*fps)",
+  "cases": [
+    {
+      "camera": "30fps_half",
+      "scenarios": {
+        "below": {
+          "missed_runs": [
+            [
+              394,
+              516
+            ]
+          ],
+          "missed_count": 123
+        },
+        "above": {
+          "missed_runs": [],
+          "missed_count": 0
+        }
+      }
+    },
+    {
+      "camera": "10fps_short",
+      "scenarios": {
+        "below": {
+          "missed_runs": [
+            [
+              132,
+              172
+            ]
+          ],
+          "missed_count": 41
+        },
+        "above": {
+          "missed_runs": [],
+          "missed_count": 0
+        }
+      }
+    },
+    {
+      "camera": "60fps_half",
+      "scenarios": {
+        "below": {
+          "missed_runs": [
+            [
+              394,
+              639
+            ]
+          ],
+          "missed_count": 246
+        },
+        "above": {
+          "missed_runs": [],
+          "missed_count": 0
+        }
+      }
+    },
+    {
+      "camera": "30fps_full",
+      "scenarios": {
+        "below": {
+          "missed_runs": [
+            [
+              788,
+              910
+            ]
+          ],
+          "missed_count": 123
+        },
+        "above": {
+          "missed_runs": [],
+          "missed_count": 0
+        }
+      }
+    },
+    {
+      "camera": "unseen_24fps_quarter",
+      "scenarios": {
+        "below": {
+          "missed_runs": [
+            [
+              197,
+              295
+            ]
+          ],
+          "missed_count": 99
+        },
+        "above": {
+          "missed_runs": [],
+          "missed_count": 0
+        }
+      }
+    }
+  ]
+}
