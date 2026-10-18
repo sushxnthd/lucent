@@ -1,0 +1,1 @@
+Public reference source: marcus-nystrom/BlinkDetector, Tobii Pro Spectrum, 600Hz, Center.tsv, subjects 01-12. Development 01-08; holdout 09-12. This dataset does not contain ordinary RGB. Original upstream Git blobs retained by authors. No human raw data mirrored. Prior art: Nystrom et al. 2024 What is a blink?; Culemann et al. 2026 doi:10.3758/s13428-026-02984-4.
