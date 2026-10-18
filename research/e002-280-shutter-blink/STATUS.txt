@@ -1,0 +1,1 @@
+Synthetic camera exposure and blink detection boundary experiment. No human data. Source and results follow.
