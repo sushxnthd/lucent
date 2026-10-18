@@ -1,0 +1,22 @@
+{
+  "run": "E002-275",
+  "dataset": "EVE ECCV 2020",
+  "upstream_repo": "swook/EVE",
+  "pinned_commit": "82757eb2ffb4dd198db36dbfea71601098b597f0",
+  "source_blobs": {
+    "DATASET.md": "9b04b892e248c2030168c627357e4cb66c87104a",
+    "src/datasources/eve_sequences.py": "8b03f60068cc40f2d2ffacac46a1638a31e2117d"
+  },
+  "blob_sha_provenance": "GitHub connector read, not independently rehashed from complete upstream source bytes",
+  "source_urls": [
+    "https://github.com/swook/EVE/blob/82757eb2ffb4dd198db36dbfea71601098b597f0/DATASET.md",
+    "https://github.com/swook/EVE/blob/82757eb2ffb4dd198db36dbfea71601098b597f0/src/datasources/eve_sequences.py"
+  ],
+  "raw_human_rgb_downloaded": false,
+  "native_tobii_samples_downloaded": false,
+  "clock_error_calibrated": false,
+  "source_dataset_sha256": null,
+  "human_waveform_measured": false,
+  "data_type": "synthetic_arithmetic",
+  "license": "CC BY-NC-SA 4.0 with additional conditions; verify before data use"
+}

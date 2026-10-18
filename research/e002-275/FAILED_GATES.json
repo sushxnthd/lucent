@@ -1,0 +1,17 @@
+{
+  "run": "E002-275",
+  "failed_scientific_gates": [
+    "Native human RGB/reference not accessed",
+    "No numeric independently calibrated clock error bound",
+    "No calibrated estimator error bound",
+    "No untouched human waveform result",
+    "No participant, distinct consumer device, lighting, glasses holdouts",
+    "No RGB-only admission coverage or human accuracy",
+    "No photometric and geometry human nuisance controls"
+  ],
+  "infrastructure_pending": [
+    "Dedicated E002-275 GitHub Actions not verified",
+    "Full upstream source-byte hash replay not performed"
+  ],
+  "not_scientific_failures": true
+}

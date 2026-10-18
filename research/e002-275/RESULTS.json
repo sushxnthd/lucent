@@ -1,0 +1,97 @@
+{
+  "algebraic_endpoint_checks": 2400,
+  "camera_sources": {
+    "basler": {
+      "author_sync": "reliable_to_eye_tracker",
+      "clock_error_bound_s": null,
+      "consumer_webcam": false,
+      "device_model": "Basler acA1920-150uc",
+      "fps": 60
+    },
+    "webcam_c": {
+      "author_sync": "best_effort_imprecise",
+      "clock_error_bound_s": null,
+      "consumer_webcam": true,
+      "device_model": "Logitech C922",
+      "fps": 30
+    },
+    "webcam_l": {
+      "author_sync": "best_effort_imprecise",
+      "clock_error_bound_s": null,
+      "consumer_webcam": true,
+      "device_model": "Logitech C922",
+      "fps": 30
+    },
+    "webcam_r": {
+      "author_sync": "best_effort_imprecise",
+      "clock_error_bound_s": null,
+      "consumer_webcam": true,
+      "device_model": "Logitech C922",
+      "fps": 30
+    }
+  },
+  "cases": {
+    "boundary_ambiguous": {
+      "decision": "INDETERMINATE",
+      "max_abs_lag_s": 0.075,
+      "min_abs_lag_s": 0.045,
+      "reason": "CONDITIONAL_SHARP_ADDITIVE_INTERVAL",
+      "true_lag_interval_s": [
+        0.045,
+        0.075
+      ]
+    },
+    "far_lag_fail": {
+      "decision": "CERTIFIED_FAIL",
+      "max_abs_lag_s": 0.115,
+      "min_abs_lag_s": 0.085,
+      "reason": "CONDITIONAL_SHARP_ADDITIVE_INTERVAL",
+      "true_lag_interval_s": [
+        0.085,
+        0.115
+      ]
+    },
+    "tight_calibrated_pass": {
+      "decision": "CERTIFIED_PASS",
+      "max_abs_lag_s": 0.035,
+      "min_abs_lag_s": 0.005000000000000001,
+      "reason": "CONDITIONAL_SHARP_ADDITIVE_INTERVAL",
+      "true_lag_interval_s": [
+        0.005000000000000001,
+        0.035
+      ]
+    },
+    "unbounded_webcam": {
+      "decision": "UNCERTIFIED",
+      "max_abs_lag_s": null,
+      "min_abs_lag_s": 0,
+      "reason": "MISSING_INDEPENDENT_CLOCK_OR_ESTIMATOR_ERROR_BOUND",
+      "true_lag_interval_s": null
+    },
+    "zero_observed_no_clock": {
+      "decision": "UNCERTIFIED",
+      "max_abs_lag_s": null,
+      "min_abs_lag_s": 0,
+      "reason": "MISSING_INDEPENDENT_CLOCK_OR_ESTIMATOR_ERROR_BOUND",
+      "true_lag_interval_s": null
+    }
+  },
+  "deterministic_trials": 2400,
+  "eligibility": {
+    "basler_positive_control_candidate": true,
+    "consumer_device_holdout_certified": false,
+    "quantitative_lag_certified_from_documentation": false,
+    "required_next_evidence": "Independent exposure-to-reference clock bounds plus distinct consumer device model holdout",
+    "same_participant_four_views_not_independent_device_models": true
+  },
+  "frozen_lag_gate_s": 0.067,
+  "human_waveform_measured": false,
+  "independent_numeric_clock_bound_in_EVE_documentation": false,
+  "interval_covered": 2400,
+  "kind": "conditional_clock_bound_and_dataset_eligibility",
+  "product_decision": "Two-tier validation: Basler synchronized physiological positive control first, independently synchronized consumer RGB device transfer second. Fail closed on unknown clock error.",
+  "raw_human_data_loaded": false,
+  "run": "E002-275",
+  "source_dataset": "EVE ECCV 2020",
+  "strongest_supported_claim": "Without an independently bounded RGB/reference clock error, no finite physiological lag can be certified from an observed lag; EVE Basler is a synchronization positive-control candidate, but EVE documentation alone cannot certify 67-ms lag or consumer device holdout."
+}
