@@ -1,0 +1,10 @@
+{
+  "local_experiment": "passed, 40960 synthetic phase decisions",
+  "local_independent_checker": "passed, five scipy LP cases, five 8192-phase checks, exact rational witness",
+  "mutations": "3/3 rejected",
+  "wildcard": "negative evidence, eye-specific offset counterfeits blink",
+  "pre_fix_issue": "numpy.bool_ JSON serialization error fixed; no scientific gate failure",
+  "github_actions": "pending new commit verification",
+  "human_test": "not performed",
+  "smallest_claim": "conditional exact affine/shutter set-separation boundary"
+}

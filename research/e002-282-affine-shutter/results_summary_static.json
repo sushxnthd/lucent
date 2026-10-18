@@ -1,0 +1,57 @@
+{
+  "run": "E002-282",
+  "date": "2026-10-18",
+  "synthetic": true,
+  "human_data": false,
+  "phase_decisions": 40960,
+  "results": [
+    {
+      "case": "C1",
+      "dcrit_ms": 32.758620689655174,
+      "below_ambiguous": 80,
+      "above_ambiguous": 0
+    },
+    {
+      "case": "C2",
+      "dcrit_ms": 26.19047619047619,
+      "below_ambiguous": 65,
+      "above_ambiguous": 0
+    },
+    {
+      "case": "C3",
+      "dcrit_ms": 16.379310344827587,
+      "below_ambiguous": 80,
+      "above_ambiguous": 0
+    },
+    {
+      "case": "C4",
+      "dcrit_ms": 99.42528735632185,
+      "below_ambiguous": 81,
+      "above_ambiguous": 0
+    },
+    {
+      "case": "C5",
+      "dcrit_ms": null,
+      "qcrit": 2,
+      "uncertifiable": true
+    },
+    {
+      "case": "C6",
+      "dcrit_ms": 41.74540682414697,
+      "below_ambiguous": 82,
+      "above_ambiguous": 0
+    }
+  ],
+  "independent_local": {
+    "scipy_lp": "5/5",
+    "phase": "5/5",
+    "mutations_rejected": "3/3"
+  },
+  "scientific_gates_failed": [],
+  "uncleared": [
+    "human waveform",
+    "device calibration",
+    "spatial illumination",
+    "field novelty"
+  ]
+}

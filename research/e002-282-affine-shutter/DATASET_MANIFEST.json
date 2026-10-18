@@ -1,0 +1,21 @@
+{
+  "run_id": "E002-282",
+  "date_utc": "2026-10-18",
+  "parent_commit": "8cd5a36d847bd11f2c106cc51735fb6f35876455",
+  "source": "deterministic hypothetical instrument model",
+  "human_dataset": null,
+  "reference": "synthetic rectangular closure",
+  "phase_decisions": 40960,
+  "raw_phase_runs_git_blob_sha": "eba4cc6d8cb2f1bd33a5b0f1e1fe885d07e331cd",
+  "results_git_blob_sha": "e2d95a31f242ab5e1568031d091b0a873f066bee",
+  "local_expanded_package": "lucent_e002_282_affine_shutter_identifiability.zip",
+  "local_zip_sha256": "1fc32cfb12a9b0023c69fb3f4dd6cab7f323a39b6e5d96283063aa42e2fc1c9c",
+  "personal_spend": 0,
+  "user_laptop_used": false,
+  "failed_scientific_gates": [],
+  "uncleared": [
+    "human evidence",
+    "independent real-camera calibration",
+    "field novelty"
+  ]
+}
