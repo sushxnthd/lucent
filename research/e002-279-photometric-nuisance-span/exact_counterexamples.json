@@ -1,0 +1,102 @@
+{
+  "kernel": "E002-279",
+  "type": "exact_rational_counterexamples",
+  "bounded_error_case": {
+    "X": [
+      [
+        1
+      ],
+      [
+        1
+      ]
+    ],
+    "s": [
+      0,
+      1
+    ],
+    "epsilon": "1/10",
+    "A": "2/5",
+    "H0": {
+      "beta": [
+        "1/5"
+      ],
+      "e": [
+        "-1/10",
+        "1/10"
+      ],
+      "z": [
+        "1/10",
+        "3/10"
+      ]
+    },
+    "H1": {
+      "beta": [
+        "0"
+      ],
+      "e": [
+        "1/10",
+        "-1/10"
+      ],
+      "z": [
+        "1/10",
+        "3/10"
+      ]
+    },
+    "dual": {
+      "w": [
+        "-1/2",
+        "1/2"
+      ],
+      "d": "1/2",
+      "Acrit": "2/5"
+    },
+    "above_boundary": {
+      "A": "41/100",
+      "dual_separation": "41/200",
+      "max_noise_projection": "1/5",
+      "overlap": false
+    }
+  },
+  "photometric_transfer_collision": {
+    "X": [
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "s": [
+      0,
+      1
+    ],
+    "A": "arbitrary",
+    "H0": {
+      "beta": [
+        "0",
+        "A"
+      ],
+      "e": [
+        0,
+        0
+      ]
+    },
+    "H1": {
+      "beta": [
+        "0",
+        "0"
+      ],
+      "e": [
+        0,
+        0
+      ]
+    },
+    "identical_observation": [
+      "0",
+      "A"
+    ]
+  },
+  "scope": "exact conditional two-frame examples; NOT real RGB"
+}

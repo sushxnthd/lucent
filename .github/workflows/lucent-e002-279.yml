@@ -12,13 +12,16 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install numpy scipy
-      - name: Run experiment and independent checker
+      - name: Run experiment, independent checker and frozen scientific gates
         run: |
           cd research/e002-279-photometric-nuisance-span
           python experiment.py
           python independent_check.py
-          sha256sum experiment.py independent_check.py results.json summary.json DATASET_MANIFEST.json > SHA256SUMS.txt
+          python verify_summary.py
+          sha256sum experiment.py independent_check.py verify_summary.py results.json summary.json DATASET_MANIFEST.json exact_counterexamples.json > SHA256SUMS.txt
       - uses: actions/upload-artifact@v4
         with:
           name: e002-279-raw-derived-and-hashes
-          path: research/e002-279-photometric-nuisance-span/*.json
+          path: |
+            research/e002-279-photometric-nuisance-span/*.json
+            research/e002-279-photometric-nuisance-span/SHA256SUMS.txt
