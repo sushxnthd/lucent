@@ -1,0 +1,20 @@
+{
+  "run": "E002-272",
+  "source": "https://zenodo.org/records/19408373",
+  "doi": "10.5281/zenodo.19408373",
+  "source_published": "2026-04-03",
+  "files": {
+    "videostream.zip": {
+      "expected_md5": "b7efc90ca02bc4e571fa90fe2634f0f4",
+      "full_bytes_verified": false
+    },
+    "pupil.zip": {
+      "expected_md5": "8a1a218003e8ded0698bcf239a23baae",
+      "full_bytes_verified": false
+    }
+  },
+  "modality": "face-feature-plus-pupil",
+  "rgb_raw_unverified": true,
+  "clock_unverified": true,
+  "human_results": false
+}
