@@ -1,0 +1,8 @@
+{
+  "exact_rational_rolling_collision_pixels": 601,
+  "exact_contrast_collision_pixels": 601,
+  "rational_mass_cases": 30,
+  "mutations_rejected": 4,
+  "synthetic": "PASS",
+  "human": "NOT RUN"
+}
