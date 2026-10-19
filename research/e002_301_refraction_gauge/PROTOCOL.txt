@@ -1,0 +1,1 @@
+Freeze kappa bound on calibration subjects. Test unseen participant and device, lighting and glasses regimes. Reference: synchronized trustworthy pupil measurement; signal: ordinary RGB conic ratio. Controls: geometry, brightness, missingness, temporal smoothness. Reject any false certified sign. No human evaluation performed in E002-301.
