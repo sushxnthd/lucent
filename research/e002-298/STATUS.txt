@@ -1,0 +1,1 @@
+E002-298: Conditional spectral-mixture identifiability analysis. Synthetic only. No human validation. Complete reproducibility archive retained separately.
