@@ -1,0 +1,1 @@
+{"status":"passed","numerical_quadrature_cases":11,"linear_program_cases":100,"max_lp_inner_approx_gap":0.00004942861575805979,"mean_lp_inner_approx_gap":0.000005298200127873711,"exact_rational_collisions":2,"mutations_rejected":3,"unseen_synthetic_holdout":"passed","holdout_measured":{"fraction":0.22078318527643223,"peak":0.4435887433657756}}
