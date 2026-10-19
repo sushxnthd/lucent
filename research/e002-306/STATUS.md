@@ -1,0 +1,1 @@
+E002-306 research status: conditional geometric result; human validation pending.
