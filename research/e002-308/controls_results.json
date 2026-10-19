@@ -1,0 +1,7 @@
+{
+  "geometry_only": "photometric error eta=0",
+  "brightness_only": "eta=.05 shifts threshold margins; raw affine brightness nonidentifiable",
+  "missingness_only": "10Hz has 83.33ms unexposed gaps versus 16.67ms at 30Hz for a 16.67ms shutter",
+  "temporal_smoothness_only": "unbounded eyelid speed makes shutter mean insufficient for point inference",
+  "human_test": false
+}
