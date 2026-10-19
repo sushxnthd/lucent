@@ -1,0 +1,13 @@
+{
+  "kernel": "E002-300",
+  "theta": 0.8,
+  "mean": 0.08,
+  "target": 0.2,
+  "coverage_critical": "8/9",
+  "cases": {
+    "7/8": "17/80",
+    "9/10": "19/100"
+  },
+  "human_test": false,
+  "claim": "conditional exact interval"
+}
