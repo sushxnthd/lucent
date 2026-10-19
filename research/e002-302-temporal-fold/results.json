@@ -1,0 +1,14 @@
+{
+  "operator_shape": [90,270],
+  "operator_rank": 90,
+  "nullity": 180,
+  "nonzero_singular_value": 0.5773502691896257,
+  "folded_slow_max_abs_deviation_mm": 8.881784197001252e-16,
+  "hidden_slow_peak_to_peak_mm": 0.6,
+  "hidden_slow_max_derivative_mm_per_s": 0.6283185307179586,
+  "folded_one_hz_apparent_frequency_hz": 0.3333333333333333,
+  "one_hz_timewarping_max_error_mm": 8.881784197001252e-16,
+  "phase_distinct_collision_error_mm": 8.881784197001252e-16,
+  "test_status": "PASS",
+  "evidence_scope": "inspected public code, not human data"
+}
