@@ -1,0 +1,12 @@
+{
+  "closing_speed": 17,
+  "opening_speed": 6,
+  "exposure_s": 0.011111111111111112,
+  "theta": 0.72,
+  "photometric_error_bound": 0.04,
+  "validation_type": "synthetic; not human",
+  "prediction": {
+    "open_certification_below": 0.6480555555555555,
+    "closed_certification_at_or_above": 0.7919444444444445
+  }
+}
