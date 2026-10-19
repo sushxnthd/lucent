@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-19",
+  "status": "synthetic_only",
+  "dcrit_30fps_30ms": 0.00470895165001163,
+  "dcrit_30fps_100ms": 0.015461086386869424,
+  "dcrit_30fps_30ms_eta_0_001": 0.0037068637617397103,
+  "exact_fraction": "3/340",
+  "rational_checks": 500,
+  "LP_checks": 150,
+  "geometry_only_spoof_gain_percent": 0.9422927370324352,
+  "brightness_only_spoof": 0.009398280739890241,
+  "remote_CI": "unverified",
+  "human_RGB": "not_run"
+}
