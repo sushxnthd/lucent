@@ -1,0 +1,14 @@
+{
+  "run": "E002-302",
+  "date": "2026-10-19",
+  "human_pairs_evaluated": 0,
+  "evidence": "synthetic_only",
+  "synthetic_participants": 51,
+  "synthetic_pairs": 816,
+  "synthetic_seed": 302,
+  "EyeDentify_attempts": 2,
+  "EyeDentify_status": "blocked",
+  "RGBE_Gaze_status": "identified_not_accessed",
+  "user_laptop_used": false,
+  "personal_spend_usd": 0
+}
