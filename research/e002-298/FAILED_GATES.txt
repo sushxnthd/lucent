@@ -1,0 +1,1 @@
+Uncalibrated colored glare: failed. Channel gain drift: failed. Spatial shading before optical blur: failed. Human paired RGB/reference test: not run. Device and participant holdout: not run. Field-level novelty: unproven.
