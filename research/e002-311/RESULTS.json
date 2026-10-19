@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-20",
+  "T_s": 0.016666666666666666,
+  "v_px_s": 120,
+  "sigma_px": 1.2,
+  "sharp_gaussian_bias_ms": {
+    "r=1": 0,
+    "r=.9": 0.23182433499880084,
+    "r=.5": 1.507619831294164,
+    "r=.25": 2.914055708022519,
+    "r=.1": 4.498335615653404
+  },
+  "frozen_synthetic": {
+    "T": 0.013,
+    "r": 0.37,
+    "v": 170,
+    "sigma": 0.9,
+    "predicted_s": 0.0017549665698877767,
+    "independent_high_precision_s": 0.0017549665698887095,
+    "discrete_LP_s": 0.0017549664791525075
+  },
+  "verification": {
+    "random_independent_LP_cases": 50,
+    "max_LP_error_s": 1.3021630024256936e-8,
+    "random_ideal_step_cases": 500,
+    "failed_cases": 0,
+    "geometry_brightness_missingness_smoothness_controls": "PASS"
+  },
+  "human_evidence": false,
+  "novelty_clearance": false
+}
