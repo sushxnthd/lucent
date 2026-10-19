@@ -1,0 +1,1 @@
+Do not infer physiological pupil change or fatigue from uncalibrated RGB conic ratios. Require independently measured differential optical nuisance bounds and abstain unless the measured ratio crosses the certified threshold. Human transfer validation remains required.
