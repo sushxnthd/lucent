@@ -1,0 +1,8 @@
+{
+  "kernel": "E002-310",
+  "status": "conditional theoretical result; no human validation",
+  "synthetic_threshold_ms": 8.709520624170137,
+  "frozen_synthetic_threshold_ms": 28.219857004500774,
+  "independent_checker_passed": true,
+  "novelty": "not established"
+}
