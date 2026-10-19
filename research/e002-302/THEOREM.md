@@ -1,0 +1,7 @@
+# E002-302 — Local optical-drift pupil-change certificate (conditional)
+Let q_j in (0,1] be anatomical pupil/iris radius ratio, z_j be an exposure-valid RGB-derived ratio. Assume z_j=q_j k_j exp(e_j), |e_j|<=eta, and independently calibrated |log(k1/k0)|<=Bk. Here k absorbs residual corneal refraction, gaze, eyelid aperture, lighting, glasses and segmentation.
+For D=log(z1/z0), **exact interval**: D-(Bk+2eta)<=log(q1/q0)<=D+(Bk+2eta).
+Thus positive anatomical change is certifiable iff D>Bk+2eta, negative iff D<-(Bk+2eta); otherwise abstain. Sharpness follows by attaining endpoint optical drift and errors. With multiplicative bounds k1/k0 in [1/G,G] and exp(e1-e0) in [1/E,E], q1/q0 in [R/(GE),RGE], R=z1/z0. Threshold for dilation: R>GE.
+Counterexample at R=26/25: (q0,q1,k0,k1)=(1/2,1/2,1,26/25) versus (1/2,13/25,1,1), exactly identical RGB ratio but different physiological changes.
+The model is invalid without calibrated exposure integration, independent nuisance budgets, and verified timestamps. In particular q*k cannot generally be pulled outside a finite shutter integral. Without bounded k drift no nontrivial sign certificate exists.
+No field-level novelty is claimed; interval inversion and gaze-foreshortening corrections are established mathematics and prior art.
