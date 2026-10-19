@@ -1,0 +1,3 @@
+# Lucent E002-295 — Rolling-shutter eyelid-velocity observability
+Research-only exact conditional boundary. No human RGB/reference recordings tested. Native rolling-shutter frames can encode sub-frame eyelid speed as spatial exposure-ramp width if both photometric plateaus are visible and camera/scene assumptions hold.
+Reproduce: python experiment.py && python independent_checker.py. Full stress-controls package is archived separately in the automation research artifact. Human evidence and field-level novelty are NOT established.
