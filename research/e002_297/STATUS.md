@@ -1,0 +1,1 @@
+E002-297 synthetic-only research; human RGB reference untested. See reproducibility package.
