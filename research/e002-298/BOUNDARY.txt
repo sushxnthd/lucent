@@ -1,0 +1,1 @@
+RGB model Y = g[(1-q)s + qe] + aw. Full rank of [s,e,w] permits q recovery under calibrated assumptions. For a pair q0,q1, their bounded-noise observation sets separate precisely when nuisance-orbit distance exceeds twice the per-channel error bound.
