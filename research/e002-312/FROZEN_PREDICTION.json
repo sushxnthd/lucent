@@ -1,0 +1,18 @@
+{
+  "kernel": "E002-312",
+  "frozen_before_independent_checker": true,
+  "exposure_s": 0.016666666666666666,
+  "contrast_ratio": 0.5,
+  "displacement_px": 4,
+  "blur_sigma_px": 0.8,
+  "event_quantile": 0.5,
+  "predicted_sharp_interval_ms": [
+    5.555555555555555,
+    11.11111111111111
+  ],
+  "predicted_sharp_width_ms": 5.555555555555555,
+  "predicted_smooth_gap_ms": 2.704627669472999,
+  "predicted_midpoint_gap_px": 0.6666666666666666,
+  "predicted_max_full_image_difference": 1e-10,
+  "human_test": "not performed"
+}

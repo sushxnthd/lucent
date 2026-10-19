@@ -1,0 +1,28 @@
+{
+  "kernel": "E002-312",
+  "full_image_collision_max_difference": 3.3306690738754696e-16,
+  "full_image_analytic_max_difference": 3.3306690738754696e-16,
+  "pixel_locations": 101,
+  "smooth_event_time_gap_ms": 2.704627669472992,
+  "smooth_midpoint_gap_px": 0.6666666666666666,
+  "sharp_interval_ms": [
+    5.555555555555555,
+    11.11111111111111
+  ],
+  "sharp_width_ms": 5.555555555555555,
+  "lp_feasible": 240,
+  "lp_infeasible": 240,
+  "triangular_peak_interval_ms": [
+    6,
+    10.666666666666666
+  ],
+  "triangular_width_ms": 4.666666666666666,
+  "triangular_full_image_difference": 2.220446049250313e-16,
+  "geometry_control_error": 3.3306690738754696e-16,
+  "brightness_control_error": 2.220446049250313e-16,
+  "missingness_interval_fraction": 0.9999999998,
+  "smoothness_control_error": 4.440892098500626e-16,
+  "independent_checker_passed": true,
+  "human_test": "not performed",
+  "novelty": "not established"
+}
