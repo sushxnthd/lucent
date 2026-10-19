@@ -1,0 +1,2 @@
+# Lucent E002-308
+Research-only shutter-mean-to-center interval model. Human RGB calibration is unverified. Independently checked with 100 discretized LP cases; maximum numerical discrepancy 4.76e-5, consistent with finite discretization. Synthetic frozen prediction is not human evidence. See PROTOCOL.md, THEOREM.md, PRIOR_ART.md, FAILED_GATES.md and results.json. Full executable package was produced separately.
