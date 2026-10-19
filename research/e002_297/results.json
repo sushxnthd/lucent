@@ -1,0 +1,30 @@
+{
+  "id": "E002-297",
+  "tier": "synthetic only",
+  "seed": 20261019,
+  "global_shutter": {
+    "pairs": 400,
+    "max_area_error_px": 7.105427357601002e-15,
+    "max_ratio_error": 4.440892098500626e-16,
+    "median_threshold_area_error_px": 1.6875
+  },
+  "rolling": {
+    "trials": 150,
+    "max_area_discrepancy_px": 0.0000048858584689170925
+  },
+  "exact_checks": {
+    "rolling_collision_pixels": 601,
+    "contrast_collision_pixels": 601,
+    "rational_mass_cases": 30,
+    "mutations_rejected": 4
+  },
+  "unseen": {
+    "A": 11.7,
+    "v": 1125,
+    "tau": 0.000027,
+    "T": 0.013,
+    "predicted": 12.066520562072967,
+    "numerical": 12.066520556224619
+  },
+  "human": "NOT RUN"
+}
