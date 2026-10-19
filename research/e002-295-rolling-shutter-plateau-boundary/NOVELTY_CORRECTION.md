@@ -1,0 +1,5 @@
+# Scientific correction: motion blur is the primary observable
+The single-frame velocity signal is primarily exposure-time motion blur, NOT uniquely rolling shutter. At tau=0 (global shutter), w=v*T and v=w/T if both plateaus visible. Rolling shutter changes this to w=v*T/(1-v*tau) and shifts the plateau-loss boundary from H/T to H/(T+tau*H).
+For hypothetical H=40 rows,T=20ms,tau=20us/row,v=1600px/s: global width=32px, rolling width=33.05785px, only 3.31% correction. Global plateau-loss threshold=2000px/s; rolling threshold=1923.0769px/s.
+Primary novelty collisions: Lin et al. 2008, Vehicle speed detection from a single motion blurred image; Agrawal & Raskar, CVPR 2009, https://www.merl.com/publications/TR2009-040; established rolling-shutter motion correction.
+Product consequence: study an EXPOSURE-AWARE eyelid velocity certificate with rolling-shutter correction where needed. Do not claim rolling shutter uniquely unlocks sub-frame velocity or that this is a novel generic blur-based velocity estimator.

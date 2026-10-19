@@ -1,0 +1,10 @@
+{
+  "H": 40,
+  "T": 0.02,
+  "v": 1600,
+  "global_width_px": 32,
+  "rolling_width_px": 33.057851239669425,
+  "relative_rolling_correction": 0.03305785123966953,
+  "global_critical_px_s": 2000,
+  "rolling_critical_px_s": 1923.076923076923
+}
