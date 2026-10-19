@@ -1,0 +1,36 @@
+{
+  "H": 40,
+  "T": 0.02,
+  "tau": 0.00002,
+  "critical_v": 1923.076923076923,
+  "low_velocity": 1600,
+  "low_width": 33.05785123966942,
+  "low_plateau_margin": 3.47107438016529,
+  "low_velocity_interval_for_1px_width_error": [
+    1553.1034040951643,
+    1646.8058918966442
+  ],
+  "high_velocity": 3000,
+  "high_width": 63.82978723404255,
+  "high_plateaus": false,
+  "synthetic_holdout": {
+    "H": 48,
+    "T": 0.011111111111111112,
+    "tau": 0.000014,
+    "critical_v": 4073.627036813518,
+    "low_v": 3500,
+    "low_pass": true,
+    "high_v": 4500,
+    "high_pass": false
+  },
+  "exact_collision": {
+    "v1": 3000,
+    "v2": 4000,
+    "A1": 0.3,
+    "B1": 0.4,
+    "A2": "157/690",
+    "B2": "188/345",
+    "all_rows_identical": true
+  },
+  "human_reference_n": 0
+}

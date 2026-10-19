@@ -1,0 +1,10 @@
+{
+  "exact_rational_pixel_equalities": 401,
+  "exact_rational_inverse_equalities": 45,
+  "exact_rational_vcrit": "6750000/1657",
+  "mutation_rejected": true,
+  "physical_exposure_integrations": 80,
+  "physical_exposure_time_samples": 4001,
+  "max_integral_abs_error": 0.00006034831172507804,
+  "passed": true
+}

@@ -1,0 +1,11 @@
+{
+  "base": 1600.8771476913782,
+  "geometry_only": 1600.8780319598573,
+  "brightness_uncalibrated": 1459.425806598592,
+  "brightness_recalibrated": 1600.8771476913782,
+  "acceleration": 1779.8848715656336,
+  "glasses_reflection": 2290.523295632881,
+  "missingness_only": "ABSTAIN",
+  "temporal_smoothness_only": "ABSTAIN",
+  "human_reference_n": 0
+}
