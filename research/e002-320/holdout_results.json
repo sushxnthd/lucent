@@ -1,0 +1,18 @@
+{
+  "holdout_kind": "synthetic_only",
+  "critical_seconds": "49/1500",
+  "cases": [
+    {
+      "duration": "31/1000",
+      "worst_overlap": "11/12000",
+      "certify": false,
+      "prediction_pass": true
+    },
+    {
+      "duration": "7/200",
+      "worst_overlap": "7/2400",
+      "certify": true,
+      "prediction_pass": true
+    }
+  ]
+}

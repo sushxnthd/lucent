@@ -1,0 +1,22 @@
+{
+  "phase": {
+    "trials": 600,
+    "max_exact_rational_error": "0"
+  },
+  "noise": {
+    "trials": 400
+  },
+  "burden": {
+    "trials": 90,
+    "max_lp_abs_discrepancy": 5.551115123125783e-16
+  },
+  "threshold": {
+    "trials": 500
+  },
+  "threshold_duty": {
+    "trials": 300,
+    "violations": 0
+  },
+  "human_evaluation": "NOT_RUN",
+  "remote_CI": "UNVERIFIED"
+}

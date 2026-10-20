@@ -1,0 +1,23 @@
+{
+  "geometry_only": {
+    "anatomical_event": false,
+    "apparent_event": 0.3,
+    "error_budget": 0.05,
+    "gate": "FAIL"
+  },
+  "brightness_only": {
+    "anatomical_event": false,
+    "apparent_event": 0.25,
+    "gate": "FAIL"
+  },
+  "missingness_only": {
+    "nominal_gap_ms": 23.3333333333333,
+    "dropped_gap_ms": 56.6666666666667,
+    "invisible_event_ms": 40,
+    "gate": "EXACT_COLLISION"
+  },
+  "smoothness_only": {
+    "gate": "FAIL",
+    "counterexample": "C-infinity bump inside shutter gap"
+  }
+}
