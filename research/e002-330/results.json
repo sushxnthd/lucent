@@ -1,0 +1,49 @@
+{
+  "kernel": "E002-330",
+  "human": "NOT RUN",
+  "novelty": "NOT ESTABLISHED",
+  "remote_ci": "NOT VERIFIED",
+  "rgb_collisions": [
+    {
+      "base": 10,
+      "amp": 4,
+      "quarter": [
+        14,
+        6
+      ],
+      "max_pixel_difference": 0,
+      "sha256": "938c506ef812240fe034e6a841babe9d7808a6b4685a374a3cc37d910b811ff2"
+    },
+    {
+      "base": 11,
+      "amp": 3,
+      "quarter": [
+        14,
+        8
+      ],
+      "max_pixel_difference": 0,
+      "sha256": "f837a489f743239ab1af014871cd8f599bef29330ecaa4ef9b93eb8abb533d1d"
+    },
+    {
+      "base": 9,
+      "amp": 2,
+      "quarter": [
+        11,
+        7
+      ],
+      "max_pixel_difference": 0,
+      "sha256": "43b1da34102379a3d35a8c35013f18a805bbed62526486c81a0648bf2e023ebc"
+    }
+  ],
+  "random_rgb_permutation_tests": 300,
+  "rational_extremizers": 9900,
+  "random_weight_bound_checks": 5000,
+  "synthetic_contrast_transition": 0.53,
+  "synthetic_kappa_transition": 1.1275510204081634,
+  "controls": {
+    "geometry": true,
+    "brightness": true,
+    "missingness": true,
+    "smoothness": true
+  }
+}

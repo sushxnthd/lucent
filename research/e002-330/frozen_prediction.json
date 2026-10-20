@@ -1,0 +1,20 @@
+{
+  "kernel": "E002-330",
+  "status": "frozen synthetic instrument only; not human",
+  "contrast": {
+    "D": 42,
+    "eta": 1.26,
+    "theta": 0.5,
+    "boundary": 0.53,
+    "abstain": 0.529,
+    "certify": 0.531
+  },
+  "visibility": {
+    "yhat": 0.52,
+    "delta": 0.01,
+    "theta": 0.48,
+    "kappa_boundary": 1.1275510204081634,
+    "certify": 1.12,
+    "abstain": 1.14
+  }
+}

@@ -1,0 +1,13 @@
+# E002-330 prospective human validation (frozen; NOT RUN)
+1. Signal/reference: native RGB eye-region frames with exposure start/end and known global/rolling shutter; simultaneously calibrated >=250 Hz, preferably >=500 Hz, NIR pupil-diameter reference and iris normalization. A 30-fps webcam with 90-Hz reference may support coarse amplitude, not a 10-ms exposure occupancy histogram.
+2. Literature: Raskar et al. 2006, Zhang et al. 2022 (temporal-order loss); Hayes/Petrov 2016, Stribos et al. 2026 (gaze confounds); Shah et al. EyeDentify 2025 (webcam/Tobii).
+3. Metric: coverage of reference radius-occupancy survival curve within calibrated RGB intervals; selective false-certificate rate; non-abstention; worst subject/device/glasses/gaze/light strata. Within-exposure phase is a structural non-identifiability control.
+4. Main confound: differential eyelid visibility, gain/contrast, gaze/refraction, glasses, moving center.
+5. Generative model: THEOREM.md, including exposure/ISP/clock and scalar common-weight specialization.
+6. Falsification: reference coverage below 95% on claimed regimes; false certificates >5%; nuisance-only baselines explain response; native exposure/clock not verifiable.
+7. Mechanism-derived predictions: frozen_prediction.json. Contrast threshold 0.530 for D=42, η=1.26, θ=.5; visibility κ threshold 221/196=1.127551 for yhat=.52, δ=.01, θ=.48. These are SYNTHETIC, not human holdout.
+8. Untouched human: freeze preprocessing, thresholds and uncertainty on 60% participant calibration +20% validation; 20% untouched participants, plus complete device/light/glasses holdout when available. Reference integrated over actual exposure windows; no 10-Hz upsampling. Predeclare expected boundary crossing before opening outcomes.
+9. Publication: >=95% subgroup coverage, <=5% false certificates, >=50% supported non-abstention, beat geometry-only/brightness-only/missingness-only/smoothness-only controls, unseen crossing, independent replication and credible priority novelty. Not achieved.
+10. Product: reject sub-exposure pupil timing and five-second fatigue inference; calibrated occupancy with abstention only after validation. Pivot to referenced eyelid occupancy if optical calibration fails.
+
+Dataset gate: EyeBlink8 and mEBAL2 paths were previously exhausted. EyeDentify is 30-fps webcam/90-Hz Tobii, research-only licensed; not by itself an exposure-histogram test. Two-run maximum on any blocked path.
