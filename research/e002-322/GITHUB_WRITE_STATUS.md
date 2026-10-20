@@ -1,0 +1,3 @@
+# GitHub write-through status
+
+2026-10-20: isolated branch research/e002-322-directional-shutter-closure created. Theorem, protocol, prior-art audit, frozen prediction, simulator, independent LP checker, checker results, failed gates and product rules committed. Remote CI has no reported checks. Local reproducibility ZIP contains fuller independent checker and all per-case results. Attempt to update the existing checker file was blocked by connector safety checks; a separate occupancy_checker.py provides reproducible occupancy tests instead. No human data or real-camera calibration has been claimed.
