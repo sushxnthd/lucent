@@ -1,0 +1,1 @@
+{"pass":true,"LP_cases":6,"randomized_witness_checks":500,"max_abs_LP_error":0.000007457965272295031,"holdout_M":0.19661760458079525,"holdout_below_feasible":true,"holdout_above_impossible":true,"baseline_M":0.18898979485566353,"one_dropped_frame_M":0.38898979485566354,"human_validation":false}
