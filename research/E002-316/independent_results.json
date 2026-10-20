@@ -1,0 +1,17 @@
+{
+  "exact_rational_collision": true,
+  "rgb_exact_channels": 3,
+  "randomized_moment_trials": 1200,
+  "max_area_error": 1.4210854715202004e-14,
+  "max_centroid_error": 2.4868995751603507e-14,
+  "max_variance_error": 1.7053025658242404e-13,
+  "relative_r90_interval": [
+    0.99,
+    1.2222222222222223
+  ],
+  "relative_r92_interval": [
+    1.012,
+    1.1956521739130435
+  ],
+  "human": "NOT_RUN"
+}

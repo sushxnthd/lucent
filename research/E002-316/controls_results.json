@@ -1,0 +1,26 @@
+{
+  "geometry_only": {
+    "passed": true,
+    "normalized_area_both": 0.08000000000000002
+  },
+  "photometry_only": {
+    "passed": true,
+    "apparent_ratio": 1.1,
+    "r90_identified_interval": [
+      0.99,
+      1.2222222222222223
+    ]
+  },
+  "missingness_only": {
+    "passed": true,
+    "fraction_lost": 0.0888888888888889
+  },
+  "temporal_smoothness_only": {
+    "passed": true,
+    "static_widths": [
+      3,
+      5
+    ],
+    "max_discrete_difference": 5.551115123125783e-17
+  }
+}
