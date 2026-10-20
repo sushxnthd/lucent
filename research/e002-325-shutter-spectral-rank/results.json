@@ -1,0 +1,24 @@
+{
+  "status": "PASS_LOCAL",
+  "alias_max_sample_discrepancy": 4.440892098500626e-16,
+  "max_native_difference": 0.06025749460298896,
+  "normalized_native_range": [
+    0.46982160793906375,
+    0.5301783920609362
+  ],
+  "rank_12": 12,
+  "rank_13": 13,
+  "spaced_sigma_min": 1.1791885450383717,
+  "clustered_sigma_min": 0.000002560271794445067,
+  "sigma_ratio": 460571.6266518329,
+  "mask_decisions": [
+    "CERTIFY",
+    "ABSTAIN"
+  ],
+  "randomized_recovery_trials": 300,
+  "max_relative_recovery_error": 5.810153312694741e-15,
+  "gain_gauge_max_deviation": 0.07692307692307698,
+  "shutter_zero_integral": 0,
+  "remote_ci": "unverified",
+  "human_validation": "not performed"
+}
