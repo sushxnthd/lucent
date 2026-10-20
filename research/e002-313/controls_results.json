@@ -1,0 +1,12 @@
+{
+  "geometry_max_error": 3.33e-16,
+  "brightness_truth": 0.4024522547,
+  "brightness_bounds": [
+    0.3482711268,
+    0.4517288732
+  ],
+  "missingness": "abstain",
+  "smoothness": "cannot identify point; exact smooth collision",
+  "synthetic_shift_below": false,
+  "synthetic_shift_above": true
+}
