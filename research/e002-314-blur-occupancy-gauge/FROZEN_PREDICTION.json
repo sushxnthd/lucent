@@ -1,0 +1,20 @@
+{
+  "frozen_before_independent_checks": true,
+  "exposure_s": 0.016666666666666666,
+  "center": 0.5,
+  "motion_halfwidth_A": 0.08,
+  "psf_halfwidth_A": 0.2,
+  "motion_halfwidth_B": 0.2,
+  "psf_halfwidth_B": 0.08,
+  "predicted_complete_image_difference": 0,
+  "predicted_total_variance": 0.015466666666666667,
+  "predicted_motion_variances": [
+    0.0021333333333333334,
+    0.013333333333333334
+  ],
+  "predicted_velocities_per_s": [
+    9.6,
+    24
+  ],
+  "human_holdout": "NOT RUN"
+}
