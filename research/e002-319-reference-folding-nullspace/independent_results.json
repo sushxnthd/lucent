@@ -1,0 +1,12 @@
+{
+  "exact_rational_collision": true,
+  "independent_randomized_nullspace_trials": 1000,
+  "frozen_sinusoid_phase_trials": 101,
+  "independent_mean_preservation_trials": 1000,
+  "sharp_lipschitz_coefficients": {
+    "0": 1,
+    "45": 0.6666666666666666,
+    "89": 0.9925925925925926
+  },
+  "human_evaluation": "NOT PERFORMED"
+}

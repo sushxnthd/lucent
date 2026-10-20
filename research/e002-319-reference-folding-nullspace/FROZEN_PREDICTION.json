@@ -1,0 +1,13 @@
+{
+  "id": "E002-319",
+  "frozen_before_synthetic_tests": true,
+  "rank": 90,
+  "nullity": 180,
+  "frequency_null_hz": 0.3333333333333333,
+  "amplitude_after_folding": 0,
+  "session_mean_error": 0,
+  "linear_slope_ratio": 0.3333333333333333,
+  "B0_seconds": 1,
+  "B45_seconds": 0.6666666666666666,
+  "human_data": "not analyzed"
+}

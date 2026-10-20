@@ -1,0 +1,3 @@
+# E002-319 negative gates
+
+HUMAN_NATIVE_PAIR: NOT RUN. PUBLIC_KAGGLE_BYTES: NOT INSPECTED. IDEAL_EQUAL_BINS: CONDITIONAL, real code may have unequal groups and NaNs. RGB_PHYSICAL_OBSERVABILITY: NOT VALIDATED. PARTICIPANT_DEVICE_LIGHTING_GAZE_GLASSES_HOLDOUT: NOT RUN. EXTERNAL_REPLICATION: NOT RUN. PUBLICATION_NOVELTY: NOT ESTABLISHED. REMOTE_CI: NOT VERIFIED. After one more blocked native-data attempt, pivot from EyeDentify dataset archaeology to an independent measurement-science kernel.

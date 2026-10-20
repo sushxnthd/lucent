@@ -1,0 +1,3 @@
+# E002-319 source audit
+
+Paper: https://arxiv.org/abs/2407.11204 (EyeDentify, 2024), section 3.4.1. Public code: https://github.com/vijulshah/eyedentify/blob/main/data_creation/eyedentify/tobii_and_webcam_data_alignment.py , blob f46d7ae369a62596f7044ca647d361c38fcb16ea, lines 140-151, 189-220 and 243-255. Source groups Tobii data by whole-second timestamps, row-averages three blocks, then sequentially pairs frames. Dataset: https://www.kaggle.com/datasets/vijuls/PupilDiameterDatasets . Dataset bytes not inspected. Classical rank-nullity, Fourier analysis and Lipschitz inequalities are prior art; this is a source-specific audit, not a new general theorem.
