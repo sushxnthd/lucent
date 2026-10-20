@@ -1,0 +1,11 @@
+{
+  "status":"PASS",
+  "exact_rational_extremizers":9900,
+  "randomized_weight_bounds":5000,
+  "independent_rgb_collision":true,
+  "unseen_contrast_transition":0.53,
+  "unseen_visibility_transition":1.1275510204081634,
+  "maximum_observed_random_bias":0.03591161770422335,
+  "human":"NOT RUN",
+  "novelty":"NOT ESTABLISHED"
+}
