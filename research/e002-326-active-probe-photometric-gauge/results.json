@@ -1,0 +1,1 @@
+{"holdout":[{"s":0.219,"margin":-0.02600000000000001,"actual":"ABSTAIN"},{"s":0.222,"margin":0.034000000000000044,"actual":"CERTIFY"}],"critical_start_seconds":0.2203,"randomized_cases":250,"max_grid_approximation_gap":2.7755575615628914e-17,"full_rgb_smooth_gauge_max_difference":1.1102230246251565e-16,"human_rgb_reference_validation":"NOT_PERFORMED","tests":"PASS"}
