@@ -1,0 +1,1 @@
+Prior art: Fogelton and Benesova, CVIU 2016 and 2018; Kwon et al., J R Soc Interface 2013; Godfrey et al., Ophthalmic Plastic Reconstr Surg 2019. Frame-index phase coverage is not novel. The EyeBlink8 manual labels are RGB-derived and not an independent high-speed reference. No clinical or fatigue claims are supported.
