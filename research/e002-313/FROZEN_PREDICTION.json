@@ -1,0 +1,16 @@
+{
+  "kernel": "E002-313",
+  "status": "synthetic model prediction only",
+  "r": 0.5,
+  "width": 0.6,
+  "critical_shift": 0.10294372515228592,
+  "below": {
+    "shift": 0.08,
+    "certify": false
+  },
+  "above": {
+    "shift": 0.12,
+    "certify": true
+  },
+  "human_holdout": false
+}
