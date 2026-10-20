@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "randomized_geometries": 2000,
+  "randomized_interior_checks": 40000,
+  "extremal_witness_checks": 4000,
+  "max_witness_abs_error": 3.3306690738754696e-16,
+  "critical_epsilon_exact": "15/121",
+  "critical_epsilon_decimal": 0.12396694214876033,
+  "at_0.12": "CLOSED",
+  "at_0.124": "ABSTAIN",
+  "human_data_tested": false
+}
