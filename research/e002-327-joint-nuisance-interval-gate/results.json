@@ -1,0 +1,17 @@
+{
+  "exact_rational_endpoint_cases": 4,
+  "random_feasible_trials": 400,
+  "independent_vertex_enumeration_checks": 200,
+  "critical_B": 0.05,
+  "controls": {
+    "geometry_only": "abstain",
+    "brightness_only": "certify_positive",
+    "missingness_full": "certify_positive",
+    "missingness_dropped": "abstain",
+    "smoothness_only": "abstain"
+  },
+  "unrestricted_nuisance": "unbounded",
+  "human_records_evaluated": 0,
+  "novelty": "not established",
+  "remote_CI": "unverified"
+}

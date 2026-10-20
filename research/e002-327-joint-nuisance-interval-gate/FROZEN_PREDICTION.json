@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-20",
+  "human_outcomes_seen": false,
+  "synthetic_only": true,
+  "y": [
+    0.06,
+    0.06
+  ],
+  "h": [
+    1,
+    1
+  ],
+  "N": [
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      -1
+    ]
+  ],
+  "eta": [
+    0.01,
+    0.01
+  ],
+  "Bcrit": 0.05,
+  "predictions": [
+    {
+      "B": 0.04,
+      "decision": "certify_positive"
+    },
+    {
+      "B": 0.055,
+      "decision": "abstain"
+    }
+  ],
+  "human_prediction": "not frozen; calibration unavailable"
+}
