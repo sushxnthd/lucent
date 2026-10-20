@@ -1,0 +1,1 @@
+Shannon (1949) sampling theorem DOI:10.1109/JRPROC.1949.232969; Papoulis (1977) generalized sampling DOI:10.1109/TCS.1977.1084284; Unser (2000) sampling and stability DOI:10.1109/5.843002. RGBE-Gaze (TPAMI 2025) is a candidate RGB/event/gaze-reference dataset. No human data analyzed. Rank, aliasing, and conditioning results are classical; novelty unproven.
