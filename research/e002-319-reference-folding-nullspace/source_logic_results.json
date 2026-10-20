@@ -1,0 +1,12 @@
+{
+  "ideal_case_pandas_reproduction": true,
+  "unequal_bin_counts": [
+    89,
+    90,
+    91
+  ],
+  "unequal_label_rows_before_frame_truncation": 91,
+  "unequal_label_rows_after_frame_truncation": 90,
+  "unequal_mean_preservation_error": 0.000820648552606773,
+  "actual_human_dataset_bytes": "NOT INSPECTED"
+}
