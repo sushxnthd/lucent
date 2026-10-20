@@ -1,8 +1,9 @@
 # E002-316 failed gates
 - Full-image absolute aperture with unknown blur and contrast: exact nonidentifiability (negative result).
+- **Two-frame anatomical aperture-change sign:** exact opposite-trend collision despite identical complete RGB videos when contrast and PSF vary independently between exposures.
 - E002-315 separable-edge prerequisite: not guaranteed for overlapping band.
 - Cropping: fails area invariant; synthetic loss 8.8889%.
-- Temporal smoothness: does not repair collision; static worlds suffice.
+- Temporal smoothness: does not repair within-exposure collision; static worlds suffice.
 - Real ordinary-RGB / high-speed reference: NOT RUN.
 - Band model under iris texture, gaze, glasses, nonlinear ISP: NOT VALIDATED.
 - Unseen human boundary: NOT RUN; synthetic frozen prediction only.

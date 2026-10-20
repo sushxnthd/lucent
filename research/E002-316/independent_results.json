@@ -1,5 +1,6 @@
 {
-  "exact_rational_collision": true,
+  "exact_rational_full_image_collision": true,
+  "exact_two_frame_opposite_trend_collision": true,
   "rgb_exact_channels": 3,
   "randomized_moment_trials": 1200,
   "max_area_error": 1.4210854715202004e-14,
