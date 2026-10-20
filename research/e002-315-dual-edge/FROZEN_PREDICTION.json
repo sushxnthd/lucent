@@ -1,0 +1,16 @@
+{
+  "kernel": "E002-315 dual-edge differential observability",
+  "frozen_before_checks": true,
+  "signal": "(centroid(lower edge)-centroid(upper edge))/canthal width",
+  "reference": "synchronized high-speed shutter-mean normalized aperture",
+  "synthetic": {
+    "delta": 0.06,
+    "common_motion_excursion": 0.25,
+    "r_critical": 0.7857142857142857,
+    "low_r": 0.75,
+    "low_decision": "abstain",
+    "high_r": 0.85,
+    "high_decision": "certify"
+  },
+  "human_holdout": "NOT_RUN"
+}
