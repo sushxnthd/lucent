@@ -1,0 +1,123 @@
+{
+  "protocol": "research/e002-335/PROTOCOL_FROZEN.md",
+  "status": "Human RGB annotations evaluated; no independent high-speed reference; not publication breakthrough",
+  "data": "EyeBlink8 annotation mirror gbonesso/recon_loc_caract_faces main",
+  "nominal_sampling": "native 30fps labels, retain frameID mod 3 for nominal 10fps; no shutter or timestamp validation",
+  "clips": [
+    {
+      "id": 2,
+      "frames": 11123,
+      "events": 88,
+      "eligible": 86,
+      "closure_survival": [
+        0,
+        1,
+        0,
+        85
+      ],
+      "glass": false
+    },
+    {
+      "id": 3,
+      "frames": 9216,
+      "events": 65,
+      "eligible": 53,
+      "closure_survival": [
+        0,
+        5,
+        12,
+        36
+      ],
+      "glass": false
+    },
+    {
+      "id": 4,
+      "frames": 5315,
+      "events": 31,
+      "eligible": 29,
+      "closure_survival": [
+        0,
+        2,
+        8,
+        19
+      ],
+      "glass": false
+    },
+    {
+      "id": 8,
+      "frames": 10663,
+      "events": 30,
+      "eligible": 30,
+      "closure_survival": [
+        0,
+        0,
+        5,
+        25
+      ],
+      "glass": false
+    },
+    {
+      "id": 9,
+      "frames": 5060,
+      "events": 41,
+      "eligible": 41,
+      "closure_survival": [
+        0,
+        0,
+        2,
+        39
+      ],
+      "glass": false
+    },
+    {
+      "id": 10,
+      "frames": 9014,
+      "events": 72,
+      "eligible": 71,
+      "closure_survival": [
+        0,
+        2,
+        14,
+        55
+      ],
+      "glass": false
+    },
+    {
+      "id": 11,
+      "frames": 4890,
+      "events": 43,
+      "eligible": 41,
+      "closure_survival": [
+        0,
+        2,
+        9,
+        30
+      ],
+      "glass": true,
+      "holdout": true
+    }
+  ],
+  "aggregate": {
+    "frames": 55281,
+    "annotated_blinks": 370,
+    "blink_interval_phase_survival": "370/370 across each of 3 phases",
+    "native_visible_closure_positive_events": 351,
+    "closure_survival_1phase": 12,
+    "closure_survival_2phases": 50,
+    "closure_survival_3phases": 289,
+    "phase_event_pairs": 1053,
+    "phase_event_pairs_missing_closure": 74,
+    "loss_rate": 0.07027540360873694,
+    "events_with_at_least_one_phase_losing_closure": 62,
+    "holdout_glasses_closure_events": 41,
+    "holdout_glasses_lost_phase_event_pairs": 13,
+    "holdout_glasses_total_phase_event_pairs": 123
+  },
+  "failure_gates": [
+    "Clip 1 .tag blob 1,057,408 bytes yielded empty content through fetch_file; excluded before outcome inspection; no imputation.",
+    "EyeBlink8 tags are RGB-based manual annotations, not an independently synchronized 100Hz+ ocular reference.",
+    "Source acquisition timestamp files absent in mirrored subset; frame-index decimation is not physical 10fps acquisition.",
+    "Device/participant identity mapping not independently verified; clip 11 is a glasses-flagged holdout, not a device/participant holdout."
+  ],
+  "conclusion": "Every-third-frame decimation preserved all annotated blink intervals, but removed all native full-closure evidence in 74 of 1053 phase-by-event cases (7.03%). The sharp mechanism is 1/2-frame closure runs vs three decimation phases; do not equate blink detection with closure completeness."
+}
