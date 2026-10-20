@@ -1,0 +1,23 @@
+{
+  "experiment": "E002-336 bounded-drift clock sign gate",
+  "status": "conditional theorem and local synthetic verification only",
+  "randomized_corner_trials": 2000,
+  "corner_checker": "passed",
+  "frozen_prediction": {
+    "t0_seconds": 0,
+    "t1_seconds": 10,
+    "anchor_errors_seconds": [
+      0.004,
+      0.004
+    ],
+    "drift_lipschitz_seconds_per_second": 0.001,
+    "rgb_event_error_seconds": 0.006,
+    "reference_event_error_seconds": 0.01,
+    "midpoint_bound_seconds": 0.025,
+    "lag_24ms": "abstain",
+    "lag_26ms": "positive"
+  },
+  "human_rgb_reference_evaluated": false,
+  "publication_novelty": false,
+  "github_actions_range_probe": "pending"
+}

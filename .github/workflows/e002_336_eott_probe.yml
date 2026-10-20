@@ -1,0 +1,24 @@
+name: E002-336 bounded EOTT range probe
+on:
+  push:
+    branches:
+      - research/e002-336-paired-clock-gate
+    paths:
+      - 'research/e002-336/**'
+      - '.github/workflows/e002_336_eott_probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check independent clock gate
+        run: python research/e002-336/independent_checker.py
+      - name: Probe EOTT byte ranges without bulk download
+        run: python research/e002-336/eott_probe.py
