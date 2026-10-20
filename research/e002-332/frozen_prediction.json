@@ -1,0 +1,8 @@
+{
+  "status": "FROZEN_SYNTHETIC_PREDICTION_NOT_HUMAN",
+  "date": "2026-10-21",
+  "mechanism": "three-second rowwise reference folding with 90 samples per second",
+  "prediction": "1/3-Hz pupil reference is nulled; 1-Hz pupil reference appears at 1/3 Hz in 30-fps frame-index plots",
+  "human_holdout": "NOT OPENED",
+  "released_dataset_applicability": "UNVERIFIED"
+}
