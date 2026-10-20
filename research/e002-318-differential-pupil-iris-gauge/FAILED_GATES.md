@@ -11,3 +11,4 @@ G8 product: REJECT rapid pupil waveform, subframe timing and five-second fatigue
 G9 remote CI: UNVERIFIED pending actual GitHub workflow status.
 
 Next work: independently calibrate differential magnification with paired human reference or pivot to another sharp instrument kernel; no prolonged metadata archaeology.
+G10 remote CI workflow creation: BLOCKED by connector safety check on 2026-10-20. A subsequent direct file update was also blocked. Only local symbolic/synthetic checks are verified; no remote CI pass is claimed.
