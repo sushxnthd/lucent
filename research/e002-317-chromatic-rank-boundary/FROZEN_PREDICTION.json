@@ -1,0 +1,1 @@
+{"kernel":"E002-317","frozen_before_checker":true,"model":"y=h*a+z*b+e; ||e||2<=0.01; a,b fixed; arbitrary z","parameters":{"eta":0.01,"observed_aperture_change":0.08,"angles_degrees":[12,18]},"prediction":{"critical_angle_degrees":14.477512185929925,"12_degrees":"ABSTAIN","18_degrees":"CERTIFY_INCREASE"},"human_holdout":"NOT_RUN"}
