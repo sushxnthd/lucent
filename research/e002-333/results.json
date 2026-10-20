@@ -1,0 +1,22 @@
+{
+  "kernel": "E002-333",
+  "date": "2026-10-21",
+  "status": "SYNTHETIC_ONLY",
+  "randomized_analytic_collisions": 1500,
+  "independent_quadrature_checks": 1502,
+  "max_analytic_collision_discrepancy": 2.220446049250313e-16,
+  "max_independent_quadrature_discrepancy": 0.0002439572971327797,
+  "max_two_frame_identity_discrepancy": 2.842170943040401e-14,
+  "frozen": {
+    "E": 0.01,
+    "delta": 0.000014,
+    "F": 0.03333333333333333,
+    "w": 5,
+    "v_plus": 496.5243296921549,
+    "v_minus": -503.5246727089628,
+    "rgb_max_abs_difference": 5.551115123125783e-17,
+    "critical_H": 16.166666666666664
+  },
+  "human_data_evaluated": false,
+  "novelty_established": false
+}
