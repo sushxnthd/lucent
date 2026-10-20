@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-20",
+  "status": "conditional synthetic geometry, no human validation",
+  "projective_invariant_random_tests": 1000,
+  "area_law_random_tests": 1000,
+  "max_projective_ratio_absolute_error": 4.440892098500626e-16,
+  "max_area_law_absolute_error": 2.220446049250313e-16,
+  "critical_projective_q_rho_0_4_delta_0_05": 0.27877880968035884,
+  "exact_rational_pinhole_collision": true,
+  "exact_rational_temporal_collision": true,
+  "pixel_identical_rgb_frames_opposite_physiological_slopes": 11,
+  "effective_depth_change_fraction": "2/101",
+  "nuisance_controls": "geometry, brightness, missingness, temporal smoothness identical across two worlds",
+  "human_validation": "NOT RUN",
+  "novelty": "NOT ESTABLISHED",
+  "remote_ci": "NOT VERIFIED"
+}
