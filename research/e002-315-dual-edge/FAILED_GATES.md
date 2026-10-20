@@ -1,0 +1,11 @@
+# Negative results and failed gates
+- HUMAN_EVIDENCE: FAIL, no synchronized ordinary RGB/high-speed reference evaluated.
+- FIELD_NOVELTY: FAIL/OPEN, classical EAR/blur-moment/total-variation prior art.
+- DIFFERENTIAL_GAIN: exact rational false-aperture bias 1/3 at r=1/2, unchanged true aperture.
+- MISSINGNESS: cropping synthetic edge profiles at pixel 65 changes centroid separation from 30 to 15.0945946; must abstain if missing mass unknown.
+- TEMPORAL_SMOOTHNESS: smooth opposing gains and gaze create false separation .0948465 within predicted .10 bound.
+- CAMERA/GLASSES: rolling shutter, spatially nonuniform reflection, changing scale and separate PSFs uncalibrated.
+- 10HZ: cannot certify rapid waveform or subframe blink velocity.
+- PRODUCT: reject five-second fatigue certification.
+- LOCAL_TEST_FAILURES_PRESERVED: initial crop pixel 105 was outside support (no bias); corrected to pixel 65. NumPy bool JSON serialization fixed.
+- REMOTE_CI: unverified until a completed status check is observed.
