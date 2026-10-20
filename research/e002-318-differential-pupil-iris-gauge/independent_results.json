@@ -1,0 +1,17 @@
+{
+  "checker": "independent symbolic + randomized feasibility",
+  "symbolic_characteristic": "(lambda - 1)**2*(25*lambda - 9)/25",
+  "exact_eigenvalue_multiset": [
+    "1",
+    "1",
+    "9/25"
+  ],
+  "exact_critical_rho": "50/53",
+  "frozen_prediction_passed": true,
+  "exact_bounded_opposite_trend_collision": true,
+  "randomized_envelope_trials": 30000,
+  "max_lower_violation": 0,
+  "max_upper_violation": 0,
+  "human_data": "NOT RUN",
+  "prior_art_warning": "Wang et al. (2019) already derive conic ratio"
+}

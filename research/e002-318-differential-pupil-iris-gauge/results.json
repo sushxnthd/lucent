@@ -1,0 +1,75 @@
+{
+  "experiment": "E002-318",
+  "model_only": true,
+  "human_reference": "NOT RUN",
+  "geometry_only": {
+    "n": 1000,
+    "max_abs_error": 4.440892098500626e-16,
+    "passed": true
+  },
+  "brightness_only": {
+    "gains": [
+      0.1,
+      0.5,
+      1,
+      1.5
+    ],
+    "calibrated_max_error": 1.1102230246251565e-16,
+    "clipped_uncorrectable_error": 0.2566666666666667,
+    "passed": true
+  },
+  "full_rgb_opposite_trend_collision": {
+    "calibrated_rho": 0.94,
+    "q_true_world_A": [
+      0.5,
+      0.5638297872340426
+    ],
+    "q_true_world_B": [
+      0.5,
+      0.4982
+    ],
+    "m_world_A": [
+      1,
+      0.94
+    ],
+    "m_world_B": [
+      1,
+      1.0638297872340425
+    ],
+    "max_rgb_pixel_error": 0,
+    "bitwise_identical": true
+  },
+  "frozen_prediction": {
+    "critical_rho": 0.9433962264150942,
+    "rho_094": {
+      "interval": [
+        0.9964,
+        1.1276595744680853
+      ],
+      "certify": false
+    },
+    "rho_095": {
+      "interval": [
+        1.007,
+        1.1157894736842107
+      ],
+      "certify": true
+    }
+  },
+  "missingness_only": {
+    "hidden_pixel_fraction": 0.089599609375,
+    "distinct_true_ratios": [
+      0.45,
+      0.65
+    ],
+    "visible_rgb_max_error": 0,
+    "visible_images_identical": true
+  },
+  "temporal_smoothness": {
+    "loader_rate_hz": 10,
+    "native_rate_hz": 30,
+    "loader_max_deviation_from_constant": 0,
+    "native_max_deviation_from_constant": 0.03000000000000036,
+    "qualification": "Instantaneous samples only; shutter integration not modeled"
+  }
+}

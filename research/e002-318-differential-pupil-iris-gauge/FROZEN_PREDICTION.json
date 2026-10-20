@@ -1,0 +1,19 @@
+{
+  "id": "E002-318",
+  "frozen_before_experiments": "2026-10-20",
+  "question": "Can a projective pupil/iris invariant certify anatomical change under bounded differential pupil-vs-iris magnification?",
+  "signal": "conic-pencil apparent pupil/iris radius p",
+  "reference": "independent anatomical radius ratio q",
+  "hypothetical_parameters": {
+    "p0": 0.5,
+    "p1": 0.53,
+    "drift_bound": "rho <= m1/m0 <= 1/rho"
+  },
+  "critical_rho": "50/53",
+  "decisions": {
+    "rho=0.94": "ABSTAIN",
+    "rho=0.95": "CERTIFY_INCREASE"
+  },
+  "human_test": "NOT RUN",
+  "prior_art": "Wang, Chern & Alexa 2019 already derive projective conic ratio"
+}

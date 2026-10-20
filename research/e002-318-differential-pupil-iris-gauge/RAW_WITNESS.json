@@ -1,0 +1,33 @@
+{
+  "name": "E002-318 exact bounded full-RGB opposite-trend witness",
+  "apparent_pupil_iris_ratio": [
+    0.5,
+    0.53
+  ],
+  "rho": "47/50",
+  "world_A": {
+    "q_true": [
+      "1/2",
+      "53/94"
+    ],
+    "m": [
+      "1",
+      "47/50"
+    ],
+    "trend": "increase"
+  },
+  "world_B": {
+    "q_true": [
+      "1/2",
+      "2491/5000"
+    ],
+    "m": [
+      "1",
+      "50/47"
+    ],
+    "trend": "decrease"
+  },
+  "identical_visible_scene": "Both worlds have effective pupil ratios [1/2,53/100] and identical iris contours, homographies, RGB reflectances and shutter",
+  "mathematical_equality": "q_A(t)*m_A(t)=q_B(t)*m_B(t) for both frames",
+  "human_physical_realizability": "NOT TESTED"
+}
