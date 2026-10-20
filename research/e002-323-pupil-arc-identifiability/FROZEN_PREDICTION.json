@@ -1,0 +1,15 @@
+{
+  "frozen_before_checker": true,
+  "model": "known-chord minor circular arc, bounded sagitta extraction error, no human data",
+  "R_pixels": 20,
+  "epsilon_pixels": 0.2,
+  "target_relative_upper_error": 0.1,
+  "predicted_finite_radius_transition_deg": 16.219228911988367,
+  "predicted_10pct_upper_error_transition_deg": 51.80323311930823,
+  "unseen_synthetic_cases": [
+    {"span_deg": 15, "prediction": "unbounded upper radius"},
+    {"span_deg": 20, "prediction": "finite but >10% upper error"},
+    {"span_deg": 49, "prediction": "finite but >10% upper error"},
+    {"span_deg": 55, "prediction": "finite and <=10% upper error"}
+  ]
+}

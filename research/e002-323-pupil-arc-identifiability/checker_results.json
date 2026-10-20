@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "randomized_feasible_cases": 400,
+  "samples_per_random_case": 501,
+  "finite_radius_transition_deg": 16.219228911988317,
+  "ten_percent_transition_deg": 51.80323311930822,
+  "frozen_cases": [
+    {"span_deg": 15, "sagitta_pixels": 0.17110277252379236, "radius_interval_pixels": [9.367421270768654, null], "classification": "unbounded upper radius"},
+    {"span_deg": 20, "sagitta_pixels": 0.3038449397558396, "radius_interval_pixels": [12.221354820099839, 58.12637400876505], "classification": "finite but >10% upper error"},
+    {"span_deg": 49, "sagitta_pixels": 1.8007745824691357, "radius_interval_pixels": [18.19077815400925, 22.286296349021853], "classification": "finite but >10% upper error"},
+    {"span_deg": 55, "sagitta_pixels": 2.2597833364355657, "radius_interval_pixels": [18.565709719041628, 21.732242061384646], "classification": "finite and <=10% upper error"}
+  ],
+  "controls": {"geometry_scaling":"PASS","brightness_segmentation_budget":"PASS","missing_arc":"PASS","temporal_smoothness":"PASS"},
+  "human_data": "NONE",
+  "independent_checker": "does not import model.py"
+}

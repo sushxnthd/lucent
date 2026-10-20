@@ -1,0 +1,3 @@
+# E002-323 repository write-through
+
+Protocol, theorem, prior-art audit, negative gates, product rules, frozen synthetic prediction, executable model, independent checker and synthetic derived outputs committed on isolated research/e002-323-pupil-arc-identifiability branch. No human raw data exist. Complete standalone downloadable local package contains the same scientific result plus hashes. The GitHub checker is a simplified independent implementation, so its generated JSON may omit fields present in the downloadable local package. No CI workflow was created; remote CI remains unverified.
