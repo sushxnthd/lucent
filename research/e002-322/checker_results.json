@@ -1,0 +1,18 @@
+{
+  "pass": true,
+  "n_lp_cases": 14,
+  "n_witness_cases": 500,
+  "n_occupancy_checks": 500,
+  "max_occupancy_error_seconds": 0.000003924632687911378,
+  "max_lp_gap": 0.0006401141794961096,
+  "holdout_prediction": 0.09636240805676727,
+  "holdout_lp": 0.09617035809018547,
+  "holdout_peak_time_seconds": 0.0038943384089831145,
+  "controls": {
+    "geometry_only": "false zero under -0.12 bias; invalid without calibrated error",
+    "brightness_only": "false zero under -0.20 bias; invalid without calibrated error",
+    "missingness_only": "40-ms additional gap raises peak from 0.0963624 to 0.1963624",
+    "temporal_smoothness_only": "directional peak 0.0963624 vs symmetric Lmax 0.2434196; unbounded speeds give 1"
+  },
+  "human_evidence": false
+}

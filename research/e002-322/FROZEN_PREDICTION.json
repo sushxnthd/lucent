@@ -1,0 +1,16 @@
+{
+  "frozen_before_checker": true,
+  "status": "synthetic instrument holdout; not human evidence",
+  "rise_speed_U_per_s": 15,
+  "fall_speed_D_per_s": 3,
+  "left_exposure_seconds": 0.008,
+  "right_exposure_seconds": 0.014,
+  "dark_gap_seconds": 0.025,
+  "left_exposure_mean_upper": 0.006,
+  "right_exposure_mean_upper": 0.013,
+  "predicted_sharp_peak": 0.09636240805676727,
+  "predicted_decisions": {
+    "threshold_0.095": "crossing feasible; abstain",
+    "threshold_0.100": "crossing excluded under model"
+  }
+}
