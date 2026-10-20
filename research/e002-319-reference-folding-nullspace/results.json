@@ -1,0 +1,12 @@
+{
+  "rank": 90,
+  "nullity": 180,
+  "slow_null_max_abs_deviation_mm": 0,
+  "slow_null_native_rgb_peak_to_peak_mm": 0.39975633080763817,
+  "random_session_mean_max_error": 1.7763568394002505e-15,
+  "linear_drift_slope_ratio": 0.3333333333333345,
+  "Lipschitz_first_frame_coefficient": 1,
+  "Lipschitz_mid_frame_coefficient": 0.6666666666666666,
+  "Lipschitz_last_frame_coefficient": 0.9925925925925926,
+  "human_evaluation": "NOT PERFORMED"
+}
