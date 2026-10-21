@@ -1,0 +1,13 @@
+{
+  "experiment": "E002-339",
+  "model": "nonnegative Lipschitz velocity with sampled endpoint positions",
+  "verification": "passed",
+  "lp_trials": 80,
+  "quadrature_trials": 1000,
+  "endpoint_trials": 1000,
+  "exposure_bias_checks": 500,
+  "max_lp_relative_gap": 0.0005605933022014199,
+  "human_evidence": "not tested",
+  "publication_novelty": "not established",
+  "remote_ci": "not verified"
+}
