@@ -1,0 +1,5 @@
+# E002-351 — Shutter-transfer observability
+
+A high-speed frame-decimated stream and a native low-fps RGB camera do not generally measure the same eyelid signal if shutter widths differ. For a V-Lipschitz temporal signal, box-shutter discrepancy is bounded sharply by V times the Wasserstein-1 distance between shutter kernels. For equal exposure centers the bound is V|w1-w2|/4. With 2-ms vs 20-ms exposures, a contiguous closure can cover 45% of native exposure while the short exposure sees zero. Mathematical identities are classical. No new human paired validation or publication novelty claimed.
+
+Local reproducibility package: lucent_e002_351_shutter_transfer.zip (2026-10-22). Product: do not transfer high-speed decimation findings to native ordinary-RGB without shutter and nuisance calibration.
