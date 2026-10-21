@@ -1,0 +1,20 @@
+{
+  "status": "PASS_REDUCED_MODEL_ONLY",
+  "checks": {
+    "affine_polygon": 220,
+    "gaze_monotonic_grid": 121200,
+    "interval_coverage": 10000,
+    "scalar_collision": 1
+  },
+  "max_relative_affine_invariant_error": 6.5503158452884236e-15,
+  "max_gaze_range_violation": 2.636779683484747e-16,
+  "gaze_nuisance_log_range": [
+    -0.03428111405820221,
+    0.031608482300442525
+  ],
+  "positive_change_certification_threshold_log": 0.03660848230044252,
+  "negative_change_certification_threshold_log": -0.039281114058202206,
+  "human_reference_evaluation": "NOT_RUN",
+  "rgb_pixel_collision": "NOT_CLAIMED",
+  "publication_novelty": "NOT_ESTABLISHED"
+}
