@@ -1,0 +1,1 @@
+At a peak P, nonnegative A-Lipschitz velocity satisfies v(t)>=max(P-A*abs(t-tpeak),0). Its minimum integral for fixed P occurs at an endpoint. Integrating and inverting gives the sharp upper envelope. Constant velocity attains the lower bound. The endpoint tent attains the upper bound.
