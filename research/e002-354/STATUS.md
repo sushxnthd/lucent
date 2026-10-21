@@ -1,0 +1,2 @@
+# E002-354
+Partial-arc observability: three-point circle radius has no finite upper bound when measured sagitta is at or below twice the independent coordinate-error bound. This is a reduced measurement-model result; no independent human validation. Full artifacts in local reproducibility archive.
