@@ -1,0 +1,40 @@
+{
+  "source": "EyeBlink8 clip 1 native RGB manual annotation",
+  "source_sha": "048ae496568af1c14fb53001917f220829e9039c",
+  "events": 38,
+  "eligible": 32,
+  "one": 1,
+  "two": 7,
+  "three_plus": 24,
+  "nonconsecutive": 0,
+  "phase_erasure": {
+    "2": [
+      1,
+      64
+    ],
+    "3": [
+      9,
+      96
+    ],
+    "4": [
+      27,
+      128
+    ],
+    "5": [
+      53,
+      160
+    ],
+    "6": [
+      82,
+      192
+    ]
+  },
+  "predicted_bands": {
+    "2": 0.05,
+    "3": 0.15
+  },
+  "predictions_passed": true,
+  "independent_reference": false,
+  "publication_threshold_met": false,
+  "github_prereg_frozen_before_access": false
+}

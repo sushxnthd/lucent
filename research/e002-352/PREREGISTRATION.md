@@ -1,0 +1,5 @@
+# Local preregistration copied after holdout access
+
+Local frozen SHA256 of preregistration: 5dee0291b69f999939e8b00c88ce24708017c0f2fdb8758f72776ae5f691bfe7. Local freeze occurred before reading clip-1 tag; two attempts to write this file via GitHub contents API were blocked. Thus GitHub timestamp is NOT independent proof of prospective registration.
+
+Held out: EyeBlink8 clip 1; development: clips 2,3,4,8,9,10,11. Signal: native RGB manual annotations. Valid clean frame: blink ID nonnegative, NF=LE_NV=RE_NV=X, LE_FC=RE_FC=C. Test exact m-fold phase erasure m=2,3,4,5,6. Predictions for clip 1: average erasure <=5% at m=2, <=15% at m=3; pooled development points 1.71%, 7.03%. Falsify empirical transfer if either bound exceeded. No frame-to-ms conversion absent verified timestamps. No independent high-speed reference. Geometry-only NF flag, visibility-only nuisance proxy, missingness decimation and temporal imputation abstention; brightness intervention not available. No fatigue certification.
