@@ -1,0 +1,12 @@
+# Failed gates
+- Remote preregistration BEFORE holdout: FAILED (two contents API writes blocked; local frozen hash preserved).
+- Independent synchronized high-speed reference: FAILED.
+- Participant/device holdout: FAILED; clip holdout only, participant overlap possible.
+- Geometry-only: FAILED (no nonfrontal frames in annotated events).
+- Brightness-only: FAILED (no calibrated intervention; visibility flags only).
+- Glasses: FAILED (clip 1 metadata says NO).
+- Native exposure and millisecond timestamp units: FAILED.
+- Novelty and publication threshold: FAILED.
+- Missingness-only all-phase decimation: PASS.
+- Empirical clip-level 2x and 3x precommitted prediction bands: PASS.
+- Independent local checker, phase enumeration/residue/closed-form: PASS.
