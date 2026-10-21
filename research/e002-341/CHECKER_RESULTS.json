@@ -1,0 +1,36 @@
+{
+  "kernel": "E002-341",
+  "model": "L-Lipschitz nuisance; infinity-norm feature error eta",
+  "theorem": "exists i<j with abs(beta*(s_i-s_j))>2*L*(t_j-t_i)+4*eta",
+  "lp_oracle": {
+    "random_cases": 650,
+    "boundary_pairs": 185,
+    "geometry_only": 1,
+    "brightness_only": 1,
+    "missingness_only": 1,
+    "temporal_smoothness_only": 1,
+    "exact_constructions": 2
+  },
+  "example": {
+    "t_seconds": [
+      0,
+      0.1,
+      0.2,
+      0.3
+    ],
+    "s": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "beta": 1,
+    "eta": 0.1,
+    "L_critical": 3,
+    "L_2_9": "certifiable",
+    "L_3_0": "indistinguishable",
+    "L_3_1": "indistinguishable"
+  },
+  "human_validation": false,
+  "novelty": false
+}
