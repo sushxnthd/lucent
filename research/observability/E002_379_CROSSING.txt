@@ -1,0 +1,1 @@
+E002-379 frozen synthetic crossing: at A=12000/s2, e=0.005, sinusoidal speed 50/s, expected adjacent 800fps certificate, adjacent 240fps and 2400fps abstention, and multiscale 2400fps certificate. No human evidence.
