@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "evidence": "synthetic exact-rational full-RGB instrument only",
+  "human_validation": false,
+  "instrument": {"closure_ms": 42, "period_ms": 50, "exposure_ms": 10, "residual_bound": 0.01},
+  "worst_shutter_phase_ms": 41,
+  "minimum_maximum_overlap_ms": 1,
+  "pixel_channel_frame_components_per_test": 576,
+  "contrasts": [
+    {"c_inf": 0.15, "Xi": 0.75, "exact_collision": true, "max_per_history_residual": 0.0075},
+    {"c_inf": 0.20, "Xi": 1.0, "exact_collision": true, "max_per_history_residual": 0.01},
+    {"c_inf": 0.30, "Xi": 1.5, "exact_collision": false, "max_per_history_residual_to_force_midpoint": 0.015}
+  ],
+  "unseen_synthetic_condition": {"fps": 30, "worst_overlap_ms": 9.333333333333334, "c_inf": 0.15, "collision": false},
+  "randomized_grid_checks": 60,
+  "optical_stress_8bit_20fps": {"clean": true, "blur_1px": true, "blur_2px": false, "blur_4px": false, "blur_8px": false, "missing_eye": false, "global_gain": false, "local_drift": false},
+  "optical_stress_8bit_30fps": {"clean": true, "blur_1px": true, "blur_2px": true, "blur_4px": true, "blur_8px": true, "missing_eye": false, "global_gain": true, "local_drift": true},
+  "failed_gates": ["no paired human test", "no physical camera calibration", "novelty unestablished"]
+}
