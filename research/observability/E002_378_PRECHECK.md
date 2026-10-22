@@ -1,0 +1,1 @@
+E002-378 prediction frozen: rho*A > 2*b+4*epsilon. Synthetic only.
