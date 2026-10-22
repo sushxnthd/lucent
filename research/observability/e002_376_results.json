@@ -1,0 +1,21 @@
+{
+  "experiment": "E002-376",
+  "kind": "synthetic instrument, no human evidence",
+  "checks": 132111,
+  "phase_grid": 2000,
+  "random_regimes": 300,
+  "random_phase_grid": 400,
+  "probabilities_full_exposure": {
+    "10fps": 0.48,
+    "20fps": 0.96,
+    "25fps": 1,
+    "30fps": 1
+  },
+  "probabilities_half_exposure": {
+    "10fps": 0.58,
+    "20fps": 1
+  },
+  "correlated_100_event_miss": true,
+  "preregistered": true,
+  "novelty_established": false
+}
