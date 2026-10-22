@@ -14,3 +14,5 @@ jobs:
           python-version: '3.11'
       - name: Check exact rational shutter phase law
         run: python research/observability/e002_376_checker.py
+      - name: Check camera-qualification abstention behavior
+        run: python research/observability/test_certificate.py
