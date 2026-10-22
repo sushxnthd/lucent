@@ -1,0 +1,1 @@
+E002-376 frozen prediction (2026-10-23): D=58ms, w=10ms, required overlap m=10ms. Under uniform shutter phase, expected event capture probabilities are 0.48 at 10fps, 0.96 at 20fps, 1 at 25fps, 1 at 30fps. Formula conditional on D>=m: p=min(1,(D+w-2m)/F); otherwise p=0. Human validation not completed. This is a shutter-overlap prediction, not RGB detection.
