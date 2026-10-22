@@ -1,0 +1,32 @@
+{
+  "experiment": "E002-373",
+  "date": "2026-10-22",
+  "human_data": false,
+  "model": "calibrated scalar shutter-averaged aperture; speed and acceleration bounded",
+  "exact_30fps": {
+    "fps": 30,
+    "exposure_ms": 10,
+    "shutter_mean_fraction": "191/192",
+    "constant_comparator": "191/192",
+    "min_aperture_fraction": "1/12",
+    "threshold": "1/5",
+    "closure_duration_ms": 6.831300510639732,
+    "max_velocity_per_s": 100,
+    "max_acceleration_per_s2": 20000,
+    "checker": "PASS"
+  },
+  "frozen_40fps": {
+    "fps": 40,
+    "exposure_ms": 10,
+    "measured_mean": 0.999,
+    "threshold": 0.2,
+    "speed_only_lower_bound": 0.2052786404500042,
+    "lp_min_midpoint": 0.5999305555555573,
+    "prediction": "PASS"
+  },
+  "calibration": {
+    "extra_mean_error_limit_40fps": 0.00025,
+    "lower_bound_60fps": 0.29250092798927235
+  },
+  "status": "conditional exact rational synthetic counterexample; no human validation; novelty not established"
+}
