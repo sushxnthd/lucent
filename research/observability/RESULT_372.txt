@@ -1,0 +1,1 @@
+E002-372: acceleration-bound synthetic LP result. At 30 fps and 10 ms exposure, with resting endpoints, theta=0.2, V=100/s, critical acceleration 27272.727/s^2. LP shows 27000 no closure and 28000 possible. No human validation.
