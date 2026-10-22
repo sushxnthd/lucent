@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-22",
+  "human_validation": false,
+  "novelty_established": false,
+  "independent_union_checks": 1800,
+  "independent_phase_checks": 220,
+  "uncertain_clock_checks": 12000,
+  "exact_rational_checks": 42,
+  "full_rgb_collision": {
+    "identical": true,
+    "frames": 14,
+    "rows": 3,
+    "columns": 16,
+    "channels": 3,
+    "reference_500fps_different_samples": 7
+  },
+  "instrument": {
+    "F_ms": 33.333333333333336,
+    "w_ms": 10,
+    "G_ms": 20,
+    "epsilon": 0.12,
+    "rows": 3
+  },
+  "critical_span_noiseless_ms": 3.3333333333333335,
+  "critical_span_bounded_noise_ms": 6.727445883028762,
+  "observations": [
+    {
+      "span_ms": 6.5,
+      "distance": 0.22391714737574014,
+      "certified": false
+    },
+    {
+      "span_ms": 7,
+      "distance": 0.2592724864350675,
+      "certified": true
+    },
+    {
+      "span_ms": 8,
+      "distance": 0.3299831645537223,
+      "certified": true
+    }
+  ],
+  "nominal_blind_gap_ms": 15.333333333333336,
+  "robust_blind_gap_ms": 16.333333333333336
+}
