@@ -1,0 +1,16 @@
+name: E002-375 shutter overlap checker
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+  workflow_dispatch:
+jobs:
+  shutter-law:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python research/observability/e002_375_checker.py
+      - run: python research/observability/e002_375_simulator.py
