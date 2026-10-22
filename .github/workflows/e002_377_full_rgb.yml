@@ -1,0 +1,18 @@
+name: E002-377 full RGB observability
+on:
+  push:
+    branches: ['research/observability-human-boundary']
+    paths:
+      - 'research/observability/e002_377_independent_checker.py'
+      - '.github/workflows/e002_377_full_rgb.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact rational full RGB checker
+        run: python research/observability/e002_377_independent_checker.py
