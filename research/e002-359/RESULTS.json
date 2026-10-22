@@ -1,0 +1,24 @@
+{
+  "status": "CONDITIONAL_SYNTHETIC_ONLY",
+  "human_validation": "NOT_RUN",
+  "novelty": "NOT_ESTABLISHED",
+  "checks_passed": 205150,
+  "parameters": {
+    "F_ms": 33.3333333333,
+    "w_ms": 10,
+    "D_ms": 30,
+    "r0_px": 5,
+    "r1_px": 5.5,
+    "contrast": 0.3,
+    "epsilon": 0.1
+  },
+  "critical_lid_continuous_px": 4.86152390044,
+  "critical_lid_pixel_integrated_px": 3.0625,
+  "h4_discrete_duration_boundary_ms": 30.996493,
+  "h4_separation": 0.1739926363,
+  "collision_error_radius": 0.08699631817,
+  "full_open_no_blur_boundary_ms": 26.957753,
+  "full_open_blur_1p5_boundary_ms": 30.861806,
+  "max_phase_grid_error": 0.000049093426973,
+  "max_area_quadrature_error": 2.3686652639e-10
+}
