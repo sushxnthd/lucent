@@ -1,0 +1,21 @@
+name: Lucent E002-374 exact instrument checker
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/**
+      - .github/workflows/e002_374_exact.yml
+  workflow_dispatch:
+jobs:
+  exact-rational-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify exact moments, affine collision, and quantized counterexamples
+        run: python research/observability/e002_374_checker.py
