@@ -1,0 +1,1 @@
+E002-379 preregistration, 2026-10-23. Target: calibrate E002-371 velocity bound from finite-rate reference with acceleration bound A and aperture error e. Predicted worst-case adjacent-secant correction U=A*Delta/2+2*e/Delta; minimum at Delta=2*sqrt(e/A). Frozen test: exact checker, synthetic holdout, nuisance abstention. Human validation pending. No fatigue inference.
