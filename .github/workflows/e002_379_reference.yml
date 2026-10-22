@@ -1,0 +1,22 @@
+name: E002-379 finite-reference-rate calibration
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_379_*.py'
+      - '.github/workflows/e002_379_reference.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact rational reference bound
+        run: python research/observability/e002_379_exact.py
+      - name: Frozen synthetic boundary crossing
+        run: python research/observability/e002_379_synthetic.py

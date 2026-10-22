@@ -1,0 +1,38 @@
+{
+  "kernel": "E002-379",
+  "status": "synthetic_only",
+  "A": 12000,
+  "e": 0.005,
+  "H": 0.023333333333333334,
+  "theta": 0.2,
+  "Vcrit": 68.57142857142857,
+  "freeze_commit": "ca3d512113ac423c15aca91dd2715370611e130c",
+  "predictions": [
+    {
+      "fps": 240,
+      "adjacent": 76.84657569276129,
+      "multiscale": 76.84657569276129,
+      "decision": "abstain"
+    },
+    {
+      "fps": 800,
+      "adjacent": 65.43718067660718,
+      "multiscale": 65.43718067660718,
+      "decision": "conditional certificate"
+    },
+    {
+      "fps": 2400,
+      "adjacent": 76.48689223395913,
+      "multiscale": 65.44686205046492,
+      "decision": "adjacent abstain, multiscale conditional certificate"
+    }
+  ],
+  "checks": {
+    "synthetic_runs": 75,
+    "dropout_trials": 800,
+    "rational_identities": 3000,
+    "product_gate_cases": 8
+  },
+  "human_validation": "NOT RUN",
+  "novelty": "NOT ESTABLISHED"
+}
