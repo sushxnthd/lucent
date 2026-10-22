@@ -1,0 +1,30 @@
+{
+  "status": "synthetic_only",
+  "checks_independent": 766,
+  "projective_trials": 600,
+  "projective_max_error": 2.220446049250313e-16,
+  "static": {
+    "q0": 0.45,
+    "q1": 0.5,
+    "noise": 0.005,
+    "delta_critical": 0.042105263157894736,
+    "exact_collision": [
+      "9/20*20/19",
+      "1/2*18/19",
+      "9/19"
+    ]
+  },
+  "temporal": {
+    "amplitude": 0.03,
+    "frequency_hz": 2,
+    "continuous_Kcritical": 0.3771608790310722,
+    "sampled_Kcritical": {
+      "10": 0.35270771166243775,
+      "30": 0.37424589681098186,
+      "60": 0.37541305583684625
+    },
+    "log_noise_critical_30fps_K_0p2": 0.009319893568754196
+  },
+  "human_evidence": false,
+  "novelty_established": false
+}
