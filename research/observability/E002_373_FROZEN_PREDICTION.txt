@@ -1,0 +1,1 @@
+E002-373 frozen prediction: 40 fps, 10 ms exposure, V=0.1 per ms, average aperture at least 0.999. Predicted minimum gap aperture above 0.205, so threshold 0.2 cannot be crossed under the calibrated Lipschitz model. This is synthetic, not human validation.
