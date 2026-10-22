@@ -1,0 +1,23 @@
+{
+  "run": "E002-375",
+  "date": "2026-10-23",
+  "evidence": "synthetic only",
+  "plateau_ms": 58,
+  "exposure_ms": 10,
+  "assertions_full_package": 60306,
+  "full_exposure_fraction": {
+    "10fps": 0.4805,
+    "20fps": 0.9605,
+    "25fps": 1,
+    "30fps": 1,
+    "60fps": 1,
+    "30fps_decimated_to_10Hz": 0.4805
+  },
+  "worst_overlap_ms": {
+    "10fps": 0,
+    "20fps": 9,
+    "25fps": 10,
+    "30fps_decimated_to_10Hz": 0
+  },
+  "human_evaluation": false
+}
