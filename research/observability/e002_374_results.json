@@ -1,0 +1,49 @@
+{
+  "evidence": "exact synthetic instrument only",
+  "moments_variable": [
+    "191/192",
+    "15203/15360",
+    "564811/573440"
+  ],
+  "moments_constant": [
+    "191/192",
+    "36481/36864",
+    "6967871/7077888"
+  ],
+  "two_channel_gain": "924/955",
+  "two_channel_offset": "31/960",
+  "second_moment_gap": "31/184320",
+  "three_channel_minimax_distance": "3313/82360320",
+  "three_channel_minimax_gain": "2437488/2560355",
+  "three_channel_minimax_offset": "3419/71680",
+  "noise_critical_per_hypothesis": "3313/164720640",
+  "quantized_codes": {
+    "8": [
+      254,
+      252,
+      251
+    ],
+    "10": [
+      1018,
+      1013,
+      1008
+    ],
+    "12": [
+      4074,
+      4053,
+      4033
+    ],
+    "16_variable": [
+      65194,
+      64865,
+      64549
+    ],
+    "16_constant": [
+      65191,
+      64868,
+      64546
+    ]
+  },
+  "human_validation": "not completed",
+  "publication_novelty": "not established"
+}
