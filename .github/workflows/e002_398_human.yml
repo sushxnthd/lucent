@@ -1,0 +1,59 @@
+name: E002-398 blinded human aperture annotation instrument
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_398_*"
+      - "research/observability/e002_398_*"
+      - ".github/workflows/e002_398_human.yml"
+  workflow_dispatch:
+jobs:
+  blinded-packet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    strategy:
+      fail-fast: false
+      matrix:
+        participant: [S01, S19]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install reproducible dependencies
+        run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Acquire checksum-verified human reference video
+        env:
+          PARTICIPANT: ${{ matrix.participant }}
+        run: |
+          mkdir -p /tmp/lucent-e002-398
+          if [ "$PARTICIPANT" = "S01" ]; then
+            URL='https://zenodo.org/records/18978288/files/S01.zip?download=1'
+            MD5='fef02cb7ebf62e4f3efb6303284fd6cb'
+          else
+            URL='https://zenodo.org/records/21905748/files/S19.zip?download=1'
+            MD5='8a16cf12526f7558b4e49926c4bc5e8e'
+          fi
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1400 \
+            "$URL" --output "/tmp/lucent-e002-398/$PARTICIPANT.zip"
+          echo "$MD5  /tmp/lucent-e002-398/$PARTICIPANT.zip" | md5sum --check
+      - name: Generate blinded landmark pack in ephemeral private directory
+        env:
+          PARTICIPANT: ${{ matrix.participant }}
+        run: |
+          python research/observability/e002_398_blinded_annotation.py \
+            --archive "/tmp/lucent-e002-398/$PARTICIPANT.zip" \
+            --participant "$PARTICIPANT" \
+            --public-dir "/tmp/lucent-e002-398/$PARTICIPANT-public" \
+            --private-dir "/tmp/lucent-e002-398/$PARTICIPANT-private"
+      - name: Independent verification of packet, PNG hashes, and blinding
+        env:
+          PARTICIPANT: ${{ matrix.participant }}
+        run: |
+          python research/observability/e002_398_independent_check.py \
+            --public-dir "/tmp/lucent-e002-398/$PARTICIPANT-public" \
+            --private-dir "/tmp/lucent-e002-398/$PARTICIPANT-private"
+      - name: Upload public-safe manifests only (no participant frames or linkage)
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: e002-398-${{ matrix.participant }}-blinded-manifest-only
+          path: /tmp/lucent-e002-398/${{ matrix.participant }}-public/
+          retention-days: 14
