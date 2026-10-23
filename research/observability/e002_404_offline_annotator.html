@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Lucent E002-404 · Offline blinded eyelid annotation</title>
+<style>
+:root{font-family:system-ui,-apple-system,sans-serif;color:#e4e8ec;background:#10151c}
+*{box-sizing:border-box}body{margin:0;padding:22px;max-width:1200px;margin-inline:auto}
+h1{font-size:1.4rem;margin:0 0 8px}p{line-height:1.5;color:#aeb9c5}
+.panel{border:1px solid #3c4b5d;border-radius:9px;padding:15px;margin:12px 0;background:#19222d}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:10px 0}
+label{font-size:.9rem}button,input{font:inherit}button{background:#25374a;color:#e4e8ec;border:1px solid #65819c;border-radius:6px;padding:8px 12px;cursor:pointer}
+button:disabled{opacity:.4;cursor:not-allowed}button:hover:not(:disabled){background:#35516a}
+input[type=text]{background:#10151c;color:#fff;border:1px solid #728399;border-radius:5px;padding:7px}
+input[type=file]{max-width:280px;font-size:.8rem}#eye{width:760px;height:520px;max-width:100%;image-rendering:pixelated;cursor:crosshair;border:2px solid #8799ad;background:#070b0e}
+#eye:focus{outline:2px solid #a1b9d2}#progress{font-variant-numeric:tabular-nums}
+#status{white-space:pre-wrap;font-family:ui-monospace,monospace;color:#b4d8ea}
+.flag{display:inline-flex;gap:5px;align-items:center}
+kbd{background:#303b47;padding:2px 5px;border-radius:3px}
+.warning{color:#ffd19b}
+</style>
+</head>
+<body>
+<h1>Lucent E002-404 · blinded eyelid landmark rater</h1>
+<p>Offline annotation only. No telemetry, uploads, EEG event/control labels, or physical-aperture certification. Each rater uses a separate browser session and exports a separate CSV. Use the <strong>local-only</strong> E002-404 pack containing a blinded manifest and 190×130 PNGs.</p>
+<section class="panel">
+<div class="row"><label>Blinded manifest <input id="manifest" type="file" accept=".json"></label><label>Images folder <input id="images" type="file" accept=".png" multiple webkitdirectory></label><label>or select PNG files <input id="files" type="file" accept=".png" multiple></label></div>
+<div class="row"><label>Independent rater ID <input id="rater" type="text" maxlength="80" placeholder="e.g. rater_A" autocomplete="off"></label><button id="load">Load & validate manifest</button><button id="export" disabled>Export complete CSV</button></div>
+<div id="status" role="status">Select the manifest and its PNG images, then load.</div>
+</section>
+<section class="panel">
+<div class="row"><button id="prev" disabled>← Previous</button><button id="next" disabled>Next →</button><button id="undo" disabled>Undo point</button><button id="clear" disabled>Clear points</button><span id="progress">No frames loaded</span></div>
+<div class="row"><strong id="target">Point 1/6: left upper</strong><span id="frameid"></span></div>
+<canvas id="eye" width="190" height="130" tabindex="0" aria-label="Eye crop. Click six upper/lower eyelid margin points in indicated order."></canvas>
+<div class="row" id="flags"></div>
+<div class="row"><label>Notes <input id="notes" type="text" maxlength="2000" size="70" placeholder="Optional visual ambiguity notes"></label></div>
+<p>Click in this order: left upper, left lower, center upper, center lower, right upper, right lower. Native pixel coordinates are preserved regardless of display scale. <kbd>←</kbd>/<kbd>→</kbd> navigate, <kbd>Backspace</kbd> undoes a point, <kbd>U</kbd> toggles unresolved. Use unresolved when any required margin cannot be confidently located. Flags alone do not silently exclude frames.</p>
+<p class="warning">Images and ratings remain on this computer. The exported CSV contains landmark coordinates, not independently calibrated physical eyelid aperture. Do not use the CSV to issue blink/PERCLOS/fatigue claims without the separate E002-399 calibration gates.</p>
+</section>
+<script>
+"use strict";
+(function(){
+  const $=id=>document.getElementById(id);
+  const points=["left_upper","left_lower","center_upper","center_lower","right_upper","right_lower"];
+  const flags=["occlusion","glare","glasses","blur","gaze_issue","unresolved"];
+  const columns=["clip_id","frame_in_clip",...points.flatMap(x=>[x+"_x",x+"_y"]),...flags,"rater_id","notes"];
+  let frames=[],files=new Map(),ratings=new Map(),index=0,manifest=null,loaded=false,verified=new Set(),image=null,imageURL=null;
+  const canvas=$("eye"),ctx=canvas.getContext("2d");
+  const setStatus=s=>{$("status").textContent=s};
+  function key(f){return f.clip_id+":"+f.frame_in_clip}
+  function record(f){const k=key(f);if(!ratings.has(k))ratings.set(k,{pts:[],flags:Object.fromEntries(flags.map(x=>[x,false])),notes:""});return ratings.get(k)}
+  function validManifest(m){
+    if(m.experiment!=="E002-398"||m.public_linkage_present!==false||m.crop_width!==190||m.crop_height!==130||!Array.isArray(m.clips)||!m.clips.length)throw Error("Invalid public E002-398 manifest");
+    const out=[],ids=new Set(),names=new Set();
+    for(const clip of m.clips){
+      if(!/^[a-f0-9]{20}$/.test(clip.clip_id)||ids.has(clip.clip_id)||!Array.isArray(clip.frames)||clip.frames.length!==7)throw Error("Invalid clip ID/size");
+      ids.add(clip.clip_id);const nums=new Set();
+      for(const f of clip.frames){
+        if(!Number.isInteger(f.frame_in_clip)||f.frame_in_clip<0||f.frame_in_clip>6||nums.has(f.frame_in_clip))throw Error("Invalid frame index");
+        nums.add(f.frame_in_clip);
+        const expected=clip.clip_id+"_"+String(f.frame_in_clip).padStart(2,"0")+".png";
+        if(f.file!==expected||names.has(f.file)||!/^[a-f0-9]{64}$/.test(f.sha256))throw Error("Invalid filename/digest");
+        names.add(f.file);out.push({clip_id:clip.clip_id,frame_in_clip:f.frame_in_clip,file:f.file,sha256:f.sha256});
+      }
+    }
+    if(out.length!==m.frame_count||m.clips.length!==m.clip_count)throw Error("Manifest totals mismatch");
+    return out;
+  }
+  function readFiles(){
+    files=new Map();
+    for(const input of [$("images"),$("files")]){
+      for(const file of input.files||[]){
+        if(!/^[a-f0-9]{20}_[0-6]{2}\.png$/.test(file.name))continue;
+        if(files.has(file.name))throw Error("Duplicate image filename: "+file.name);
+        files.set(file.name,file);
+      }
+    }
+  }
+  async function verify(f){
+    const source=files.get(f.file);
+    if(!source)throw Error("Missing image "+f.file);
+    if(!verified.has(f.file)){
+      if(!globalThis.crypto||!crypto.subtle)throw Error("Browser SHA-256 unavailable; use a secure local browser context");
+      const digest=Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",await source.arrayBuffer()))).map(x=>x.toString(16).padStart(2,"0")).join("");
+      if(digest!==f.sha256)throw Error("Image SHA-256 mismatch: "+f.file);
+      verified.add(f.file);
+    }
+    return source;
+  }
+  function redraw(){
+    ctx.clearRect(0,0,190,130);ctx.fillStyle="#0a0d10";ctx.fillRect(0,0,190,130);
+    if(!loaded)return;
+    if(image)ctx.drawImage(image,0,0,190,130);
+    const f=frames[index],r=record(f);
+    ctx.lineWidth=0.6;
+    r.pts.forEach((p,i)=>{ctx.strokeStyle=i%2===0?"#ffde77":"#67dce7";ctx.beginPath();ctx.arc(p[0],p[1],2,0,2*Math.PI);ctx.stroke();ctx.fillStyle=ctx.strokeStyle;ctx.font="5px sans-serif";ctx.fillText(String(i+1),p[0]+2,p[1]-2)});
+    $("target").textContent=r.flags.unresolved?"Unresolved (no coordinates required)":r.pts.length===6?"Six points complete":("Point "+(r.pts.length+1)+"/6: "+points[r.pts.length].replace("_"," "));
+    $("frameid").textContent="Blinded clip "+f.clip_id+" · frame "+f.frame_in_clip;
+    const complete=frames.filter(f=>{const x=record(f);return x.flags.unresolved||x.pts.length===6}).length;
+    $("progress").textContent=(index+1)+"/"+frames.length+" frames · "+complete+" complete";
+    $("export").disabled=complete!==frames.length;
+    $("undo").disabled=!r.pts.length;
+    for(const flag of flags)$("flag_"+flag).checked=!!r.flags[flag];
+    $("notes").value=r.notes;
+  }
+  async function show(i){
+    if(!loaded||i<0||i>=frames.length)return;
+    index=i;image=null;redraw();
+    const f=frames[i];const captured=i;
+    try{
+      const source=await verify(f);
+      if(imageURL)URL.revokeObjectURL(imageURL);
+      imageURL=URL.createObjectURL(source);
+      const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=imageURL});
+      if(img.naturalWidth!==190||img.naturalHeight!==130)throw Error("Wrong PNG dimensions: "+f.file);
+      if(captured===index){image=img;redraw();setStatus("Verified SHA-256 and PNG geometry: "+f.file)}
+    }catch(e){loaded=false;image=null;redraw();$("export").disabled=true;setStatus("BLOCKED: "+e.message)}
+  }
+  $("load").addEventListener("click",async()=>{
+    try{
+      if(!$("manifest").files.length)throw Error("Select blinded manifest");
+      const m=JSON.parse(await $("manifest").files[0].text());
+      const f=validManifest(m);readFiles();
+      for(const x of f)if(!files.has(x.file))throw Error("Missing PNG "+x.file);
+      manifest=m;frames=f;ratings=new Map();verified=new Set();index=0;loaded=true;
+      $("prev").disabled=false;$("next").disabled=false;$("clear").disabled=false;
+      await show(0);
+    }catch(e){loaded=false;setStatus("BLOCKED: "+e.message);$("export").disabled=true}
+  });
+  canvas.addEventListener("click",e=>{
+    if(!loaded||!image)return;
+    const r=record(frames[index]);if(r.flags.unresolved||r.pts.length>=6)return;
+    const b=canvas.getBoundingClientRect();
+    const x=(e.clientX-b.left)*190/b.width,y=(e.clientY-b.top)*130/b.height;
+    if(x<0||y<0||x>=190||y>=130)return;
+    r.pts.push([Number(x.toFixed(3)),Number(y.toFixed(3))]);redraw();
+  });
+  $("prev").onclick=()=>show(index-1);$("next").onclick=()=>show(index+1);
+  $("undo").onclick=()=>{if(loaded){record(frames[index]).pts.pop();redraw()}};
+  $("clear").onclick=()=>{if(loaded){record(frames[index]).pts=[];redraw()}};
+  for(const flag of flags){
+    const label=document.createElement("label");label.className="flag";
+    const checkbox=document.createElement("input");checkbox.type="checkbox";checkbox.id="flag_"+flag;
+    checkbox.onchange=()=>{if(loaded){record(frames[index]).flags[flag]=checkbox.checked;redraw()}};
+    label.append(checkbox,document.createTextNode(flag.replace("_"," ")));$("flags").append(label);
+  }
+  $("notes").addEventListener("input",()=>{if(loaded)record(frames[index]).notes=$("notes").value});
+  document.addEventListener("keydown",e=>{
+    if(!loaded||["INPUT","TEXTAREA"].includes(document.activeElement.tagName))return;
+    if(e.key==="ArrowLeft"){e.preventDefault();show(index-1)}
+    if(e.key==="ArrowRight"){e.preventDefault();show(index+1)}
+    if(e.key==="Backspace"){e.preventDefault();record(frames[index]).pts.pop();redraw()}
+    if(e.key.toLowerCase()==="u"){e.preventDefault();const r=record(frames[index]);r.flags.unresolved=!r.flags.unresolved;redraw()}
+  });
+  function csvCell(x){const s=String(x??"");return /[",\r\n]/.test(s)?'"'+s.replaceAll('"','""')+'"':s}
+  $("export").onclick=()=>{
+    try{
+      if(!loaded)throw Error("No manifest loaded");
+      const rater=$("rater").value.trim();
+      if(!rater||rater.length>80)throw Error("Enter a valid rater ID");
+      const lines=[columns.map(csvCell).join(",")];
+      for(const f of frames){
+        const r=record(f);
+        if(!r.flags.unresolved&&r.pts.length!==6)throw Error("Incomplete frame "+key(f));
+        const coords=points.flatMap((_,i)=>r.pts[i]||["",""]);
+        const row=[f.clip_id,f.frame_in_clip,...coords,...flags.map(x=>r.flags[x]?"1":"0"),rater,r.notes];
+        if(row.length!==columns.length)throw Error("Internal CSV shape error");
+        lines.push(row.map(csvCell).join(","));
+      }
+      const blob=new Blob([lines.join("\r\n")+"\r\n"],{type:"text/csv;charset=utf-8"});
+      const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="e002_404_"+rater.replace(/[^a-zA-Z0-9_-]/g,"_")+"_landmarks.csv";
+      document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+      setStatus("CSV exported locally. Verify using e002_404_rater_pack.py check; keep each rater separate.");
+    }catch(e){setStatus("BLOCKED: "+e.message)}
+  };
+})();
+</script>
+</body>
+</html>
