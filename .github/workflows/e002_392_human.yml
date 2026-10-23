@@ -7,6 +7,7 @@ on:
       - "research/observability/E002_392_FROZEN.md"
       - ".github/workflows/e002_392_human.yml"
       - "research/observability/e002_392_clock_repair.py"
+      - "research/observability/e002_393_sync_audit.py"
   workflow_dispatch:
 jobs:
   public-human-feasibility:
@@ -37,6 +38,11 @@ jobs:
       - name: Recompute nominal human time axes and inspect sync sidecar
         run: |
           python research/observability/e002_392_clock_repair.py \
+            --archive /tmp/lucent-e002-392/S01.zip \
+            --output /tmp/lucent-e002-392/output
+      - name: Independently reconcile 1-kHz EEG and Phantom camera clocks
+        run: |
+          python research/observability/e002_393_sync_audit.py \
             --archive /tmp/lucent-e002-392/S01.zip \
             --output /tmp/lucent-e002-392/output
       - name: Remove raw human footage and sidecars from artifacts
