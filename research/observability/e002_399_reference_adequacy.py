@@ -20,7 +20,13 @@ class Frame:
     mean_hi: float
     exposure: float
     clock_error: float
-    # Independently bounded E_w|time - nominal_center|; None only for verified\n    # uniform temporal kernels in direct E002-399 synthetic callers.\n    temporal_first_abs_moment_s: float | None = None\n\n\n@dataclass(frozen=True)\nclass Calibration:
+    # Independently bounded E_w|time - nominal_center|; None only for verified
+    # uniform temporal kernels in direct E002-399 synthetic callers.
+    temporal_first_abs_moment_s: float | None = None
+
+
+@dataclass(frozen=True)
+class Calibration:
     speed_upper: float
     threshold: float
     independent_velocity: bool = False
@@ -207,7 +213,8 @@ def main():
     out=json.dumps(report,indent=2,sort_keys=True)
     if args.output:
         from pathlib import Path
-        Path(args.output).write_text(out+'\n')
+        Path(args.output).write_text(out+'
+')
     print(out)
 
 
