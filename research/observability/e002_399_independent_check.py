@@ -61,6 +61,16 @@ def check_adversarial():
     assert analyze(manifest,s1,s2,timing,cfg)['decisions']['ABSTAIN_UNCALIBRATED']==1
     cfg['optical_mean_error_bound']=0.0
     cfg['optical_mean_error_provenance']='synthetic_direct_mean_oracle_only'
+    # E002-401: all historical global-shutter positive controls must declare
+    # independently verified zero row offset; a Boolean shutter flag alone
+    # cannot establish simultaneous two-landmark measurement.
+    assert analyze(manifest,s1,s2,timing,cfg)['decisions']['ABSTAIN_UNCALIBRATED']==1
+    cfg['row_timing_calibration']={
+        'upper_offset_abs_s_upper':0.,'lower_offset_abs_s_upper':0.,
+        'upper_landmark_speed_upper_per_s':20.,
+        'lower_landmark_speed_upper_per_s':20.,
+        'equal_row_exposure_verified':True,
+        'provenance':'synthetic_verified_global_shutter_zero_skew'}
     assert analyze(manifest,s1,s2,timing,cfg)['decisions']['CONFIRMED_NO_CROSSING']==1
     cfg['optical_mean_error_bound']=.2
     assert analyze(manifest,s1,s2,timing,cfg)['decisions']['UNRESOLVED']==1
