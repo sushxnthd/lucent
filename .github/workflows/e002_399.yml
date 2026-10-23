@@ -1,0 +1,25 @@
+name: E002-399 calibrated reference-label adequacy (synthetic)
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_399_*'
+      - 'research/observability/e002_399_*'
+      - '.github/workflows/e002_399.yml'
+  workflow_dispatch:
+jobs:
+  reference-adequacy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Frozen synthetic predictions and independent oracle
+        run: |
+          python research/observability/e002_399_reference_adequacy.py --output /tmp/e002_399_results.json
+          python research/observability/e002_399_independent_check.py
+      - name: Upload synthetic JSON only (no human images, labels or linkage)
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-399-synthetic-reference-adequacy
+          path: /tmp/e002_399_results.json
+          retention-days: 14
