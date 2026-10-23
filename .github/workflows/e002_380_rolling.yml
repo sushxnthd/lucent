@@ -1,0 +1,24 @@
+name: E002-380 rolling-shutter observability
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_380_*'
+      - '.github/workflows/e002_380_rolling.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent exact rational phase oracle
+        run: python research/observability/e002_380_exact.py
+      - name: Synthetic shutter instrument
+        run: python research/observability/e002_380_instrument.py
+      - name: Camera qualification abstention gates
+        run: python research/observability/e002_380_certificate.py
