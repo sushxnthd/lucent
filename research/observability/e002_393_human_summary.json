@@ -1,0 +1,42 @@
+{
+  "experiment": "E002-393B",
+  "date": "2026-10-23",
+  "source": "Guttmann-Flury et al., Scientific Data 12:587 (2025); Zenodo 18978288 S01.zip",
+  "archive_md5": "fef02cb7ebf62e4f3efb6303284fd6cb",
+  "verification_run": "39955263954",
+  "human_participants_analyzed": 1,
+  "decoded_frames": 53680,
+  "sync_rows": 414720,
+  "avi_metadata_fps": 1,
+  "unsegmented_frame_clock_fps": 139.3705877923838,
+  "gap_aware_active_fps": 152.21777631264857,
+  "reported_paper_fps": 150,
+  "rate_prediction_passed": false,
+  "recording_gaps_gt_20ms": 116,
+  "total_gap_seconds": 33.269000000000176,
+  "max_gap_seconds": 0.872,
+  "EEG_blink_markers": 112,
+  "outside_camera": 12,
+  "in_camera_gaps": 7,
+  "aligned_within_10ms": 93,
+  "exploratory_selected_phantom_frames": [
+    758,
+    1249,
+    1667,
+    2610,
+    3284,
+    4045
+  ],
+  "exploratory_alignment_errors_ms": [
+    0,
+    -2,
+    -3,
+    3,
+    0,
+    2
+  ],
+  "human_aperture_ground_truth": false,
+  "shutter_exposure_calibrated": false,
+  "hard_certificate": "ABSTAIN_UNCALIBRATED",
+  "note": "EEG markers and visible eyelid closures are not physical-aperture ground truth; first six examples unblinded; no human theorem validation."
+}
