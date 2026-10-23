@@ -1,0 +1,82 @@
+{
+  "study": "E002-383",
+  "date": "2026-10-23",
+  "scope": "synthetic only",
+  "seed": 383,
+  "conditions_per_n": 1100,
+  "total_trials": 12100,
+  "exact_collision": {
+    "fps": 30,
+    "exposure_s": 0.01,
+    "v": 60,
+    "threshold": 0.2,
+    "physical_mean": 0.99,
+    "hidden_min": 0.19045548849896676,
+    "nonlinear_rgb_mean": 0.9949047433862308,
+    "naive_bound": 0.22180595971224515,
+    "constant_nonclosure": 0.9898354484124218,
+    "pixel_channel_values": 5760,
+    "independent_max_difference": 0,
+    "subthreshold_duration_ms": 0.3181503833677749
+  },
+  "calibrated_error_envelope": 0.0039007042679779494,
+  "clock_allowance_s": 0.0015,
+  "naive_false_over_issued": {
+    "clean": [
+      0,
+      474
+    ],
+    "bounded_photometry": [
+      8,
+      560
+    ],
+    "nonlinear_transfer": [
+      28,
+      608
+    ],
+    "gain_drift": [
+      38,
+      682
+    ],
+    "clock_error": [
+      14,
+      563
+    ],
+    "glasses_glare": [
+      41,
+      645
+    ],
+    "gaze": [
+      0,
+      74
+    ],
+    "blur": [
+      0,
+      26
+    ],
+    "missingness": [
+      0,
+      21
+    ],
+    "gradient": [
+      0,
+      454
+    ],
+    "mixed": [
+      0,
+      34
+    ]
+  },
+  "gated_bounded": {
+    "false": 0,
+    "issued": 457,
+    "trials": 1100,
+    "abstain": 643
+  },
+  "independent_checks": {
+    "randomized": 500,
+    "max_gap_error": 1.1102230246251565e-16,
+    "max_linear_mean_error": 3.9607157009680094e-7
+  },
+  "limitations": "No human data, physical camera, physiological velocity validation or established publication novelty."
+}
