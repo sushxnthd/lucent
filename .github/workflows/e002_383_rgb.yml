@@ -1,0 +1,29 @@
+name: E002-383 RGB transfer falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_383_*'
+      - 'research/observability/E002_383_*'
+      - '.github/workflows/e002_383_rgb.yml'
+  workflow_dispatch:
+jobs:
+  exact-rgb-collision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy scipy
+      - run: python research/observability/e002_383_exact_checker.py
+      - name: Verify abstention on unknown transfer
+        run: |
+          PYTHONPATH=research/observability python - <<'PY'
+          from e002_383_rgb_certificate import Calibration, qualify_gap
+          c=Calibration(60,0,1/30-.01,.01,False,True,True,True,True,True,True,True)
+          assert qualify_gap(.994904743386,.994904743386,.2,c)=='ABSTAIN'
+          c=Calibration(60,0,1/30-.01,.01,True,True,True,True,True,True,True,True)
+          assert qualify_gap(.995,.995,.2,c)=='CERTIFIED_NO_HIDDEN_CLOSURE_IN_GAP'
+          assert qualify_gap(.99,.99,.2,c)=='ABSTAIN'
+          PY
