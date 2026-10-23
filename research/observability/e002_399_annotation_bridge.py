@@ -64,6 +64,30 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
             raise ValueError('Invalid optical exposure-mean error bound')
         if not isinstance(provenance,str) or len(provenance.strip())<8:
             raise ValueError('Quantitative optical error needs an auditable provenance label')
+    # E002-401: two landmarks on different rolling-shutter rows are not
+    # simultaneous. A bound on aperture velocity alone cannot control their
+    # common-mode motion. Require independent row offsets and per-landmark
+    # normalized position-speed envelopes even for asserted global shutter.
+    row_cfg=cfg.get('row_timing_calibration')
+    row_error=None
+    if row_cfg is not None:
+        fields=('upper_offset_abs_s_upper','lower_offset_abs_s_upper',
+                'upper_landmark_speed_upper_per_s','lower_landmark_speed_upper_per_s')
+        vals=[float(row_cfg[key]) for key in fields]
+        if not all(math.isfinite(v) and v>=0 for v in vals):
+            raise ValueError('Invalid rolling-shutter temporal geometry/speed bounds')
+        row_provenance=row_cfg.get('provenance','')
+        if not isinstance(row_provenance,str) or len(row_provenance.strip())<8:
+            raise ValueError('Row timing/speed calibration needs auditable provenance')
+        if row_cfg.get('equal_row_exposure_verified') is not True:
+            raise ValueError('Equal row exposure profile not verified')
+        row_error=vals[0]*vals[2]+vals[1]*vals[3]
+    shutter_gate=(bool(gates.get('uniform_shutter_verified',False)) or
+                  bool(gates.get('calibrated_row_shutter',False)))
+    # The Calibration field retains its historical name, but its meaning here
+    # is qualified shutter timing: either true global shutter or calibrated
+    # rolling shutter with equal exposure profiles.
+    shutter_gate=shutter_gate and row_error is not None
     cal=Calibration(speed_upper=float(cfg['speed_upper']),threshold=float(cfg['threshold']),
                     independent_velocity=bool(gates.get('independent_velocity',False)),
                     aperture_geometry=bool(gates.get('aperture_geometry',False)),
@@ -72,7 +96,7 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
                     exposure_timing=bool(gates.get('exposure_timing',False)),
                     clock_synchronization=bool(gates.get('clock_synchronization',False)),
                     nuisance_resolved=bool(gates.get('nuisance_resolved',False)),
-                    uniform_shutter_verified=bool(gates.get('uniform_shutter_verified',False)))
+                    uniform_shutter_verified=shutter_gate)
     names=[]
     for sheet in (sheet1,sheet2):
         who={v.get('rater_id','').strip() for v in sheet.values()}
@@ -102,9 +126,9 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
                 continue
             # A static landmark measurement is not automatically the physical
             # exposure mean. Missing quantitative calibration forces abstention.
-            if optical_error is not None:
-                lo-=optical_error
-                hi+=optical_error
+            if optical_error is not None and row_error is not None:
+                lo-=optical_error+row_error
+                hi+=optical_error+row_error
             t=timing[key]
             frames.append(Frame(float(t['nominal_time_s']),lo,hi,
                                 float(t['exposure_s']),float(t['clock_error_s'])))
@@ -115,9 +139,11 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
             'total_clips':len(manifest['clips']),'excluded_frames':excluded_frames,
             'decisions':totals,'calibration_gates_passed':cal.qualified(),
             'optical_mean_error_bound_applied':optical_error,
+            'row_skew_error_bound_applied':row_error,
             'warning':'No physical-aperture claim unless the quantitative optical mean-error '
                       'bound and all calibration gates are independently verified. '
                       'A provenance string is NOT external verification. '
+                      'Rolling shutter needs independent per-landmark row timing and speed bounds. '
                       'No event/control linkage or EEG labels used.'}
 
 
