@@ -1,0 +1,27 @@
+name: E002-388 encoded-video instrument
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_388_*'
+      - 'research/observability/E002_388_*'
+      - '.github/workflows/e002_388_codec.yml'
+  workflow_dispatch:
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: python -m pip install numpy opencv-python-headless
+      - run: python research/observability/e002_388_codec_instrument.py --output /tmp/e002_388_out
+      - run: python research/observability/e002_388_independent_check.py /tmp/e002_388_out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-388-software-instrument-evidence
+          path: /tmp/e002_388_out/
+          retention-days: 30
