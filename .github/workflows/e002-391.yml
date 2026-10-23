@@ -1,0 +1,23 @@
+name: E002-391 phase-sweep synthetic instrument
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/e002_391_*"
+      - ".github/workflows/e002-391.yml"
+  pull_request:
+    paths:
+      - "research/observability/e002_391_*"
+      - ".github/workflows/e002-391.yml"
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python -m pip install numpy
+      - run: python research/observability/e002_391_phase_instrument.py
+      - run: python research/observability/e002_391_independent_check.py
