@@ -1,0 +1,27 @@
+{
+  "experiment": "E002-381 synthetic only, 2026-10-23",
+  "frame_period_s": 0.03333333333333333,
+  "exposure_s": 0.01,
+  "required_overlap_s": 0.004,
+  "row_offsets_s": [0,0.005,0.010,0.015,0.020],
+  "per_row_duration_s": 0.015,
+  "critical_alpha": "11/60",
+  "prospective_conditions": [
+    {"alpha":0,"certified":true,"hits":12000,"misses":0,"whole_eye_ms":15},
+    {"alpha":0.18,"certified":true,"hits":12000,"misses":0,"whole_eye_ms":11.4},
+    {"alpha":0.18333333333333332,"certified":true,"hits":12000,"misses":0,"whole_eye_ms":11.3333333333},
+    {"alpha":0.19,"certified":false,"hits":11953,"misses":47,"whole_eye_ms":11.2,"witness_ms":22.2666666667},
+    {"alpha":0.2,"certified":false,"hits":11881,"misses":119,"whole_eye_ms":11},
+    {"alpha":1,"certified":false,"hits":6121,"misses":5879,"whole_eye_ms":0}
+  ],
+  "oracle_randomized_cases":2500,
+  "product_randomized_cases":600,
+  "certified_product_cases":516,
+  "timing_perturbation_draws_per_certified_case":6,
+  "naive_open_eye_false_positive_controls": {
+    "gaze_only_max_score":0.6735842146365462,
+    "blur_only_max_score":0.3876108106146299
+  },
+  "human_validation":false,
+  "publication_novelty_established":false
+}

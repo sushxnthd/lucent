@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="530" viewBox="0 0 960 530">
+<rect width="960" height="530" fill="#fff"/>
+<text x="65" y="48" font-family="Arial" font-size="23" fill="#17202a">E002-381 | Moving eyelid fronts can erase rolling-shutter diversity</text>
+<line x1="95" y1="455" x2="900" y2="455" stroke="#334155" stroke-width="2"/>
+<line x1="95" y1="95" x2="95" y2="455" stroke="#334155" stroke-width="2"/>
+<g font-family="Arial" font-size="16" fill="#334155">
+<text x="83" y="476">0</text><text x="875" y="476">1.0</text>
+<text x="44" y="108">1.0</text><text x="42" y="455">0.5</text>
+<text x="365" y="510">Eyelid travel / readout ratio α</text>
+<text x="110" y="84">Fraction of shutter phases capturing ≥4 ms of row occlusion</text>
+</g>
+<path d="M 95 101 L 242.583 101 L 900 447" fill="none" stroke="#0f766e" stroke-width="4"/>
+<line x1="242.583" y1="95" x2="242.583" y2="455" stroke="#dc2626" stroke-width="2" stroke-dasharray="7 7"/>
+<g fill="#0f766e"><circle cx="95" cy="101" r="6"/><circle cx="239.9" cy="101" r="6"/><circle cx="247.95" cy="103.8" r="6"/><circle cx="256" cy="108" r="6"/></g>
+<text x="255" y="155" font-family="Arial" font-size="16" fill="#dc2626">Sharp transition α = 11/60</text>
+<text x="580" y="395" font-family="Arial" font-size="15" fill="#334155">Synthetic instrument, not human evidence</text>
+</svg>
