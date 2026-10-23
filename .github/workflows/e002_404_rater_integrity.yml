@@ -1,0 +1,37 @@
+name: E002-404 offline human annotation integrity
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_404_*"
+      - "research/observability/e002_404_*"
+      - "research/observability/test_e002_404_*"
+      - ".github/workflows/e002_404_rater_integrity.yml"
+  workflow_dispatch:
+jobs:
+  offline-rater-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Python and run independent synthetic fixture tests
+        run: |
+          python -m py_compile research/observability/e002_404_rater_pack.py
+          python research/observability/test_e002_404_rater_pack.py
+      - name: Syntax-check the standalone offline browser script
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('research/observability/e002_404_offline_annotator.html').read_text()
+          assert '<script src=' not in s and 'fetch(' not in s and 'XMLHttpRequest' not in s
+          assert "connect-src 'none'" in s and "default-src 'none'" in s
+          blocks=re.findall(r'<script>(.*?)</script>',s,re.S)
+          assert len(blocks)==1
+          Path('/tmp/e002_404_offline_script.js').write_text(blocks[0])
+          PY
+          node --check /tmp/e002_404_offline_script.js
+      - name: Record explicit evidence tier
+        run: |
+          echo 'E002-404 PASS means synthetic fixture integrity and browser syntax only.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'No human rater sheets, physical aperture or camera calibration were obtained.' >> "$GITHUB_STEP_SUMMARY"
