@@ -1,0 +1,42 @@
+name: E002-396 unseen S19 participant proxy transfer
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_396_FROZEN.md"
+      - "research/observability/E002_396_PREDATA_CLARIFICATION.md"
+      - "research/observability/e002_396_unseen_s19.py"
+      - "research/observability/e002_396_independent_check.py"
+      - ".github/workflows/e002_396_human.yml"
+  workflow_dispatch:
+jobs:
+  unseen-person:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install open-source image dependencies
+        run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Acquire untouched S19 participant and verify MD5
+        run: |
+          mkdir -p /tmp/lucent-e002-396
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1400 \
+            'https://zenodo.org/records/21905748/files/S19.zip?download=1' \
+            --output /tmp/lucent-e002-396/S19.zip
+          echo '8a16cf170a9c7e9660f6e22b81d7d0a  /tmp/lucent-e002-396/S19.zip' | md5sum --check
+      - name: Execute frozen unseen-person experiment
+        run: |
+          python research/observability/e002_396_unseen_s19.py \
+            --archive /tmp/lucent-e002-396/S19.zip \
+            --output /tmp/lucent-e002-396/results
+      - name: Independent original-source and score oracle
+        run: |
+          python research/observability/e002_396_independent_check.py \
+            --archive /tmp/lucent-e002-396/S19.zip \
+            --output /tmp/lucent-e002-396/results
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-396-s19-unseen-person-aggregate
+          path: /tmp/lucent-e002-396/results/
+          retention-days: 14
