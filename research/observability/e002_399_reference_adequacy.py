@@ -20,10 +20,7 @@ class Frame:
     mean_hi: float
     exposure: float
     clock_error: float
-
-
-@dataclass(frozen=True)
-class Calibration:
+    # Independently bounded E_w|time - nominal_center|; None only for verified\n    # uniform temporal kernels in direct E002-399 synthetic callers.\n    temporal_first_abs_moment_s: float | None = None\n\n\n@dataclass(frozen=True)\nclass Calibration:
     speed_upper: float
     threshold: float
     independent_velocity: bool = False
@@ -103,7 +100,13 @@ def certify(frames: Sequence[Frame], calibration: Calibration) -> Result:
         if ts and f.t <= ts[-1]:
             raise ValueError('Frame centers must be strictly increasing')
         ts.append(f.t)
-        correction = calibration.speed_upper*(f.exposure/4 + f.clock_error)
+        # e/4 is valid for uniform temporal integration ONLY. For calibrated
+        # nonuniform shutters the independently bounded first absolute moment
+        # is required (E002-403). Human annotation bridge always supplies it.
+        moment = f.exposure/4 if f.temporal_first_abs_moment_s is None else f.temporal_first_abs_moment_s
+        if not _finite(moment) or moment < 0 or moment > f.exposure/2 + 1e-12:
+            raise ValueError('Invalid shutter temporal first absolute moment')
+        correction = calibration.speed_upper*(moment + f.clock_error)
         lower.append(f.mean_lo-correction)
         upper.append(f.mean_hi+correction)
     min_lower = exact_lower_envelope_min(ts, lower, calibration.speed_upper)
