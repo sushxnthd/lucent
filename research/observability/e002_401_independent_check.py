@@ -75,6 +75,10 @@ def bridge_checks():
         'reference_column_px':50.,'upper_lid_slope_bound':0.,
         'lower_lid_slope_bound':0.,'vertical_axis_verified':True,
         'provenance':'synthetic_exact_parallel_lids_at_x50'}
+    assert analyze(manifest,s1,s2,timing,cfg)['decisions']['ABSTAIN_UNCALIBRATED']==1
+    cfg['temporal_kernel_calibration']={
+        'first_absolute_moment_fraction_upper':.25,
+        'provenance':'synthetic_verified_uniform_temporal_kernel'}
     clean=analyze(manifest,s1,s2,timing,cfg)
     assert clean['decisions']['CONFIRMED_NO_CROSSING']==1, ('W7 zero',clean)
     cfg['gates']['uniform_shutter_verified']=False
