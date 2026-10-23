@@ -77,6 +77,11 @@ def check_adversarial():
         'reference_column_px':50.,'upper_lid_slope_bound':0.,
         'lower_lid_slope_bound':0.,'vertical_axis_verified':True,
         'provenance':'synthetic_exact_parallel_lids_at_x50'}
+    # E002-403: old gates do not prove a uniform temporal shutter kernel.
+    assert analyze(manifest,s1,s2,timing,cfg)['decisions']['ABSTAIN_UNCALIBRATED']==1
+    cfg['temporal_kernel_calibration']={
+        'first_absolute_moment_fraction_upper':.25,
+        'provenance':'synthetic_verified_uniform_temporal_kernel'}
     assert analyze(manifest,s1,s2,timing,cfg)['decisions']['CONFIRMED_NO_CROSSING']==1
     cfg['optical_mean_error_bound']=.2
     assert analyze(manifest,s1,s2,timing,cfg)['decisions']['UNRESOLVED']==1
