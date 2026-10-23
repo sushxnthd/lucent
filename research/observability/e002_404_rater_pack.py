@@ -28,7 +28,7 @@ POINTS = [
     "right_upper", "right_lower",
 ]
 FLAGS = ["occlusion", "glare", "glasses", "blur", "gaze_issue", "unresolved"]
-FILENAME = re.compile(r"^[a-f0-9]{20}_[0-6]{2}\\.png$")
+FILENAME = re.compile(r"^[a-f0-9]{20}_[0-6]{2}\.png$")
 CLIP_ID = re.compile(r"^[a-f0-9]{20}$")
 
 
@@ -73,7 +73,7 @@ def manifest_rows(manifest):
 def png_dimensions(path):
     with path.open("rb") as f:
         header = f.read(24)
-    if len(header) != 24 or header[:8] != b"\\x89PNG\\r\\n\\x1a\\n" or header[12:16] != b"IHDR":
+    if len(header) != 24 or header[:8] != b"\x89PNG\r\n\x1a\n" or header[12:16] != b"IHDR":
         raise ValueError(f"Invalid PNG header: {path.name}")
     return struct.unpack(">II", header[16:24])
 
