@@ -1,0 +1,40 @@
+name: E002-390 independent-velocity falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_390_*'
+      - 'research/observability/E002_390_*'
+      - '.github/workflows/e002_390_velocity.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_390_*'
+      - 'research/observability/E002_390_*'
+      - '.github/workflows/e002_390_velocity.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install numpy
+      - name: Frozen synthetic holdout
+        run: python research/observability/e002_390_velocity_aliasing.py
+      - name: Independent quadrature and speed-envelope oracle
+        run: python research/observability/e002_390_independent_check.py
+      - name: Fail-closed product qualification
+        run: python research/observability/e002_390_policy.py
+      - name: Frozen predictions and independent P5
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('/tmp/e002_390/e002_390_results.json').read_text())
+          assert all(r['predictions'][f'P{i}'] for i in range(1,5))
+          assert r['predictions']['P5'] is None  # verified in independent step above
+          assert r['independent_false_certificates']==0
+          print('PASS E002-390 frozen P1-P5')
+          PY
