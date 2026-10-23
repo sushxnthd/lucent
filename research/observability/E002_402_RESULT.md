@@ -16,7 +16,9 @@ gap_at_x0 in [d-B, d+B].
 
 This follows by applying the triangle inequality to each lid contour. The two raters' intervals are combined by **union**, never averaging or intersection; lower and upper normalized bounds use independent iris-scale bounds. A negative signed landmark separation, nonfinite coordinate, or invalid geometry calibration rejects that frame. This is classical bounded-error photogrammetry, not a new general theorem.
 
-Vector schematic: [E002_402_GEOMETRY.svg](E002_402_GEOMETRY.svg), showing the exact wrong-certificate witness and corrected aperture definition.\n\n## Frozen predictions and results
+Vector schematic: [E002_402_GEOMETRY.svg](E002_402_GEOMETRY.svg), showing the exact wrong-certificate witness and corrected aperture definition.
+
+## Frozen predictions and results
 
 | Frozen criterion | Outcome |
 | --- | --- |
