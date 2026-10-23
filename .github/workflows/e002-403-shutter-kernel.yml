@@ -36,6 +36,13 @@ jobs:
         run: python research/observability/e002_403_shutter_kernel.py
       - name: Independent shutter-kernel oracle and bridge tests
         run: python research/observability/e002_403_independent_check.py
+      - name: Generate vector figure
+        run: python research/observability/e002_403_figure.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-403-vector-figure
+          path: research/observability/E002_403_SHUTTER_KERNEL.svg
+          if-no-files-found: error
       - name: Historical reference and nuisance regressions
         run: |
           python research/observability/e002_399_independent_check.py
