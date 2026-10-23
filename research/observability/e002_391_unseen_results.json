@@ -1,0 +1,12 @@
+{
+  "seed": 39113,
+  "unseen_60hz_single_capture_theory": 0.6000000000000001,
+  "unseen_60hz_locked_fraction": 0.5993333333333334,
+  "unseen_60hz_randomized_fraction": 1.0,
+  "unseen_60hz_randomized_theory": 0.999983222784,
+  "adaptive_30hz_detected_event_count": 0,
+  "adaptive_30hz_total_event_count": 144000,
+  "adaptive_30hz_minimum_shutter_mean": 0.5666666666666665,
+  "predictions": {"unseen_locked":true,"unseen_randomized":true,"adaptive_hidden":true},
+  "evidence_tier": "synthetic instrument only; adversarial phase coupling is constructed"
+}
