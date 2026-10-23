@@ -1,0 +1,39 @@
+name: E002-394 independent human dual-clock and shutter-marker test
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_394_FROZEN.md"
+      - "research/observability/e002_394_dual_clock.py"
+      - "research/observability/e002_394_independent_check.py"
+      - ".github/workflows/e002_394_human.yml"
+  workflow_dispatch:
+jobs:
+  human-clock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Acquire verified CC0 human reference source
+        run: |
+          mkdir -p /tmp/lucent-e002-394
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1200 \
+            'https://zenodo.org/records/18978288/files/S01.zip?download=1' \
+            --output /tmp/lucent-e002-394/S01.zip
+          echo 'fef02cb7ebf62e4f3efb6303284fd6cb  /tmp/lucent-e002-394/S01.zip' | md5sum --check
+      - name: Run frozen real-human dual-clock test
+        run: |
+          python research/observability/e002_394_dual_clock.py \
+            --archive /tmp/lucent-e002-394/S01.zip \
+            --output /tmp/lucent-e002-394/results
+      - name: Independent oracle from raw source
+        run: |
+          python research/observability/e002_394_independent_check.py \
+            --archive /tmp/lucent-e002-394/S01.zip \
+            --result /tmp/lucent-e002-394/results/e002_394_dual_clock.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-394-dual-clock-aggregates
+          path: /tmp/lucent-e002-394/results/
+          retention-days: 14
