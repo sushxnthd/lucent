@@ -11,6 +11,17 @@ on:
       - 'research/observability/e002_402_independent_check.py'
       - 'research/observability/e002_403_*.py'
       - '.github/workflows/e002-403-shutter-kernel.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'research/observability/e002_399_reference_adequacy.py'
+      - 'research/observability/e002_399_annotation_bridge.py'
+      - 'research/observability/e002_399_independent_check.py'
+      - 'research/observability/e002_401_independent_check.py'
+      - 'research/observability/e002_402_independent_check.py'
+      - 'research/observability/e002_403_*.py'
+      - '.github/workflows/e002-403-shutter-kernel.yml'
   workflow_dispatch:
 jobs:
   instrument-and-regressions:
