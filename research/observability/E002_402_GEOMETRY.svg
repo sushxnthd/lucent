@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="560" viewBox="0 0 1200 560" role="img" aria-labelledby="title desc">
+<title id="title">E002-402: diagonal landmark separation can falsely exclude eyelid closure</title>
+<desc id="desc">Left: upper and lower landmarks at the same vertical height but different image columns, yielding a nonzero diagonal distance despite zero vertical aperture. Right: the old method estimates normalized aperture 0.4, above the 0.2 threshold, while the corrected calibrated vertical measurement gives zero.</desc>
+<rect width="1200" height="560" fill="#f8fafc"/>
+<text x="48" y="48" fill="#17233c" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="700">Landmark-column mismatch can invalidate a closure certificate</text>
+<text x="48" y="78" fill="#64748b" font-family="Arial,Helvetica,sans-serif" font-size="15">E002-402 · exact synthetic witness · iris scale 50 px · threshold 0.20</text>
+<rect x="38" y="106" width="535" height="404" rx="12" fill="#fff" stroke="#d8e0ea"/>
+<rect x="594" y="106" width="568" height="404" rx="12" fill="#fff" stroke="#d8e0ea"/>
+<text x="63" y="143" fill="#26364e" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700">A  Landmark geometry</text>
+<text x="620" y="143" fill="#26364e" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700">B  Certificate consequence</text>
+<line x1="110" y1="290" x2="500" y2="290" stroke="#cbd5e1" stroke-width="2"/>
+<line x1="296" y1="194" x2="296" y2="391" stroke="#64748b" stroke-width="1.8" stroke-dasharray="6 6"/>
+<text x="296" y="185" fill="#475569" font-family="Arial,Helvetica,sans-serif" font-size="14" text-anchor="middle">Calibrated x₀ = 70</text>
+<line x1="210" y1="290" x2="382" y2="290" stroke="#d65b54" stroke-width="5" stroke-linecap="round" stroke-dasharray="7 7"/>
+<circle cx="210" cy="290" r="9" fill="#296e8c" stroke="white" stroke-width="3"/>
+<circle cx="382" cy="290" r="9" fill="#b45347" stroke="white" stroke-width="3"/>
+<text x="210" y="260" fill="#296e8c" font-family="Arial,Helvetica,sans-serif" font-size="15" text-anchor="middle">Upper (60,40)</text>
+<text x="382" y="260" fill="#b45347" font-family="Arial,Helvetica,sans-serif" font-size="15" text-anchor="middle">Lower (80,40)</text>
+<text x="296" y="318" fill="#b45347" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" text-anchor="middle">Euclidean distance = 20 px</text>
+<text x="296" y="348" fill="#16785d" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" text-anchor="middle">Signed vertical gap at x₀ = 0 px</text>
+<text x="64" y="428" fill="#64748b" font-family="Arial,Helvetica,sans-serif" font-size="13">Landmark columns differ; the 20 px horizontal</text>
+<text x="64" y="448" fill="#64748b" font-family="Arial,Helvetica,sans-serif" font-size="13">separation is not a physical eyelid opening.</text>
+<line x1="682" y1="425" x2="1103" y2="425" stroke="#a5b4c4" stroke-width="1.6"/>
+<line x1="682" y1="210" x2="682" y2="425" stroke="#a5b4c4" stroke-width="1.6"/>
+<g font-family="Arial,Helvetica,sans-serif" font-size="13" fill="#64748b">
+<text x="670" y="429" text-anchor="end">0.0</text>
+<text x="670" y="343" text-anchor="end">0.2</text>
+<text x="670" y="257" text-anchor="end">0.4</text>
+<text x="670" y="214" text-anchor="end">0.5</text>
+</g>
+<line x1="682" y1="339" x2="1103" y2="339" stroke="#9c7445" stroke-width="1.6" stroke-dasharray="6 5"/>
+<text x="1098" y="331" fill="#9c7445" font-family="Arial,Helvetica,sans-serif" font-size="13" text-anchor="end">Closure threshold 0.20</text>
+<rect x="756" y="253" width="106" height="172" rx="5" fill="#d65b54"/>
+<rect x="951" y="422" width="106" height="3" rx="1" fill="#16785d"/>
+<text x="809" y="239" fill="#b45347" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" text-anchor="middle">0.40</text>
+<text x="1004" y="407" fill="#16785d" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700" text-anchor="middle">0.00</text>
+<text x="809" y="456" fill="#26364e" font-family="Arial,Helvetica,sans-serif" font-size="14" text-anchor="middle">Legacy diagonal</text>
+<text x="1004" y="456" fill="#26364e" font-family="Arial,Helvetica,sans-serif" font-size="14" text-anchor="middle">Corrected vertical</text>
+<text x="809" y="480" fill="#b45347" font-family="Arial,Helvetica,sans-serif" font-size="12" text-anchor="middle">False no-crossing certificate</text>
+<text x="1004" y="480" fill="#16785d" font-family="Arial,Helvetica,sans-serif" font-size="12" text-anchor="middle">Crossing confirmed</text>
+<text x="48" y="543" fill="#64748b" font-family="Arial,Helvetica,sans-serif" font-size="12">Conditional on a calibrated vertical anatomical reference, contour-slope bounds and optical/shutter validity. Synthetic illustration, not human validation.</text>
+</svg>
