@@ -106,11 +106,15 @@ def make_pack(public_dir, private_dir, output_dir):
         if len(keys) != len(rows) or set(keys) != {(c, n) for c, n, _, _ in rows}:
             raise ValueError("Blank sheet does not match manifest")
     # Only copy whitelisted files; NEVER private linkage or source videos.
+    annotator = Path(__file__).with_name("e002_404_offline_annotator.html")
+    if not annotator.is_file():
+        raise ValueError("Missing offline annotator HTML next to packager")
     output_dir.mkdir(parents=True)
     try:
         (output_dir / "images").mkdir()
         shutil.copyfile(manifest_path, output_dir / "blinded_manifest.json")
         shutil.copyfile(sheet, output_dir / "blank_annotation_sheet.csv")
+        shutil.copyfile(annotator, output_dir / "annotate_offline.html")
         for path, filename in source_images:
             shutil.copyfile(path, output_dir / "images" / filename)
     except BaseException:
