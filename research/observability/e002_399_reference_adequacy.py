@@ -213,8 +213,7 @@ def main():
     out=json.dumps(report,indent=2,sort_keys=True)
     if args.output:
         from pathlib import Path
-        Path(args.output).write_text(out+'
-')
+        Path(args.output).write_text(out+'\n')
     print(out)
 
 
