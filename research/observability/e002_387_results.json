@@ -1,0 +1,194 @@
+{
+  "scope": "synthetic-only",
+  "phase_grid": 10000,
+  "speed_per_s": 40,
+  "threshold": 0.2,
+  "records": [
+    {
+      "h": 0.17,
+      "fps": 240,
+      "exposure_s": 0,
+      "true_duration_ms": 1.5,
+      "detected": 3600,
+      "missed": 6400,
+      "detection_rate": 0.36,
+      "ideal_point_phase_probability": 0.36
+    },
+    {
+      "h": 0.17,
+      "fps": 240,
+      "exposure_s": 0.0005,
+      "true_duration_ms": 1.5,
+      "detected": 3600,
+      "missed": 6400,
+      "detection_rate": 0.36,
+      "ideal_point_phase_probability": 0.36
+    },
+    {
+      "h": 0.17,
+      "fps": 240,
+      "exposure_s": 0.002,
+      "true_duration_ms": 1.5,
+      "detected": 3394,
+      "missed": 6606,
+      "detection_rate": 0.3394,
+      "ideal_point_phase_probability": 0.36
+    },
+    {
+      "h": 0.17,
+      "fps": 240,
+      "exposure_s": 0.004,
+      "true_duration_ms": 1.5,
+      "detected": 0,
+      "missed": 10000,
+      "detection_rate": 0,
+      "ideal_point_phase_probability": 0.36
+    },
+    {
+      "h": 0.17,
+      "fps": 960,
+      "exposure_s": 0,
+      "true_duration_ms": 1.5,
+      "detected": 10000,
+      "missed": 0,
+      "detection_rate": 1,
+      "ideal_point_phase_probability": 1
+    },
+    {
+      "h": 0.17,
+      "fps": 960,
+      "exposure_s": 0.0005,
+      "true_duration_ms": 1.5,
+      "detected": 10000,
+      "missed": 0,
+      "detection_rate": 1,
+      "ideal_point_phase_probability": 1
+    },
+    {
+      "h": 0.185,
+      "fps": 240,
+      "exposure_s": 0,
+      "true_duration_ms": 0.7500000000000007,
+      "detected": 1800,
+      "missed": 8200,
+      "detection_rate": 0.18,
+      "ideal_point_phase_probability": 0.18000000000000016
+    },
+    {
+      "h": 0.185,
+      "fps": 240,
+      "exposure_s": 0.0005,
+      "true_duration_ms": 0.7500000000000007,
+      "detected": 1800,
+      "missed": 8200,
+      "detection_rate": 0.18,
+      "ideal_point_phase_probability": 0.18000000000000016
+    },
+    {
+      "h": 0.185,
+      "fps": 240,
+      "exposure_s": 0.002,
+      "true_duration_ms": 0.7500000000000007,
+      "detected": 0,
+      "missed": 10000,
+      "detection_rate": 0,
+      "ideal_point_phase_probability": 0.18000000000000016
+    },
+    {
+      "h": 0.185,
+      "fps": 240,
+      "exposure_s": 0.004,
+      "true_duration_ms": 0.7500000000000007,
+      "detected": 0,
+      "missed": 10000,
+      "detection_rate": 0,
+      "ideal_point_phase_probability": 0.18000000000000016
+    },
+    {
+      "h": 0.185,
+      "fps": 960,
+      "exposure_s": 0,
+      "true_duration_ms": 0.7500000000000007,
+      "detected": 7200,
+      "missed": 2800,
+      "detection_rate": 0.72,
+      "ideal_point_phase_probability": 0.7200000000000006
+    },
+    {
+      "h": 0.185,
+      "fps": 960,
+      "exposure_s": 0.0005,
+      "true_duration_ms": 0.7500000000000007,
+      "detected": 7200,
+      "missed": 2800,
+      "detection_rate": 0.72,
+      "ideal_point_phase_probability": 0.7200000000000006
+    },
+    {
+      "h": 0.195,
+      "fps": 240,
+      "exposure_s": 0,
+      "true_duration_ms": 0.2500000000000002,
+      "detected": 600,
+      "missed": 9400,
+      "detection_rate": 0.06,
+      "ideal_point_phase_probability": 0.06000000000000005
+    },
+    {
+      "h": 0.195,
+      "fps": 240,
+      "exposure_s": 0.0005,
+      "true_duration_ms": 0.2500000000000002,
+      "detected": 0,
+      "missed": 10000,
+      "detection_rate": 0,
+      "ideal_point_phase_probability": 0.06000000000000005
+    },
+    {
+      "h": 0.195,
+      "fps": 240,
+      "exposure_s": 0.002,
+      "true_duration_ms": 0.2500000000000002,
+      "detected": 0,
+      "missed": 10000,
+      "detection_rate": 0,
+      "ideal_point_phase_probability": 0.06000000000000005
+    },
+    {
+      "h": 0.195,
+      "fps": 240,
+      "exposure_s": 0.004,
+      "true_duration_ms": 0.2500000000000002,
+      "detected": 0,
+      "missed": 10000,
+      "detection_rate": 0,
+      "ideal_point_phase_probability": 0.06000000000000005
+    },
+    {
+      "h": 0.195,
+      "fps": 960,
+      "exposure_s": 0,
+      "true_duration_ms": 0.2500000000000002,
+      "detected": 2400,
+      "missed": 7600,
+      "detection_rate": 0.24,
+      "ideal_point_phase_probability": 0.2400000000000002
+    },
+    {
+      "h": 0.195,
+      "fps": 960,
+      "exposure_s": 0.0005,
+      "true_duration_ms": 0.2500000000000002,
+      "detected": 0,
+      "missed": 10000,
+      "detection_rate": 0,
+      "ideal_point_phase_probability": 0.2400000000000002
+    }
+  ],
+  "verification": {
+    "independent_quadrature_checks": 150,
+    "max_abs_error": 1.3877787807814457e-15,
+    "point_probability_checks": 6,
+    "frozen_predictions": "P1-P4 verified where applicable"
+  }
+}
