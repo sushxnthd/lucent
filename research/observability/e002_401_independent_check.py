@@ -70,6 +70,11 @@ def bridge_checks():
         'lower_landmark_speed_upper_per_s':20.,
         'equal_row_exposure_verified':True,
         'provenance':'synthetic_verified_zero_row_skew'}
+    assert analyze(manifest,s1,s2,timing,cfg)['decisions']['ABSTAIN_UNCALIBRATED']==1
+    cfg['landmark_geometry_calibration']={
+        'reference_column_px':50.,'upper_lid_slope_bound':0.,
+        'lower_lid_slope_bound':0.,'vertical_axis_verified':True,
+        'provenance':'synthetic_exact_parallel_lids_at_x50'}
     clean=analyze(manifest,s1,s2,timing,cfg)
     assert clean['decisions']['CONFIRMED_NO_CROSSING']==1, ('W7 zero',clean)
     cfg['gates']['uniform_shutter_verified']=False
