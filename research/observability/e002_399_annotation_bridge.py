@@ -29,21 +29,36 @@ def read_index(path):
     return out
 
 
-def measurement_interval(a,b,scale_lo,scale_hi,error):
-    if not (math.isfinite(scale_lo) and math.isfinite(scale_hi) and 0<scale_lo<=scale_hi
-            and math.isfinite(error) and error>=0):
-        raise ValueError('Invalid independently calibrated scale/error')
-    def central_distance(row):
-        x1=float(row['center_upper_x']);y1=float(row['center_upper_y'])
-        x2=float(row['center_lower_x']);y2=float(row['center_lower_y'])
-        if not all(math.isfinite(v) for v in (x1,y1,x2,y2)):
-            raise ValueError('Nonfinite landmark')
-        if not all(0<=x<190 for x in (x1,x2)) or not all(0<=y<130 for y in (y1,y2)):
-            raise ValueError('Landmark outside crop')
-        return math.hypot(x1-x2,y1-y2)
-    d1,d2=central_distance(a),central_distance(b)
-    return max(0.,(min(d1,d2)-2*error)/scale_hi),(max(d1,d2)+2*error)/scale_lo
+def measurement_interval(a,b,scale_lo,scale_hi,error,
+                         reference_x=None,upper_slope=None,lower_slope=None):
+    """Conservative signed vertical aperture at independently calibrated x_ref.
 
+    Each rater may annotate different columns. The union of their intervals,
+    not the average, encloses the same physical reference-column gap.
+    """
+    vals=(scale_lo,scale_hi,error,reference_x,upper_slope,lower_slope)
+    if any(v is None for v in vals) or not all(math.isfinite(v) for v in vals) or not (
+            0<scale_lo<=scale_hi and error>=0 and 0<=reference_x<190
+            and upper_slope>=0 and lower_slope>=0):
+        raise ValueError('Missing/invalid independent reference-column and eyelid-slope calibration')
+    intervals=[]
+    for row in (a,b):
+        xu=float(row['center_upper_x']);yu=float(row['center_upper_y'])
+        xl=float(row['center_lower_x']);yl=float(row['center_lower_y'])
+        if not all(math.isfinite(v) for v in (xu,yu,xl,yl)):
+            raise ValueError('Nonfinite landmark')
+        if not all(0<=x<190 for x in (xu,xl)) or not all(0<=y<130 for y in (yu,yl)):
+            raise ValueError('Landmark outside crop')
+        if yl<yu:
+            raise ValueError('Inverted signed vertical eyelid gap')
+        # Error E bounds each reported x/y coordinate separately. Independent
+        # contour slope envelopes propagate x-column mismatch and x uncertainty.
+        d=yl-yu
+        bnd=(upper_slope*abs(reference_x-xu)
+             +lower_slope*abs(reference_x-xl)
+             +error*(2+upper_slope+lower_slope))
+        intervals.append((d-bnd,d+bnd))
+    return max(0.,min(v[0] for v in intervals)/scale_hi),max(v[1] for v in intervals)/scale_lo
 
 def analyze(manifest, sheet1, sheet2, timing, cfg):
     if manifest.get('experiment')!='E002-398':
@@ -82,6 +97,24 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
         if row_cfg.get('equal_row_exposure_verified') is not True:
             raise ValueError('Equal row exposure profile not verified')
         row_error=vals[0]*vals[2]+vals[1]*vals[3]
+    # E002-402: diagonal Euclidean distance is not vertical palpebral gap.
+    # A Boolean geometry gate is insufficient; require independent reference
+    # column, per-lid slope envelopes and verified vertical measurement axis.
+    geometry_cfg=cfg.get('landmark_geometry_calibration')
+    geometry_vals=None
+    if geometry_cfg is not None:
+        geometry_fields=('reference_column_px','upper_lid_slope_bound',
+                         'lower_lid_slope_bound')
+        geometry_vals=tuple(float(geometry_cfg[k]) for k in geometry_fields)
+        if not (all(math.isfinite(v) for v in geometry_vals)
+                and 0<=geometry_vals[0]<190
+                and geometry_vals[1]>=0 and geometry_vals[2]>=0):
+            raise ValueError('Invalid reference-column/lid-slope geometry')
+        if geometry_cfg.get('vertical_axis_verified') is not True:
+            raise ValueError('Vertical anatomical measurement axis not verified')
+        geom_provenance=geometry_cfg.get('provenance','')
+        if not isinstance(geom_provenance,str) or len(geom_provenance.strip())<8:
+            raise ValueError('Independent geometry calibration needs provenance')
     shutter_gate=(bool(gates.get('uniform_shutter_verified',False)) or
                   bool(gates.get('calibrated_row_shutter',False)))
     # The Calibration field retains its historical name, but its meaning here
@@ -90,7 +123,8 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
     shutter_gate=shutter_gate and row_error is not None
     cal=Calibration(speed_upper=float(cfg['speed_upper']),threshold=float(cfg['threshold']),
                     independent_velocity=bool(gates.get('independent_velocity',False)),
-                    aperture_geometry=bool(gates.get('aperture_geometry',False)),
+                    aperture_geometry=(bool(gates.get('aperture_geometry',False)) and
+                                       geometry_vals is not None),
                     optical_response=(bool(gates.get('optical_response',False)) and
                                       optical_error is not None),
                     exposure_timing=bool(gates.get('exposure_timing',False)),
@@ -120,7 +154,8 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
             try:
                 lo,hi=measurement_interval(a,b,float(cfg['iris_scale_lower_px']),
                                            float(cfg['iris_scale_upper_px']),
-                                           float(cfg['landmark_error_px']))
+                                           float(cfg['landmark_error_px']),
+                                           *(geometry_vals or (None,None,None)))
             except (ValueError,KeyError):
                 excluded_frames+=1
                 continue
@@ -143,7 +178,7 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
             'warning':'No physical-aperture claim unless the quantitative optical mean-error '
                       'bound and all calibration gates are independently verified. '
                       'A provenance string is NOT external verification. '
-                      'Rolling shutter needs independent per-landmark row timing and speed bounds. '
+                      'Rolling shutter needs independent per-landmark row timing and speed bounds. 'Reference-column and lid-slope calibration must also be independently verified. ''
                       'No event/control linkage or EEG labels used.'}
 
 
