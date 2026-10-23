@@ -57,7 +57,14 @@ def check_adversarial():
     cfg['gates']={k:True for k in ('independent_velocity','aperture_geometry',
         'optical_response','exposure_timing','clock_synchronization',
         'nuisance_resolved','uniform_shutter_verified')}
+    # E002-400: Boolean optical_response alone cannot certify a shutter mean.
+    assert analyze(manifest,s1,s2,timing,cfg)['decisions']['ABSTAIN_UNCALIBRATED']==1
+    cfg['optical_mean_error_bound']=0.0
+    cfg['optical_mean_error_provenance']='synthetic_direct_mean_oracle_only'
     assert analyze(manifest,s1,s2,timing,cfg)['decisions']['CONFIRMED_NO_CROSSING']==1
+    cfg['optical_mean_error_bound']=.2
+    assert analyze(manifest,s1,s2,timing,cfg)['decisions']['UNRESOLVED']==1
+    cfg['optical_mean_error_bound']=0.0
     for i in (1,3,5):s1[(clip,str(i))]['glare']='true'
     assert analyze(manifest,s1,s2,timing,cfg)['decisions']['UNRESOLVED']==1
     for i in range(7):s2[(clip,str(i))]['rater_id']='rater-A'
