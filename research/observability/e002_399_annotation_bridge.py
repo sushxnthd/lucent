@@ -97,6 +97,18 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
         if row_cfg.get('equal_row_exposure_verified') is not True:
             raise ValueError('Equal row exposure profile not verified')
         row_error=vals[0]*vals[2]+vals[1]*vals[3]
+    # E002-403: shutter duration does not determine the temporal weighting
+    # kernel. A verified upper bound on the kernel's first absolute moment
+    # is required even if exposure timing and equal row profiles are known.
+    kernel_cfg=cfg.get('temporal_kernel_calibration')
+    kernel_fraction=None
+    if kernel_cfg is not None:
+        kernel_fraction=float(kernel_cfg['first_absolute_moment_fraction_upper'])
+        if not math.isfinite(kernel_fraction) or not 0<=kernel_fraction<=.5:
+            raise ValueError('Invalid temporal shutter-kernel moment fraction')
+        kernel_provenance=kernel_cfg.get('provenance','')
+        if not isinstance(kernel_provenance,str) or len(kernel_provenance.strip())<8:
+            raise ValueError('Temporal shutter-kernel moment needs auditable provenance')
     # E002-402: diagonal Euclidean distance is not vertical palpebral gap.
     # A Boolean geometry gate is insufficient; require independent reference
     # column, per-lid slope envelopes and verified vertical measurement axis.
@@ -120,7 +132,7 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
     # The Calibration field retains its historical name, but its meaning here
     # is qualified shutter timing: either true global shutter or calibrated
     # rolling shutter with equal exposure profiles.
-    shutter_gate=shutter_gate and row_error is not None
+    shutter_gate=shutter_gate and row_error is not None and kernel_fraction is not None
     cal=Calibration(speed_upper=float(cfg['speed_upper']),threshold=float(cfg['threshold']),
                     independent_velocity=bool(gates.get('independent_velocity',False)),
                     aperture_geometry=(bool(gates.get('aperture_geometry',False)) and
@@ -166,7 +178,9 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
                 hi+=optical_error+row_error
             t=timing[key]
             frames.append(Frame(float(t['nominal_time_s']),lo,hi,
-                                float(t['exposure_s']),float(t['clock_error_s'])))
+                                float(t['exposure_s']),float(t['clock_error_s']),
+                                None if kernel_fraction is None else
+                                float(t['exposure_s'])*kernel_fraction))
         frames.sort(key=lambda x:x.t)
         result=certify(frames,cal)
         totals[result.decision]+=1
@@ -175,11 +189,13 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
             'decisions':totals,'calibration_gates_passed':cal.qualified(),
             'optical_mean_error_bound_applied':optical_error,
             'row_skew_error_bound_applied':row_error,
+            'temporal_kernel_first_abs_moment_fraction_applied':kernel_fraction,
             'warning':'No physical-aperture claim unless the quantitative optical mean-error '
                       'bound and all calibration gates are independently verified. '
                       'A provenance string is NOT external verification. '
                       'Rolling shutter needs independent per-landmark row timing and speed bounds. '
                       'Reference-column and lid-slope calibration must also be independently verified. '
+                      'Nonuniform temporal shutter response needs an independently bounded first absolute moment. '
                       'No event/control linkage or EEG labels used.'}
 
 
