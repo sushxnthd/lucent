@@ -38,7 +38,7 @@ def check_adversarial():
     assert certify(two,c).decision=='UNRESOLVED'
     a={'center_upper_x':'50','center_upper_y':'30','center_lower_x':'50','center_lower_y':'40'}
     b={'center_upper_x':'50','center_upper_y':'30','center_lower_x':'50','center_lower_y':'70'}
-    lo,hi=measurement_interval(a,b,100,100,1)
+    lo,hi=measurement_interval(a,b,100,100,1,50,0,0)
     assert abs(lo-.08)<1e-12 and abs(hi-.42)<1e-12
     clip='a'*20
     manifest={'experiment':'E002-398','clips':[{'clip_id':clip,'frames':[
@@ -71,6 +71,12 @@ def check_adversarial():
         'lower_landmark_speed_upper_per_s':20.,
         'equal_row_exposure_verified':True,
         'provenance':'synthetic_verified_global_shutter_zero_skew'}
+    # E002-402: legacy Boolean geometry cannot certify a physical aperture.
+    assert analyze(manifest,s1,s2,timing,cfg)['decisions']['ABSTAIN_UNCALIBRATED']==1
+    cfg['landmark_geometry_calibration']={
+        'reference_column_px':50.,'upper_lid_slope_bound':0.,
+        'lower_lid_slope_bound':0.,'vertical_axis_verified':True,
+        'provenance':'synthetic_exact_parallel_lids_at_x50'}
     assert analyze(manifest,s1,s2,timing,cfg)['decisions']['CONFIRMED_NO_CROSSING']==1
     cfg['optical_mean_error_bound']=.2
     assert analyze(manifest,s1,s2,timing,cfg)['decisions']['UNRESOLVED']==1
