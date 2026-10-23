@@ -178,7 +178,7 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
             'warning':'No physical-aperture claim unless the quantitative optical mean-error '
                       'bound and all calibration gates are independently verified. '
                       'A provenance string is NOT external verification. '
-                      'Rolling shutter needs independent per-landmark row timing and speed bounds. 'Reference-column and lid-slope calibration must also be independently verified. ''
+                      'Rolling shutter needs independent per-landmark row timing and speed bounds. '\n                      'Reference-column and lid-slope calibration must also be independently verified. '
                       'No event/control linkage or EEG labels used.'}
 
 
