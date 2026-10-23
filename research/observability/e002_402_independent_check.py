@@ -70,6 +70,13 @@ def bridge_regression():
         'lower_lid_slope_bound':0.,'vertical_axis_verified':True,
         'provenance':'synthetic_parallel_contours_at_x70'}
     assert analyze(manifest,s1,s2,timing,cfg)['decisions']['ABSTAIN_UNCALIBRATED']==1
+    # E002-405: synthetic oracle supplies a known physical speed envelope;
+    # observed human sample maxima are explicitly not accepted as hard bounds.
+    cfg['velocity_bound_calibration']={
+        'bound_kind':'deterministic_physical_upper',
+        'upper_per_s':cfg['speed_upper'],
+        'validity_domain':'synthetic_exact_aperture_trajectory_only',
+        'provenance':'synthetic_oracle_hard_velocity_upper'}
     cfg['temporal_kernel_calibration']={
         'first_absolute_moment_fraction_upper':.25,
         'provenance':'synthetic_verified_uniform_temporal_kernel'}
