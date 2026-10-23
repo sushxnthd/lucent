@@ -1,0 +1,46 @@
+name: E002-392 public-human reference feasibility
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/e002_392_public_human.py"
+      - "research/observability/E002_392_FROZEN.md"
+      - ".github/workflows/e002_392_human.yml"
+  workflow_dispatch:
+jobs:
+  public-human-feasibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install video analysis tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python -m pip install --quiet numpy opencv-python-headless
+      - name: Download CC0 human high-speed video archive
+        run: |
+          mkdir -p /tmp/lucent-e002-392
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1200 \
+            'https://zenodo.org/records/18978288/files/S01.zip?download=1' \
+            --output /tmp/lucent-e002-392/S01.zip
+          echo 'fef02cb7ebf62e4f3efb6303284fd6cb  /tmp/lucent-e002-392/S01.zip' | md5sum --check
+      - name: Audit human video cadence and exploratory image traces
+        run: |
+          python research/observability/e002_392_public_human.py \
+            --archive /tmp/lucent-e002-392/S01.zip \
+            --output /tmp/lucent-e002-392/output
+      - name: Remove raw human footage and sidecars from artifacts
+        if: always()
+        run: |
+          rm -f /tmp/lucent-e002-392/output/human_reference.avi
+          rm -f /tmp/lucent-e002-392/output/sidecar_*
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-392-human-feasibility
+          path: /tmp/lucent-e002-392/output/
+          retention-days: 7
