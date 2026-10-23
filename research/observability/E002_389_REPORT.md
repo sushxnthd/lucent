@@ -24,7 +24,7 @@ V=60/s; threshold=0.2; h=1 ms; target t in [20,80] ms. Exposure windows [10,30],
 
 All five frozen predictions passed. **The strict gain is 0.246 > 0.2 despite a standalone Lipschitz exposure envelope of 0.055 < 0.2.** Negative lower bounds are unclipped mathematical relaxation outputs; physical aperture remains nonnegative.
 
-A constructive outer-only counterexample is a(t)=0.96-max(0,0.76-60|t-0.05|). It reaches aperture 0.20 at 50 ms, is 60/s-Lipschitz and has exactly 0.96 mean in both outer exposures. It is a mathematical threshold touch; small modifications can produce a strict crossing with similar means. The third exposure rules out such a crossing in the calibrated model.
+A constructive outer-only counterexample is a(t)=0.96-max(0,0.77-60|t-0.05|). It reaches aperture 0.19 at 50 ms, is 60/s-Lipschitz and has exactly 0.96 mean in both outer exposures. It is a strict threshold crossing, not merely a touch. The third exposure rules out such a crossing in the calibrated model.
 
 ## Independent verification
 An independently coded LP matrix generator reproduced the node-wise optimum at each worst-case target node. Dual and primal objectives matched within 1e-7, with stationarity and inequality residuals <1e-7. Independent trapezoidal integration checked every reported witness exposure mean. An explicit crossing witness satisfied the *original*, not inflated, outer exposure constraints. The local check performed 18 assertions/check groups, including four primal-dual comparisons.
