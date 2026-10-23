@@ -1,0 +1,33 @@
+name: E002-403 temporal shutter-kernel falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_399_reference_adequacy.py'
+      - 'research/observability/e002_399_annotation_bridge.py'
+      - 'research/observability/e002_399_independent_check.py'
+      - 'research/observability/e002_401_independent_check.py'
+      - 'research/observability/e002_402_independent_check.py'
+      - 'research/observability/e002_403_*.py'
+      - '.github/workflows/e002-403-shutter-kernel.yml'
+  workflow_dispatch:
+jobs:
+  instrument-and-regressions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen E002-403 instrument
+        run: python research/observability/e002_403_shutter_kernel.py
+      - name: Independent shutter-kernel oracle and bridge tests
+        run: python research/observability/e002_403_independent_check.py
+      - name: Historical reference and nuisance regressions
+        run: |
+          python research/observability/e002_399_independent_check.py
+          python research/observability/e002_400_independent_check.py
+          python research/observability/e002_401_independent_check.py
+          python research/observability/e002_402_independent_check.py
