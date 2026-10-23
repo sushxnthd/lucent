@@ -23,6 +23,14 @@ jobs:
         run: python research/observability/e002_401_rolling_shutter.py
       - name: Independent quadrature and bridge adversarial checks
         run: python research/observability/e002_401_independent_check.py
+      - name: Generate and validate reproducible vector figure
+        run: python research/observability/e002_401_figure.py --output /tmp/e002_401_figure.svg
+      - name: Upload scientific figure
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-401-vector-figure
+          path: /tmp/e002_401_figure.svg
+          retention-days: 30
       - name: Preserve E002-399 reference adequacy regressions
         run: python research/observability/e002_399_independent_check.py
       - name: Preserve E002-400 optical error regressions
