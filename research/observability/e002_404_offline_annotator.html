@@ -46,7 +46,7 @@ kbd{background:#303b47;padding:2px 5px;border-radius:3px}
   const points=["left_upper","left_lower","center_upper","center_lower","right_upper","right_lower"];
   const flags=["occlusion","glare","glasses","blur","gaze_issue","unresolved"];
   const columns=["clip_id","frame_in_clip",...points.flatMap(x=>[x+"_x",x+"_y"]),...flags,"rater_id","notes"];
-  let frames=[],files=new Map(),ratings=new Map(),index=0,manifest=null,loaded=false,verified=new Set(),image=null,imageURL=null;
+  let frames=[],files=new Map(),ratings=new Map(),index=0,manifest=null,loaded=false,verified=new Set(),image=null,imageURL=null,showGeneration=0;
   const canvas=$("eye"),ctx=canvas.getContext("2d");
   const setStatus=s=>{$("status").textContent=s};
   function key(f){return f.clip_id+":"+f.frame_in_clip}
@@ -107,16 +107,24 @@ kbd{background:#303b47;padding:2px 5px;border-radius:3px}
   }
   async function show(i){
     if(!loaded||i<0||i>=frames.length)return;
+    const generation=++showGeneration;
     index=i;image=null;redraw();
-    const f=frames[i];const captured=i;
+    const f=frames[i];let localURL=null;
     try{
       const source=await verify(f);
-      if(imageURL)URL.revokeObjectURL(imageURL);
-      imageURL=URL.createObjectURL(source);
-      const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=imageURL});
+      if(generation!==showGeneration)return;
+      localURL=URL.createObjectURL(source);
+      const img=new Image();
+      await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=reject;img.src=localURL});
       if(img.naturalWidth!==190||img.naturalHeight!==130)throw Error("Wrong PNG dimensions: "+f.file);
-      if(captured===index){image=img;redraw();setStatus("Verified SHA-256 and PNG geometry: "+f.file)}
-    }catch(e){loaded=false;image=null;redraw();$("export").disabled=true;setStatus("BLOCKED: "+e.message)}
+      if(generation===showGeneration){
+        if(imageURL)URL.revokeObjectURL(imageURL);
+        imageURL=localURL;localURL=null;
+        image=img;redraw();setStatus("Verified SHA-256 and PNG geometry: "+f.file);
+      }
+    }catch(e){
+      if(generation===showGeneration){loaded=false;image=null;redraw();$("export").disabled=true;setStatus("BLOCKED: "+e.message)}
+    }finally{if(localURL)URL.revokeObjectURL(localURL)}
   }
   $("load").addEventListener("click",async()=>{
     try{
@@ -124,7 +132,7 @@ kbd{background:#303b47;padding:2px 5px;border-radius:3px}
       const m=JSON.parse(await $("manifest").files[0].text());
       const f=validManifest(m);readFiles();
       for(const x of f)if(!files.has(x.file))throw Error("Missing PNG "+x.file);
-      manifest=m;frames=f;ratings=new Map();verified=new Set();index=0;loaded=true;
+      ++showGeneration;manifest=m;frames=f;ratings=new Map();verified=new Set();index=0;loaded=true;
       $("prev").disabled=false;$("next").disabled=false;$("clear").disabled=false;
       await show(0);
     }catch(e){loaded=false;setStatus("BLOCKED: "+e.message);$("export").disabled=true}
@@ -133,7 +141,7 @@ kbd{background:#303b47;padding:2px 5px;border-radius:3px}
     if(!loaded||!image)return;
     const r=record(frames[index]);if(r.flags.unresolved||r.pts.length>=6)return;
     const b=canvas.getBoundingClientRect();
-    const x=(e.clientX-b.left)*190/b.width,y=(e.clientY-b.top)*130/b.height;
+    const x=(e.clientX-b.left-canvas.clientLeft)*190/canvas.clientWidth,y=(e.clientY-b.top-canvas.clientTop)*130/canvas.clientHeight;
     if(x<0||y<0||x>=190||y>=130)return;
     r.pts.push([Number(x.toFixed(3)),Number(y.toFixed(3))]);redraw();
   });
