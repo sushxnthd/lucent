@@ -1,0 +1,32 @@
+name: E002-402 signed landmark geometry and abstention
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_399_annotation_bridge.py'
+      - 'research/observability/e002_399_reference_adequacy.py'
+      - 'research/observability/e002_399_independent_check.py'
+      - 'research/observability/e002_400_independent_check.py'
+      - 'research/observability/e002_401_independent_check.py'
+      - 'research/observability/e002_402_geometry.py'
+      - 'research/observability/e002_402_independent_check.py'
+      - 'research/observability/E002_402_FROZEN.md'
+      - '.github/workflows/e002_402_geometry.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen synthetic geometry experiment
+        run: python research/observability/e002_402_geometry.py
+      - name: Independent contour and bridge checker
+        run: python research/observability/e002_402_independent_check.py
+      - name: Earlier reference, optical, rolling-shutter regressions
+        run: |
+          python research/observability/e002_399_independent_check.py
+          python research/observability/e002_400_independent_check.py
+          python research/observability/e002_401_independent_check.py
