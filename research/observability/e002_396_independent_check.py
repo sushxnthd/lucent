@@ -20,7 +20,7 @@ def main():
     out=pathlib.Path(a.output)
     r=json.loads((out/"e002_396_result.json").read_text())
     scores=json.loads((out/"e002_396_anonymous_scores.json").read_text())
-    assert md5(a.archive)==r["source_md5"]=="8a16cf170a9c7e9660f6e22b81d7d0a"
+    assert md5(a.archive)==r["source_md5"]=="8a16cf12526f7558b4e49926c4bc5e8e"
     with zipfile.ZipFile(a.archive) as z:
         sync=r["selected_session_stem"]+"_sync.csv"
         assert sync in z.namelist()
