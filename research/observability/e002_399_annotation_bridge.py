@@ -52,10 +52,23 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
     if not (set(sheet1)==set(sheet2)==set(timing)==ids):
         raise ValueError('Rater/time keys do not match blinded manifest exactly')
     gates=cfg.get('gates',{})
+    # E002-400: static landmark/optical calibration is NOT exposure-mean calibration.
+    # This quantitative bound is in normalized physical-aperture units and must
+    # include shutter/optical inversion and landmark-extraction bias. Its source
+    # remains externally auditable, not cryptographically verified by this script.
+    raw_optical_error=cfg.get('optical_mean_error_bound')
+    optical_error=None if raw_optical_error is None else float(raw_optical_error)
+    provenance=cfg.get('optical_mean_error_provenance','')
+    if optical_error is not None:
+        if not math.isfinite(optical_error) or optical_error<0:
+            raise ValueError('Invalid optical exposure-mean error bound')
+        if not isinstance(provenance,str) or len(provenance.strip())<8:
+            raise ValueError('Quantitative optical error needs an auditable provenance label')
     cal=Calibration(speed_upper=float(cfg['speed_upper']),threshold=float(cfg['threshold']),
                     independent_velocity=bool(gates.get('independent_velocity',False)),
                     aperture_geometry=bool(gates.get('aperture_geometry',False)),
-                    optical_response=bool(gates.get('optical_response',False)),
+                    optical_response=(bool(gates.get('optical_response',False)) and
+                                      optical_error is not None),
                     exposure_timing=bool(gates.get('exposure_timing',False)),
                     clock_synchronization=bool(gates.get('clock_synchronization',False)),
                     nuisance_resolved=bool(gates.get('nuisance_resolved',False)),
@@ -87,6 +100,11 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
             except (ValueError,KeyError):
                 excluded_frames+=1
                 continue
+            # A static landmark measurement is not automatically the physical
+            # exposure mean. Missing quantitative calibration forces abstention.
+            if optical_error is not None:
+                lo-=optical_error
+                hi+=optical_error
             t=timing[key]
             frames.append(Frame(float(t['nominal_time_s']),lo,hi,
                                 float(t['exposure_s']),float(t['clock_error_s'])))
@@ -96,7 +114,10 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
     return {'experiment':'E002-399','evidence_tier':'requires independently calibrated rater sheets',
             'total_clips':len(manifest['clips']),'excluded_frames':excluded_frames,
             'decisions':totals,'calibration_gates_passed':cal.qualified(),
-            'warning':'No physical-aperture claim unless all calibration gates independently verified. '
+            'optical_mean_error_bound_applied':optical_error,
+            'warning':'No physical-aperture claim unless the quantitative optical mean-error '
+                      'bound and all calibration gates are independently verified. '
+                      'A provenance string is NOT external verification. '
                       'No event/control linkage or EEG labels used.'}
 
 
