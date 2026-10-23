@@ -1,0 +1,17 @@
+# E002-395 — frozen prospective within-recording human blink-image association (2026-10-23)
+
+**Status: preregistered before decoding any new frames beyond the six E002-393 exploratory examples.** This is a new, explicitly lower-tier human-image test, **not** E002-371 physical aperture validation. E002-394's independent Phantom clock failed; use EEG `Time` only for event alignment, never to assert measured exposure or physical eyelid speed.
+
+## Fixed source, population and split
+- CC0 Eye-BCI S01 archive, MD5 `fef02cb7ebf62e4f3efb6303284fd6cb`, 53,680 frames. Single participant, single camera; no unseen participant/device inference.
+- EEG blink marker: `Blinks > 0`; require nearest video frame within 10 ms, 3 frames either side without >20-ms EEG gap. Pair each event with the first valid non-event time in fixed offset order +0.55, -0.55, +0.75, -0.75, +1.05, -1.05 seconds, at least 0.35 seconds from *any* EEG marker. Use one matched control per event, no manual relabeling.
+- Chronological 60% event pairs for training, final 40% untouched for test. At least 20 held-out pairs required; otherwise report underpowered and abstain. The first six events previously viewed are not valid untouched evidence: explicitly **exclude all six E002-393 first-six Phantom frame IDs (758, 1249, 1667, 2610, 3284, 4045) from both fitting and held-out scoring**.
+
+## Predefined image proxy and evaluation
+- Video frame gray-scale. Eye ROI x=[100,230), y=[118,190); local skin reference x=[45,85), y=[125,200). Define dark-pixel fraction as mean(eye_gray < median(skin_gray) - max(20, 0.25*median(skin_gray))). Closure-associated score = 1 - dark fraction. This is **not aperture**. No optimization of ROI, feature direction or transformations after evaluation.
+- Per-window score = maximum across the 7 nearest frames (center ±3), identically for markers and matched non-events. Use training pairs only to choose threshold maximizing Youden sensitivity+specificity-1, ties favor stricter threshold. Evaluate on untouched later pairs.
+- Primary prediction: held-out clean ROC AUC >= 0.75. Secondary: held-out AUC under global brightness gains 0.7 and 1.3 and offsets ±25 degrades by <=0.08 relative to clean; report all failures, including clipping. A predeclared glare rectangle and 2-pixel Gaussian blur are stress tests; no pass threshold, preserve full degradation. Translate by (+8,+6) px and report. Shuffled-label null with seed 371 should be close to chance (absolute AUC deviation <=0.15); if not, flag time confounding. Report class counts, sensitivity, specificity and bootstrap confidence interval (1000 paired resamples seed 371).
+- Score thresholds may not be promoted into hard physical no-hidden-closure certificates. No use of EEG markers as physical aperture truth. Do not tune thresholds to test data. If strong nuisance sensitivity, kill the observable rather than relabel failures.
+
+## Independent audit and release gate
+Reparse original sync sidecar, verify source MD5, independently recompute AUC from anonymous per-pair score arrays and enforce chronology/exclusion. No identifiable imagery is uploaded. A successful GitHub Actions job is only reproducibility, not successful scientific prediction. Product remains `ABSTAIN_UNCALIBRATED`; no fatigue/PERCLOS/physical closure claim without measured exposure, independently calibrated aperture and velocity, optical bounds and untouched participants/devices.
