@@ -1,0 +1,7 @@
+# E002-380 prospective human validation (NOT EXECUTED)
+Ethics/consent required. Concurrent native >=240fps (prefer >=600fps) eye reference plus 30/60fps ordinary RGB with measured per-row exposure timing, two independent synchronization anchors, raw timestamps, no loader downsampling.
+Freeze calibration on 16 adults; keep 8 participants, second device and lighting condition untouched. 30 spontaneous and 30 voluntary blinks per participant; strata for gaze, glasses, blur, lighting, occlusion, missingness and clock residual.
+Independently calibrate row optical contrast, error, reference aperture threshold, velocity and acceleration assumptions; no transfer of sample maxima as universal bounds. Freeze per-event predicted phase coverage and ABSTAIN before opening holdout labels. Compare against geometry-only, brightness-only, missingness-only, smoothness-only and no-row-time baselines.
+Primary falsification: any verified reference closure missed when model claims all-phase optical capture, with assumptions independently confirmed. Report grouped participant/device error, abstention and confidence bounds; never frame-bootstrap.
+With zero failures among N independent units, one-sided 95% upper risk bound is 1-0.05**(1/N): N=8 =>31.2%, N=24 =>11.7%, N=299 =>0.997%. A 24-person feasibility study cannot establish 1% population reliability.
+Publication requires independent reproduction, held-out boundary crossing and priority audit. Product stays camera qualification only.

@@ -1,0 +1,31 @@
+{
+  "id": "E002-380",
+  "date": "2026-10-23",
+  "status": "synthetic only; no human validation",
+  "random_exact_checks": 3000,
+  "frozen": [
+    {
+      "D_ms": 24,
+      "m_ms": 10,
+      "all_five": "PASS",
+      "center_three": "FAIL",
+      "single": "FAIL"
+    },
+    {
+      "D_ms": 15,
+      "m_ms": 4,
+      "all_five": "PASS",
+      "center_three": "FAIL",
+      "single": "FAIL"
+    }
+  ],
+  "synthetic_phase_fraction": {
+    "all_five": 1,
+    "center_three": 0.8102,
+    "narrow_1ms": 0.5402,
+    "clock_offset_adversarial_2ms": 0.9902
+  },
+  "optical_blur": "ABSTAIN",
+  "photometry_unbounded": "exact collision possible",
+  "novelty": "not established"
+}
