@@ -1,0 +1,41 @@
+name: E002-395 preregistered human image proxy falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_395_FROZEN.md"
+      - "research/observability/e002_395_human_proxy.py"
+      - "research/observability/e002_395_independent_check.py"
+      - ".github/workflows/e002_395_human.yml"
+  workflow_dispatch:
+jobs:
+  human-surrogate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install open-source image dependencies
+        run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Acquire original CC0 S01 human recording and verify bytes
+        run: |
+          mkdir -p /tmp/lucent-e002-395
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1200 \
+            'https://zenodo.org/records/18978288/files/S01.zip?download=1' \
+            --output /tmp/lucent-e002-395/S01.zip
+          echo 'fef02cb7ebf62e4f3efb6303284fd6cb  /tmp/lucent-e002-395/S01.zip' | md5sum --check
+      - name: Evaluate frozen human-image surrogate and nuisance controls
+        run: |
+          python research/observability/e002_395_human_proxy.py \
+            --archive /tmp/lucent-e002-395/S01.zip \
+            --output /tmp/lucent-e002-395/results
+      - name: Independent source and metric oracle
+        run: |
+          python research/observability/e002_395_independent_check.py \
+            --archive /tmp/lucent-e002-395/S01.zip \
+            --output /tmp/lucent-e002-395/results
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-395-anonymous-human-proxy-aggregates
+          path: /tmp/lucent-e002-395/results/
+          retention-days: 14
