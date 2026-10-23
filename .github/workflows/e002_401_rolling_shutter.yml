@@ -1,0 +1,29 @@
+name: E002-401 rolling-shutter physical aperture falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/e002_401_*"
+      - "research/observability/E002_401_*"
+      - "research/observability/e002_399_annotation_bridge.py"
+      - "research/observability/e002_399_independent_check.py"
+      - ".github/workflows/e002_401_rolling_shutter.yml"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Frozen witness and held-out synthetic instrument
+        run: python research/observability/e002_401_rolling_shutter.py
+      - name: Independent quadrature and bridge adversarial checks
+        run: python research/observability/e002_401_independent_check.py
+      - name: Preserve E002-399 reference adequacy regressions
+        run: python research/observability/e002_399_independent_check.py
+      - name: Preserve E002-400 optical error regressions
+        run: python research/observability/e002_400_independent_check.py
