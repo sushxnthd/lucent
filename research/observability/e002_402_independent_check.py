@@ -69,6 +69,10 @@ def bridge_regression():
         'reference_column_px':70.,'upper_lid_slope_bound':0.,
         'lower_lid_slope_bound':0.,'vertical_axis_verified':True,
         'provenance':'synthetic_parallel_contours_at_x70'}
+    assert analyze(manifest,s1,s2,timing,cfg)['decisions']['ABSTAIN_UNCALIBRATED']==1
+    cfg['temporal_kernel_calibration']={
+        'first_absolute_moment_fraction_upper':.25,
+        'provenance':'synthetic_verified_uniform_temporal_kernel'}
     zero_gap=analyze(manifest,s1,s2,timing,cfg)
     assert zero_gap['decisions']['CONFIRMED_CROSSING']==1, ('G4',zero_gap)
     s1,s2=sheets(50,30,50,50)
