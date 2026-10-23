@@ -23,7 +23,7 @@ jobs:
           curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1400 \
             'https://zenodo.org/records/21905748/files/S19.zip?download=1' \
             --output /tmp/lucent-e002-396/S19.zip
-          echo '8a16cf170a9c7e9660f6e22b81d7d0a  /tmp/lucent-e002-396/S19.zip' | md5sum --check
+          echo '8a16cf12526f7558b4e49926c4bc5e8e  /tmp/lucent-e002-396/S19.zip' | md5sum --check
       - name: Execute frozen unseen-person experiment
         run: |
           python research/observability/e002_396_unseen_s19.py \
