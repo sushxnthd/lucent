@@ -1,0 +1,48 @@
+name: E002-405 empirical speed is not a hard physical ceiling
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_405_*'
+      - 'research/observability/e002_405_*'
+      - 'research/observability/e002_399_annotation_bridge.py'
+      - 'research/observability/e002_399_independent_check.py'
+      - 'research/observability/e002_401_independent_check.py'
+      - 'research/observability/e002_402_independent_check.py'
+      - 'research/observability/e002_403_independent_check.py'
+      - '.github/workflows/e002_405_velocity_rank.yml'
+  workflow_dispatch:
+jobs:
+  independent-velocity-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prospective rank-risk experiment and false-certificate witness
+        run: |
+          cd research/observability
+          python e002_405_velocity_rank.py > e002_405_results.json
+      - name: Independent combinatorial and analytical oracle plus bridge enforcement
+        run: python research/observability/e002_405_independent_check.py
+      - name: Earlier independent regressions
+        run: |
+          python research/observability/e002_399_independent_check.py
+          python research/observability/e002_400_independent_check.py
+          python research/observability/e002_401_independent_check.py
+          python research/observability/e002_402_independent_check.py
+          python research/observability/e002_403_independent_check.py
+          python research/observability/test_e002_404_rater_pack.py
+      - name: Preserve numerical results without human frames
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-405-velocity-rank-results
+          path: research/observability/e002_405_results.json
+          retention-days: 14
+      - name: Scientific interpretation
+        run: |
+          echo 'E002-405 tests exact order-statistics and synthetic physical witness only.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'No independent human velocity bound or physical-aperture validation was obtained.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Finite human sample maxima cannot justify deterministic closure-exclusion claims.' >> "$GITHUB_STEP_SUMMARY"
