@@ -1,0 +1,27 @@
+name: E002-400 optical shutter noncommutation
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/e002_400_*"
+      - "research/observability/E002_400_*"
+      - "research/observability/e002_399_annotation_bridge.py"
+      - "research/observability/e002_399_independent_check.py"
+      - ".github/workflows/e002_400_optical_noncommutation.yml"
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Frozen optical witness and independent quadrature
+        run: |
+          python research/observability/e002_400_optical_noncommutation.py | tee /tmp/e002_400.json
+          python research/observability/e002_400_independent_check.py
+      - name: Regression on E002-399 physical-aperture bridge
+        run: python research/observability/e002_399_independent_check.py
