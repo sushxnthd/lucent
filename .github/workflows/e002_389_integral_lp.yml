@@ -1,0 +1,32 @@
+name: E002-389 exposure-integral observability
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_389_*'
+      - 'research/observability/E002_389_*'
+      - '.github/workflows/e002_389_integral_lp.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_389_*'
+      - 'research/observability/E002_389_*'
+      - '.github/workflows/e002_389_integral_lp.yml'
+  workflow_dispatch:
+
+jobs:
+  independent-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=1.24,<3' 'scipy>=1.11,<2'
+      - run: python research/observability/e002_389_integral_lp.py --out /tmp/e002_389
+      - run: python research/observability/e002_389_independent_check.py /tmp/e002_389/e002_389_results.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-389-results
+          path: /tmp/e002_389/e002_389_results.json
