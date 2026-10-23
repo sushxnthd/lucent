@@ -13,7 +13,7 @@ import numpy as np
 
 import e002_395_human_proxy as prior
 
-MD5 = "8a16cf170a9c7e9660f6e22b81d7d0a"
+MD5 = "8a16cf12526f7558b4e49926c4bc5e8e"
 FROZEN_S01_THR = 0.7938034188034189
 
 def load(z):
