@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1020" height="645" viewBox="0 0 1020 645" role="img" aria-label="Lucent E002-395 held-out human video image proxy ROC AUC results">
+<style>text{font-family:Arial,Helvetica,sans-serif;fill:#1c2831}.title{font-size:26px;font-weight:700}.sub{font-size:15px;fill:#53616b}.lab{font-size:16px}.num{font-size:15px;font-weight:600}.foot{font-size:13px;fill:#53616b}.axis{font-size:13px;fill:#53616b}</style>
+<rect width="1020" height="645" fill="#ffffff"/>
+<text x="28" y="45" class="title">A fixed eyelid-image proxy fails on held-out human video</text>
+<text x="28" y="73" class="sub">E002-395 · preregistered EEG-marker association · 35 untouched event/control pairs · single participant</text>
+<line x1="245" y1="112" x2="245" y2="534" stroke="#cad2d8"/>
+<line x1="570" y1="106" x2="570" y2="535" stroke="#c5b2a0" stroke-dasharray="6 5" stroke-width="1.5"/>
+<line x1="732.5" y1="106" x2="732.5" y2="535" stroke="#9a3541" stroke-dasharray="6 5" stroke-width="1.5"/>
+<text x="575" y="101" class="axis">0.50 chance</text>
+<text x="737.5" y="101" class="axis">0.75 frozen target</text>
+<text x="28" y="157" class="lab">Clean</text><rect x="245" y="138" width="130.3" height="26" rx="3" fill="#9a3541"/><text x="385.3" y="157" class="num">0.200</text>
+<text x="28" y="206" class="lab">Gain 0.70</text><rect x="245" y="187" width="102.4" height="26" rx="3" fill="#4b6171"/><text x="357.4" y="206" class="num">0.158</text>
+<text x="28" y="255" class="lab">Gain 1.30</text><rect x="245" y="236" width="131.1" height="26" rx="3" fill="#4b6171"/><text x="386.1" y="255" class="num">0.202</text>
+<text x="28" y="304" class="lab">Brightness +25</text><rect x="245" y="285" width="90.7" height="26" rx="3" fill="#4b6171"/><text x="345.7" y="304" class="num">0.140</text>
+<text x="28" y="353" class="lab">Brightness -25</text><rect x="245" y="334" width="161.3" height="26" rx="3" fill="#4b6171"/><text x="416.3" y="353" class="num">0.248</text>
+<text x="28" y="402" class="lab">Blur sigma 2</text><rect x="245" y="383" width="130.0" height="26" rx="3" fill="#4b6171"/><text x="385.0" y="402" class="num">0.200</text>
+<text x="28" y="451" class="lab">Glare rectangle</text><rect x="245" y="432" width="130.3" height="26" rx="3" fill="#4b6171"/><text x="385.3" y="451" class="num">0.200</text>
+<text x="28" y="500" class="lab">Translation +8,+6</text><rect x="245" y="481" width="187.0" height="26" rx="3" fill="#4b6171"/><text x="442.0" y="500" class="num">0.288</text>
+<line x1="245" y1="533" x2="895" y2="533" stroke="#9eabb4"/>
+<line x1="245" y1="533" x2="245" y2="539" stroke="#9eabb4"/><text x="245" y="558" text-anchor="middle" class="axis">0.00</text>
+<line x1="407.5" y1="533" x2="407.5" y2="539" stroke="#9eabb4"/><text x="407.5" y="558" text-anchor="middle" class="axis">0.25</text>
+<line x1="570" y1="533" x2="570" y2="539" stroke="#9eabb4"/><text x="570" y="558" text-anchor="middle" class="axis">0.50</text>
+<line x1="732.5" y1="533" x2="732.5" y2="539" stroke="#9eabb4"/><text x="732.5" y="558" text-anchor="middle" class="axis">0.75</text>
+<line x1="895" y1="533" x2="895" y2="539" stroke="#9eabb4"/><text x="895" y="558" text-anchor="middle" class="axis">1.00</text>
+<text x="570" y="581" text-anchor="middle" class="axis">Held-out ROC AUC (higher is better)</text>
+<text x="28" y="613" class="foot">Clean AUC 0.200 (paired-bootstrap 95% interval 0.088–0.354). 32/35 nominal controls flagged positive.</text>
+<text x="28" y="634" class="foot">CI passing means reproducible execution, not scientific success. Proxy rejected; physical aperture remains unvalidated.</text>
+</svg>
