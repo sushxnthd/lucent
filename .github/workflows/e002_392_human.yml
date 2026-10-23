@@ -8,6 +8,7 @@ on:
       - ".github/workflows/e002_392_human.yml"
       - "research/observability/e002_392_clock_repair.py"
       - "research/observability/e002_393_sync_audit.py"
+      - "research/observability/e002_393_sync_repair.py"
   workflow_dispatch:
 jobs:
   public-human-feasibility:
@@ -43,6 +44,11 @@ jobs:
       - name: Independently reconcile 1-kHz EEG and Phantom camera clocks
         run: |
           python research/observability/e002_393_sync_audit.py \
+            --archive /tmp/lucent-e002-392/S01.zip \
+            --output /tmp/lucent-e002-392/output
+      - name: Correct gap-aware camera rate and reject out-of-coverage blink markers
+        run: |
+          python research/observability/e002_393_sync_repair.py \
             --archive /tmp/lucent-e002-392/S01.zip \
             --output /tmp/lucent-e002-392/output
       - name: Remove raw human footage and sidecars from artifacts
