@@ -16,6 +16,32 @@ from e002_399_reference_adequacy import Calibration, Frame, certify
 FLAGS=('occlusion','glare','glasses','blur','gaze_issue','unresolved')
 TRUTHY={'1','true','yes','y'}
 
+def hard_velocity_evidence(cfg):
+    """Require a stated *deterministic* physical speed ceiling, not a sample max.
+
+    This is a schema/claim gate, NOT cryptographic verification of the physical
+    evidence. An independent reviewer must validate provenance and applicability.
+    """
+    record=cfg.get('velocity_bound_calibration')
+    if not isinstance(record,dict):
+        return False
+    if record.get('bound_kind')!='deterministic_physical_upper':
+        return False
+    provenance=record.get('provenance')
+    domain=record.get('validity_domain')
+    if not isinstance(provenance,str) or len(provenance.strip())<8:
+        return False
+    if not isinstance(domain,str) or len(domain.strip())<8:
+        return False
+    try:
+        speed=float(cfg['speed_upper'])
+        recorded=float(record['upper_per_s'])
+    except (KeyError,TypeError,ValueError):
+        return False
+    return (math.isfinite(speed) and math.isfinite(recorded)
+            and speed>=0 and recorded==speed)
+
+
 
 def read_index(path):
     with open(path,newline='') as f:
@@ -134,7 +160,8 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
     # rolling shutter with equal exposure profiles.
     shutter_gate=shutter_gate and row_error is not None and kernel_fraction is not None
     cal=Calibration(speed_upper=float(cfg['speed_upper']),threshold=float(cfg['threshold']),
-                    independent_velocity=bool(gates.get('independent_velocity',False)),
+                    independent_velocity=(bool(gates.get('independent_velocity',False)) and
+                                          hard_velocity_evidence(cfg)),
                     aperture_geometry=(bool(gates.get('aperture_geometry',False)) and
                                        geometry_vals is not None),
                     optical_response=(bool(gates.get('optical_response',False)) and
@@ -187,6 +214,8 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
     return {'experiment':'E002-399','evidence_tier':'requires independently calibrated rater sheets',
             'total_clips':len(manifest['clips']),'excluded_frames':excluded_frames,
             'decisions':totals,'calibration_gates_passed':cal.qualified(),
+            'hard_velocity_bound_gate':hard_velocity_evidence(cfg),
+            'velocity_evidence_kind':(cfg.get('velocity_bound_calibration') or {}).get('bound_kind') if isinstance(cfg.get('velocity_bound_calibration'),dict) else None,
             'optical_mean_error_bound_applied':optical_error,
             'row_skew_error_bound_applied':row_error,
             'temporal_kernel_first_abs_moment_fraction_applied':kernel_fraction,
@@ -196,6 +225,8 @@ def analyze(manifest, sheet1, sheet2, timing, cfg):
                       'Rolling shutter needs independent per-landmark row timing and speed bounds. '
                       'Reference-column and lid-slope calibration must also be independently verified. '
                       'Nonuniform temporal shutter response needs an independently bounded first absolute moment. '
+                      'Finite observed speed maxima or marginal conformal bounds are NOT deterministic velocity ceilings. '
+                      'A structured provenance string is not independently verified. '
                       'No event/control linkage or EEG labels used.'}
 
 
