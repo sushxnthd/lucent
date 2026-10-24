@@ -70,6 +70,7 @@ class TestExposureAlias(unittest.TestCase):
                 evaluate(w)
         self.assertFalse(evaluate(Witness(.3, 60, 1/240, .002, .05))['conditional_observational_ambiguity'])
         self.assertFalse(evaluate(Witness(.3, 60, 1/240, .002, .29))['conditional_observational_ambiguity'])
+        self.assertIsNone(evaluate(Witness(.3, 60, 1/240, .002, .29))['dimensionless_ambiguity_ratio'])
         with self.assertRaises(ValueError):
             exposure_average(Witness(.3, 60, 1/240, .002, .2), 0, 'closure', 5)
 
