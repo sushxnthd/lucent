@@ -1,0 +1,55 @@
+name: E002-409 untouched S06 transfer and nuisance falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_409_*"
+      - "research/observability/e002_409_*"
+      - ".github/workflows/e002_409_unseen_s06.yml"
+  workflow_dispatch:
+jobs:
+  independent-oracle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and independently verify synthetic controls
+        run: |
+          python -m py_compile research/observability/e002_409_unseen_s06.py research/observability/e002_409_independent_check.py
+          python research/observability/e002_409_independent_check.py --self-test
+  real-human-unseen-S06:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    needs: independent-oracle
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install numerical and optical-flow dependencies
+        run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Download exact preregistered untouched participant
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/lucent-e002-409
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1800 \
+            'https://zenodo.org/records/18978288/files/S06.zip?download=1' \
+            --output /tmp/lucent-e002-409/S06.zip
+          echo '8217203472f7393b03aa56102dbc9adc  /tmp/lucent-e002-409/S06.zip' | md5sum --check
+      - name: Execute frozen motion feature, nuisance predictions and independent oracle
+        run: |
+          set -euo pipefail
+          trap 'rm -f /tmp/lucent-e002-409/S06.zip' EXIT
+          python research/observability/e002_409_unseen_s06.py \
+            --archive /tmp/lucent-e002-409/S06.zip \
+            --output /tmp/lucent-e002-409/aggregate
+          python research/observability/e002_409_independent_check.py \
+            --output /tmp/lucent-e002-409/aggregate
+          echo 'CI success means computational reproducibility, NOT that H1-H5 passed.'
+          echo 'No images, video, EEG timestamps, or source frame IDs uploaded.'
+      - name: Archive non-image anonymous scientific evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-409-s06-anonymous-scores-and-summary
+          path: |
+            /tmp/lucent-e002-409/aggregate/summary.json
+            /tmp/lucent-e002-409/aggregate/anonymous_scores.json
+          retention-days: 14
+          if-no-files-found: error
