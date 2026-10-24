@@ -59,6 +59,15 @@ class E002425Tests(unittest.TestCase):
         self.assertGreater(float(np.max(np.abs(A[256:] @ delta))), 0.01)
         self.assertEqual(len(np.unique(starts)), 384)
 
+    def test_exploratory_timing_mismatch_not_mistaken_for_validation(self):
+        # Off-model clock jitter can distort the recovered kernel even when
+        # ordinary held-out pulse MAE remains below a permissive 0.01.
+        x = m.experiment()["exploratory_unmodeled_30us_timing_jitter"]
+        self.assertFalse(x["preregistered_gate"])
+        self.assertGreater(x["recovery"]["mass_l1_error"], 0.5)
+        self.assertLess(x["recovery"]["heldout_mae"], 0.01)
+        self.assertGreater(x["nominal_training_mae"], 0.005)
+
     def test_invalid_inputs_and_bounded_fit(self):
         for s, w in (([], []), ([0], []), ([float("nan")], [0.5]),
                      ([0], [-0.2]), ([0], [float("inf")]), ([[0]], [[0.5]])):
