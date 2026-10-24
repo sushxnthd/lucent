@@ -91,7 +91,8 @@ def main():
         partial=root/"partial.json"
         partial.write_text(json.dumps({"speed_upper":5,"threshold":.2}))
         incomplete=adjudicate(mp,a,b,timing,partial)
-        assert incomplete["decisions"]["ABSTAIN_UNCALIBRATED"]==4\n        assert sum(v for k,v in incomplete["decisions"].items() if k!="ABSTAIN_UNCALIBRATED")==0
+        assert incomplete["decisions"]["ABSTAIN_UNCALIBRATED"]==4
+        assert sum(v for k,v in incomplete["decisions"].items() if k!="ABSTAIN_UNCALIBRATED")==0
         assert incomplete["physical_timing_provenance_authenticated"] is False
         # Positive control is an exact synthetic physical instrument, not human evidence.
         cfg={"speed_upper":1,"threshold":.2,"iris_scale_lower_px":20,
