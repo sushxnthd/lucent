@@ -1,0 +1,32 @@
+name: E002-426 prospective human-validation registry integrity
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_426_*'
+      - 'research/observability/e002_426_*'
+      - 'research/observability/test_e002_426_*'
+      - '.github/workflows/e002_426_prospective_lock.yml'
+  workflow_dispatch:
+jobs:
+  synthetic-registry-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test sealed preregistration and participant-level uncertainty
+        run: python -m unittest -v research/observability/test_e002_426_prospective_lock.py
+      - name: Explicitly retain physical abstention
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'research/observability')
+          import e002_426_prospective_lock as p
+          assert p.PREDICTIONS == {'NO_CROSSING_CONDITIONAL','POSSIBLE_CROSSING','ABSTAIN'}
+          assert 'MISSING' in p.REFERENCES
+          print('Only synthetic study-control tests executed; no human annotations or camera calibration.')
+          PY
