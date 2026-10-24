@@ -1,0 +1,77 @@
+{
+  "clean_A_valid": 585,
+  "clean_B_valid": 374,
+  "clean_joint_agree_all_frame_fraction": 0.240506,
+  "clean_joint_agree_within_5px": 152,
+  "clean_joint_valid": 374,
+  "clips": 8,
+  "evidence_tier": "human eye video; automated pixel-space candidate only",
+  "experiment": "E002-417",
+  "human_raters": 0,
+  "hypotheses": {
+    "H1_source_coverage": true,
+    "H2_joint_coverage_and_agreement": false,
+    "H3_all_four_transfer_conditions": false,
+    "H4_white_glare_both_abstain": true,
+    "H5_synthetic_control_and_no_product": true
+  },
+  "independent_camera_exposure_calibrated": false,
+  "independent_hard_velocity_bound": false,
+  "joint_transfer_gate_pass": false,
+  "nuisance": {
+    "blur2": {
+      "all_frame_joint_valid": 342,
+      "all_frame_joint_valid_fraction": 0.541139,
+      "both_abstain": 144,
+      "both_abstain_fraction": 0.227848,
+      "clean_joint_valid_denominator": 374,
+      "retained_and_stable": 202,
+      "retained_and_stable_fraction": 0.540107,
+      "retained_joint_valid": 340
+    },
+    "gain070": {
+      "all_frame_joint_valid": 204,
+      "all_frame_joint_valid_fraction": 0.322785,
+      "both_abstain": 137,
+      "both_abstain_fraction": 0.216772,
+      "clean_joint_valid_denominator": 374,
+      "retained_and_stable": 108,
+      "retained_and_stable_fraction": 0.28877,
+      "retained_joint_valid": 203
+    },
+    "gain130": {
+      "all_frame_joint_valid": 425,
+      "all_frame_joint_valid_fraction": 0.672468,
+      "both_abstain": 14,
+      "both_abstain_fraction": 0.022152,
+      "clean_joint_valid_denominator": 374,
+      "retained_and_stable": 207,
+      "retained_and_stable_fraction": 0.553476,
+      "retained_joint_valid": 372
+    },
+    "translate8_6": {
+      "all_frame_joint_valid": 245,
+      "all_frame_joint_valid_fraction": 0.387658,
+      "both_abstain": 152,
+      "both_abstain_fraction": 0.240506,
+      "clean_joint_valid_denominator": 374,
+      "retained_and_stable": 18,
+      "retained_and_stable_fraction": 0.048128,
+      "retained_joint_valid": 186
+    },
+    "white_glare": {
+      "all_frame_joint_valid": 0,
+      "all_frame_joint_valid_fraction": 0,
+      "both_abstain": 632,
+      "both_abstain_fraction": 1,
+      "clean_joint_valid_denominator": 374,
+      "retained_and_stable": 0,
+      "retained_and_stable_fraction": 0,
+      "retained_joint_valid": 0
+    }
+  },
+  "physical_aperture_validated": false,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "product_claim_authorized": false,
+  "source_frame_occurrences": 632
+}
