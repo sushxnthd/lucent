@@ -102,6 +102,35 @@ def physical_policy(*, photodiode_verified: bool = False,
     }
 
 
+
+def exploratory_row_offset_counterexample(fitted_rows: list[dict]) -> dict:
+    """Post-preregistration consequence: a fitted row delay can reverse E002-422's
+    conditional certificate. The aperture means and V below are HYPOTHETICAL.
+    """
+    nominal_d_ms = 1000.0 / 240.0
+    row_delay_ms = abs(fitted_rows[1]["center_ms"] - fitted_rows[0]["center_ms"])
+    actual_d_ms = nominal_d_ms + row_delay_ms
+    a, b, theta, v_per_ms = 0.40, 0.35, 0.20, 0.05
+    nominal_L = (a + b - v_per_ms * nominal_d_ms) / 2
+    corrected_L = (a + b - v_per_ms * actual_d_ms) / 2
+    balanced = abs(a - b) <= v_per_ms * (nominal_d_ms - 2.4)
+    return {
+        "exploratory_not_preregistered": True,
+        "hypothetical_means": [a, b],
+        "hypothetical_V_per_second": 50.0,
+        "closure_threshold": theta,
+        "nominal_center_separation_ms": nominal_d_ms,
+        "synthetic_inferred_row_delay_ms": row_delay_ms,
+        "corrected_center_separation_ms": actual_d_ms,
+        "balanced_slope_condition": balanced,
+        "nominal_sharp_minimum": nominal_L,
+        "row_corrected_sharp_minimum": corrected_L,
+        "nominal_conditional_no_closure": nominal_L > theta,
+        "row_corrected_conditional_no_closure": corrected_L > theta,
+        "physical_product_authorized": False,
+    }
+
+
 def experiment() -> dict:
     base = [fit_row(PHASES_MS, row) for row in generate_rows(423)]
     jitter = [fit_row(PHASES_MS, row) for row in generate_rows(7423, jitter_ms=0.8)]
@@ -121,6 +150,7 @@ def experiment() -> dict:
         "truth_not_available_to_fitter": [{"E_ms": e, "c_ms": c} for e, c in TRUTH],
         "baseline": base, "jitter_0p8ms": jitter, "gamma_sqrt": gamma,
         "phase_shuffle": shuffled,
+        "exploratory_row_offset": exploratory_row_offset_counterexample(base),
         "frozen_tests": {
             "H1_recovery_and_rolling_difference": h1,
             "H2_jitter_detected": any(not x["heldout_pass"] for x in jitter),
