@@ -134,7 +134,7 @@ def main():
         full.write_text(json.dumps(cfg))
         rejected=adjudicate(mp,a,b,timing,full)
         assert rejected["decisions"]["ABSTAIN_UNCALIBRATED"]==4
-        assert rejected["conditional_research_decisions"] is None
+        assert rejected["conditional_research_decisions"]["ABSTAIN_UNCALIBRATED"]==4
         print(json.dumps({"experiment":"E002-408",
                           "synthetic_fixtures_passed":True,
                           "test_frames":120,
