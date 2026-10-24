@@ -1,0 +1,81 @@
+{
+  "all_hypotheses_pass": true,
+  "camera_exposure_calibrated": false,
+  "clean_valid_frames": 623,
+  "clips": 8,
+  "dynamic_clips": 8,
+  "evidence_tier": "real human video, exploratory fixed optical proxy, no physical aperture",
+  "experiment": "E002-412",
+  "glare_rejected_fraction": 1,
+  "hard_velocity_bound_established": false,
+  "hypotheses": {
+    "H1_eight_clips_ge_600_frames": true,
+    "H2_clean_90pct_valid_four_dynamic": true,
+    "H3_30Hz_phase_aliasing_gt_10pct": true,
+    "H4_gain_blur_95pct_stable": true,
+    "H5_glare_95pct_rejected": true,
+    "H6_range_ratios_valid": true
+  },
+  "nuisance": {
+    "blur_sigma2": {
+      "fraction_abs_change_le_008": 1,
+      "joint_valid_fraction": 0.984177,
+      "joint_valid_frames": 622,
+      "median_abs_change": 0.012076,
+      "rejected_frames": 10
+    },
+    "gain_070": {
+      "fraction_abs_change_le_008": 1,
+      "joint_valid_fraction": 0.75,
+      "joint_valid_frames": 474,
+      "median_abs_change": 0.003721,
+      "rejected_frames": 158
+    },
+    "gain_130": {
+      "fraction_abs_change_le_008": 1,
+      "joint_valid_fraction": 0.985759,
+      "joint_valid_frames": 623,
+      "median_abs_change": 0.003077,
+      "rejected_frames": 4
+    },
+    "glare": {
+      "fraction_abs_change_le_008": null,
+      "joint_valid_fraction": 0,
+      "joint_valid_frames": 0,
+      "median_abs_change": null,
+      "rejected_frames": 632
+    },
+    "translation_8_6": {
+      "fraction_abs_change_le_008": 0.454106,
+      "joint_valid_fraction": 0.982595,
+      "joint_valid_frames": 621,
+      "median_abs_change": 0.083117,
+      "rejected_frames": 11
+    }
+  },
+  "physical_aperture_validated": false,
+  "point_decimation": {
+    "15": {
+      "fraction_loss_gt_010": 0.625,
+      "median_capture_ratio": 0.843748,
+      "min_capture_ratio": 0.367684,
+      "valid_clip_phases": 128
+    },
+    "30": {
+      "fraction_loss_gt_010": 0.375,
+      "median_capture_ratio": 0.956637,
+      "min_capture_ratio": 0.696752,
+      "valid_clip_phases": 128
+    },
+    "60": {
+      "fraction_loss_gt_010": 0.203125,
+      "median_capture_ratio": 1,
+      "min_capture_ratio": 0.765356,
+      "valid_clip_phases": 128
+    }
+  },
+  "product": "ABSTAIN_UNCALIBRATED",
+  "source_md5_verified": true,
+  "total_frames": 632,
+  "translation_transfer_rejected": true
+}

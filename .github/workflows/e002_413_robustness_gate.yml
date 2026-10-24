@@ -1,0 +1,22 @@
+name: E002-413 human-proxy nuisance denominator audit
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_413_*"
+      - "research/observability/e002_413_*"
+      - "research/observability/test_e002_413_*"
+      - ".github/workflows/e002_413_robustness_gate.yml"
+  workflow_dispatch:
+jobs:
+  independent-denominator-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and run standalone regression tests
+        run: |
+          python -m py_compile research/observability/e002_413_robustness_gate.py
+          cd research/observability
+          python test_e002_413_robustness_gate.py
+          python e002_413_robustness_gate.py --input E002_413_AGGREGATE.json
