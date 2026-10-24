@@ -1,0 +1,107 @@
+{
+  "baseline": [
+    {
+      "center_ms": 0,
+      "exposure_ms": 2.4,
+      "heldout_pass": true,
+      "heldout_rmse": 0.0018779761271319228,
+      "train_rmse": 0.0018180825513707598
+    },
+    {
+      "center_ms": 3.2,
+      "exposure_ms": 2.4,
+      "heldout_pass": true,
+      "heldout_rmse": 0.001685769320311234,
+      "train_rmse": 0.0019596644130956795
+    }
+  ],
+  "frozen_tests": {
+    "H1_recovery_and_rolling_difference": true,
+    "H2_jitter_detected": true,
+    "H3_nonlinearity_detected": true,
+    "H4_phase_corruption_detected": true,
+    "H5_no_physical_evidence_from_metadata": true,
+    "H6_product_abstention": true
+  },
+  "gamma_sqrt": [
+    {
+      "center_ms": 0,
+      "exposure_ms": 2.3,
+      "heldout_pass": false,
+      "heldout_rmse": 0.12887327808575236,
+      "train_rmse": 0.1272607317531163
+    },
+    {
+      "center_ms": 3.2,
+      "exposure_ms": 2.3,
+      "heldout_pass": false,
+      "heldout_rmse": 0.12789770805068107,
+      "train_rmse": 0.12719285014652668
+    }
+  ],
+  "heldout_count_per_row": 50,
+  "jitter_0p8ms": [
+    {
+      "center_ms": 0.1,
+      "exposure_ms": 2.7,
+      "heldout_pass": false,
+      "heldout_rmse": 0.04503669677778997,
+      "train_rmse": 0.03682685689570907
+    },
+    {
+      "center_ms": 3.1,
+      "exposure_ms": 2.1,
+      "heldout_pass": false,
+      "heldout_rmse": 0.058624816159591836,
+      "train_rmse": 0.0387467395679932
+    }
+  ],
+  "phase_count": 101,
+  "phase_shuffle": [
+    {
+      "center_ms": 3.7,
+      "exposure_ms": 3.3,
+      "heldout_pass": false,
+      "heldout_rmse": 0.09889573309660933,
+      "train_rmse": 0.08838622468025127
+    },
+    {
+      "center_ms": -0.2,
+      "exposure_ms": 3.3,
+      "heldout_pass": false,
+      "heldout_rmse": 0.11670948832615087,
+      "train_rmse": 0.09415842014938539
+    }
+  ],
+  "policy": {
+    "evidence_tier": "SYNTHETIC_INSTRUMENT_ONLY",
+    "instrument_assumptions_declared": false,
+    "physical_calibration_authorized": false,
+    "physical_provenance_authenticated_by_tool": false,
+    "product": "ABSTAIN_UNCALIBRATED",
+    "product_claim_authorized": false
+  },
+  "rows": [
+    0,
+    800
+  ],
+  "source": "seeded simulated LED pulses; no physical hardware",
+  "study": "E002-423",
+  "train_count_per_row": 51,
+  "truth_not_available_to_fitter": [
+    {
+      "E_ms": 2.4,
+      "c_ms": 0
+    },
+    {
+      "E_ms": 2.4,
+      "c_ms": 3.2
+    }
+  ],
+  "provenance": {
+    "evidence_tier": "seeded-synthetic",
+    "hosted_workflow_run": "https://github.com/sushxnthd/lucent/actions/runs/40121895766",
+    "frozen_protocol_commit": "b96e6b325fde584fadc9639f9ff1304fe958490a",
+    "note": "Recompute from committed code; no physical measurements."
+  }
+}
