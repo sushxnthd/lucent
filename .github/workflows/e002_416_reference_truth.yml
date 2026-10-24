@@ -1,0 +1,23 @@
+name: E002-416 high-speed reference negative-label adequacy
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_416_*"
+      - "research/observability/e002_416_reference_truth.py"
+      - "research/observability/test_e002_416_reference_truth.py"
+      - ".github/workflows/e002_416_reference_truth.yml"
+  workflow_dispatch:
+jobs:
+  reference-negative-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile reference gate and independent checker
+        run: |
+          python -m py_compile research/observability/e002_416_reference_truth.py research/observability/test_e002_416_reference_truth.py
+      - name: Frozen reference blind-spot and 1000-case grid-oracle tests
+        run: python research/observability/test_e002_416_reference_truth.py
+      - name: Existing product provenance boundary regression
+        run: python research/observability/test_e002_415_product_boundary.py
