@@ -91,7 +91,7 @@ def main():
         partial=root/"partial.json"
         partial.write_text(json.dumps({"speed_upper":5,"threshold":.2}))
         incomplete=adjudicate(mp,a,b,timing,partial)
-        assert incomplete["decisions"]=={"ABSTAIN_UNCALIBRATED":4}
+        assert incomplete["decisions"]["ABSTAIN_UNCALIBRATED"]==4\n        assert sum(v for k,v in incomplete["decisions"].items() if k!="ABSTAIN_UNCALIBRATED")==0
         assert incomplete["physical_timing_provenance_authenticated"] is False
         print(json.dumps({"experiment":"E002-408",
                           "synthetic_fixtures_passed":True,
