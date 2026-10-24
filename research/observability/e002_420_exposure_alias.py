@@ -54,7 +54,7 @@ def evaluate(w: Witness) -> dict:
         'open_world_minimum': observed,
         'closure_world_minimum': closure_min,
         'dimensionless_exposure_fraction': w.exposure_s/w.frame_gap_s,
-        'dimensionless_hidden_depth': w.velocity_per_s*w.frame_gap_s/(2*max(observed-w.closure_threshold, 1e-15)),
+        'dimensionless_ambiguity_ratio': w.velocity_per_s*(4*w.frame_gap_s-w.exposure_s)/(8*max(observed-w.closure_threshold, 1e-15)),
         'product': 'ABSTAIN_UNCALIBRATED',
         'product_claim_authorized': False,
         'physical_provenance_authenticated_by_tool': False,
