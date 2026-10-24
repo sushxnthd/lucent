@@ -1,0 +1,65 @@
+name: E002-417 real-human eyelid geometry falsification (aggregate only)
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_417_*"
+      - "research/observability/e002_417_*"
+      - "research/observability/test_e002_417_*"
+      - ".github/workflows/e002_417_human_geometry.yml"
+  workflow_dispatch:
+jobs:
+  independent-synthetic-controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install fixed image dependencies
+        run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Run known-gap, nuisance, missingness and product-gate tests
+        run: |
+          python -m py_compile research/observability/e002_417_human_geometry.py
+          python research/observability/test_e002_417_human_geometry.py
+  real-human-aggregate:
+    needs: independent-synthetic-controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install fixed image dependencies
+        run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Download and verify previously used CC0 human sources
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/lucent-e002-417
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1400 \
+            'https://zenodo.org/records/18978288/files/S01.zip?download=1' \
+            -o /tmp/lucent-e002-417/S01.zip
+          echo 'fef02cb7ebf62e4f3efb6303284fd6cb  /tmp/lucent-e002-417/S01.zip' | md5sum --check
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1400 \
+            'https://zenodo.org/records/21905748/files/S19.zip?download=1' \
+            -o /tmp/lucent-e002-417/S19.zip
+          echo '8a16cf12526f7558b4e49926c4bc5e8e  /tmp/lucent-e002-417/S19.zip' | md5sum --check
+      - name: Score frozen human-video candidates and all-frame nuisance denominators
+        run: |
+          set -euo pipefail
+          python research/observability/e002_417_human_geometry.py \
+            --s01 /tmp/lucent-e002-417/S01.zip \
+            --s19 /tmp/lucent-e002-417/S19.zip \
+            --output /tmp/lucent-e002-417/aggregate.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          x=json.loads(Path('/tmp/lucent-e002-417/aggregate.json').read_text())
+          assert x['product'] == 'ABSTAIN_UNCALIBRATED'
+          assert x['product_claim_authorized'] is False
+          assert x['human_raters'] == 0 and not x['physical_aperture_validated']
+          assert x['source_frame_occurrences'] >= x['clean_joint_valid']
+          print('E002-417 frozen hypotheses:',x['hypotheses'])
+          print('Scientific transfer decision:', 'PASS necessary controls only' if x['joint_transfer_gate_pass'] else 'REJECT candidate')
+          PY
+      - name: Delete local source and output; never upload eye frames or linkage
+        if: always()
+        run: |
+          rm -rf /tmp/lucent-e002-417
+          echo 'No artifacts uploaded; logs contain only aggregate measurements.'
