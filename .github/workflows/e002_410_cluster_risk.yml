@@ -18,18 +18,22 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install fixed simulation dependency
-        run: python -m pip install 'numpy>=1.26,<3'
+        run: python -m pip install 'numpy>=1.26,<3' 'matplotlib>=3.8,<4'
       - name: Run frozen participant-cluster and shifted-domain experiment
         run: python research/observability/e002_410_cluster_risk.py --output e002_410_results.json
       - name: Run independent rank oracle
         run: python research/observability/e002_410_independent_check.py
       - name: Test release-gate enforcement and edge cases
         run: python -m unittest discover -s research/observability -p 'test_e002_410_cluster_risk.py' -v
+      - name: Render reproducible vector scientific figure
+        run: python research/observability/e002_410_figure.py --results e002_410_results.json --output e002_410_figure.svg
       - name: Preserve anonymous aggregate synthetic result
         uses: actions/upload-artifact@v4
         with:
           name: e002-410-clustered-velocity-results
-          path: e002_410_results.json
+          path: |
+            e002_410_results.json
+            e002_410_figure.svg
           retention-days: 14
       - name: Evidence-tier warning
         run: |
