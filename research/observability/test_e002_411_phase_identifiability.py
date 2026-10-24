@@ -14,6 +14,14 @@ class PhaseIdentifiabilityTests(unittest.TestCase):
         self.assertAlmostEqual(result["moment_ratio"], 4.6/.6)
         self.assertEqual(result["product"], "ABSTAIN_UNCALIBRATED")
 
+    def test_exploratory_nonzero_observations_still_ambiguous(self):
+        mix = experiment()["exploratory_positive_signal_mixture"]
+        self.assertTrue(all(y > 0 for y in mix["sparse_pulse_responses"]))
+        self.assertAlmostEqual(mix["center_moment_ms"], 1.55)
+        self.assertAlmostEqual(mix["edge_moment_ms"], 3.55)
+        self.assertAlmostEqual(mix["moment_separation_ms"], 2.0)
+        self.assertFalse(mix["preregistered"])
+
     def test_uncovered_support(self):
         self.assertGreater(uncovered_support_ms(range(10), .2, 10., .05), 7.)
         self.assertLess(uncovered_support_ms([i/10 for i in range(99)], .2, 10.), 1e-9)
