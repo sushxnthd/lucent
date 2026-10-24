@@ -1,0 +1,22 @@
+name: E002-414 participant-level false-certificate power gate
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_414_*"
+      - "research/observability/e002_414_*"
+      - "research/observability/test_e002_414_*"
+      - ".github/workflows/e002_414_claim_power.yml"
+  workflow_dispatch:
+jobs:
+  exact-participant-oracle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and run independent arithmetic and fail-closed controls
+        run: |
+          python -m py_compile research/observability/e002_414_claim_power.py
+          cd research/observability
+          python test_e002_414_claim_power.py
+          python e002_414_claim_power.py --validation-risk 0.025 --calibration-risk 0.025 --future-participants 10
