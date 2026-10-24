@@ -49,6 +49,7 @@ class TestExposureAlias(unittest.TestCase):
             w = Witness(a, v, d, e, theta)
             o = evaluate(w)
             self.assertTrue(o['conditional_observational_ambiguity'])
+            self.assertGreaterEqual(o['dimensionless_ambiguity_ratio'], 1)
             self.assertLessEqual(0, low)
             self.assertLessEqual(a, 1)
             for closed, name in ((False, 'open'), (True, 'closure')):
