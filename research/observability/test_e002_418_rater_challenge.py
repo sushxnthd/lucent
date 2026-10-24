@@ -65,6 +65,24 @@ class ChallengeTest(unittest.TestCase):
         self.assertEqual(failed["raters"][0]["obscured_abstain"], 0)
         self.assertEqual(sum(v["false_confident"] for v in
                              failed["raters"][0]["by_condition"].values()), 48)
+        # A malicious/buggy UI must not conceal coordinates behind an
+        # unresolved flag; the denominator still includes the frame.
+        masked = root / "masked.csv"
+        with a.open(newline="") as inp:
+            original = list(csv.DictReader(inp))
+        for row in original:
+            if row["unresolved"] == "1":
+                row["center_upper_x"] = "95"
+                row["center_upper_y"] = "45"
+                break
+        with masked.open("w", newline="") as out:
+            writer = csv.DictWriter(out, fieldnames=base.COLUMNS)
+            writer.writeheader()
+            writer.writerows(original)
+        masked_result = qc.score(self.pack, self.truth_file, masked, b)
+        self.assertEqual(masked_result["raters"][0]["obscured_abstain"], 47)
+        self.assertEqual(sum(v["false_confident"] for v in
+                             masked_result["raters"][0]["by_condition"].values()), 1)
         with self.assertRaisesRegex(ValueError, "distinct"):
             qc.score(self.pack, self.truth_file, a, a)
 
