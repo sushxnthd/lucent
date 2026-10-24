@@ -71,9 +71,15 @@ jobs:
             --public-dir "/tmp/lucent-e002-407/public" \
             --private-dir "/tmp/lucent-e002-407/private" \
             --output-dir "/tmp/lucent-e002-407/rater-pack"
-          python research/observability/e002_407_full_event_pilot.py check \
-            --manifest "/tmp/lucent-e002-407/rater-pack/blinded_manifest.json" \
-            --sheet "/tmp/lucent-e002-407/rater-pack/blank_annotation_sheet.csv" || test "$?" -eq 1
+          python - <<'PY'
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, "research/observability")
+          import e002_407_full_event_pilot as pilot
+          root=Path("/tmp/lucent-e002-407/rater-pack")
+          result=pilot.validate_sheet(root/"blinded_manifest.json",root/"blank_annotation_sheet.csv",blank=True)
+          assert result["frames"] > 100
+          PY
           test "$(find /tmp/lucent-e002-407/rater-pack/images -name '*.png' | wc -l)" -gt 100
           test ! -e /tmp/lucent-e002-407/rater-pack/PRIVATE_DO_NOT_UPLOAD_linkage.json
           echo 'Full-event pilot generated locally; images and private linkage will not be uploaded.'
