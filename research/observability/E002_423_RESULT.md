@@ -30,7 +30,7 @@ python -m unittest -v research/observability/test_e002_423_pulse_metrology.py
 python research/observability/e002_423_pulse_metrology.py
 ```
 
-The hosted workflow `e002_423_pulse_metrology.yml` runs both, checks all frozen outcomes, and uploads a JSON **synthetic-only** artifact. No eye images or private calibration traces are uploaded. The initial hosted workflow completed successfully on commit `43a7d7b`: [Actions run 40121895766](https://github.com/sushxnthd/lucent/actions/runs/40121895766). A subsequent regression adds the exploratory row-offset consequence below and must be verified separately before claiming that extension hosted-successful.
+The hosted workflow `e002_423_pulse_metrology.yml` runs both, checks all frozen outcomes, and uploads a JSON **synthetic-only** artifact. No eye images or private calibration traces are uploaded. The final post-fix hosted workflow **completed successfully** on implementation commit `8bceff2b`: [Actions run 40122029458](https://github.com/sushxnthd/lucent/actions/runs/40122029458). It includes the exploratory row-offset regression and the now-executed (rather than hardcoded) H5 provenance gate. The exact machine-readable aggregate is preserved in `E002_423_SYNTHETIC_AGGREGATE.json`, with explicit synthetic provenance.
 
 ## Exploratory product-decision reversal (not preregistered)
 
