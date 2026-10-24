@@ -1,0 +1,38 @@
+name: E002-424 shutter-subphase identifiability falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_424_*'
+      - 'research/observability/e002_424_*'
+      - 'research/observability/test_e002_424_*'
+      - '.github/workflows/e002_424_subphase_shutter_alias.yml'
+  workflow_dispatch:
+jobs:
+  independent-synthetic-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independently check shutter integrals and frozen decisions
+        run: python -m unittest -v research/observability/test_e002_424_subphase_shutter_alias.py
+      - name: Reproduce synthetic aggregate and enforce abstention
+        run: |
+          python research/observability/e002_424_subphase_shutter_alias.py > e002_424_synthetic_result.json
+          python - <<'PY'
+          import json
+          x = json.load(open("e002_424_synthetic_result.json"))
+          assert all(x["frozen_tests"].values()), x["frozen_tests"]
+          assert not x["policy"]["product_claim_authorized"]
+          assert x["policy"]["product"] == "ABSTAIN_UNCALIBRATED"
+          print(json.dumps(x["frozen_tests"], indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-424-synthetic-only
+          path: e002_424_synthetic_result.json
+          retention-days: 7
