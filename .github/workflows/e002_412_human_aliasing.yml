@@ -1,0 +1,57 @@
+name: E002-412 high-speed human optical proxy phase-decimation (aggregate only)
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_412_*"
+      - "research/observability/e002_412_*"
+      - "research/observability/test_e002_412_*"
+      - ".github/workflows/e002_412_human_aliasing.yml"
+  workflow_dispatch:
+jobs:
+  independent-synthetic-oracle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install numerical/vision libraries
+        run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Compile and run independent oracle + adversarial tests
+        run: |
+          python -m py_compile research/observability/e002_412_human_proxy_aliasing.py
+          cd research/observability
+          python test_e002_412_human_proxy_aliasing.py
+  real-human-aggregate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 95
+    needs: independent-synthetic-oracle
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install numerical/vision libraries
+        run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Acquire two existing checksum-verified high-speed human archives
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/lucent-e002-412
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1600             'https://zenodo.org/records/18978288/files/S01.zip?download=1'             --output /tmp/lucent-e002-412/S01.zip
+          echo 'fef02cb7ebf62e4f3efb6303284fd6cb  /tmp/lucent-e002-412/S01.zip' | md5sum --check
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1600             'https://zenodo.org/records/21905748/files/S19.zip?download=1'             --output /tmp/lucent-e002-412/S19.zip
+          echo '8a16cf12526f7558b4e49926c4bc5e8e  /tmp/lucent-e002-412/S19.zip' | md5sum --check
+      - name: Execute frozen real-human optical-proxy phase-decimation and nuisance tests
+        run: |
+          set -euo pipefail
+          trap 'rm -rf /tmp/lucent-e002-412' EXIT
+          python research/observability/e002_412_human_proxy_aliasing.py             --s01 /tmp/lucent-e002-412/S01.zip             --s19 /tmp/lucent-e002-412/S19.zip             --output /tmp/lucent-e002-412/aggregate.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('/tmp/lucent-e002-412/aggregate.json').read_text())
+          assert d['product']=='ABSTAIN_UNCALIBRATED'
+          assert not d['physical_aperture_validated']
+          assert d['clips']==8
+          assert 'source_timestamps' not in d and 'source_frame_ids' not in d
+          print('Aggregate-only human evaluation completed; H1-H6 are scientific predictions, not CI assertions.')
+          PY
+      - name: No image or event-linkage artifact upload
+        run: |
+          echo 'Private eye video, image frames, source timestamps and EEG labels are never uploaded.'
