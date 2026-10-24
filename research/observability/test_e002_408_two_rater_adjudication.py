@@ -93,6 +93,42 @@ def main():
         incomplete=adjudicate(mp,a,b,timing,partial)
         assert incomplete["decisions"]["ABSTAIN_UNCALIBRATED"]==4\n        assert sum(v for k,v in incomplete["decisions"].items() if k!="ABSTAIN_UNCALIBRATED")==0
         assert incomplete["physical_timing_provenance_authenticated"] is False
+        # Positive control is an exact synthetic physical instrument, not human evidence.
+        cfg={"speed_upper":1,"threshold":.2,"iris_scale_lower_px":20,
+             "iris_scale_upper_px":20,"landmark_error_px":0,
+             "gates":{k:True for k in (
+                 "independent_velocity","aperture_geometry","optical_response",
+                 "exposure_timing","clock_synchronization","nuisance_resolved",
+                 "uniform_shutter_verified")},
+             "optical_mean_error_bound":0,
+             "optical_mean_error_provenance":"synthetic exact linear optics",
+             "row_timing_calibration":{
+                 "upper_offset_abs_s_upper":0,"lower_offset_abs_s_upper":0,
+                 "upper_landmark_speed_upper_per_s":1,
+                 "lower_landmark_speed_upper_per_s":1,
+                 "equal_row_exposure_verified":True,
+                 "provenance":"synthetic exact global shutter"},
+             "landmark_geometry_calibration":{
+                 "reference_column_px":90,"upper_lid_slope_bound":0,
+                 "lower_lid_slope_bound":0,"vertical_axis_verified":True,
+                 "provenance":"synthetic exact vertical geometry"},
+             "velocity_bound_calibration":{
+                 "bound_kind":"deterministic_physical_upper","upper_per_s":1,
+                 "validity_domain":"synthetic exact trajectory only",
+                 "provenance":"synthetic exact velocity oracle"},
+             "temporal_kernel_calibration":{
+                 "first_absolute_moment_fraction_upper":.25,
+                 "provenance":"synthetic exact uniform shutter"}}
+        full=root/"full.json"
+        full.write_text(json.dumps(cfg))
+        conditional=adjudicate(mp,a,b,timing,full)
+        assert conditional["decisions"]["CONFIRMED_NO_CROSSING"]==4
+        assert conditional["product"]=="ABSTAIN_UNCALIBRATED"
+        assert conditional["physical_timing_provenance_authenticated"] is False
+        cfg["velocity_bound_calibration"]["bound_kind"]="empirical_sample_max"
+        full.write_text(json.dumps(cfg))
+        rejected=adjudicate(mp,a,b,timing,full)
+        assert rejected["decisions"]["ABSTAIN_UNCALIBRATED"]==4
         print(json.dumps({"experiment":"E002-408",
                           "synthetic_fixtures_passed":True,
                           "test_frames":120,
@@ -100,7 +136,7 @@ def main():
                           "nuisance_excluded":2,
                           "geometry_excluded":1,
                           "spoofed_EEG_clock_rejected":True,
-                          "incomplete_physical_calibration_abstained":True,
+                          "incomplete_physical_calibration_abstained":True,\n                          "synthetic_exact_physical_positive_control":True,\n                          "empirical_velocity_max_rejected":True,
                           "real_human_ratings_present":False,
                           "physical_aperture_validated":False},indent=2))
 
