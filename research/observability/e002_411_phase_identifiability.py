@@ -112,6 +112,16 @@ def experiment(seed=4112026, trials=1000):
         minimum_separation = min(minimum_separation,
                                  first_abs_moment_ms(k_b)-first_abs_moment_ms(k_a))
     assert collisions == trials and minimum_separation >= 3.5  # P4
+    # EXPLORATORY post-freeze robustness witness: measured pulse signals are
+    # strictly positive, yet the two shutter moments remain nonidentifiable.
+    # Each shutter is 50% uniform temporal response plus 50% hidden pulse.
+    uniform_pulse_response = PULSE_MS / EXPOSURE_MS
+    mixed_a = [.5*uniform_pulse_response + .5*y for y in y_a]
+    mixed_b = [.5*uniform_pulse_response + .5*y for y in y_b]
+    mixed_m_a = .5*(EXPOSURE_MS/4) + .5*m_a
+    mixed_m_b = .5*(EXPOSURE_MS/4) + .5*m_b
+    assert mixed_a == mixed_b and all(y > 0 for y in mixed_a)
+    assert abs(mixed_m_b-mixed_m_a-2.) < 1e-10
     gate = shutter_release_gate(phases=SPARSE_PHASES_MS, pulse_ms=PULSE_MS,
         exposure_ms=EXPOSURE_MS, jitter_ms=.05,
         photodiode_verified=True, hardware_clock_verified=True,
@@ -124,6 +134,11 @@ def experiment(seed=4112026, trials=1000):
         sparse_pulse_observations=y_a, dc_response_both=1,
         witness_moments_ms=dict(center=m_a, edge=m_b),
         moment_ratio=m_b/m_a,
+        exploratory_positive_signal_mixture=dict(
+            sparse_pulse_responses=mixed_a,
+            center_moment_ms=mixed_m_a, edge_moment_ms=mixed_m_b,
+            moment_separation_ms=mixed_m_b-mixed_m_a,
+            preregistered=False),
         dense_scan_distinguishes=d_a != d_b,
         uncovered_sparse_ms=uncovered_support_ms(SPARSE_PHASES_MS, PULSE_MS,
                                                  EXPOSURE_MS, .05),
