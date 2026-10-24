@@ -180,7 +180,11 @@ def score_one(pack_dir, cases, sheet):
         counts[condition]["total"] += 1
         unresolved = row["unresolved"] == "1"
         if condition not in VISIBLE:
-            good = unresolved
+            # An unresolved flag does not erase confident coordinates.
+            # Obscured frames require an explicit abstention with no points.
+            no_points = all(not row[p + "_x"].strip() and not row[p + "_y"].strip()
+                            for p in base.POINTS)
+            good = unresolved and no_points
             if not good:
                 counts[condition]["false_confident"] += 1
         else:
