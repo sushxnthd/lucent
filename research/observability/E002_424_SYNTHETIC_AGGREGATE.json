@@ -1,0 +1,89 @@
+{
+  "study": "E002-424",
+  "provenance": "exact synthetic scalar shutter and moving aperture; no hardware or humans",
+  "frozen_protocol": "E002_424_FROZEN.md",
+  "phase_count": 101,
+  "original_pulse_width_ms": 0.5,
+  "rescue_pulse_width_ms": 0.45,
+  "max_original_grid_response_difference_per_row": [
+    1.942890293094024e-16,
+    9.159339953157541e-16
+  ],
+  "fitted_boxcar_models": [
+    {
+      "row": 0,
+      "boxcar": {
+        "exposure_ms": 2.4,
+        "center_ms": 0,
+        "train_rmse": 0,
+        "heldout_rmse": 0,
+        "heldout_pass": true
+      },
+      "adversary": {
+        "exposure_ms": 2.4,
+        "center_ms": 0,
+        "heldout_rmse": 6.830494338097412e-17,
+        "heldout_pass": true
+      }
+    },
+    {
+      "row": 1,
+      "boxcar": {
+        "exposure_ms": 2.4,
+        "center_ms": 3.2,
+        "heldout_rmse": 0,
+        "heldout_pass": true
+      },
+      "adversary": {
+        "exposure_ms": 2.4,
+        "center_ms": 3.2,
+        "heldout_rmse": 3.6373573299804566e-16,
+        "heldout_pass": true
+      }
+    }
+  ],
+  "max_changed_width_response_difference_per_row": [
+    0.020625000000000143,
+    0.020624999999999748
+  ],
+  "minimum_aperture_boxcar_world": 0.201,
+  "minimum_aperture_subphase_world": 0.1997625,
+  "closure_threshold": 0.2,
+  "hypothetical_velocity_per_second": 50,
+  "observed_means_boxcar": [
+    0.281,
+    0.2810000000000001
+  ],
+  "observed_means_subphase": [
+    0.28100000000000014,
+    0.28100000000000114
+  ],
+  "normalization_checks": [
+    1,
+    1.0000000000000004,
+    1.0000000000000002,
+    1.0000000000000038
+  ],
+  "minimum_shutter_weights": [
+    0.4166666666666667,
+    0.004166666666666671,
+    0.4166666666666667,
+    0.004166666666666671
+  ],
+  "max_aperture_over_exposures": 0.341,
+  "frozen_tests": {
+    "H1_original_phase_grid_indistinguishable": true,
+    "H1_heldout_fits_indistinguishable": true,
+    "H2_opposite_closure_worlds_identical_means": true,
+    "H3_changed_pulse_width_discriminates": true,
+    "H4_nonnegative_normalized": true,
+    "H5_physical_abstention": true
+  },
+  "policy": {
+    "evidence_tier": "SYNTHETIC_SHUTTER_ONLY",
+    "physical_camera_authenticated": false,
+    "human_velocity_authenticated": false,
+    "product_claim_authorized": false,
+    "product": "ABSTAIN_UNCALIBRATED"
+  }
+}
