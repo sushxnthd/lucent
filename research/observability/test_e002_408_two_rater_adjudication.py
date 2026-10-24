@@ -123,13 +123,18 @@ def main():
         full=root/"full.json"
         full.write_text(json.dumps(cfg))
         conditional=adjudicate(mp,a,b,timing,full)
-        assert conditional["decisions"]["CONFIRMED_NO_CROSSING"]==4
+        assert conditional["conditional_research_decisions"]["CONFIRMED_NO_CROSSING"]==4
+        assert conditional["decisions"]=={"ABSTAIN_UNCALIBRATED":4}
+        assert conditional["physical_calibration_authenticated"] is False
+        assert conditional["product_claim_authorized"] is False
+        assert conditional["conditional_research_only"] is True
         assert conditional["product"]=="ABSTAIN_UNCALIBRATED"
         assert conditional["physical_timing_provenance_authenticated"] is False
         cfg["velocity_bound_calibration"]["bound_kind"]="empirical_sample_max"
         full.write_text(json.dumps(cfg))
         rejected=adjudicate(mp,a,b,timing,full)
         assert rejected["decisions"]["ABSTAIN_UNCALIBRATED"]==4
+        assert rejected["conditional_research_decisions"] is None
         print(json.dumps({"experiment":"E002-408",
                           "synthetic_fixtures_passed":True,
                           "test_frames":120,
