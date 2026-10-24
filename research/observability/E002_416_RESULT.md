@@ -43,3 +43,7 @@ The 632 unannotated frames in E002-407 are not 632 negative reference labels. Ev
 ## World-class gate still unmet
 
 No real-human hard velocity cap, two independent blinded physical eyelid annotations, independently measured camera shutter/exposure response, instrument-clock uncertainty, unseen-device prediction, or independent external replication exists. This run therefore does **not** validate E002-371 or justify blink duration, PERCLOS, fatigue, or hidden-closure exclusion. Next experimental priority remains two blinded E002-407 rater sheets, E002-408 adjudication, and independently timed physical reference measurements; avoid further synthetic theorem polishing unless it exposes a concrete invalid study or product decision.
+
+## Hosted CI verification (post-report addendum)
+
+The dedicated E002-416 GitHub Actions workflow [run 40087540534](https://github.com/sushxnthd/lucent/actions/runs/40087540534) completed **SUCCESS** on commit `62ec39896a39cfa3704ac4160429d39a36463d53`. It executed the frozen E002-416 reference triage tests and predecessor E002-415 product-provenance regression. The earlier workflow [run 40087465455](https://github.com/sushxnthd/lucent/actions/runs/40087465455) also completed SUCCESS. Hosted CI confirms computational execution, **not** human physical-aperture validation.
