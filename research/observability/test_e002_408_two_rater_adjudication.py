@@ -67,7 +67,9 @@ def main():
         assert all(c["clip_id"] not in json.dumps(out) for c in manifest["clips"])
         reject(lambda: adjudicate(mp,a,a))
         truncated=root/"truncated.csv"
-        truncated.write_text("\n".join(a.read_text().splitlines()[:-1])+"\n")
+        truncated.write_text("
+".join(a.read_text().splitlines()[:-1])+"
+")
         reject(lambda: adjudicate(mp,truncated,b))
         spoof={"clock_kind":"EEG_sync","camera_clock_verified":True,
                "provenance":"EEG synchronisation only",
@@ -137,7 +139,9 @@ def main():
                           "nuisance_excluded":2,
                           "geometry_excluded":1,
                           "spoofed_EEG_clock_rejected":True,
-                          "incomplete_physical_calibration_abstained":True,\n                          "synthetic_exact_physical_positive_control":True,\n                          "empirical_velocity_max_rejected":True,
+                          "incomplete_physical_calibration_abstained":True,
+                          "synthetic_exact_physical_positive_control":True,
+                          "empirical_velocity_max_rejected":True,
                           "real_human_ratings_present":False,
                           "physical_aperture_validated":False},indent=2))
 
