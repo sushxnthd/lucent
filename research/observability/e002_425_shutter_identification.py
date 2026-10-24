@@ -90,6 +90,13 @@ def experiment() -> dict:
     noiseless = recover(A_train, truth_train)
     noise = np.random.default_rng(SEED_NOISE).normal(0.0, NOISE_SD, CALIBRATION_N)
     noisy = recover(A_train, truth_train + noise)
+    # Exploratory model-mismatch stress: physical pulse start times differ from
+    # nominal times. Never count this post-frozen intervention as a frozen gate.
+    timing_jitter_ms = 0.03
+    timing_shifts = np.random.default_rng(20261027).normal(0.0, timing_jitter_ms, CALIBRATION_N)
+    jittered_train = pulse_matrix(starts[:CALIBRATION_N] + timing_shifts,
+                                  widths[:CALIBRATION_N])
+    timing_mismatch = recover(A_train, jittered_train @ x_alias)
 
     def score(x):
         return {"heldout_mae": float(np.mean(np.abs(A_test @ x - truth_test))),
@@ -119,6 +126,14 @@ def experiment() -> dict:
         "heldout_uniform_wrong_model_mae": float(np.mean(heldout_difference)),
         "noiseless_recovery": score(noiseless),
         "noisy_recovery": score(noisy),
+        "exploratory_unmodeled_30us_timing_jitter": {
+            "jitter_sd_ms": timing_jitter_ms,
+            "jitter_seed": 20261027,
+            "recovery": score(timing_mismatch),
+            "nominal_training_mae": float(np.mean(np.abs(
+                A_train @ timing_mismatch - jittered_train @ x_alias))),
+            "preregistered_gate": False,
+        },
         "policy": policy(),
     }
     result["frozen_tests"] = {
