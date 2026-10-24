@@ -109,6 +109,10 @@ def adjudicate(manifest_path, sheet_a_path, sheet_b_path,
         "physical_velocity_provenance_authenticated": False,
         "product": "ABSTAIN_UNCALIBRATED",
         "decisions": {"ABSTAIN_UNCALIBRATED": manifest["clip_count"]},
+        "conditional_research_decisions": None,
+        "conditional_research_only": True,
+        "physical_calibration_authenticated": False,
+        "product_claim_authorized": False,
         "warning": "Pixel-gap rater agreement is not physical aperture truth. "
                    "Calibration claims are never authenticated by this script."
     }
@@ -126,10 +130,13 @@ def adjudicate(manifest_path, sheet_a_path, sheet_b_path,
     except (KeyError, TypeError, ValueError):
         report["warning"] += " Incomplete/invalid physical calibration; abstaining."
         return report
-    report["decisions"] = result["decisions"]
+    # Self-reported provenance is not authenticated evidence. Keep the
+    # scientific conditional oracle, but never export it as a product decision.
+    report["conditional_research_decisions"] = result["decisions"]
     report["physical_calibration_gates_asserted"] = result["calibration_gates_passed"]
     report["hard_velocity_gate_asserted"] = result["hard_velocity_bound_gate"]
-    report["warning"] += (" Any non-abstaining decision is conditional on externally "
+    report["warning"] += (" Research-only conditional decisions are NOT product outputs. "
+                          "Any non-abstaining research decision is conditional on externally "
                           "verified calibration; the provided strings/booleans are NOT proof.")
     return report
 
