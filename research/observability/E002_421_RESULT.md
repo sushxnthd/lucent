@@ -58,7 +58,7 @@ python -m unittest -v test_e002_421_sharp_boxcar_gap
 python e002_421_sharp_boxcar_gap.py --bins 20000
 ```
 
-**Local result:** four test groups passed on 2026-10-24. Dedicated GitHub Actions verification is tracked separately; no hosted success is claimed before that workflow concludes. Technical figure: `E002_421_SHARP_GAP.svg`.
+**Verification:** four test groups passed locally on 2026-10-24. The dedicated hosted GitHub Actions run [40113712704](https://github.com/sushxnthd/lucent/actions/runs/40113712704) **completed successfully** on implementation commit `ea0b4effc15e4c8a246e8c085d3556a06a64d804`, including the independent SciPy LP, quadrature, malformed-input controls and frozen-witness JSON. This is software verification, not physical calibration or independent external replication. Technical figure: `E002_421_SHARP_GAP.svg`.
 
 ## Robust nuisance qualification and scope restrictions
 
