@@ -131,6 +131,31 @@ def exploratory_row_offset_counterexample(fitted_rows: list[dict]) -> dict:
     }
 
 
+
+def adversarial_metadata_gate() -> bool:
+    """Exercise H5, rather than asserting it as a constant."""
+    rejected = []
+    for phases, vals in (
+        (None, [0.0] * 10),
+        (list(range(10)), [0.0] * 9 + [1.5]),
+        ([0.0] * 10, [0.0] * 10),
+    ):
+        try:
+            validate_trace(phases, vals)
+        except ValueError:
+            rejected.append(True)
+        else:
+            rejected.append(False)
+    declared_only = physical_policy(photodiode_verified=True,
+                                    phase_clock_verified=True,
+                                    row_clock_verified=True,
+                                    linear_raw_verified=True,
+                                    unsaturated=True)
+    return (all(rejected)
+            and not declared_only["physical_provenance_authenticated_by_tool"]
+            and not declared_only["physical_calibration_authorized"])
+
+
 def experiment() -> dict:
     base = [fit_row(PHASES_MS, row) for row in generate_rows(423)]
     jitter = [fit_row(PHASES_MS, row) for row in generate_rows(7423, jitter_ms=0.8)]
@@ -156,7 +181,7 @@ def experiment() -> dict:
             "H2_jitter_detected": any(not x["heldout_pass"] for x in jitter),
             "H3_nonlinearity_detected": any(not x["heldout_pass"] for x in gamma),
             "H4_phase_corruption_detected": any(not x["heldout_pass"] for x in shuffled),
-            "H5_no_physical_evidence_from_metadata": True,
+            "H5_no_physical_evidence_from_metadata": adversarial_metadata_gate(),
             "H6_product_abstention": not physical_policy()["product_claim_authorized"],
         },
         "policy": physical_policy(),
