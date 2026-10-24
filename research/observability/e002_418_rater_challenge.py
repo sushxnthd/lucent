@@ -72,13 +72,13 @@ def render(condition, p):
     return png_gray(out)
 
 
-def generate(pack_dir, truth_dir, seed=20261024):
+def generate(pack_dir, truth_dir, seed=None):
     pack_dir, truth_dir = Path(pack_dir).resolve(), Path(truth_dir).resolve()
     if pack_dir.exists() or truth_dir.exists() or pack_dir == truth_dir:
         raise ValueError("New, separate pack and private truth directories required")
     if pack_dir in truth_dir.parents or truth_dir in pack_dir.parents:
         raise ValueError("Private truth must not be inside blinded pack")
-    rng = random.Random(seed)
+    rng = random.SystemRandom() if seed is None else random.Random(seed)
     conditions = list(CONDITIONS) * 16
     rng.shuffle(conditions)
     secret = secrets.token_bytes(32)
