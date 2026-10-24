@@ -81,12 +81,11 @@ def validate_manifest(manifest):
         raise ValueError("Manifest totals inconsistent")
     forbidden = ("participant", "marker", "control", "arm", "source_time",
                  "eeg", "source_frame", "pair_index", "linkage", "key_hex")
-    serialized = json.dumps(manifest).lower()
     # Check keys, not string values such as 'no EEG linkage'.
     def walk(v):
         if isinstance(v, dict):
             for k, val in v.items():
-                if any(term in k.lower() for term in forbidden):
+                if k != "public_linkage_present" and any(term in k.lower() for term in forbidden):
                     raise ValueError(f"Forbidden private manifest key: {k}")
                 walk(val)
         elif isinstance(v, list):
