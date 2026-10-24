@@ -1,0 +1,26 @@
+name: E002-415 forged provenance product boundary
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_415_*"
+      - "research/observability/e002_408_two_rater_adjudication.py"
+      - "research/observability/test_e002_408_two_rater_adjudication.py"
+      - "research/observability/test_e002_415_product_boundary.py"
+      - ".github/workflows/e002_415_product_boundary.yml"
+  workflow_dispatch:
+jobs:
+  adversarial-product-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile adjudicator and independent contract checker
+        run: |
+          python -m py_compile research/observability/e002_408_two_rater_adjudication.py research/observability/test_e002_408_two_rater_adjudication.py research/observability/test_e002_415_product_boundary.py
+      - name: Existing two-rater synthetic instrument regression
+        run: python research/observability/test_e002_408_two_rater_adjudication.py
+      - name: Independent forged provenance and product isolation oracle
+        run: python research/observability/test_e002_415_product_boundary.py
+      - name: Reference adequacy regression
+        run: python research/observability/e002_399_independent_check.py
