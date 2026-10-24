@@ -1,0 +1,82 @@
+name: E002-407 blinded full-event rater pilot (no image artifacts)
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_407_*"
+      - "research/observability/e002_407_*"
+      - "research/observability/test_e002_407_*"
+      - ".github/workflows/e002_407_full_event_pilot.yml"
+  workflow_dispatch:
+jobs:
+  independent-synthetic-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile full-event generator and run independent synthetic privacy/integrity tests
+        run: |
+          python -m py_compile research/observability/e002_407_full_event_pilot.py
+          python research/observability/test_e002_407_full_event_pilot.py
+      - name: Offline annotator JavaScript syntax check
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path("research/observability/e002_407_offline_annotator.html").read_text()
+          scripts=re.findall(r"<script[^>]*>(.*?)</script>",s,flags=re.S)
+          assert len(scripts)==1 and not re.search(r"https?://|fetch\s*\(",scripts[0])
+          Path("/tmp/e002_407_offline.js").write_text(scripts[0])
+          PY
+          node --check /tmp/e002_407_offline.js
+  real-human-local-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    needs: independent-synthetic-integrity
+    strategy:
+      fail-fast: false
+      matrix:
+        participant: [S01, S19]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install existing source parser dependencies
+        run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Acquire checksum-verified human reference locally
+        env:
+          PARTICIPANT: ${{ matrix.participant }}
+        run: |
+          mkdir -p /tmp/lucent-e002-407
+          if [ "$PARTICIPANT" = "S01" ]; then
+            URL='https://zenodo.org/records/18978288/files/S01.zip?download=1'
+            MD5='fef02cb7ebf62e4f3efb6303284fd6cb'
+          else
+            URL='https://zenodo.org/records/21905748/files/S19.zip?download=1'
+            MD5='8a16cf12526f7558b4e49926c4bc5e8e'
+          fi
+          curl --fail --location --retry 2 --retry-delay 8 --connect-timeout 45 --max-time 1400 \
+            "$URL" --output "/tmp/lucent-e002-407/$PARTICIPANT.zip"
+          echo "$MD5  /tmp/lucent-e002-407/$PARTICIPANT.zip" | md5sum --check
+      - name: Generate and verify local-only blinded full-event rater pack
+        env:
+          PARTICIPANT: ${{ matrix.participant }}
+        run: |
+          set -euo pipefail
+          trap 'rm -rf /tmp/lucent-e002-407' EXIT
+          python research/observability/e002_407_full_event_pilot.py generate \
+            --archive "/tmp/lucent-e002-407/$PARTICIPANT.zip" \
+            --participant "$PARTICIPANT" \
+            --public-dir "/tmp/lucent-e002-407/public" \
+            --private-dir "/tmp/lucent-e002-407/private"
+          python research/observability/e002_407_full_event_pilot.py pack \
+            --public-dir "/tmp/lucent-e002-407/public" \
+            --private-dir "/tmp/lucent-e002-407/private" \
+            --output-dir "/tmp/lucent-e002-407/rater-pack"
+          python research/observability/e002_407_full_event_pilot.py check \
+            --manifest "/tmp/lucent-e002-407/rater-pack/blinded_manifest.json" \
+            --sheet "/tmp/lucent-e002-407/rater-pack/blank_annotation_sheet.csv" || test "$?" -eq 1
+          test "$(find /tmp/lucent-e002-407/rater-pack/images -name '*.png' | wc -l)" -gt 100
+          test ! -e /tmp/lucent-e002-407/rater-pack/PRIVATE_DO_NOT_UPLOAD_linkage.json
+          echo 'Full-event pilot generated locally; images and private linkage will not be uploaded.'
+      - name: Explicit no-upload policy
+        run: |
+          echo 'No artifacts uploaded: source video, eye imagery, EEG events and private linkage are ephemeral.'
