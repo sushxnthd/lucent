@@ -1,0 +1,29 @@
+name: E002-418 blinded synthetic rater challenge
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/e002_418_rater_challenge.py"
+      - "research/observability/test_e002_418_rater_challenge.py"
+      - "research/observability/e002_407_full_event_pilot.py"
+      - "research/observability/e002_407_offline_annotator.html"
+      - ".github/workflows/e002_418_rater_challenge.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-instrument:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test local-only rater qualification and falsification
+        run: |
+          python research/observability/test_e002_418_rater_challenge.py
+          python research/observability/test_e002_407_full_event_pilot.py
+      - name: Verify no human imagery or private truth artifacts are uploaded
+        run: |
+          test ! -e research/observability/PRIVATE_DO_NOT_SHARE_truth.json
+          echo "Synthetic tests only; ephemeral data deleted with runner."
