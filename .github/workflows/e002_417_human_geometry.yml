@@ -58,6 +58,11 @@ jobs:
           print('E002-417 frozen hypotheses:',x['hypotheses'])
           print('Scientific transfer decision:', 'PASS necessary controls only' if x['joint_transfer_gate_pass'] else 'REJECT candidate')
           PY
+      - name: Independently audit aggregate denominators, frozen gates and reproducibility
+        run: |
+          python research/observability/e002_417_verify_aggregate.py \
+            /tmp/lucent-e002-417/aggregate.json \
+            --reference research/observability/E002_417_HUMAN_AGGREGATE.json
       - name: Delete local source and output; never upload eye frames or linkage
         if: always()
         run: |
