@@ -15,6 +15,24 @@
       "train_rmse": 0.0019596644130956795
     }
   ],
+  "exploratory_row_offset": {
+    "balanced_slope_condition": true,
+    "closure_threshold": 0.2,
+    "corrected_center_separation_ms": 7.366666666666667,
+    "exploratory_not_preregistered": true,
+    "hypothetical_V_per_second": 50,
+    "hypothetical_means": [
+      0.4,
+      0.35
+    ],
+    "nominal_center_separation_ms": 4.166666666666667,
+    "nominal_conditional_no_closure": true,
+    "nominal_sharp_minimum": 0.2708333333333333,
+    "physical_product_authorized": false,
+    "row_corrected_conditional_no_closure": false,
+    "row_corrected_sharp_minimum": 0.1908333333333333,
+    "synthetic_inferred_row_delay_ms": 3.2
+  },
   "frozen_tests": {
     "H1_recovery_and_rolling_difference": true,
     "H2_jitter_detected": true,
@@ -100,7 +118,7 @@
   ],
   "provenance": {
     "evidence_tier": "seeded-synthetic",
-    "hosted_workflow_run": "https://github.com/sushxnthd/lucent/actions/runs/40121895766",
+    "hosted_workflow_run": "https://github.com/sushxnthd/lucent/actions/runs/40122029458",
     "frozen_protocol_commit": "b96e6b325fde584fadc9639f9ff1304fe958490a",
     "note": "Recompute from committed code; no physical measurements."
   }
