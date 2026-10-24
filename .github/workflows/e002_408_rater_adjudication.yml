@@ -1,0 +1,27 @@
+name: E002-408 two-rater adjudication and independent clock gate
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_408_*"
+      - "research/observability/e002_408_*"
+      - "research/observability/test_e002_408_*"
+      - ".github/workflows/e002_408_rater_adjudication.yml"
+  workflow_dispatch:
+jobs:
+  synthetic-adjudication-and-clock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile and independently test two-rater adjudication
+        run: |
+          python -m py_compile research/observability/e002_408_two_rater_adjudication.py
+          python -m py_compile research/observability/test_e002_408_two_rater_adjudication.py
+          python research/observability/test_e002_408_two_rater_adjudication.py
+      - name: Earlier real-human rater instrument integrity regression
+        run: |
+          python research/observability/test_e002_407_full_event_pilot.py
+      - name: Reference certificate regression
+        run: |
+          python research/observability/e002_399_independent_check.py
