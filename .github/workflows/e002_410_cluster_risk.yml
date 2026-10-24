@@ -1,0 +1,38 @@
+name: E002-410 participant-level velocity rank falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_410_*'
+      - 'research/observability/e002_410_*'
+      - 'research/observability/test_e002_410_*'
+      - '.github/workflows/e002_410_cluster_risk.yml'
+  workflow_dispatch:
+jobs:
+  clustered-velocity-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install fixed simulation dependency
+        run: python -m pip install 'numpy>=1.26,<3'
+      - name: Run frozen participant-cluster and shifted-domain experiment
+        run: python research/observability/e002_410_cluster_risk.py --output e002_410_results.json
+      - name: Run independent rank oracle
+        run: python research/observability/e002_410_independent_check.py
+      - name: Test release-gate enforcement and edge cases
+        run: python -m unittest discover -s research/observability -p 'test_e002_410_cluster_risk.py' -v
+      - name: Preserve anonymous aggregate synthetic result
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-410-clustered-velocity-results
+          path: e002_410_results.json
+          retention-days: 14
+      - name: Evidence-tier warning
+        run: |
+          echo 'Synthetic clustered-velocity falsification only. No human physical-aperture ground truth.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'A statistical participant-level rank bound is not a deterministic E002-371 physical certificate.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'ABSTAIN_UNCALIBRATED remains mandatory for unverified physical product claims.' >> "$GITHUB_STEP_SUMMARY"
