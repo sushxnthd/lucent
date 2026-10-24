@@ -28,7 +28,8 @@ class E002412(unittest.TestCase):
         idx = exp.nearest_indices(times, 60, 0, tolerance=0.001)
         self.assertTrue(all(i is not None for i in idx))
         jittered = [t + (0.003 * math.sin(i / 5)) for i, t in enumerate(times)]
-        self.assertGreaterEqual(len(exp.nearest_indices(jittered, 30, 0)), 14)\n        self.assertLessEqual(len(exp.nearest_indices(jittered, 30, 0)), 16)
+        self.assertGreaterEqual(len(exp.nearest_indices(jittered, 30, 0)), 14)
+        self.assertLessEqual(len(exp.nearest_indices(jittered, 30, 0)), 16)
 
     def test_zero_variation_not_certified(self):
         times = [i / 240 for i in range(121)]
