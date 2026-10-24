@@ -34,6 +34,15 @@ class E002423Tests(unittest.TestCase):
         self.assertTrue(any(x["heldout_rmse"] > 0.015 for x in r["gamma_sqrt"]))
         self.assertTrue(any(x["heldout_rmse"] > 0.015 for x in r["phase_shuffle"]))
 
+    def test_exploratory_rolling_row_offset_reverses_conditional_decision(self):
+        x = m.experiment()["exploratory_row_offset"]
+        self.assertTrue(x["balanced_slope_condition"])
+        self.assertTrue(x["nominal_conditional_no_closure"])
+        self.assertFalse(x["row_corrected_conditional_no_closure"])
+        self.assertGreater(x["nominal_sharp_minimum"], x["closure_threshold"])
+        self.assertLess(x["row_corrected_sharp_minimum"], x["closure_threshold"])
+        self.assertFalse(x["physical_product_authorized"])
+
     def test_invalid_and_unlabeled_traces_fail_closed(self):
         invalid = [
             (None, [0.0] * 10),
