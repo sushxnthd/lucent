@@ -1,0 +1,41 @@
+name: E002-441 human 500-fps acquisition probe
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_441_human_acquisition.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  human-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify adversarial fixture before accessing human data
+        run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_441_human_acquisition.py' -v
+      - name: Acquire and integrity-check S19 500-fps human AVI
+        id: acquire
+        continue-on-error: true
+        run: |
+          python research/observability/e002_441_human_acquisition.py --subject S19 --output /tmp/e002_441_s19.json
+      - name: Record evidence tier without raw participant images
+        if: always()
+        run: |
+          if [ -f /tmp/e002_441_s19.json ]; then
+            cat /tmp/e002_441_s19.json
+            echo 'Acquisition probe produced real-video metadata only; E002-371 remains physically unvalidated.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Human archive acquisition failed or was blocked; no human-video evidence claimed.' >> "$GITHUB_STEP_SUMMARY"
+            echo '{"status":"ACQUISITION_BLOCKED","physical_release_authorized":false,"e002_371_physical_validation":"FAIL"}' > /tmp/e002_441_s19.json
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-441-s19-metadata-only
+          path: /tmp/e002_441_s19.json
+          retention-days: 14
