@@ -4,6 +4,8 @@ on:
     branches: [research/observability-human-boundary]
     paths:
       - '.github/workflows/e002_444_human_optical_motion.yml'
+      - 'research/observability/e002_444_human_optical_motion.py'
+      - 'research/observability/test_e002_444_human_optical_motion.py'
   workflow_dispatch:
 permissions:
   contents: read
