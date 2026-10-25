@@ -1,0 +1,49 @@
+name: E002-444 real human S19 optical activity
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_444_human_optical_motion.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  s19-optical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install numeric dependency and video decoder
+        run: |
+          python -m pip install --disable-pip-version-check numpy==2.2.6
+          if ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+      - name: Independent adversarial synthetic fixture tests
+        run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_444_human_optical_motion.py' -v
+      - name: Acquire verified S19 and evaluate 12000 actual grayscale frames
+        id: human
+        continue-on-error: true
+        run: python research/observability/e002_444_human_optical_motion.py --output /tmp/e002_444_s19.json
+      - name: Publish nonidentifying aggregate only
+        if: always()
+        run: |
+          if [ -f /tmp/e002_444_s19.json ]; then
+            cat /tmp/e002_444_s19.json
+            echo 'Real human optical change is NOT calibrated anatomical aperture or sensor exposure time. Physical product claims remain blocked.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '{"experiment":"E002-444","status":"HUMAN_ANALYSIS_FAILED","physical_release_authorized":false,"product_claim":"ABSTAIN_UNCALIBRATED"}' > /tmp/e002_444_s19.json
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-444-s19-optical-aggregate
+          path: /tmp/e002_444_s19.json
+          retention-days: 14
+      - name: Fail if real-human experiment did not execute
+        if: steps.human.outcome != 'success'
+        run: exit 1
