@@ -1,0 +1,29 @@
+{
+  "S21_S22_holdouts_inspected": false,
+  "aperture_mean_mm": 3,
+  "boxcar_clock_1ms_lower_mm": 2.376,
+  "boxcar_sharp_center_lower_mm": 2.4,
+  "closure_threshold_mm": 2.8,
+  "constant_world_aperture_at_center_mm": 3,
+  "e002_371_physical_validation": "NOT_ESTABLISHED",
+  "equal_shutter_mean_mm": 3,
+  "evidence": "SYNTHETIC_IDEALIZED_APERTURE_INTEGRATION_ONLY",
+  "experiment": "E002-447",
+  "human_eyelid_aperture_measured": false,
+  "observation_identifies_closure_status": false,
+  "physical_shutter_calibrated": false,
+  "physiological_speed_cap_validated": false,
+  "point_substitution_claims_open": true,
+  "product": {
+    "blink_duration_authorized": false,
+    "fatigue_authorized": false,
+    "instrument_model_ready": false,
+    "perclos_authorized": false,
+    "physical_release_authorized": false,
+    "status": "ABSTAIN_UNCALIBRATED"
+  },
+  "shutter_width_s": 0.01,
+  "unknown_kernel_support_only_lower_mm": 1.8,
+  "v_world_aperture_at_center_mm": 2.4,
+  "velocity_assumed_mm_s": 240
+}
