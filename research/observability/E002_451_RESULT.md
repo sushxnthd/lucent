@@ -1,6 +1,6 @@
 # E002-451 — hidden-repeat byte-linkability falsification and exploratory mirror challenge
 
-**Date:** 2026-10-26. **Frozen before implementation:** [E002_451_FROZEN.md](E002_451_FROZEN.md) at `045aa20370da2425400b193d137b364abff438a0`. **Evidence tier:** deterministic source-level falsification, nine local synthetic/adversarial tests using a stand-in for the existing encoder/aperture functions; repository-hosted actual-code integration pending at this initial report. **No real human annotation, calibrated shutter, scale or physiological velocity cap.**
+**Date:** 2026-10-26. **Frozen before implementation:** [E002_451_FROZEN.md](E002_451_FROZEN.md) at `045aa20370da2425400b193d137b364abff438a0`. **Evidence tier:** deterministic source-level falsification, nine local synthetic/adversarial tests using a stand-in for the existing encoder/aperture functions; repository-hosted actual-code integration **completed successfully** (9/9 tests; [run 40244213282](https://github.com/sushxnthd/lucent/actions/runs/40244213282)). **No real human annotation, calibrated shutter, scale or physiological velocity cap.**
 
 ## Newly identified validation vulnerability
 
@@ -14,7 +14,7 @@ The source-level construction implies **all 12 of the previously prepared S19 hi
 
 **Critical limitation:** Horizontal mirroring is easily reversed, and a rater may recognize the image. This is a controlled **nuisance-perturbed repeat-consistency challenge**, **not cryptographic blinding** or independent human evidence. The mirrored and unmirrored conditions should be separately reported, not pooled as though they were identical measurements. It does not replace independent raters or validate physical eyelid closure.
 
-Nine local tests passed: original duplicate identification; transformed-pair inequality; actual pixel reflection; exact-symmetry fail-closed; overwrite refusal; invalid repeat mapping; missing image; PNG CRC corruption; anatomical-aperture reflection invariance; and private-summary controls (the first test also checks non-leakage). Local tests used a faithful minimal stand-in for the original encoder/aperture; [dedicated GitHub workflow](../../.github/workflows/e002_451_repeat_challenge.yml) tests the **actual** repository functions. Do not claim hosted success until completed.
+Nine local tests passed: original duplicate identification; transformed-pair inequality; actual pixel reflection; exact-symmetry fail-closed; overwrite refusal; invalid repeat mapping; missing image; PNG CRC corruption; anatomical-aperture reflection invariance; and private-summary controls (the first test also checks non-leakage). Local tests used a faithful minimal stand-in for the original encoder/aperture; the [dedicated GitHub workflow](https://github.com/sushxnthd/lucent/actions/runs/40244213282) independently completed **9/9 tests successfully** against the **actual** repository functions on implementation commit `6ebc036a56aefa9f666f939fc8de473d73ed3553`. This verifies the software counterexample and challenge, **not** real-human blinding or anatomical/physical measurement.
 
 ## Authorized private study handoff
 
