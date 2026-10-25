@@ -23,7 +23,7 @@ class QualityPipelineTimingTests(unittest.TestCase):
             quality=folder/'quality.json'
             subprocess.run([sys.executable,str(ANALYZE),str(video),str(meta),
                             '--container-pts','--output',str(quality)],
-                           capture_output=True,text=True,check=True,timeout=30)
+                           capture_output=False,text=True,check=True,timeout=30)
             data=json.loads(quality.read_text())
             self.assertEqual(data['video']['sampledFrames'],13)
             self.assertAlmostEqual(data['frames'][7]['timeS'],.52,places=3)
@@ -34,7 +34,7 @@ class QualityPipelineTimingTests(unittest.TestCase):
             self.assertEqual(data['product'],'ABSTAIN_UNCALIBRATED')
             nominal=folder/'nominal.json'
             subprocess.run([sys.executable,str(ANALYZE),str(video),str(meta),
-                            '--output',str(nominal)],capture_output=True,text=True,check=True,timeout=30)
+                            '--output',str(nominal)],capture_output=False,text=True,check=True,timeout=30)
             control=json.loads(nominal.read_text())
             self.assertAlmostEqual(control['frames'][7]['timeS'],.28,places=3)
             self.assertEqual(control['frames'][7]['timeSProvenance'],
@@ -49,7 +49,7 @@ class QualityPipelineTimingTests(unittest.TestCase):
             quality=folder/'quality.json'
             subprocess.run([sys.executable,str(ANALYZE),str(video),str(meta),
                             '--stride','3','--container-pts','--output',str(quality)],
-                           capture_output=True,text=True,check=True,timeout=30)
+                           capture_output=False,text=True,check=True,timeout=30)
             rows=json.loads(quality.read_text())['frames']
             self.assertEqual([r['frame'] for r in rows],[0,3,6,9,12])
             self.assertEqual([round(r['timeS'],2) for r in rows],[0,.12,.40,.60,.72])
