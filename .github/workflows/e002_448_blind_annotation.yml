@@ -1,0 +1,70 @@
+name: E002-448 blinded S19 annotation readiness
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_448_blind_annotation.yml'
+      - 'research/observability/e002_448_blind_annotation.py'
+      - 'research/observability/e002_448_rater.html'
+      - 'research/observability/test_e002_448_blind_annotation.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  blind-annotation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned numeric dependency and video decoder
+        run: |
+          python -m pip install --disable-pip-version-check numpy==2.2.6
+          if ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+      - name: Independent synthetic adversarial tests
+        run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_448_blind_annotation.py' -v
+      - name: Hash-verify S19 and build/discard private blinded pack
+        id: pilot
+        continue-on-error: true
+        run: |
+          umask 077
+          python research/observability/e002_448_blind_annotation.py prepare --output-root /tmp/e002448_private --summary /tmp/e002448_readiness.json
+          python research/observability/e002_448_blind_annotation.py score --master /tmp/e002448_private/PRIVATE_MASTER_DO_NOT_SHARE.json --summary /tmp/e002448_unlabeled.json
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/e002448_readiness.json'))
+          b=json.load(open('/tmp/e002448_unlabeled.json'))
+          assert a['annotation_status']=='ZERO_HUMAN_LABELS'
+          assert b['annotation_status']=='ZERO_HUMAN_LABELS'
+          assert not a['physical_release_authorized'] and not b['physical_release_authorized']
+          assert a['candidate_medium_intervals']>0 and a['candidate_medium_intervals']==a['candidate_short_controls']
+          assert a['hidden_repeat_views']==12
+          print('PRIVATE_PACK_CONSTRUCTED_AND_DISCARDED; NO HUMAN ANATOMICAL LABELS')
+          PY
+      - name: Securely discard local images and master
+        if: always()
+        run: |
+          rm -rf /tmp/e002448_private
+          test ! -e /tmp/e002448_private
+      - name: Report only nonidentifying aggregate
+        if: always()
+        run: |
+          if [ ! -f /tmp/e002448_readiness.json ]; then
+            echo '{"experiment":"E002-448","status":"HUMAN_PACK_PREPARATION_FAILED","human_labels_collected":0,"physical_release_authorized":false,"product_claim":"ABSTAIN_UNCALIBRATED"}' > /tmp/e002448_readiness.json
+          fi
+          cat /tmp/e002448_readiness.json
+          echo 'No raw human images, master mappings or per-frame labels uploaded. Physical E002-371 remains unvalidated.' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-448-s19-anatomical-annotation-readiness-aggregate
+          path: /tmp/e002448_readiness.json
+          retention-days: 14
+      - name: Fail if real S19 preparation failed
+        if: steps.pilot.outcome != 'success'
+        run: exit 1
