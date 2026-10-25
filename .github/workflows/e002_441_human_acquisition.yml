@@ -16,6 +16,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Install and verify real video decoding tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
       - name: Verify adversarial fixture before accessing human data
         run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_441_human_acquisition.py' -v
       - name: Acquire and integrity-check S19 500-fps human AVI
