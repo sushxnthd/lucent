@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="570" viewBox="0 0 960 570">
+<style>
+.title{font:700 26px Arial,Helvetica,sans-serif;fill:#12243a}
+.sub{font:15px Arial,Helvetica,sans-serif;fill:#485a6d}
+.tick{font:13px Arial,Helvetica,sans-serif;fill:#5c6c7c}
+.label{font:700 14px Arial,Helvetica,sans-serif;fill:#24384e}
+.call{font:700 16px Arial,Helvetica,sans-serif;fill:#a14a18}
+</style>
+<rect width="960" height="570" fill="#fff"/>
+<text x="52" y="45" class="title">E002-434  |  Frame-rate metadata is not a clock</text>
+<text x="52" y="70" class="sub">Real FFV1/Matroska encoding of 13 generated frames; reported rate = 25 fps in both controls</text>
+<line x1="116" y1="440.0" x2="817" y2="440.0" stroke="#e3e8ee" stroke-width="1"/><text x="99" y="444.0" text-anchor="end" class="tick">0</text><line x1="116" y1="397.0" x2="817" y2="397.0" stroke="#e3e8ee" stroke-width="1"/><text x="99" y="401.0" text-anchor="end" class="tick">100</text><line x1="116" y1="354.0" x2="817" y2="354.0" stroke="#e3e8ee" stroke-width="1"/><text x="99" y="358.0" text-anchor="end" class="tick">200</text><line x1="116" y1="311.0" x2="817" y2="311.0" stroke="#e3e8ee" stroke-width="1"/><text x="99" y="315.0" text-anchor="end" class="tick">300</text><line x1="116" y1="268.0" x2="817" y2="268.0" stroke="#e3e8ee" stroke-width="1"/><text x="99" y="272.0" text-anchor="end" class="tick">400</text><line x1="116" y1="225.0" x2="817" y2="225.0" stroke="#e3e8ee" stroke-width="1"/><text x="99" y="229.0" text-anchor="end" class="tick">500</text><line x1="116" y1="182.0" x2="817" y2="182.0" stroke="#e3e8ee" stroke-width="1"/><text x="99" y="186.0" text-anchor="end" class="tick">600</text><line x1="116" y1="139.0" x2="817" y2="139.0" stroke="#e3e8ee" stroke-width="1"/><text x="99" y="143.0" text-anchor="end" class="tick">700</text><line x1="116" y1="96.0" x2="817" y2="96.0" stroke="#e3e8ee" stroke-width="1"/><text x="99" y="100.0" text-anchor="end" class="tick">800</text><text x="116.0" y="464" text-anchor="middle" class="tick">0</text><text x="229.0" y="464" text-anchor="middle" class="tick">2</text><text x="342.0" y="464" text-anchor="middle" class="tick">4</text><text x="455.0" y="464" text-anchor="middle" class="tick">6</text><text x="568.0" y="464" text-anchor="middle" class="tick">8</text><text x="681.0" y="464" text-anchor="middle" class="tick">10</text><text x="794.0" y="464" text-anchor="middle" class="tick">12</text>
+<line x1="116" y1="96" x2="116" y2="440" stroke="#607386" stroke-width="1.5"/>
+<line x1="116" y1="440" x2="817" y2="440" stroke="#607386" stroke-width="1.5"/>
+<polygon points="116,440 172.5,422.8 229,405.6 285.5,388.4 342,302.4 398.5,285.20000000000005 455,268 511.5,216.4 568,199.2 624.5,182 681,164.8 737.5,147.59999999999997 794,130.40000000000003 794,233.6 737.5,250.8 681,268 624.5,285.20000000000005 568,302.4 511.5,319.6 455,336.8 398.5,354 342,371.2 285.5,388.4 229,405.6 172.5,422.8 116,440" fill="#eecbb1" opacity=".45"/>
+<path d="M116.0,440.0 L172.5,422.8 L229.0,405.6 L285.5,388.4 L342.0,371.2 L398.5,354.0 L455.0,336.8 L511.5,319.6 L568.0,302.4 L624.5,285.2 L681.0,268.0 L737.5,250.8 L794.0,233.6" fill="none" stroke="#d16a2b" stroke-width="3" stroke-dasharray="8 6"/>
+<path d="M116.0,440.0 L172.5,422.8 L229.0,405.6 L285.5,388.4 L342.0,302.4 L398.5,285.2 L455.0,268.0 L511.5,216.4 L568.0,199.2 L624.5,182.0 L681.0,164.8 L737.5,147.6 L794.0,130.4" fill="none" stroke="#193c61" stroke-width="3.5"/>
+<circle cx="116" cy="440" r="3.8" fill="#193c61"/><circle cx="172.5" cy="422.8" r="3.8" fill="#193c61"/><circle cx="229" cy="405.6" r="3.8" fill="#193c61"/><circle cx="285.5" cy="388.4" r="3.8" fill="#193c61"/><circle cx="342" cy="302.4" r="3.8" fill="#193c61"/><circle cx="398.5" cy="285.20000000000005" r="3.8" fill="#193c61"/><circle cx="455" cy="268" r="3.8" fill="#193c61"/><circle cx="511.5" cy="216.4" r="3.8" fill="#193c61"/><circle cx="568" cy="199.2" r="3.8" fill="#193c61"/><circle cx="624.5" cy="182" r="3.8" fill="#193c61"/><circle cx="681" cy="164.8" r="3.8" fill="#193c61"/><circle cx="737.5" cy="147.59999999999997" r="3.8" fill="#193c61"/><circle cx="794" cy="130.40000000000003" r="3.8" fill="#193c61"/>
+<text x="55" y="282" class="label" transform="rotate(-90 55 282)">Encoded presentation time (ms)</text>
+<text x="470" y="493" text-anchor="middle" class="label">Decoded frame index</text>
+<rect x="556" y="112" width="285" height="79" rx="8" fill="#fff8f2" stroke="#efc7a7"/>
+<text x="570" y="137" class="call">Max clock error  240 ms</text>
+<text x="570" y="159" class="sub">Two authored presentation gaps</text>
+<text x="570" y="178" class="sub">200 ms and 120 ms</text>
+<line x1="285.5" y1="388.4" x2="342" y2="302.4" stroke="#193c61" stroke-width="0"/>
+<rect x="119" y="508" width="16" height="4" fill="#193c61"/><text x="144" y="516" class="sub">FFprobe decoded PTS (VFR)</text>
+<line x1="402" y1="510" x2="430" y2="510" stroke="#d16a2b" stroke-width="3" stroke-dasharray="8 5"/>
+<text x="440" y="516" class="sub">frame index / 25 fps (incorrect)</text>
+<text x="52" y="550" class="sub">CFR control: 0 ms discrepancy. PTS is container time, not authenticated hardware exposure time.</text>
+</svg>
