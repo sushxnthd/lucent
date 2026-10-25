@@ -29,6 +29,12 @@ The adversarial quadratic \(x(t)=2+30t-1800t^2\), \(h=2.5\) ms, with opposite-si
 
 ![Synthetic sampling-rate tradeoff](E002_437_SAMPLING_TRADEOFF.svg)
 
+
+
+## Primary-literature priority boundary
+
+This is **not a priority claim for differentiation of noisy measurements**. Savitzky and Golay, *Smoothing and Differentiation of Data by Simplified Least Squares Procedures*, **Analytical Chemistry** 36 (1964), 1627–1639, DOI [10.1021/ac60214a047](https://doi.org/10.1021/ac60214a047), is an early primary source for estimating derivatives from sampled noisy data. E002-372 already established Lucent's conditional acceleration-limited shutter-gap theorem. Equation (1) here is an elementary conservative error bound for a particular two-sample, bounded-acceleration measurement contract; it is **not** presented as a new optimal numerical differentiator or as a physiology discovery. The relevant contribution is the testable reference-calibration gate and its rate/error tradeoff. A complete specialized metrology and physiological priority audit remains necessary before publication.
+
 ## Reproducibility and adversarial controls
 
 The standard-library implementation requires explicit per-frame flags for geometry, brightness, missingness, blur, gaze, glasses, sampling, clock, occlusion and shutter. It rejects nonmonotone frames/timestamps, ambiguous clock ordering, missing frame IDs, gaps exceeding the frozen maximum, malformed physical units, and absent acceleration or scale attestations. **Attestation booleans and external-reference strings are not authenticated by software**. Even a finite conditional reference bound never authorizes a product certificate.
