@@ -205,8 +205,7 @@ def main():
     p.add_argument('--private-trial', required=True, help='locally held dual-rater reference JSON')
     p.add_argument('--output', help='write private result instead of stdout')
     args = p.parse_args()
-    result = json.dumps(adjudicate(json.loads(Path(args.private_trial).read_text())), indent=2, sort_keys=True) + '
-'
+    result = json.dumps(adjudicate(json.loads(Path(args.private_trial).read_text())), indent=2, sort_keys=True) + '\n'
     if args.output:
         Path(args.output).write_text(result)
     else:
