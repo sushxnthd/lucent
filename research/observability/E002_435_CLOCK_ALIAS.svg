@@ -9,8 +9,8 @@
 <polyline points="90,234.0 147,223.2 204,212.4 261,201.6 318,190.8 375,180.0 432,169.2 489,158.4 546,147.6 603,136.8 660,126.0 717,115.2 774,104.4" fill="none" stroke="#15803d" stroke-width="3"/>
 <text x="440" y="507" text-anchor="middle" font-size="14" fill="#0f172a">Encoded frame index (packet sequence unchanged)</text>
 <text transform="translate(26 270) rotate(-90)" text-anchor="middle" font-size="14" fill="#0f172a">Container PTS (seconds)</text>
-<line x1="574" y1="105" x2="604" y2="105" stroke="#2563eb" stroke-width="3"/><text x="613" y="110" font-size="13" fill="#334155">Original / identity</text>
-<line x1="574" y1="126" x2="604" y2="126" stroke="#dc2626" stroke-width="3"/><text x="613" y="131" font-size="13" fill="#334155">2× PTS scale</text>
-<line x1="574" y1="147" x2="604" y2="147" stroke="#15803d" stroke-width="3"/><text x="613" y="152" font-size="13" fill="#334155">+0.8 s offset</text>
+<line x1="114" y1="105" x2="144" y2="105" stroke="#2563eb" stroke-width="3"/><text x="153" y="110" font-size="13" fill="#334155">Original / identity</text>
+<line x1="114" y1="126" x2="144" y2="126" stroke="#dc2626" stroke-width="3"/><text x="153" y="131" font-size="13" fill="#334155">2× PTS scale</text>
+<line x1="114" y1="147" x2="144" y2="147" stroke="#15803d" stroke-width="3"/><text x="153" y="152" font-size="13" fill="#334155">+0.8 s offset</text>
 <text x="90" y="528" font-size="12" fill="#64748b">Container PTS is not hardware exposure time. No human or sensor measurement is certified.</text>
 </g></svg>
