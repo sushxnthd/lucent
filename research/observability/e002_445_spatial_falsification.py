@@ -43,7 +43,7 @@ def pair_measurements(frames, event_times, limit=FIXED_WINDOW):
             signed = arr.astype(np.int16) - previous.astype(np.int16)
             raw = np.abs(signed)
             global_offset = float(np.median(signed))
-            adjusted = np.abs(signed.astype(np.float32) - global_offset)
+            adjusted = np.minimum(raw.astype(np.float32), np.abs(signed.astype(np.float32) - global_offset))
             records["central_raw"].append(float(np.mean(raw[CENTRAL]) / 255.0))
             records["border_raw"].append(float(np.mean(raw[BORDER]) / 255.0))
             records["central_adjusted"].append(float(np.mean(adjusted[CENTRAL]) / 255.0))
