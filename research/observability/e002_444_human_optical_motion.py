@@ -96,8 +96,10 @@ def summarize(changes, changed_fractions, exact_duplicates, gaps):
     n = len(changes)
     if n < 2 or len(changed_fractions) != n or len(exact_duplicates) != n or len(gaps) != n:
         raise ValueError("mismatched or short optical measurements")
-    if any(not math.isfinite(float(v)) or v < 0 for v in changes + changed_fractions + gaps):
-        raise ValueError("nonfinite or negative measurement")
+    if any(not math.isfinite(float(v)) for v in changes + changed_fractions + gaps):
+        raise ValueError("nonfinite measurement")
+    if any(c < 0 or f < 0 for c, f in zip(changes, changed_fractions)):
+        raise ValueError("negative optical measurement")
     if any(g <= 0 for g in gaps):
         raise ValueError("nonpositive event gap")
     if any(c > 1 or f > 1 for c, f in zip(changes, changed_fractions)):
