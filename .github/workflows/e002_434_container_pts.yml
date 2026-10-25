@@ -24,7 +24,8 @@ jobs:
           if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
             sudo apt-get update && sudo apt-get install -y ffmpeg
           fi
-          python -m pip install numpy opencv-python-headless
+          python -m pip install --force-reinstall --no-cache-dir numpy==1.26.4 opencv-python-headless==4.10.0.84
+          python -c "import cv2; print(cv2.__file__, cv2.__version__); assert hasattr(cv2, 'CascadeClassifier')"
       - name: Independent parser and real codec tests
         run: PYTHONPATH=instrument python -m unittest -v research/observability/test_e002_434_container_pts.py
       - name: Actual OpenCV quality pipeline VFR integration
