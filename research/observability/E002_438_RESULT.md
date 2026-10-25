@@ -28,6 +28,8 @@ Using a=6.0 mm, θ=2.0 mm, ε=δ=0 and V=243 mm/s *solely as an illustrative sce
 | 120 fps | 4.9875 mm | conditional exclusion if premises held |
 | 250 fps | 5.514 mm | conditional exclusion if premises held |
 
+![Conditional cadence sensitivity using a human-reported mean as a hypothetical scenario only](E002_438_HUMAN_MEAN_SCENARIO.svg)
+
 **None of these are physical certifications.** The published *mean* of 243 mm/s is not a velocity upper bound, so even the seemingly safe 60–250-fps scenarios remain **ABSTAIN_UNCALIBRATED** in the actual product. This changes the engineering priority: collecting more low-rate frames cannot compensate for a missing independently defensible speed bound.
 
 ## New falsification-only calibrated-pair instrument
