@@ -4,16 +4,16 @@
 <text x="70" y="63" font-family="Arial,Helvetica,sans-serif" font-size="13" fill="#596879">E002-447 | idealized aperture sensor | synthetic assumptions, not human measurements</text>
 <rect x="94" y="82" width="664" height="273" rx="2" fill="#f6f9fc"/>
 <g stroke="#d9e1e8" stroke-width="1">
-<path d="M100 98H750 M100 170H750 M100 206H750 M100 278H750 M100 350H750"/>
+<path d="M100 126H750 M100 190H750 M100 222H750 M100 286H750 M100 350H750"/>
 <path d="M100 80V355 M230 80V355 M360 80V355 M490 80V355 M620 80V355 M750 80V355"/>
 </g>
 <path d="M100 82V355H750" fill="none" stroke="#283c4e" stroke-width="1.8"/>
-<path d="M100 206H750" stroke="#bd3946" stroke-width="2.5" stroke-dasharray="8 6"/>
-<path d="M100 170H750" stroke="#0b8791" stroke-width="4"/>
-<path d="M100 62 L165 105.2 L230 148.4 L295 191.6 L360 234.8 L425 278 L490 234.8 L555 191.6 L620 148.4 L685 105.2 L750 62" fill="none" stroke="#e28b2b" stroke-width="4" stroke-linejoin="round"/>
-<circle cx="425" cy="278" r="6" fill="#e28b2b" stroke="#fff" stroke-width="2"/>
+<path d="M100 222H750" stroke="#bd3946" stroke-width="2.5" stroke-dasharray="8 6"/>
+<path d="M100 190H750" stroke="#0b8791" stroke-width="4"/>
+<path d="M100 94 L165 132.4 L230 170.8 L295 209.2 L360 247.6 L425 286 L490 247.6 L555 209.2 L620 170.8 L685 132.4 L750 94" fill="none" stroke="#e28b2b" stroke-width="4" stroke-linejoin="round"/>
+<circle cx="425" cy="286" r="6" fill="#e28b2b" stroke="#fff" stroke-width="2"/>
 <g font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#4c5a68">
-<text x="62" y="102">3.4</text><text x="62" y="174">3.0</text><text x="62" y="210">2.8</text><text x="62" y="282">2.4</text><text x="62" y="354">2.0</text>
+<text x="62" y="130">3.4</text><text x="62" y="194">3.0</text><text x="62" y="226">2.8</text><text x="62" y="290">2.4</text><text x="62" y="354">2.0</text>
 <text x="91" y="375">-5</text><text x="222" y="375">-3</text><text x="356" y="375">-1</text><text x="421" y="375">0</text><text x="486" y="375">1</text><text x="616" y="375">3</text><text x="746" y="375">5</text>
 <text x="377" y="403" font-size="14">Time relative to shutter center (ms)</text>
 <text x="19" y="234" transform="rotate(-90 19 234)" font-size="14">Anatomical aperture (mm)</text>
