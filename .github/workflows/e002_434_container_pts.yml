@@ -1,0 +1,44 @@
+name: E002-434 encoded frame timing instrument validation
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'instrument/verify_frame_timing.py'
+      - 'instrument/analyze_capture.py'
+      - 'research/observability/E002_434_*'
+      - 'research/observability/test_e002_434_*'
+      - '.github/workflows/e002_434_container_pts.yml'
+  workflow_dispatch:
+jobs:
+  container-pts-instrument:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install no-cost codec and image dependencies
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+          python -m pip install numpy opencv-python-headless
+      - name: Independent parser and real codec tests
+        run: PYTHONPATH=instrument python -m unittest -v research/observability/test_e002_434_container_pts.py
+      - name: Actual OpenCV quality pipeline VFR integration
+        run: PYTHONPATH=instrument python -m unittest -v research/observability/test_e002_434_instrument_integration.py
+      - name: Reproduce preregistered instrument result
+        run: |
+          python instrument/verify_frame_timing.py --experiment --output /tmp/e002_434_aggregate.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/e002_434_aggregate.json'))
+          assert d['primary_prediction_passed']
+          assert d['vfr']['max_abs_naive_time_error_s'] > 0.05
+          assert d['cfr']['max_abs_naive_time_error_s'] <= 0.01
+          assert not d['physical_certificate_authorized']
+          assert d['product'] == 'ABSTAIN_UNCALIBRATED'
+          print('REAL ENCODED MEDIA TEST; NO HUMAN OR SENSOR VALIDATION')
+          PY
