@@ -105,6 +105,7 @@ def main():
             {
                 "frame": frame_index,
                 "timeS": frame_index / fps if fps > 0 else None,
+                "timeSProvenance": "NOMINAL_FRAME_INDEX_DIVIDED_BY_REPORTED_FPS_NOT_SENSOR_TIME",
                 "faceDetected": bool(detected),
                 "eyeDetections": eye_count,
                 "faceAreaFraction": area_fraction,
@@ -150,6 +151,9 @@ def main():
                 float(np.mean(timing_errors)) if timing_errors else None
             ),
             "browserFrameCadence": meta.get("frameCadence"),
+            "frameTimeSource": "NOMINAL_FPS_ESTIMATE_NOT_HARDWARE_CAPTURE_TIME",
+            "containerPtsValidated": False,
+            "hardwareExposureTimestampsAuthenticated": False,
         },
         "quality": {
             "faceDetectionRate": face_rate,
@@ -162,6 +166,8 @@ def main():
             ),
         },
         "frames": rows,
+        "physicalCertificateAuthorized": False,
+        "product": "ABSTAIN_UNCALIBRATED",
         "interpretation": (
             "Capture-quality diagnostics only. No biological state or fatigue "
             "estimate is produced."
