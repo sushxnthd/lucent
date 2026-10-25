@@ -1,0 +1,42 @@
+name: E002-439 optical clock instrument
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_439_optical_clock.py'
+      - 'research/observability/test_e002_439_optical_clock.py'
+      - '.github/workflows/e002_439_optical_clock.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_439_optical_clock.py'
+      - 'research/observability/test_e002_439_optical_clock.py'
+      - '.github/workflows/e002_439_optical_clock.yml'
+  workflow_dispatch:
+jobs:
+  optical-clock-instrument:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Check independent video instruments
+        run: |
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Run adversarial tests including actual FFV1 encoder-decoder
+        run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_439_optical_clock.py
+      - name: Reproduce machine-readable experiment and assert hard abstention
+        run: |
+          python research/observability/e002_439_optical_clock.py --output /tmp/e002_439.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/e002_439.json'))
+          assert x['identical_decoded_image_sha256'] is True
+          assert x['rolling_shutter_splice_indistinguishable'] is True
+          assert x['retimed_pts_ms'][-1] == 1000
+          assert x['optical_ticks_after_retiming'][-1] == 500
+          assert x['product'] == 'ABSTAIN_UNCALIBRATED'
+          assert x['physical_exposure_authenticated'] is False
+          print('E002-439 virtual instrument PASS; physical validation remains blocked')
+          PY
