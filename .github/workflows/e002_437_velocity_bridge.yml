@@ -1,0 +1,39 @@
+name: E002-437 acceleration-conditioned velocity bridge
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_437_*'
+      - 'research/observability/E002_437_*'
+      - 'research/observability/test_e002_437_*'
+      - '.github/workflows/e002_437_velocity_bridge.yml'
+  workflow_dispatch:
+jobs:
+  reference-velocity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent analytic and adversarial oracle
+        run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_437_velocity_bridge.py
+      - name: Frozen 500-trace synthetic reproduction
+        run: |
+          PYTHONPATH=research/observability python research/observability/e002_437_velocity_bridge.py --traces 500 --output /tmp/e002_437.json
+          PYTHONPATH=research/observability python research/observability/e002_437_figure.py --output /tmp/e002_437.svg
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          expected=json.loads(Path('research/observability/E002_437_SYNTHETIC_AGGREGATE.json').read_text())
+          actual=json.loads(Path('/tmp/e002_437.json').read_text())
+          assert actual == expected
+          assert actual['traces']==500 and actual['violations_under_true_premises']==0
+          assert actual['human_participants']==0
+          assert actual['physical_certificate_authorized'] is False
+          assert actual['product']=='ABSTAIN_UNCALIBRATED'
+          assert Path('/tmp/e002_437.svg').read_bytes()==Path('research/observability/E002_437_SAMPLING_TRADEOFF.svg').read_bytes()
+          print('CONDITIONAL SYNTHETIC BRIDGE ONLY; NO HUMAN PHYSICAL CERTIFICATE')
+          PY
