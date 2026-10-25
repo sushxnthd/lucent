@@ -1,0 +1,33 @@
+name: Lucent E002-428 human velocity-tail study gate
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_428_velocity_tail.py'
+      - 'research/observability/test_e002_428_velocity_tail.py'
+      - 'research/observability/E002_428_*.md'
+      - '.github/workflows/e002-428-velocity-tail.yml'
+  workflow_dispatch:
+jobs:
+  participant-tail-inversion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independently verify binomial inversion and conservative missingness
+        run: python -m unittest -v research/observability/test_e002_428_velocity_tail.py
+      - name: Verify study-only CLI refuses physical certification
+        run: |
+          python research/observability/e002_428_velocity_tail.py --participants 25 --witnessed 0 --unresolved 0 --frozen-velocity-mm-s 400 --frozen-reference independently-archived-training-v > /tmp/e002428.json
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/e002428.json'))
+          assert x['product']=='ABSTAIN_UNCALIBRATED'
+          assert x['physical_certificate_authorized'] is False
+          assert x['hard_velocity_bound_authorized'] is False
+          assert abs(x['worst_case_tail_upper']-0.112928)<0.00001
+          PY
