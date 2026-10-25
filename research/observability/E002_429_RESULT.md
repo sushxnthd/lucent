@@ -26,6 +26,8 @@ For World B, H decreases linearly from 2.01 to 1.99 mm over 1/60 s, then returns
 
 If an independent calibration instead authenticates an effective-angle interval [15°,20°] for the whole interval, the instantaneous lower envelope is `H >= y/cos(15°) = 1.98459643 mm`, which is below the threshold and forces abstention. This is only an **instantaneous** envelope given y(t); applying it to ordinary sampled video additionally requires a validated temporal observation model. A tighter verified interval [18°,20°] would exclude this specific World B geometry but is not claimed to be available physically.
 
+[Technical vector figure: physical versus projected alias](E002_429_GEOMETRY_ALIAS.svg) illustrates why identical scalar camera measurements cannot determine the physical threshold crossing under uncalibrated geometry.
+
 ## Numerical execution and independent verification
 
 The standard-library-only [simulator](e002_429_geometry_alias.py) and [independent test suite](test_e002_429_geometry_alias.py) were executed locally. **Five test groups passed.** They cover finite-difference physical-speed checking, 1,201 projected-time comparisons including outside the gap, independently evaluated midpoint shutter integration at 24/30/60/120/500 Hz and three exposures, false fixed-geometry decision, interval-guard reversal, and malformed-input rejection. Maximum projected discrepancy on the declared dense grid was **0.0** in double precision. Both 4-ms shutter averages were **1.9169729464032532**. The false fixed-geometry lower bound was **2.02 mm**. These are synthetic arithmetic results, not a human error rate or evidence of physical angular dynamics.
