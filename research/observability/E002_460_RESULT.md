@@ -33,6 +33,9 @@ Use c=2 mm, m0=m1=3 mm, C=567.103928 mm/s and O=274.616337 mm/s. These are publi
 
 For the 240-fps, 2.3-ms exposure case, E002-458's **conservative surrogate** lowers the hypothetical critical gap to **4.096860 ms**, returning NOT_EXCLUDED. The sharp dark-gap law still excludes a crossing under the narrower linear-aperture-average assumptions. Thus **the earlier surrogate's loss of exclusion is not evidence that a dark-gap closure is feasible**. It was conservative, not incorrect as a one-sided safety bound. This result does **not** say exposure-masked closures inside shutter supports are impossible.
 
+
+**Additional model boundary:** The iff construction assumes a nonnegative aperture with **no separately imposed upper anatomical aperture cap**. If a verified finite upper cap A is added, the intersection criterion remains **necessary** for a dark-gap crossing but the piecewise-affine witness must also satisfy `a(t)<=A` throughout the observation horizon; without that check, do not claim sufficiency under the bounded-range model. This does not weaken a sound exclusion based on the necessary condition.
+
 ## Reproduction and falsification
 
 - [Python evaluator](e002_460_exposure_centroid.py) refuses pixel contrast, uncalibrated linearity, invalid kernel/clock metadata, geometry, brightness, missingness, blur, gaze, glasses, sampling and rolling-shutter uncertainty. It always returns `physical_certification:false`.
