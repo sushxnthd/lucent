@@ -41,6 +41,21 @@ class DarkGapWitnessTests(unittest.TestCase):
         self.assertEqual(r["reference"], "REFERENCE_INCOMPLETE")
         self.assertFalse(r["joint_falsification"])
 
+    def test_exploratory_realizable_exposure_only_crossing(self):
+        # Independent continuous 1000-mm/s-Lipschitz aperture:
+        # a(t) = 2.5 - max(0, 0.7 - |t-1|).
+        # It reaches 1.8 mm at 1 ms, but remains 2.5 mm in the
+        # entire unexposed gap [2,8] ms. Exact first shutter mean is
+        # 2.5 - triangular_area(0.7*0.7)/4 = 2.3775 mm.
+        c = fixture()
+        c["velocity"]["limit_mm_s"] = 1000.0
+        c["endpoint_aperture_mm"] = [2.3775, 2.5]
+        c["reference"][0]["aperture_mm"] = 1.85  # 0.2-ms boxcar average
+        r = evaluate_interval(c)
+        self.assertEqual(r["decision"], "NOT_EXCLUDED")
+        self.assertEqual(r["reference"], "REFERENCE_INCOMPLETE")
+        self.assertFalse(r["joint_falsification"])
+
     def test_interior_gap_witness_still_falsifies_joint_assumptions(self):
         c = fixture()
         c["reference"][0]["time_ms"] = 5.0
