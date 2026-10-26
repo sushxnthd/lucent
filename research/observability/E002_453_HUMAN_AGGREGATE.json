@@ -4,10 +4,10 @@
     "url": "https://osf.io/download/m34qd/",
     "osf_project": "https://osf.io/tud8a",
     "sha256_declared": "6248c00b3c2849115f913eb184821d05efe069dd081587a84472c054494bbc43",
-    "sha256_verified": false,
+    "sha256_verified": true,
     "declared_bytes": 743520,
     "observed_text_bytes": 743520,
-    "retrieval": "OSF public CSV via browser extraction; original raw-file hash not independently verified"
+    "retrieval": "Complete 743520-byte ASCII CSV obtained from OSF; independent SHA256 over exact extracted bytes matched OSF API digest; separate hosted Python replay pending"
   },
   "rows": {
     "valid": 2306,
