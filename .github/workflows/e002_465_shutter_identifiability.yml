@@ -20,6 +20,8 @@ jobs:
           node-version: '22'
       - name: Run adversarial tests
         run: node --test research/observability/test_e002_465_shutter_phase_scan.mjs
+      - name: Independently replay exact shutter bounds
+        run: python3 research/observability/e002_465_independent_replay.py
       - name: Run frozen witness
         run: node research/observability/e002_465_shutter_phase_scan.mjs
       - name: Refuse physical claims
