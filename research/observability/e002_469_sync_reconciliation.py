@@ -15,9 +15,9 @@ import zipfile
 MD5 = '022dc7770d62b258ce2dd5a9a7b3df6c'
 NEEDED = ('ME191_phantom.xml', 'ME191_sync.csv')
 KEY = re.compile(r'frame|fps|rate|clock|time|timestamp|tick|trigger|sample|frequency|interval|duration', re.I)
-FRAME = re.compile(r'(frame|image)[_\\s-]*(index|number|num|id|counter)|^(frame|frame_idx|frameindex|framenumber)$', re.I)
+FRAME = re.compile(r'(frame|image)[_\s-]*(index|number|num|id|counter)|^(frame|frame_idx|frameindex|framenumber)$', re.I)
 TIME = re.compile(r'time|timestamp|clock', re.I)
-UNIT = re.compile(r'(?:^|[_\\s(\\[])(ns|us|ms|s|nanoseconds?|microseconds?|milliseconds?|seconds?)(?:$|[_\\s)\\]])', re.I)
+UNIT = re.compile(r'(?:^|[_\s(\[])(ns|us|ms|s|nanoseconds?|microseconds?|milliseconds?|seconds?)(?:$|[_\s)\]])', re.I)
 UNIT_SCALE = {'s':1, 'second':1, 'seconds':1, 'ms':.001, 'millisecond':.001, 'milliseconds':.001, 'us':1e-6, 'microsecond':1e-6, 'microseconds':1e-6, 'ns':1e-9, 'nanosecond':1e-9, 'nanoseconds':1e-9}
 
 def digest(path, kind='md5'):
@@ -53,7 +53,7 @@ def safe_components(archive, directory):
 
 def safe_key(s):
     s = str(s).strip()
-    return s if len(s) <= 64 and re.fullmatch(r'[\\w .()/\\[\\]-]+', s) else '[REDACTED]'
+    return s if len(s) <= 64 and re.fullmatch(r'[\w .()/\[\]-]+', s) else '[REDACTED]'
 
 def xml_summary(path):
     n = 0; keys = {}; numeric_rate = []
@@ -65,7 +65,7 @@ def xml_summary(path):
             if KEY.search(k):
                 sk = safe_key(k)
                 keys[sk] = keys.get(sk, 0) + 1
-                if re.search(r'fps|frame[_\\s-]?rate', k, re.I):
+                if re.search(r'fps|frame[_\s-]?rate', k, re.I):
                     try:
                         f = float(v.strip())
                         if math.isfinite(f) and 0 < f <= 10000:
@@ -118,7 +118,7 @@ def frame_clock_candidate(headers, rows):
 def csv_summary(path):
     with path.open('r',encoding='utf-8-sig',errors='replace',newline='') as f:
         sample = f.read(4096); f.seek(0)
-        try: dialect = csv.Sniffer().sniff(sample, delimiters=',;\\t|')
+        try: dialect = csv.Sniffer().sniff(sample, delimiters=',;\t|')
         except csv.Error: dialect = csv.excel
         reader = csv.reader(f, dialect)
         headers = next(reader, [])
@@ -147,7 +147,7 @@ def analyze(archive, expected_md5=MD5):
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--archive',required=True); ap.add_argument('--output',required=True)
     args=ap.parse_args(); result=analyze(args.archive)
-    Path(args.output).write_text(json.dumps(result,sort_keys=True,indent=2)+'\\n')
+    Path(args.output).write_text(json.dumps(result,sort_keys=True,indent=2)+'\n')
     print(json.dumps({'status':result['sync_csv']['clock_test']['status'],
                       'csv_rows':result['sync_csv']['rows'],
                       'xml_elements':result['xml']['elements'],
