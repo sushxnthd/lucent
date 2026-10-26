@@ -1,0 +1,139 @@
+{
+  "evidence_tier": "EXTERNAL_HUMAN_DERIVED_PEAK_ESTIMATES_NOT_HARD_CAP",
+  "source": {
+    "url": "https://osf.io/download/m34qd/",
+    "osf_project": "https://osf.io/tud8a",
+    "sha256_declared": "6248c00b3c2849115f913eb184821d05efe069dd081587a84472c054494bbc43",
+    "sha256_verified": false,
+    "declared_bytes": 743520,
+    "observed_text_bytes": 743520,
+    "retrieval": "OSF public CSV via browser extraction; original raw-file hash not independently verified"
+  },
+  "rows": {
+    "valid": 2306,
+    "excluded": 0,
+    "participants": 17,
+    "train_subjects": 12,
+    "holdout_subjects": 5,
+    "train": 1657,
+    "holdout": 649
+  },
+  "train": {
+    "min": 61.26036698905257,
+    "median": 238.3774874604129,
+    "max": 567.1039281430776,
+    "q99_nearest_rank": 509.9008611933492
+  },
+  "holdout": {
+    "min": 98.11562179910965,
+    "median": 241.292492538495,
+    "max": 427.05309798933393
+  },
+  "gaze": {
+    "bottom": {
+      "train_n": 539,
+      "train_max": 546.5524385750548,
+      "holdout_n": 208,
+      "holdout_max": 402.709067983863
+    },
+    "center": {
+      "train_n": 558,
+      "train_max": 567.1039281430776,
+      "holdout_n": 222,
+      "holdout_max": 427.05309798933393
+    },
+    "top": {
+      "train_n": 560,
+      "train_max": 521.1072466536267,
+      "holdout_n": 219,
+      "holdout_max": 392.030391836384
+    }
+  },
+  "tests": {
+    "pooled_train_max": {
+      "count": 0,
+      "denominator": 649,
+      "abstained": 0,
+      "max_exceedance_ratio": null,
+      "holdout_subjects_with_exceedance": 0,
+      "max_exceedances_per_holdout_subject": 0,
+      "by_gaze": {
+        "bottom": {
+          "count": 0,
+          "denominator": 208
+        },
+        "center": {
+          "count": 0,
+          "denominator": 222
+        },
+        "top": {
+          "count": 0,
+          "denominator": 219
+        }
+      }
+    },
+    "pooled_train_q99": {
+      "count": 0,
+      "denominator": 649,
+      "abstained": 0,
+      "max_exceedance_ratio": null,
+      "holdout_subjects_with_exceedance": 0,
+      "max_exceedances_per_holdout_subject": 0,
+      "by_gaze": {
+        "bottom": {
+          "count": 0,
+          "denominator": 208
+        },
+        "center": {
+          "count": 0,
+          "denominator": 222
+        },
+        "top": {
+          "count": 0,
+          "denominator": 219
+        }
+      }
+    },
+    "gaze_train_max": {
+      "count": 0,
+      "denominator": 649,
+      "abstained": 0,
+      "max_exceedance_ratio": null,
+      "holdout_subjects_with_exceedance": 0,
+      "max_exceedances_per_holdout_subject": 0,
+      "by_gaze": {
+        "bottom": {
+          "count": 0,
+          "denominator": 208
+        },
+        "center": {
+          "count": 0,
+          "denominator": 222
+        },
+        "top": {
+          "count": 0,
+          "denominator": 219
+        }
+      }
+    }
+  },
+  "illustrative": {
+    "a0_mm": 3,
+    "a1_mm": 3,
+    "threshold_mm": 2,
+    "train_max_mm_s": 567.1039281430776,
+    "critical_gap_ms": 3.5266904367049445,
+    "nominal_fps_gap_ms": {
+      "30": 33.333333333333336,
+      "60": 16.666666666666668,
+      "240": 4.166666666666667
+    },
+    "nominal_gap_shorter_than_illustrative_threshold": {
+      "30": false,
+      "60": false,
+      "240": false
+    }
+  },
+  "physical_release_authorized": false,
+  "product_claim": "ABSTAIN_UNCALIBRATED"
+}
