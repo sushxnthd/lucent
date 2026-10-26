@@ -1,5 +1,8 @@
 # E002-461 — executable physical-instrument and human validation handoff
 
+> **E002-465 shutter-metrology correction (2026-10-26):** An LED photodiode and shared trigger authenticate the *illumination pulse and trigger*, **not** the camera sensor's exposure window. Actual imaging-path shutter support requires independently timed optical phase scanning or an equivalently validated sensor-exposure measurement, with clock, radiometry, response tails and rolling-row uncertainty bounded. See [E002-465](E002_465_RESULT.md). Until then any inferred dark-gap crossing is shutter-unidentified and product claims abstain. Historical protocol below is retained for traceability.
+
+
 **Status:** prospective protocol, **not executed**. This complements [E002-456](E002_456_FROZEN.md), not a substitute for independently annotated human eyelid kinematics. No purchase or human recruitment is authorized by this file.
 
 ## Stage A: falsify the measurement model with a moving aperture phantom
