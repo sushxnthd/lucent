@@ -1,5 +1,8 @@
 # E002-463 — independent encoder witness integration and physical bench handoff
 
+> **E002-465 shutter-metrology correction (2026-10-26):** An LED photodiode and shared trigger authenticate the *illumination pulse and trigger*, **not** the camera sensor's exposure window. Actual imaging-path shutter support requires independently timed optical phase scanning or an equivalently validated sensor-exposure measurement, with clock, radiometry, response tails and rolling-row uncertainty bounded. See [E002-465](E002_465_RESULT.md). Until then any inferred dark-gap crossing is shutter-unidentified and product claims abstain. Historical protocol below is retained for traceability.
+
+
 **Date: 2026-10-26. Evidence tier: synthetic end-to-end instrument integration; independent arithmetic check; no physical hardware or new human labels.** [Protocol](E002_463_FROZEN.md) was committed before implementation at `c28660fdc8bfad0b749a0fe7781507c4987b4a3f`. This work is a direct enforcement consequence of E002-462, **not a new observability theorem or physiological discovery**.
 
 ## Falsifiable result and what it establishes
