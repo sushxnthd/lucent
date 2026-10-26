@@ -175,10 +175,8 @@ def synthetic_fixture(closure=True):
             "scale_units": "mm", "time_units": "ms",
         },
         "samples": [
-            {"time_ms": 0.5, "aperture_mm": 2.3, "quality": "PASS"},
             {"time_ms": 1.0, "aperture_mm": 1.95 if closure else 2.3,
              "quality": "PASS"},
-            {"time_ms": 2.0, "aperture_mm": 2.3, "quality": "PASS"},
         ],
     }
     return case, encoder
