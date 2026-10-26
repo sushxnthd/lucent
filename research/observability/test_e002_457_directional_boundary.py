@@ -90,7 +90,8 @@ class DirectionalBoundary(unittest.TestCase):
 
 class ShutterAdversarial(unittest.TestCase):
     def test_instantaneous_critical(self):
-        result=shutter_gate(case())
+        # 5 ms is below the 8.333-ms directional critical gap; 10 ms is not.
+        result=shutter_gate(case(times_ms=[0.0,5.0]))
         self.assertEqual(result["decision"], "EXCLUDED_CONDITIONALLY")
         self.assertAlmostEqual(result["critical_gap_ms"], 1000*(1/300+1/200))
 
