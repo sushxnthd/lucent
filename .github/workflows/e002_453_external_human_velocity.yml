@@ -1,0 +1,44 @@
+name: E002-453 external human peak-velocity transfer
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_453_external_human_velocity.py'
+      - 'research/observability/test_e002_453_external_human_velocity.py'
+      - '.github/workflows/e002_453_external_human_velocity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  participant-disjoint-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run independent synthetic and adversarial checks
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_453_external_human_velocity.py
+      - name: Hash-verify OSF public human CSV and print only aggregate
+        run: |
+          cd research/observability
+          python - <<'PY'
+          import hashlib, json, os, tempfile, urllib.request
+          from pathlib import Path
+          from e002_453_external_human_velocity import SOURCE_URL, EXPECTED_SHA256, analyze_file
+          req = urllib.request.Request(SOURCE_URL, headers={"User-Agent": "Lucent-E002-453-research/1.0"})
+          with urllib.request.urlopen(req, timeout=60) as response:
+              raw = response.read()
+          digest = hashlib.sha256(raw).hexdigest()
+          if digest != EXPECTED_SHA256:
+              raise SystemExit("SOURCE_SHA256_MISMATCH: abort without inference")
+          with tempfile.TemporaryDirectory() as temp:
+              path = Path(temp) / "Blinks.csv"
+              path.write_bytes(raw)
+              del raw
+              aggregate = analyze_file(path)
+          print(json.dumps(aggregate, indent=2, sort_keys=True, allow_nan=False))
+          PY
