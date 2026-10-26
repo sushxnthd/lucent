@@ -1,0 +1,48 @@
+name: E002-469 one-shot independent S19 clock reconciliation
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - .github/workflows/e002_469_sync_reconciliation.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e002-469-one-shot-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  one-shot-clock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify frozen protocol and independent synthetic controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_469_sync_reconciliation.py' -v
+      - name: One-time source acquisition and metadata-only independent clock test
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --retry 1 --connect-timeout 20 --max-time 600 --max-filesize 450000000 \
+            --output "$RUNNER_TEMP/S19.zip" \
+            'https://zenodo.org/records/18971758/files/S19.zip?download=1'
+          python research/observability/e002_469_sync_reconciliation.py \
+            --archive "$RUNNER_TEMP/S19.zip" \
+            --output "$RUNNER_TEMP/E002_469_SYNC_AGGREGATE.json"
+          echo 'One-shot S19 XML/CSV clock reconciliation completed. No physical shutter or anatomical claim.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Preserve explicit failure state without fabricating clock evidence
+        if: failure()
+        shell: bash
+        run: |
+          printf '%s\n' '{"protocol":"E002-469-frozen-v1","status":"RECONCILIATION_FAILED","hardware_exposure_timing_authenticated":false,"physical_hidden_closure_exclusion":"ABSTAIN_UNCALIBRATED","product_release_authorized":false}' > "$RUNNER_TEMP/E002_469_SYNC_AGGREGATE.json"
+      - name: Upload only sanitized aggregate
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-469-sync-aggregate
+          path: ${{ runner.temp }}/E002_469_SYNC_AGGREGATE.json
+          retention-days: 7
+          if-no-files-found: error
