@@ -6,9 +6,9 @@
 
 The existing E002-456 evaluator was challenged with exact shutter means of continuous V-shaped apertures, a(t)=m+s|t-p|. An independent analytic geometric oracle determines whether the true aperture is below 2.0 mm anywhere in the camera's **unexposed** interval. The generator uses the frozen 250-mm/s *illustrative* Lipschitz limit and no physiology or human-derived hard cap. Exact analytic shutter integration was checked against separate dense trapezoidal quadrature.
 
-The 12,000-case frozen matrix crosses 30/60/120/240 fps with 0.5/1.5-ms exposures, 1,500 cases per cell, seed 470371. A local faithful stand-in of E002-456's relevant arithmetic was executed because the GitHub source is not mounted locally. **Actual repository evaluator verification is pending in [hosted CI](https://github.com/sushxnthd/lucent/actions/runs/40398705563)**; do not treat local stand-in success as hosted confirmation.
+The 12,000-case frozen matrix crosses 30/60/120/240 fps with 0.5/1.5-ms exposures, 1,500 cases per cell, seed 470371. A local faithful stand-in of E002-456's relevant arithmetic was initially executed because the GitHub source was not mounted locally. **Independent hosted replay has now SUCCEEDED** against the actual repository E002-456 evaluator in [GitHub Actions run 40398705563](https://github.com/sushxnthd/lucent/actions/runs/40398705563) on checked-out head `f2d08a93a1c188c67b0a299d86c5104bde197b5a`. The job ran **12/12 adversarial tests**, generated the 12,000-case aggregate, and passed all hard assertions. The hosted aggregate is preserved as [artifact 12687583012](https://github.com/sushxnthd/lucent/actions/runs/40398705563/artifacts/12687583012); uploaded ZIP SHA-256 reported in the job log: `f0acd547f8b26a3acc413e6b47d7752c1b0a1d7dc5dfd27344a70072df544923`. This verifies the restricted simulator implementation, not its physical assumptions.
 
-### Local deterministic outcomes (pending hosted replay)
+### Deterministic outcomes (hosted actual-evaluator replay passed)
 
 - 12,000 constructed clean continuous-aperture trajectories; 3,919 had a strictly subthreshold minimum in the unexposed gap.
 - Conditional exclusion on 2,663 trajectories; 9,337 not excluded; **0 clean false exclusions and 0 unexpected abstentions** in the local stand-in.
