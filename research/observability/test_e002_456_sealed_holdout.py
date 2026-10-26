@@ -21,7 +21,7 @@ class SealedHoldoutTests(unittest.TestCase):
     def test_freeze_has_no_reference(self):
         manifest, public = freeze(study())
         self.assertEqual(len(manifest["predictions"]), 1)
-        self.assertEqual(len(public["commitment_sha256"]), 64)
+        self.assertEqual(len(public["commitment_hmac_sha256"]), 64)
         self.assertFalse(public["physical_release_authorized"])
 
     def test_witness_after_unsealing_falsifies(self):
@@ -70,6 +70,16 @@ class SealedHoldoutTests(unittest.TestCase):
             "uncertainty_mm": 0, "quality": "PASS"}]
         with self.assertRaises(ValueError):
             freeze(p)
+
+    def test_random_key_prevents_repeatable_dictionary_commitments(self):
+        p = study()
+        first, public1 = freeze(p)
+        second, public2 = freeze(p)
+        self.assertNotEqual(public1["commitment_hmac_sha256"],
+                            public2["commitment_hmac_sha256"])
+        self.assertNotIn("private_hmac_key_hex", public1)
+        self.assertEqual(len(first["private_hmac_key_hex"]), 64)
+        self.assertEqual(len(second["private_hmac_key_hex"]), 64)
 
     def test_no_private_ids_in_public_artifact(self):
         p = study()
