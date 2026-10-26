@@ -2,7 +2,9 @@
 // A trigger or illumination photodiode is NOT a camera exposure measurement.
 export function overlap(a, b, c, d) {
   if (![a,b,c,d].every(Number.isFinite) || !(a < b) || !(c < d)) throw new Error("INVALID_INTERVAL");
-  return Math.max(0, Math.min(b,d) - Math.max(a,c));
+  const intersection = Math.max(0, Math.min(b,d) - Math.max(a,c));
+  // Clamp floating-point boundary residue, never a physical detection threshold.
+  return intersection <= 1e-12 ? 0 : intersection;
 }
 export function response(shutter, phase, pulseWidth) {
   if (!Array.isArray(shutter) || shutter.length !== 2) throw new Error("INVALID_SHUTTER");
@@ -41,10 +43,12 @@ export function inferIdealShutter(samples, pulseWidth, step, calibration={}) {
   if(positives.length!==last-first+1) return blocked("DISCONTINUOUS_SUPPORT");
   if(samples[first-1].response!==0 || samples[last+1].response!==0)
     return blocked("NO_ZERO_BRACKETS");
-  const aLo=samples[first-1].phase_ms+pulseWidth;
-  const aHi=samples[first].phase_ms+pulseWidth;
-  const bLo=samples[last].phase_ms;
-  const bHi=samples[last+1].phase_ms;
+  // Numerical outward rounding only; does NOT bound real optical noise/clock error.
+  const roundoff=1e-10;
+  const aLo=samples[first-1].phase_ms+pulseWidth-roundoff;
+  const aHi=samples[first].phase_ms+pulseWidth+roundoff;
+  const bLo=samples[last].phase_ms-roundoff;
+  const bHi=samples[last+1].phase_ms+roundoff;
   if(!(aLo<=aHi && bLo<=bHi && aHi<bLo)) return blocked("UNRESOLVED_EXPOSURE");
   return {decision:"SHUTTER_SUPPORT_BOUNDED_SYNTHETIC",
     start_interval_ms:[aLo,aHi],end_interval_ms:[bLo,bHi],
