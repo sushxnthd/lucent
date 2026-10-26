@@ -39,7 +39,7 @@ The separate frozen supplement constructed nondegenerate piecewise-linear closur
 | 400 fps | 2.30 mm | 1.95 mm | **0.370239 ms** | [0.282829, 2.274505] ms | (0.15, 2.35) ms | **0.000000 mm** |
 | 1000 fps | 2.10 mm | 1.98 mm | **0.138096 ms** | [0.168399, 0.846973] ms | (0.15, 0.85) ms | **0.000000 mm** |
 
-Both positive sequences are **exactly indistinguishable from a constant-open negative control** at every ideal reference exposure. These are intentionally adversarial constructed trajectories, not measured human motions. The 1000-fps example has only ~0.003 ms clearance to the second exposure support, so even modest unmodeled timing errors could change that *particular* construction; the broader identifiability issue remains whenever an excursion fits inside a dark gap.
+Both positive sequences are **exactly indistinguishable from a constant-open negative control** at every ideal reference exposure. These are intentionally adversarial constructed trajectories, not measured human motions. **Acceleration caveat:** the piecewise-linear trajectories have instantaneous changes of velocity at their corners (unbounded acceleration). They are valid witnesses for the stated *velocity-only* E002-371 model, but may be inadmissible under a separately authenticated acceleration or minimum-dwell model. E002-437 already studied conditional acceleration constraints; do not claim these witnesses are physiologically realizable without such validation. The 1000-fps example has only ~0.003 ms clearance to the second exposure support, so even modest unmodeled timing errors could change that *particular* construction; the broader identifiability issue remains whenever an excursion fits inside a dark gap.
 
 ## Reproduction and adversarial controls
 
@@ -49,7 +49,7 @@ Both positive sequences are **exactly indistinguishable from a constant-open neg
 - [Primary aggregate](E002_462_SYNTHETIC_AGGREGATE.json), [finite-duration aggregate](E002_462_FINITE_DWELL_AGGREGATE.json), and [CI workflow](../../.github/workflows/e002_462_reference_aliasing.yml) preserve reproducibility.
 - **Verification:** 13/13 local Python adversarial tests and both independent Node scripts passed. [Hosted run 40308078862](https://github.com/sushxnthd/lucent/actions/runs/40308078862) **SUCCEEDED** on the committed code, including Python adversarial tests, both independent Node replays, and exact committed-aggregate reproduction. The later report-head run was queued at last inspection; no claim is made about that newer run.
 
-The synthetic evaluator refuses unknown geometry, brightness, missingness, blur, gaze, glasses, sampling, clock, rolling-shutter, or exposure-kernel status; it never returns physical certification. The idealized counterexample isolates *temporal* information loss and does not show those nuisances are harmless.
+The synthetic evaluator refuses unknown geometry, brightness, missingness, blur, gaze, glasses, sampling, clock, rolling-shutter, or exposure-kernel status; it never returns physical certification. The idealized counterexample isolates *temporal* information loss and does not show those nuisances are harmless. It also holds acceleration unconstrained, which must be an explicit qualification condition in any future physical study.
 
 ## Direct consequence: change the reference-labeling and validation gate
 
