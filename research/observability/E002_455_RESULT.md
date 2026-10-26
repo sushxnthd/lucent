@@ -17,7 +17,18 @@ Can actual high-rate human-eye image contrast exhibit an interior excursion even
 - [14 synthetic/adversarial tests](test_e002_455_optical_aliasing.py) cover hidden triangular pulses, monotone controls, equal nuisance controls, additive global illumination invariance, spatially localized **nonanatomical** illumination confounding, missing/corrupt frames, nonfinite inputs, phase accounting, fixed threshold and fail-closed product behavior.
 - [Dedicated hosted experiment](../../.github/workflows/e002_455_optical_aliasing.yml) runs tests and downloads/decodes real S19, then publishes only the nonidentifying aggregate.
 
-**Execution status at report creation:** code and CI workflow committed; new hosted real-S19 outcome and actual 14-test pass/fail count are **not yet verified**. Do not infer empirical success from synthetic predictions. Once CI completes, copy the verified aggregate and log evidence into this branch, without rewriting the frozen protocol.
+**Hosted real-human experiment completed successfully** on [GitHub Actions run 40262411798](https://github.com/sushxnthd/lucent/actions/runs/40262411798). All **14/14 synthetic/adversarial tests passed**, then the published MD5-verified S19 archive was decoded and the frozen 12,000-frame analysis ran. The complete nonidentifying [machine-readable aggregate](E002_455_HUMAN_AGGREGATE.json) was committed, not left as an expiring artifact. Independent JavaScript recomputation from the committed phase counts verified all four summed totals and four reported fractions, without rerunning video decoding.
+
+## Actual preregistered S19 result: spatial specificity FAILS
+
+| Frame-index stride | Center-minus-border excursions | Border-left/right control excursions |
+|---|---:|---:|
+| K=8 | **377/9,992 = 3.773%** | **1,444/9,992 = 14.452%** |
+| K=17 | **3,823/9,983 = 38.295%** | **3,904/9,983 = 39.106%** |
+
+All counts follow the frozen near-identical-endpoints plus interior-excursion rule and are **overlapping-window descriptive counts**, not independent blink events. The threshold was **4/255** from the prespecified first 2,000-frame calibration block. The presence of positive excursions at both strides supports only the narrow empirical claim that *the selected image-space contrast is not recoverable from its decimated endpoints*. However, the prespecified border nuisance control has **higher** excursion fractions at **both** strides. Therefore the frozen spatial-specificity kill criterion triggers: **SPATIAL_SPECIFICITY_NOT_ESTABLISHED**. Do not promote these excursions to anatomical eyelid motion, blink closures, or a new certified observable.
+
+This is a substantive negative result. It prevents using the contrast-excursion statistic as an eyelid-specific surrogate without independent anatomy and nuisance validation. It does not prove that all excursions are nuisance or that true eyelid motion is absent. The center/border and border-left/right scalars have different distributions; the same absolute threshold is a conservative descriptive challenge, not a calibrated matched-noise causal control.
 
 ## Nuisance and novelty limitations
 The scalar z cancels uniform additive brightness only in unclipped frames. Spatially varying illumination, camera motion, gaze, eyelid vs pupil identity, glasses, blur, compression, missing exposures and unknown shutter kernel can all cause or hide an optical excursion. The w control is not an anatomical ground truth. K=8/17 are frame-index strides; they are **not authenticated 60/30-fps camera exposure experiments**. Only one previously inspected pilot subject is used. No participant-disjoint performance or physical closure accuracy is estimated.
