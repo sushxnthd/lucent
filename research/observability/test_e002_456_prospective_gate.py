@@ -18,7 +18,8 @@ def fixture():
         "endpoint_uncertainty_mm": [0.0, 0.0],
         "endpoint_time_ms": [0.0, 10.0],
         "shutter": {"kernel": "uniform_symmetric",
-                    "exposure_ms": 0.0, "clock_error_ms": 0.0},
+                    "exposure_ms": 0.0, "clock_error_ms": 0.0,
+                    "reference_exposure_ms": 0.2, "reference_clock_error_ms": 0.1},
         "velocity": {"limit_mm_s": 100.0, "provenance": "ILLUSTRATIVE"},
         "instrument": {
             "geometry_calibration_id": "synthetic-geometry",
@@ -155,6 +156,17 @@ class ProspectiveGateTests(unittest.TestCase):
             c = fixture()
             c["endpoint_uncertainty_mm"][0] = invalid
             self.assertEqual(evaluate_interval(c)["decision"], "ABSTAIN")
+
+    def test_reference_shutter_must_be_robustly_interior(self):
+        c = fixture()
+        c["reference"][0].update(time_ms=0.1, aperture_mm=1.0)
+        self.assertEqual(evaluate_interval(c)["reference"], "REFERENCE_INCOMPLETE")
+        self.assertFalse(evaluate_interval(c)["joint_falsification"])
+
+    def test_reference_clock_support_too_wide_abstains(self):
+        c = fixture()
+        c["shutter"]["reference_exposure_ms"] = 10
+        self.assertEqual(evaluate_interval(c)["reason"], "REFERENCE_TIME_SUPPORT_TOO_WIDE")
 
     def test_unknown_shutter_abstains(self):
         c = fixture()
