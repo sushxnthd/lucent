@@ -1,0 +1,27 @@
+name: E002-465 shutter identifiability (synthetic only)
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_465_*'
+      - 'research/observability/e002_465_*'
+      - 'research/observability/test_e002_465_*'
+      - '.github/workflows/e002_465_shutter_identifiability.yml'
+jobs:
+  shutter-phase-scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run adversarial tests
+        run: node --test research/observability/test_e002_465_shutter_phase_scan.mjs
+      - name: Run frozen witness
+        run: node research/observability/e002_465_shutter_phase_scan.mjs
+      - name: Refuse physical claims
+        run: |
+          node --input-type=module -e "import {runFrozen} from './research/observability/e002_465_shutter_phase_scan.mjs'; const r=runFrozen(); if(r.real_physical_acquisitions!==0||r.new_human_anatomical_measurements!==0||r.physical_release_authorized!==false||r.product_claim!=='ABSTAIN_UNCALIBRATED')process.exit(1)"
