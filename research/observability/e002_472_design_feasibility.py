@@ -38,6 +38,9 @@ def design_case(*, fps, exposure_ms, aperture_margin_mm,
         return {"decision": "ABSTAIN_DESIGN", "reason": "UNSUPPORTED_SHUTTER",
                 "physical_release_authorized": False, "product_claim": ABSTAIN}
     T = 1000.0 / fps
+    if not math.isfinite(T) or T <= 0:
+        return {"decision": "ABSTAIN_DESIGN", "reason": "UNREPRESENTABLE_FRAME_PERIOD",
+                "physical_release_authorized": False, "product_claim": ABSTAIN}
     k = 0.25 if shutter_kernel == "uniform_symmetric" else 0.5
     if w >= T:
         return {"decision": "ABSTAIN_DESIGN", "reason": "OVERLAPPING_EXPOSURES",
@@ -47,6 +50,9 @@ def design_case(*, fps, exposure_ms, aperture_margin_mm,
                 "physical_release_authorized": False, "product_claim": ABSTAIN}
     denominator_ms = k * w + (T + 2 * e) / 2
     vcrit = 1000.0 * (m - u) / denominator_ms if m > u else 0.0
+    if not math.isfinite(vcrit):
+        return {"decision": "ABSTAIN_DESIGN", "reason": "UNREPRESENTABLE_CRITICAL_SPEED",
+                "physical_release_authorized": False, "product_claim": ABSTAIN}
     # Exact same sufficient envelope as E002-456 for symmetric endpoints.
     excess_lower_mm = m - u - V * denominator_ms / 1000.0
     reference_feasible = w + r + 2 * (e + er) < T
