@@ -7,6 +7,8 @@ on:
       - 'research/observability/E002_459_FROZEN.md'
       - 'research/observability/e002_459_gaze_shift_transfer.py'
       - 'research/observability/test_e002_459_gaze_shift_transfer.py'
+      - 'research/observability/E002_459_HUMAN_AGGREGATE.json'
+      - 'research/observability/e002_459_independent_aggregate_check.cjs'
   pull_request:
     branches: [main]
     paths:
@@ -64,6 +66,8 @@ jobs:
           print(json.dumps(a,sort_keys=True,separators=(',',':')))
           print('FROZEN_E002459_HUMAN_AGGREGATE_END')
           PY
+      - name: Independent JS aggregate arithmetic and fresh-human replay comparison
+        run: node research/observability/e002_459_independent_aggregate_check.cjs research/observability/E002_459_HUMAN_AGGREGATE.json /tmp/e002459_aggregate.json
       - name: Publish only nonidentifying aggregate
         if: always()
         uses: actions/upload-artifact@v4
