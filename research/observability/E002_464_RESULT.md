@@ -22,14 +22,14 @@ For reported time t, the true physical influence support is conservatively conta
 
 Both edges must lie **strictly** inside the ordinary-camera dark gap. For a nonnegative unit-mass kernel and bounded additive position error epsilon, a reported mean y satisfying `y+epsilon<=c` implies **existence** of a true threshold crossing somewhere within this support, not at the nominal timestamp. The gate forwards that expanded support to E002-463/E002-456 and never promotes noncrossing samples into negative OPEN truth.
 
-The frozen delay example (L=1.40 ms) is refused because the effective support begins at -0.42 ms, before the 0.15-ms dark-gap boundary. The synthetic positive control (L=0.10 ms) retains support [0.88,1.02] ms and is admitted. An undeclared or signed kernel abstains. The independent arithmetic checker enumerates the preregistered 201×201 past-memory/future-lead grid, with predicted **11,039/40,401** strictly interior cases. These are **frozen predictions** until hosted execution is verified, not physical rates.
+The frozen delay example (L=1.40 ms) is refused because the effective support begins at -0.42 ms, before the 0.15-ms dark-gap boundary. The synthetic positive control (L=0.10 ms) retains support [0.88,1.02] ms and is admitted. An undeclared or signed kernel abstains. The independent arithmetic checker enumerates the preregistered 201×201 past-memory/future-lead grid, with predicted **11,039/40,401** strictly interior cases. The dedicated hosted Python sweep and independent JavaScript arithmetic replay **both passed**; 11,039/40,401 is a verified synthetic coverage count, not a physical rate.
 
 ## Verification and implementation
 
 - [18 adversarial Python tests](test_e002_464_dynamic_reference.py) exercise the delayed/signed counterexamples, strict boundary equality, missing calibrations, nonfinite values, acquisition support, clock error, open-world nonlabels, nuisance abstention, and the 40,401-case sweep.
 - [Independent Node.js arithmetic reproduction](e002_464_independent_replay.cjs) does not import the Python evaluator.
 - [Dedicated GitHub Actions workflow](../../.github/workflows/e002_464_dynamic_reference.yml) runs both implementations and asserts that no physical release is authorized.
-- **At report creation the E002-464 hosted workflow result has not been verified. Do not claim its tests or sweep passed until GitHub Actions completion is inspected.** The predecessor [E002-463 run 40322384434](https://github.com/sushxnthd/lucent/actions/runs/40322384434) **did pass**, including its 18 earlier tests; that earlier success does not resolve this newly found transfer gap.
+- **Hosted verification PASSED:** [run 40336618734](https://github.com/sushxnthd/lucent/actions/runs/40336618734) and earlier [run 40336474056](https://github.com/sushxnthd/lucent/actions/runs/40336474056) each completed successfully, including the 18 Python adversarial tests, the 40,401-case sweep, the independent Node.js reproduction and frozen aggregate assertions. The predecessor [E002-463 run 40322384434](https://github.com/sushxnthd/lucent/actions/runs/40322384434) **did pass**, including its 18 earlier tests; that earlier success does not resolve this newly found transfer gap.
 
 ## Physical acquisition handoff: what would actually validate the reference
 
