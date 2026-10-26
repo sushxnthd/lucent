@@ -18,7 +18,7 @@ Frozen p=0.10 ms and h=0.05 ms separate the two worlds. JS numeric bracket examp
 - A start approximately [0.000,0.050], end [0.350,0.400].
 - B start approximately [0.200,0.250], end [0.550,0.600].
 
-An independent Python `fractions.Fraction` implementation reproduced the analytic phase brackets with exact rational arithmetic. The JS evaluator also passed a local frozen-case assertion and fail-closed checks. Twelve Node adversarial tests and a dedicated hosted CI workflow were committed; **hosted pass remains unverified until GitHub reports completion**. This is a one-counterexample instrument challenge, not a large synthetic benchmark.
+An independent Python `fractions.Fraction` implementation reproduced the analytic phase brackets with exact rational arithmetic. The JS evaluator also passed a local frozen-case assertion and fail-closed checks. Twelve Node adversarial tests and a dedicated hosted CI workflow were committed. **Hosted JS adversarial tests and frozen witness PASSED** on [run 40340656068](https://github.com/sushxnthd/lucent/actions/runs/40340656068). The later workflow version adding the independent Python replay was still **queued** at [run 40340787022](https://github.com/sushxnthd/lucent/actions/runs/40340787022); no hosted cross-language pass is claimed. This is a one-counterexample instrument challenge, not a large synthetic benchmark.
 
 ## Executable physical acquisition protocol (not yet executed)
 
