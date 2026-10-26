@@ -1,0 +1,79 @@
+name: E002-459 participant-disjoint gaze-shift falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_459_gaze_shift_transfer.yml'
+      - 'research/observability/E002_459_FROZEN.md'
+      - 'research/observability/e002_459_gaze_shift_transfer.py'
+      - 'research/observability/test_e002_459_gaze_shift_transfer.py'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/e002_459_gaze_shift_transfer.yml'
+      - 'research/observability/e002_459_gaze_shift_transfer.py'
+      - 'research/observability/test_e002_459_gaze_shift_transfer.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  human-gaze-transfer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent synthetic and adversarial tests
+        run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_459_gaze_shift_transfer.py
+      - name: Fetch previously checksum-verified published human velocity table
+        run: |
+          umask 077
+          python - <<'PY'
+          import hashlib, time, urllib.request
+          from pathlib import Path
+          from sys import path
+          path.insert(0, 'research/observability')
+          from e002_457_directional_boundary import SOURCE_URL, EXPECTED_SHA256
+          for attempt in range(3):
+              try:
+                  req=urllib.request.Request(SOURCE_URL, headers={'User-Agent':'Lucent-Research-Validation/1.0'})
+                  with urllib.request.urlopen(req,timeout=75) as r:
+                      data=r.read(2000000)
+                  if hashlib.sha256(data).hexdigest()!=EXPECTED_SHA256:
+                      raise ValueError('immutable human CSV checksum mismatch')
+                  Path('/tmp/e002459_human.csv').write_bytes(data)
+                  print('SOURCE_SHA256_VERIFIED',EXPECTED_SHA256,'bytes',len(data))
+                  break
+              except Exception:
+                  if attempt==2: raise
+                  time.sleep(5*(attempt+1))
+          PY
+      - name: Frozen out-of-gaze held-out human analysis
+        run: |
+          PYTHONPATH=research/observability python research/observability/e002_459_gaze_shift_transfer.py --csv /tmp/e002459_human.csv --out /tmp/e002459_aggregate.json > /tmp/e002459_log.json
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/e002459_aggregate.json'))
+          assert a['participants']=={'calibration':12,'holdout':5}
+          assert a['blinks']=={'calibration':1657,'holdout':649}
+          assert a['physical_release_authorized'] is False
+          assert a['product_claim']=='ABSTAIN_UNCALIBRATED'
+          print('FROZEN_E002459_HUMAN_AGGREGATE_BEGIN')
+          print(json.dumps(a,sort_keys=True,separators=(',',':')))
+          print('FROZEN_E002459_HUMAN_AGGREGATE_END')
+          PY
+      - name: Publish only nonidentifying aggregate
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002459-gaze-shift-nonidentifying-aggregate
+          path: /tmp/e002459_aggregate.json
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Physical claim remains blocked
+        if: always()
+        run: |
+          echo 'E002-459 is published per-blink human peak-velocity transfer, not anatomical trajectories.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'E002-371 NOT_ESTABLISHED; ABSTAIN_UNCALIBRATED; S21/S22 sealed.' >> "$GITHUB_STEP_SUMMARY"
