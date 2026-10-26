@@ -61,15 +61,17 @@ class TestE002472(unittest.TestCase):
         for changes in (
             dict(exposure_ms=8), dict(clock_error_ms=0.8),
             dict(aperture_uncertainty_mm=0.4),
-            dict(aperture_margin_mm=0.6),
-            dict(hypothetical_velocity_mm_s=160)):
-            r = case(hypothetical_velocity_mm_s=80, **changes) if (
-                "hypothetical_velocity_mm_s" not in changes) else case(**changes)
+            dict(aperture_margin_mm=0.6)):
+            r = case(hypothetical_velocity_mm_s=80, **changes)
             self.assertLessEqual(
                 r["critical_hypothetical_velocity_mm_s"],
-                base["critical_hypothetical_velocity_mm_s"] + 1e-10
-            ) if "hypothetical_velocity_mm_s" not in changes else None
-            self.assertNotEqual(r["decision"], "ABSTAIN_UNCALIBRATED")
+                base["critical_hypothetical_velocity_mm_s"] + 1e-10)
+            self.assertIn(r["decision"], (
+                "EXCLUSION_FEASIBLE_CONDITIONALLY", "EXCLUSION_NOT_SUPPORTED",
+                "ABSTAIN_DESIGN"))
+        self.assertEqual(
+            case(hypothetical_velocity_mm_s=160)["decision"],
+            "EXCLUSION_NOT_SUPPORTED")
 
     def test_unknown_shutter_abstains(self):
         r = case(shutter_kernel="unspecified")
@@ -104,6 +106,15 @@ class TestE002472(unittest.TestCase):
                 args[field] = val
                 with self.assertRaises(ValueError):
                     design_case(**args)
+
+    def test_derived_overflow_abstains(self):
+        self.assertEqual(case(fps=1e-308)["reason"],
+                         "UNREPRESENTABLE_FRAME_PERIOD")
+        self.assertEqual(case(fps=1e308, exposure_ms=0, clock_error_ms=0,
+                              reference_exposure_ms=0,
+                              reference_clock_error_ms=0)["reason"],
+                         "UNREPRESENTABLE_CRITICAL_SPEED")
+        self.assertFalse(case(fps=1e-308)["physical_release_authorized"])
 
     def test_reference_evaluator_crosscheck_all_feasible_grid_rows(self):
         for row in frozen_matrix()["rows"]:
