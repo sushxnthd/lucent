@@ -1,7 +1,7 @@
 name: E002-455 S19 high-rate optical aliasing
 on:
-  push:
-    branches: [research/observability-human-boundary]
+  pull_request:
+    branches: [main]
     paths:
       - '.github/workflows/e002_455_optical_aliasing.yml'
       - 'research/observability/e002_455_optical_aliasing.py'
