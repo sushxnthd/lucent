@@ -1,0 +1,34 @@
+name: E002-461 nonlinear shutter-sensor falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_461_quadratic_shutter.yml'
+      - 'research/observability/E002_461_FROZEN.md'
+      - 'research/observability/e002_461_quadratic_shutter.py'
+      - 'research/observability/test_e002_461_quadratic_shutter.py'
+      - 'research/observability/e002_461_independent_replay.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  synthetic-observation-kill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen quadratic sensor falsification and 10k seeded witness checks
+        run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_461_quadratic_shutter.py
+      - name: Independent 10k-case JavaScript replay
+        run: node research/observability/e002_461_independent_replay.cjs
+      - name: Preserve reproducible primary synthetic examples
+        run: python research/observability/e002_461_quadratic_shutter.py --examples
+      - name: Evidence tier and product blocker
+        if: always()
+        run: |
+          echo 'E002-461: synthetic nonlinear shutter-sensor counterexample, not physical validation.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Static feature calibration is insufficient for linear anatomical exposure means.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'E002-371 NOT_ESTABLISHED; ABSTAIN_UNCALIBRATED; no release; S21/S22 sealed.' >> "$GITHUB_STEP_SUMMARY"
