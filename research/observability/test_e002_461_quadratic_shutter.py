@@ -12,7 +12,7 @@ from e002_460_exposure_centroid import example as linear_example
 def naive_static_inverse(x):
     """Deliberately WRONG observation assumption for the preregistered control."""
     d = linear_example(
-        gap_ms=x["exposures"][1]["centroid_ms"],
+        delta_ms=x["exposures"][1]["centroid_ms"],
         shutter_ms=x["exposures"][0]["support_end_ms"] -
                    x["exposures"][0]["support_start_ms"])
     d.update(mean0_mm=math.sqrt(x["q0_mm2"]),
