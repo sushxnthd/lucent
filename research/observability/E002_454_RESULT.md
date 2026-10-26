@@ -1,6 +1,6 @@
 # E002-454 — zero-of-649 is weak evidence for a physical cap
 
-**Date:** 2026-10-26. **Protocol frozen first:** [E002_454_FROZEN.md](E002_454_FROZEN.md), commit `f476f7de05dbd9d4252d76713d8cb556e258daed`. **Input:** [E002-453 checksum-verified external human aggregate](E002_453_HUMAN_AGGREGATE.json), from Culemann et al. (2026), DOI [10.3758/s13428-026-02984-4](https://doi.org/10.3758/s13428-026-02984-4). This is a **new inferential falsification of the apparent strength of the previous result**, not new raw human measurements.
+**Date:** 2026-10-26. **Protocol frozen first:** [E002_454_FROZEN.md](E002_454_FROZEN.md), commit `f476f7de05dbd9d4252d76713d8cb556e258daed`. **Input:** [E002-453 checksum-verified external human aggregate](E002_453_HUMAN_AGGREGATE.json), from Culemann et al. (2026), DOI [10.3758/s13428-026-02984-4](https://doi.org/10.3758/s13428-026-02984-4). This is a **new dataset-specific rank diagnostic** of the E002-453 sample-maximum transfer test, not new raw human measurements. The participant-clustering and exact-binomial issue was **already established by Lucent E002-440** (synthetic clustered-study falsification and release ledger). Neither Clopper–Pearson bounds nor pseudoreplication are novel here. E002-454 adds the exact **12/17 no-exceedance null benchmark for the real E002-453 split**, not a new statistical theorem.
 
 ## Result: a sample-maximum validation can pass almost by construction
 
@@ -10,7 +10,7 @@ E002-453 observed zero exceedances of its 12-person calibration maximum among 64
 
 An independent enumerator over the 17 possible positions of the global maximum reproduces the fraction. The 0/649 result is therefore **unsurprising even when there is no finite physiological upper bound**. This is not a conventional p-value or a proof of unbounded physiology; it is a design-sensitivity benchmark. The identity does not apply to the 99th-percentile or gaze-stratified caps, which require separate analyses.
 
-## Result: the unit of generalization is a person, not a blink
+## Existing E002-440 cluster lesson, quantified for this real-data split
 
 For the binary event **at least one peak estimate exceeds the fixed training cap during a comparable participant session**, zero events in five held-out participants gives a one-sided exact 95% upper binomial confidence limit:
 
@@ -20,7 +20,7 @@ The misleading computation treating all 649 blink events as iid would instead gi
 
 **Frozen kill criteria triggered:** null probability 70.6% >= 50%; participant upper bound 45.1% >= 10%. Therefore **reject** the claim that E002-453's zero exceedances strongly validate a universal physiological cap. Retain the factual descriptive result that no exceedance occurred in that particular five-person holdout.
 
-## Verification and reproducibility
+## Priority audit and verification\n\n[E002-440](E002_440_RESULT.md) already established the participant-level Clopper–Pearson correction and false reassurance from treating repeated intervals as independent. The present calculation is incremental; do not present the 45.1% bound as a newly discovered statistical result. The **70.6% rank-null calculation** is the incremental dataset-specific diagnostic.\n\n## Verification and reproducibility
 
 - Standard-library analyzer: [e002_454_cluster_inference.py](e002_454_cluster_inference.py), fail-closed on inconsistent source metadata, nonzero/missing events, invalid counts, nonfinite values, or a physical-release flag.
 - [11 synthetic/adversarial tests](test_e002_454_cluster_inference.py) passed locally. These include independent combinatorial enumeration and inversion of the exact binomial tail. No human video or raw participant rows were used in this pass.
