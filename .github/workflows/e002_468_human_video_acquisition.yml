@@ -23,6 +23,16 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - name: Install required video tools (explicit runner dependency)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+          fi
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
       - name: Test frozen acquisition adapter on synthetic fixtures
         run: python -m unittest discover -s research/observability -p 'test_e002_468_video_acquisition.py' -v
       - name: Download one development participant, verify checksum, inspect video
