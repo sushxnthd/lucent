@@ -51,7 +51,7 @@ def design_case(*, fps, exposure_ms, aperture_margin_mm,
     excess_lower_mm = m - u - V * denominator_ms / 1000.0
     reference_feasible = w + r + 2 * (e + er) < T
     decision = ("ABSTAIN_DESIGN" if not reference_feasible else
-                "EXCLUSION_FEASIBLE_CONDITIONALLY" if excess_lower_mm > 0 else
+                "EXCLUSION_FEASIBLE_CONDITIONALLY" if m > u and V < vcrit else
                 "EXCLUSION_NOT_SUPPORTED")
     return {
         "decision": decision,
