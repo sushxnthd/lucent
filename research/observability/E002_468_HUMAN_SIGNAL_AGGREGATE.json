@@ -1,0 +1,43 @@
+{
+  "anatomical_closure_labels": 0,
+  "anatomical_reference_authenticated": false,
+  "container_avg_fps": 1.0,
+  "container_stream": {
+    "avg_frame_rate": "1/1",
+    "codec_name": "mpeg4",
+    "duration": "52049.000000",
+    "height": 288,
+    "nb_frames": "52049",
+    "r_frame_rate": "1/1",
+    "width": 320
+  },
+  "decoded_signal_first_512": {
+    "adjacent_mad_max_0_255": 29.466146,
+    "adjacent_mad_median_0_255": 0.38444,
+    "adjacent_mad_p95_0_255": 16.947917,
+    "frames": 512,
+    "mean_brightness_0_255": 73.155708
+  },
+  "evidence_tier": "independent public human video, container-level signal only",
+  "hardware_exposure_timing_authenticated": false,
+  "nominal_150fps_conflict": true,
+  "note": "AVI timestamps may be synthetic; image differences are not eyelid measurements.",
+  "physical_hidden_closure_exclusion": "ABSTAIN_UNCALIBRATED",
+  "product_release_authorized": false,
+  "protocol": "E002-468-frozen-v1",
+  "pts_first_120": {
+    "available": 120,
+    "max_step_ms": 1000.0,
+    "median_step_ms": 1000.0,
+    "min_step_ms": 1000.0,
+    "missing": 0,
+    "nonpositive_steps": 0
+  },
+  "rehost_approximately_500fps_conflict": true,
+  "source_archive_sha256": "da4281a4d77f95683f541452a0f5b6e56ad8d54139e3be9d7b64374d77a41c25",
+  "source_component_sha256": {
+    "avi": "0c75a359843694adc6eac1057d6c2aca6e94b31fea464c07d68d28a25b4ddbde",
+    "csv": "920a3dea991afc626386bb4b22ebbc72abc4389b3562b8dc996718c416c7eed8",
+    "xml": "ca48b49356198f822f95965c1d9d753b30c9c145c9ab269cdf7d8b6112910b3a"
+  }
+}
