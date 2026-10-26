@@ -43,3 +43,7 @@ Two targeted public-source searches this run found no unrestricted, acquisition-
 The symmetric maximum-speed model is **not sharp** when independently valid directional caps differ; shutter/clock uncertainty can erase the gain. Until independent anatomical human reference trajectories and physically justified C/O bounds are available, **E002-371 remains NOT_PHYSICALLY_VALIDATED**. Lucent must not issue physical hidden-closure, blink-duration, PERCLOS, fatigue or medical claims. Product remains ABSTAIN_UNCALIBRATED; PR #26 draft/unmerged; Hush branch/PR #45 untouched.
 
 Reproduce: python -m unittest -v test_e002_457_directional_boundary.py; python e002_457_directional_boundary.py --csv /authorized/Blinks.csv --out /tmp/E002_457_AGGREGATE.json. The latter fails on checksum mismatch and writes only deidentified aggregate.
+
+## CI erratum — frozen threshold unchanged
+
+The first hosted Python run [40270641576](https://github.com/sushxnthd/lucent/actions/runs/40270641576) **FAILED 1/19 tests** because the test fixture incorrectly expected exclusion at a 10-ms gap even though the preregistered asymmetric critical gap for its 300/200-mm/s limits is only 8.333 ms. The implementation correctly returned NOT_EXCLUDED. The fixture was corrected to a 5-ms gap in commit 9952e485eaa587cd11f054cd67e43533f89aea73; **no scientific boundary, code algorithm or threshold was changed**. The OSF human stage was skipped in that failed run. Its results must not be claimed until a successful rerun. This error and failed run are preserved for reproducibility.
