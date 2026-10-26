@@ -1,0 +1,59 @@
+name: E002-455 S19 high-rate optical aliasing
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_455_optical_aliasing.yml'
+      - 'research/observability/e002_455_optical_aliasing.py'
+      - 'research/observability/test_e002_455_optical_aliasing.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  optical-aliasing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned NumPy and FFmpeg
+        run: |
+          python -m pip install --disable-pip-version-check numpy==2.2.6
+          if ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+      - name: Frozen synthetic/adversarial tests
+        run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_455_optical_aliasing.py' -v
+      - name: Hash-verified real S19 temporal-decimation experiment
+        id: real
+        run: |
+          umask 077
+          python research/observability/e002_455_optical_aliasing.py --output /tmp/e002455.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/e002455.json'))
+          a=d['analysis']
+          assert d['pilot_subject']=='S19' and d['decoded_frames']==12000
+          assert a['calibration_frames']==2000 and a['evaluation_frames']==10000
+          assert all(a['stride_results'][str(k)]['primary']['intervals']==10000-k for k in (8,17))
+          assert not a['physical_release_authorized'] and not a['participant_holdouts_inspected']
+          print('FROZEN_REAL_S19_AGGREGATE_BEGIN')
+          print(json.dumps(d,sort_keys=True,separators=(',',':')))
+          print('FROZEN_REAL_S19_AGGREGATE_END')
+          PY
+      - name: Upload nonidentifying aggregate only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-455-s19-optical-aliasing-aggregate
+          path: /tmp/e002455.json
+          if-no-files-found: ignore
+          retention-days: 14
+      - name: Physical claim remains blocked
+        if: always()
+        run: |
+          echo 'Image-space temporal aliasing only; NOT physical eyelid closure.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'E002-371 NOT_ESTABLISHED; ABSTAIN_UNCALIBRATED; S21/S22 untouched.' >> "$GITHUB_STEP_SUMMARY"
