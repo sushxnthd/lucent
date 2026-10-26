@@ -1,0 +1,27 @@
+name: E002-466 thresholded optical shutter scan (synthetic)
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_466_*'
+      - 'research/observability/e002_466_*'
+      - 'research/observability/test_e002_466_*'
+      - '.github/workflows/e002_466_thresholded_phase_scan.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Reproduce frozen and held-out synthetic experiment
+        run: |
+          node --test research/observability/test_e002_466_thresholded_phase_scan.mjs
+          node research/observability/e002_466_thresholded_phase_scan.mjs
+      - name: Independent exact-rational check
+        run: python3 research/observability/e002_466_independent_rational.py
