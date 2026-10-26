@@ -103,7 +103,11 @@ def evaluate_encoder(case, encoder):
             right = t + delta + support / 2
             dark_left = t0 + ordinary_width / 2 + ordinary_delta
             dark_right = t1 - ordinary_width / 2 - ordinary_delta
-            if left > dark_left and right < dark_right and a + position_error <= c:
+            # Never promote floating-point equality at an exposure boundary.
+            time_tol_ms = 1e-12
+            if (left > dark_left + time_tol_ms and
+                    right < dark_right - time_tol_ms and
+                    a + position_error <= c):
                 witnessed.append((t, a))
         if not witnessed:
             return {
