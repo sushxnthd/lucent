@@ -5,7 +5,9 @@ on:
     paths:
       - 'research/observability/E002_456_*'
       - 'research/observability/e002_456_prospective_gate.py'
+      - 'research/observability/e002_456_sealed_holdout.py'
       - 'research/observability/test_e002_456_prospective_gate.py'
+      - 'research/observability/test_e002_456_sealed_holdout.py'
       - '.github/workflows/e002_456_prospective_gate.yml'
   workflow_dispatch:
 permissions:
@@ -21,8 +23,9 @@ jobs:
           python-version: '3.11'
       - name: Compile and run adversarial synthetic tests
         run: |
-          python -m py_compile research/observability/e002_456_prospective_gate.py
+          python -m py_compile research/observability/e002_456_prospective_gate.py research/observability/e002_456_sealed_holdout.py
           python -m unittest discover -s research/observability -p 'test_e002_456_prospective_gate.py' -v
+          python -m unittest discover -s research/observability -p 'test_e002_456_sealed_holdout.py' -v
       - name: Verify that no human data or physical authorization is required
         run: |
           python - <<'PY'
