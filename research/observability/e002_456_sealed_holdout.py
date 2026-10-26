@@ -2,11 +2,13 @@
 """E002-456 sealed prospective holdout harness.
 
 Private manifest contains interval identifiers and must NEVER be committed.
-Public commitment is a SHA256 digest, not a trusted timestamp or privacy guarantee.
+Public commitment is a random-key HMAC-SHA256; not a trusted timestamp or privacy guarantee.
 Independent timestamp escrow must precede unsealing anatomical references.
 """
 import argparse
 import hashlib
+import hmac
+import secrets
 import json
 from pathlib import Path
 
@@ -41,12 +43,15 @@ def freeze(payload):
             "decision": result["decision"],
         })
     predictions.sort(key=lambda x: x["interval_id"])
+    key = secrets.token_bytes(32)
+    commitment = hmac.new(key, canonical(predictions), hashlib.sha256).hexdigest()
     manifest = {"schema_version": "E002-456-private-v1",
                 "predictions": predictions,
-                "commitment_sha256": digest(predictions)}
+                "private_hmac_key_hex": key.hex(),
+                "commitment_hmac_sha256": commitment}
     public = {"experiment": "E002-456",
               "evidence_tier": "FROZEN_PREDICTIONS_NO_HUMAN_REFERENCE",
-              "commitment_sha256": manifest["commitment_sha256"],
+              "commitment_hmac_sha256": manifest["commitment_hmac_sha256"],
               "intervals": len(predictions),
               "external_timestamp_escrow_verified": False,
               "physical_release_authorized": False,
@@ -58,7 +63,16 @@ def score(payload, manifest):
     if manifest.get("schema_version") != "E002-456-private-v1":
         raise ValueError("private manifest schema mismatch")
     preds = manifest.get("predictions")
-    if not isinstance(preds, list) or digest(preds) != manifest.get("commitment_sha256"):
+    try:
+        key = bytes.fromhex(manifest["private_hmac_key_hex"])
+        if len(key) != 32:
+            raise ValueError("invalid private commitment key")
+        expected = hmac.new(key, canonical(preds), hashlib.sha256).hexdigest()
+    except (KeyError, TypeError, ValueError):
+        raise ValueError("private commitment key invalid") from None
+    if not isinstance(preds, list) or not hmac.compare_digest(
+        expected, manifest.get("commitment_hmac_sha256", "")
+    ):
         raise ValueError("frozen commitment tampered")
     cases = payload.get("intervals", [])
     if len(cases) != len(preds):
@@ -75,7 +89,7 @@ def score(payload, manifest):
         if p["decision"] != evaluate_interval(case)["decision"]:
             raise ValueError("prediction no longer matches frozen evaluator")
     result = evaluate_dataset(payload)
-    result["commitment_sha256"] = manifest["commitment_sha256"]
+    result["commitment_hmac_sha256"] = manifest["commitment_hmac_sha256"]
     result["external_timestamp_escrow_verified"] = False
     return result
 
