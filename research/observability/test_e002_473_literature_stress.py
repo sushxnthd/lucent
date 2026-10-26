@@ -20,7 +20,7 @@ def evaluator_case(fps, exposure_ms, v):
         "shutter": {"kernel": "uniform_symmetric", "exposure_ms": exposure_ms,
                     "clock_error_ms": 0.1, "reference_exposure_ms": 0.2,
                     "reference_clock_error_ms": 0.1},
-        "velocity": {"limit_mm_s": v, "provenance": "LITERATURE_STRESS_NOT_HARD_CAP"},
+        "velocity": {"limit_mm_s": v, "provenance": "ILLUSTRATIVE"},
         "instrument": {
             "geometry_calibration_id": "synthetic",
             "clock_calibration_id": "synthetic",
