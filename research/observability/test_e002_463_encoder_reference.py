@@ -63,7 +63,7 @@ class EncoderWitnessTests(unittest.TestCase):
 
     def test_nonmonotone_encoder_times_fail_closed(self):
         case, encoder = synthetic_fixture(True)
-        encoder["samples"][1]["time_ms"] = 0.5
+        encoder["samples"].append(copy.deepcopy(encoder["samples"][0]))
         self.assertEqual(evaluate_encoder(case, encoder)["decision"], "ABSTAIN")
 
     def test_missing_source_hash_fails_closed(self):
@@ -83,7 +83,7 @@ class EncoderWitnessTests(unittest.TestCase):
 
     def test_quality_failure_fails_closed(self):
         case, encoder = synthetic_fixture(True)
-        encoder["samples"][1]["quality"] = "OCCLUDED"
+        encoder["samples"][0]["quality"] = "OCCLUDED"
         self.assertEqual(evaluate_encoder(case, encoder)["decision"], "ABSTAIN")
 
     def test_nonfinite_and_boolean_inputs_fail_closed(self):
