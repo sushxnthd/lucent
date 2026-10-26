@@ -54,7 +54,7 @@ class E002460Tests(unittest.TestCase):
 
     def test_overlap_bad_units_and_nonfinite_abstain(self):
         for mutate in (
-            lambda x: x["exposures"][0].update(support_end_ms=3),
+            lambda x: x["exposures"][0].update(support_end_ms=3.5),
             lambda x: x.update(closing_mm_s=0),
             lambda x: x.update(opening_mm_s=float("nan")),
             lambda x: x.update(mean0_mm=1.0),
