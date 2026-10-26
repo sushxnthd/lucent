@@ -77,10 +77,14 @@ def evaluate_interval(case):
             return abstain("UNKNOWN_SHUTTER")
         exposure = number(shutter["exposure_ms"])
         clock_error = number(shutter["clock_error_ms"])
+        reference_exposure = number(shutter["reference_exposure_ms"])
+        reference_clock_error = number(shutter["reference_clock_error_ms"])
         if exposure > t1 - t0:
             return abstain("OVERLAPPING_EXPOSURES")
         if clock_error * 2 >= t1 - t0:
             return abstain("CLOCK_UNCERTAINTY_TOO_LARGE")
+        if reference_exposure + 2 * (clock_error + reference_clock_error) >= t1 - t0:
+            return abstain("REFERENCE_TIME_SUPPORT_TOO_WIDE")
         shutter_error = V * exposure / 1000.0 * (
             0.25 if kernel == "uniform_symmetric" else 0.5
         )
@@ -105,6 +109,12 @@ def evaluate_interval(case):
             if not t0 < rt < t1:
                 return abstain("REFERENCE_NOT_INTERIOR")
             if r.get("quality") != "PASS":
+                incomplete = True
+                continue
+            # A reference shutter exposure must be entirely inside the
+            # ordinary-camera gap despite BOTH clock uncertainties.
+            guard = clock_error + reference_clock_error + reference_exposure / 2
+            if rt <= t0 + guard or rt >= t1 - guard:
                 incomplete = True
                 continue
             if ra + ru <= c:
