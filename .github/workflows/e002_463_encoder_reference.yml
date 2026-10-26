@@ -23,6 +23,8 @@ jobs:
           python-version: '3.11'
       - name: Run 18 fail-closed adversarial cases
         run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_463_encoder_reference.py
+      - name: Independently reproduce E002-462 dark-gap witness and E002-463 decision
+        run: node research/observability/e002_463_independent_replay.cjs
       - name: Generate frozen synthetic-only aggregate
         run: python research/observability/e002_463_encoder_reference.py > /tmp/e002463.json
       - name: Verify frozen outcomes and release blocker
