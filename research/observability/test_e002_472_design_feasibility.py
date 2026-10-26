@@ -38,12 +38,13 @@ class TestE002472(unittest.TestCase):
         self.assertFalse(r["hard_human_velocity_bound_established"])
 
     def test_shutter_timing_can_make_reference_unobservable(self):
-        for fps, exposure in ((120, 8), (240, 4)):
+        for fps, exposure, reason in ((120, 8, "REFERENCE_SUPPORT_CANNOT_FIT"),
+                                      (240, 4, "NO_GUARANTEED_DARK_GAP")):
             with self.subTest(fps=fps):
                 r = case(fps=fps, exposure_ms=exposure,
                          hypothetical_velocity_mm_s=50)
                 self.assertEqual(r["decision"], "ABSTAIN_DESIGN")
-                self.assertEqual(r["reason"], "REFERENCE_SUPPORT_CANNOT_FIT")
+                self.assertEqual(r["reason"], reason)
 
     def test_strict_critical_velocity_equality(self):
         threshold = case()["critical_hypothetical_velocity_mm_s"]
