@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Adversarial E002-485 tests; standard library only."""
 import csv
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -70,6 +71,20 @@ class HeldoutGapTests(unittest.TestCase):
         groups[key] = [Frame(f.subject, f.session, f.idx, f.t, .8, 0, 'ok') for f in groups[key]]
         result = analyze(groups, synthetic=True)
         self.assertGreaterEqual(result['counts']['falsified_joint_assumptions'], 1)
+        json.dumps(result, allow_nan=False)  # Infinity must never leak into JSON numbers
+
+    def test_every_heldout_subject_must_have_clean_window(self):
+        groups = load_csv(self.fixture())
+        cal = groups[('S01', 'Sess01')]
+        good = groups[('S22', 'Sess01')]
+        for i in range(2, 21):
+            subject = f'S{i:02d}'
+            groups[(subject, 'Sess01')] = [Frame(subject, f.session, f.idx, f.t, f.a, f.u, f.quality) for f in cal]
+        for i in range(25, 32):
+            subject = f'S{i:02d}'
+            groups[(subject, 'Sess01')] = [Frame(subject, f.session, f.idx, f.t, f.a, f.u, 'blur' if i == 31 else f.quality) for f in good]
+        with self.assertRaisesRegex(ValueError, 'clean-window coverage'):
+            analyze(groups, synthetic=False)
 
     def test_invalid_clock_error_rejected(self):
         with self.assertRaisesRegex(ValueError, 'invalid threshold'):
