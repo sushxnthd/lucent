@@ -1,0 +1,67 @@
+name: E002-491 calibration human-video image-content screening
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_491_calibration_motion.yml'
+      - 'research/observability/e002_491_calibration_motion.py'
+      - 'research/observability/test_e002_491_calibration_motion.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_491_calibration_motion.yml'
+      - 'research/observability/e002_491_calibration_motion.py'
+      - 'research/observability/test_e002_491_calibration_motion.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-491-s01-calibration
+  cancel-in-progress: false
+jobs:
+  calibration-video:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run frozen adversarial nuisance controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_491_calibration_motion.py' -v
+      - name: Provision FFmpeg decoder and verify
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+          command -v ffmpeg
+          ffmpeg -version | head -n 1
+      - name: Verify S01 calibration archive and screen image-content motion only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/lucent491"
+          REPORT="$RUNNER_TEMP/lucent491/E002_491_AGGREGATE.json"
+          if ! curl --fail --location --silent --show-error --retry 2 --retry-delay 8 \
+              --connect-timeout 30 --max-time 900 --max-filesize 600000000 \
+              --output "$RUNNER_TEMP/lucent491/S01.zip" \
+              'https://zenodo.org/records/18970793/files/S01.zip?download=1'; then
+            printf '{"experiment":"E002-491","status":"FAILED_DOWNLOAD","product":"ABSTAIN_UNCALIBRATED","release":"BLOCKED"}\n' > "$REPORT"
+            exit 1
+          fi
+          python research/observability/e002_491_calibration_motion.py \
+            --archive "$RUNNER_TEMP/lucent491/S01.zip" --output "$REPORT"
+          rm -f "$RUNNER_TEMP/lucent491/S01.zip"
+      - name: Publish aggregate-only calibration metrics, never human frames
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-491-s01-motion-aggregate-only
+          path: ${{ runner.temp }}/lucent491/E002_491_AGGREGATE.json
+          if-no-files-found: warn
+          retention-days: 7
