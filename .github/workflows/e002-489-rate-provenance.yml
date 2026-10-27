@@ -1,0 +1,45 @@
+name: E002-489 reproduce real S24 timebase abstention
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - .github/workflows/e002-489-rate-provenance.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: lucent-e002-489-provenance
+  cancel-in-progress: false
+
+jobs:
+  verify-provenance:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Adversarial guard tests
+        run: python research/observability/test_e002_489_rate_provenance.py
+      - name: Download prior authenticated header artifact only
+        uses: actions/download-artifact@v4
+        with:
+          name: e002-488-s24-header-only
+          run-id: 40532997441
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/e002489
+      - name: Evaluate authenticated header without inferring camera timing
+        run: |
+          python research/observability/e002_489_rate_provenance.py \
+            --header-json "${{ runner.temp }}/e002489/E002_488_REAL_HEADER.json" \
+            --output "${{ runner.temp }}/e002489/E002_489_RATE_PROVENANCE.json"
+      - name: Publish metadata-only abstention report
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-489-s24-provenance-only
+          path: ${{ runner.temp }}/e002489/E002_489_RATE_PROVENANCE.json
+          retention-days: 7
