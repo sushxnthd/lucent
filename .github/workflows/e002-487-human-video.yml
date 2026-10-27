@@ -22,6 +22,14 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
+      - name: Provision video metadata tools (runner has no ffmpeg by default)
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
       - name: Verify local synthetic adversarial tests
         run: python research/observability/test_e002_487_human_video_intake.py
       - name: Download one published S24 archive and audit video metadata
