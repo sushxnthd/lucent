@@ -1,6 +1,6 @@
 # E002-478 FROZEN — two-period optical response repeatability falsification
 
-Date: 2026-10-27. Kernel E002-371. **Frozen before implementation or inspection of E002-477's second-period response.**
+Date: 2026-10-27. Kernel E002-371. **Post-hoc hypothesis after inspecting E002-477 source and synthetic fixture; frozen before implementing the new periodicity test. This is not a blinded preregistration.**
 
 ## Question and predicted result
 E002-477's intake validates file completeness, timing fields and checksums but does not test whether a stationary camera's optical pulse response repeats after one authenticated frame period. For a time-invariant shutter response under fixed illumination, gain and row, phase-folded pulse response should recur. A synthetic one-shot shutter that responds in the first period but not the second can therefore pass intake while violating the physical repeating-shutter model.
