@@ -1,0 +1,33 @@
+name: E002-483 complementary temporal-gate falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_483_*'
+      - 'research/observability/test_e002_483_*'
+      - '.github/workflows/e002_483_temporal_gates.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_483_*'
+      - 'research/observability/test_e002_483_*'
+      - '.github/workflows/e002_483_temporal_gates.yml'
+  workflow_dispatch:
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Adversarial Node tests
+        run: node --test research/observability/test_e002_483_temporal_gates.cjs
+      - name: Independent exact-rational Python replay
+        run: python research/observability/e002_483_independent_replay.py
+      - name: Reproduce synthetic aggregate
+        run: node research/observability/e002_483_temporal_gates.cjs > /tmp/e002_483_aggregate.json
