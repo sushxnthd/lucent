@@ -16,6 +16,13 @@ NUISANCES = ("geometry", "brightness", "missingness", "blur", "gaze",
 CALIBRATIONS = ("geometry_calibration_id", "clock_calibration_id",
                 "exposure_calibration_id", "reference_annotation_id")
 ABSTAIN = "ABSTAIN_UNCALIBRATED"
+# Interval outputs are research classifications, never physical product certificates.
+# This program cannot independently authenticate physiological speed caps or optics.
+INTERVAL_PRODUCT_SAFETY = {
+    "physical_release_authorized": False,
+    "product_claim": ABSTAIN,
+    "external_hard_bound_verified_by_this_program": False,
+}
 
 
 def number(value, *, nonnegative=True):
@@ -36,7 +43,8 @@ def pair(case, key):
 
 def abstain(reason):
     return {"decision": "ABSTAIN", "reason": reason,
-            "reference": "NOT_EVALUATED", "joint_falsification": False}
+            "reference": "NOT_EVALUATED", "joint_falsification": False,
+            **INTERVAL_PRODUCT_SAFETY}
 
 
 def evaluate_interval(case):
@@ -137,7 +145,8 @@ def evaluate_interval(case):
         return {"decision": decision, "reason": "NONE", "reference": reference,
                 "joint_falsification": falsified,
                 "lower_envelope_mm": L,
-                "velocity_cap_tier": velocity["provenance"]}
+                "velocity_cap_tier": velocity["provenance"],
+                **INTERVAL_PRODUCT_SAFETY}
     except (KeyError, TypeError, ValueError, OverflowError):
         return abstain("INVALID_OR_MISSING_MEASUREMENT")
 
