@@ -1,0 +1,36 @@
+{
+  "aperture_threshold_fraction": 0.1,
+  "calibration_proxy_speed_fraction_per_ms": 0.0105882353,
+  "calibration_subjects": 1,
+  "counts": {
+    "abstain_nuisance_or_missing": 2,
+    "conditional_excluded": 2,
+    "falsified_joint_assumptions": 1,
+    "reference_observed_closure": 1,
+    "reference_unresolved_not_negative": 1,
+    "windows_eligible": 2
+  },
+  "endpoint_clock_uncertainty_ms": 0.5,
+  "evidence_tier": "SYNTHETIC_FIXTURE",
+  "falsification_examples": [
+    {
+      "frame_end": 5,
+      "frame_start": 0,
+      "participant": "S21",
+      "reason": "observed high-rate closure contradicts proxy-cap exclusion",
+      "session": "Sess01",
+      "z": 3.8236246
+    }
+  ],
+  "heldout_secant_pairs": 14,
+  "heldout_secant_proxy_exceedances": 5,
+  "heldout_subjects": 4,
+  "interpretation": "A conditional exclusion contradicted by observed reference closure falsifies the joint proxy-speed/measurement assumptions; no nonclosure ground truth is inferred from missed high-rate frames.",
+  "physical_claims": "ABSTAIN_UNCALIBRATED",
+  "product_release": "BLOCKED",
+  "protocol": "E002-485",
+  "proxy_is_hard_velocity_bound": false,
+  "reference_frame_rate_hz": 150,
+  "simulated_low_rate_hz": 30,
+  "source_doi": "10.1038/s41597-025-04861-9"
+}
