@@ -21,6 +21,8 @@ The independent-jitter adversary selects one allowed timing error, -u or +u, sep
 
 All four frozen predictions survived the local simulator. The adversarial actual timing schedule yields identical response vectors for the two worlds despite a positive sensitivity island. This is an **existence counterexample**, not a measured false-negative rate. It does not assert that all possible timing realizations hide the island.
 
+[Vector timing-core figure](E002_480_TIMING_CORE.svg) illustrates the distinction between possible pulse supports and their guaranteed intersection.
+
 ## Sharp geometric law and dimensionless design condition
 
 If the independent measurement reports a pulse start m with true start anywhere in [m-u,m+u], the set illuminated for **every** allowed timing realization is
