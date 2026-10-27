@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Ten adversarial tests
+      - name: Eleven adversarial tests
         run: python research/observability/test_e002_485_heldout_gap.py -v
       - name: Synthetic fixture, never a human result
         run: python research/observability/e002_485_heldout_gap.py --synthetic-fixture
