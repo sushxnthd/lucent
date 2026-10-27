@@ -1,0 +1,28 @@
+name: E002-485 held-out human-gap falsifier
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_485_*"
+      - "research/observability/e002_485_*"
+      - "research/observability/test_e002_485_*"
+      - ".github/workflows/e002_485_heldout_gap.yml"
+  pull_request:
+    paths:
+      - "research/observability/E002_485_*"
+      - "research/observability/e002_485_*"
+      - "research/observability/test_e002_485_*"
+      - ".github/workflows/e002_485_heldout_gap.yml"
+jobs:
+  falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Ten adversarial tests
+        run: python research/observability/test_e002_485_heldout_gap.py -v
+      - name: Synthetic fixture, never a human result
+        run: python research/observability/e002_485_heldout_gap.py --synthetic-fixture
