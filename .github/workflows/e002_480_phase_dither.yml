@@ -1,4 +1,5 @@
 name: E002-480 bounded-jitter phase-dither falsification
+# Post-aggregate verification: run only after the frozen JSON exists on branch.
 on:
   push:
     branches: [research/observability-human-boundary]
