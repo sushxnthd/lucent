@@ -1,0 +1,99 @@
+{
+  "protocol": "E002-486",
+  "evidence_tier": "EXACT_RATIONAL_SYNTHETIC_INSTRUMENT",
+  "acquisition_hz": 150,
+  "exposure_ms": {
+    "rational": "1",
+    "decimal": 1
+  },
+  "baseline_aperture": {
+    "rational": "7/20",
+    "decimal": 0.35
+  },
+  "closure_threshold": {
+    "rational": "1/10",
+    "decimal": 0.1
+  },
+  "illustrative_velocity_fraction_per_ms": {
+    "rational": "1/10",
+    "decimal": 0.1
+  },
+  "dimensionless_hidden_closure_ratio": {
+    "rational": "17/15",
+    "decimal": 1.1333333333
+  },
+  "critical_velocity_fraction_per_ms": {
+    "rational": "3/34",
+    "decimal": 0.0882352941
+  },
+  "stationary_nominal_exposure": {
+    "rational": "7/20",
+    "decimal": 0.35
+  },
+  "closing_nominal_exposure": {
+    "rational": "7/20",
+    "decimal": 0.35
+  },
+  "stationary_half_phase_exposure": {
+    "rational": "7/20",
+    "decimal": 0.35
+  },
+  "closing_half_phase_exposure": {
+    "rational": "1/8",
+    "decimal": 0.125
+  },
+  "strict_below_threshold_dip_min": {
+    "rational": "2/25",
+    "decimal": 0.08
+  },
+  "strict_below_threshold_original_phase_exposure": {
+    "rational": "7/20",
+    "decimal": 0.35
+  },
+  "moving_half_phase_jitter_max_0_25ms": {
+    "rational": "21/160",
+    "decimal": 0.13125
+  },
+  "threshold_0_15_with_gain_10pct_additive_0_01": {
+    "moving_upper": {
+      "rational": "247/1600",
+      "decimal": 0.154375
+    },
+    "stationary_lower": {
+      "rational": "61/200",
+      "decimal": 0.305
+    },
+    "guaranteed_detection": false
+  },
+  "threshold_0_15_with_gain_5pct_additive_0_005": {
+    "moving_upper": {
+      "rational": "457/3200",
+      "decimal": 0.1428125
+    },
+    "stationary_lower": {
+      "rational": "131/400",
+      "decimal": 0.3275
+    },
+    "guaranteed_detection": true
+  },
+  "threshold_0_15_with_gain_20pct_additive_0_03": {
+    "moving_upper": {
+      "rational": "3/16",
+      "decimal": 0.1875
+    },
+    "stationary_lower": {
+      "rational": "1/4",
+      "decimal": 0.25
+    },
+    "guaranteed_detection": false
+  },
+  "low_velocity_control_ratio": {
+    "rational": "68/75",
+    "decimal": 0.9066666667
+  },
+  "low_velocity_hidden_closure_possible": false,
+  "physical_human_sequences": 0,
+  "physical_shutter_acquisitions": 0,
+  "physical_claims": "ABSTAIN_UNCALIBRATED",
+  "product_release": "BLOCKED"
+}
