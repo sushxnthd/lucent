@@ -77,10 +77,10 @@ def run():
         filt = 'settb=1/1000,setpts=' + expression.replace(',', chr(92) + ',')
         original, retimed = root / 'original.mkv', root / 'retimed.mkv'
         command('ffmpeg', '-v', 'error', '-y', '-framerate', '25', '-i',
-                str(root / 'f%03d.ppm'), '-vf', filt, '-fps_mode', 'vfr',
+                str(root / 'f%03d.ppm'), '-vf', filt, '-fps_mode', 'vfr', '-enc_time_base:v', '1:1000',
                 '-c:v', 'ffv1', str(original))
         command('ffmpeg', '-v', 'error', '-y', '-i', str(original),
-                '-vf', 'settb=1/1000,setpts=2*PTS', '-fps_mode', 'vfr',
+                '-vf', 'settb=1/1000,setpts=2*PTS', '-fps_mode', 'vfr', '-enc_time_base:v', '1:1000',
                 '-c:v', 'ffv1', str(retimed))
         a, b = read_frames(original), read_frames(retimed)
         if len(a) != len(TICKS) or a != b:
