@@ -27,3 +27,12 @@ Exit code 0 means **intake QA only**; exit code 2 means rejected. Neither exit c
 - Obtain a separately calibrated encoder/moving-aperture positive witness. Then, with consent/approval and privacy controls, obtain blinded human reference trajectories, split by participant. Do not derive a universal hard velocity limit from the largest observed sample speed.
 
 If any of these independent physical gates is unavailable, label the result `INTAKE_ONLY_NOT_PHYSICALLY_VALIDATED` and keep every product output `ABSTAIN_UNCALIBRATED`.
+
+
+## E002-480 mandatory phase-coverage and detector-sensitivity amendment (2026-10-27)
+
+The [frozen adversarial phase-dither experiment](E002_480_RESULT.md) shows that merely adding nominal phase offsets is insufficient for deterministic optical coverage when each pulse has an independently uncertain start. **This is a synthetic worst-case design result, not measured jitter.**
+
+Before a reviewer may assert a physical shutter-support envelope, require the independent clock to provide per-pulse measured start/end times and a defensible error model. For reported pulse start `m`, pulse width `w`, and independent start uncertainty `±u`, the guaranteed illuminated core is `[m+u,m+w-u]` only if `w>2u`. Otherwise it is empty. Compute the union of these cores *from authenticated measured pulse times*, separately for each sensor row, exposure mode, and frame attribution. Record uncovered phases and **abstain** if any phase needed for the intended exclusion is not guaranteed sampled. If errors are common-mode or correlated, document and independently verify that model instead of silently applying the independent-jitter counterexample.
+
+**Coverage is not detection.** Independently calibrate the camera/detector response, dark noise, gain, linearity, pulse width, optical tails, brightness drift, blur, missing frames and threshold sensitivity. A geometric hit can produce an undetectably small response. Report a threshold-dependent upper response envelope and a minimum detectable signal class, not exact zero. Do not infer a physiological hard speed cap from human sample maxima. `PASS_INTAKE_ONLY` and `GEOMETRY_COVERAGE_ONLY` never authorize hidden-closure, blink duration, PERCLOS, fatigue, or medical outputs; preserve `ABSTAIN_UNCALIBRATED` until independent physical and anatomical validation passes.
