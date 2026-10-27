@@ -13,7 +13,7 @@
   "nominal_dither_grids": [
     {
       "adversarial_timing_schedule_exists": true,
-      "max_optical_response_difference": 0.0,
+      "max_optical_response_difference": 0,
       "nominal_phase_starts": 168,
       "offset_count": 1,
       "timing_errors_used_ms": [
@@ -23,7 +23,7 @@
     },
     {
       "adversarial_timing_schedule_exists": true,
-      "max_optical_response_difference": 0.0,
+      "max_optical_response_difference": 0,
       "nominal_phase_starts": 335,
       "offset_count": 2,
       "timing_errors_used_ms": [
@@ -33,18 +33,17 @@
     },
     {
       "adversarial_timing_schedule_exists": true,
-      "max_optical_response_difference": 0.0,
+      "max_optical_response_difference": 0,
       "nominal_phase_starts": 668,
       "offset_count": 4,
       "timing_errors_used_ms": [
-        -0.004,
-        0.004
+        -0.004
       ],
       "unavoidable_island_intersections": 0
     },
     {
       "adversarial_timing_schedule_exists": true,
-      "max_optical_response_difference": 0.0,
+      "max_optical_response_difference": 0,
       "nominal_phase_starts": 1335,
       "offset_count": 8,
       "timing_errors_used_ms": [
@@ -55,9 +54,9 @@
     }
   ],
   "one_fewer_even_phases_covers": false,
-  "one_fewer_maximum_uncovered_gap_ms": 2.5616394507821383e-06,
+  "one_fewer_maximum_uncovered_gap_ms": 0.0000025616394507821383,
   "original_clock_uncertainty_ms": 0.004,
-  "original_robust_core_width_ms": 0.0,
+  "original_robust_core_width_ms": 0,
   "physical_release_authorized": false,
   "physical_shutter_acquisitions": 0,
   "product_claim": "ABSTAIN_UNCALIBRATED",
