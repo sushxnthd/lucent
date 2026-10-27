@@ -98,6 +98,7 @@ def analyze(groups, threshold=0.1, clock_ms=0.5, synthetic=False):
     examples = []
     test_speed_exceedances = 0
     test_speed_pairs = 0
+    eligible_by_subject = set()
     for (subject, session), frames in sorted(groups.items()):
         if subject not in TEST_SUBJECTS:
             continue
@@ -122,6 +123,7 @@ def analyze(groups, threshold=0.1, clock_ms=0.5, synthetic=False):
             excluded = z > 1 + 1e-12
             witnessed = any(f.hi <= threshold for f in window[1:-1])
             counts['windows_eligible'] += 1
+            eligible_by_subject.add(subject)
             counts['conditional_excluded' if excluded else 'conditional_possible'] += 1
             if witnessed:
                 counts['reference_observed_closure'] += 1
@@ -131,9 +133,12 @@ def analyze(groups, threshold=0.1, clock_ms=0.5, synthetic=False):
                 counts['falsified_joint_assumptions'] += 1
                 examples.append({'participant': subject, 'session': session,
                                  'frame_start': a.idx, 'frame_end': b.idx,
-                                 'z': round(z, 8), 'reason': 'observed high-rate closure contradicts proxy-cap exclusion'})
+                                 'z': 'Infinity' if math.isinf(z) else round(z, 8),
+                                 'reason': 'observed high-rate closure contradicts proxy-cap exclusion'})
     if counts['windows_eligible'] == 0:
         raise ValueError('no eligible held-out windows; cannot report success')
+    if not synthetic and eligible_by_subject != TEST_SUBJECTS:
+        raise ValueError(f'held-out clean-window coverage unmet: {len(eligible_by_subject)}/11')
     return {
         'protocol': 'E002-485', 'source_doi': SOURCE_DOI,
         'evidence_tier': 'SYNTHETIC_FIXTURE' if synthetic else 'UNVERIFIED_HUMAN_ANNOTATIONS',
