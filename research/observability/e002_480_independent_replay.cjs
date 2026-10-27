@@ -28,7 +28,17 @@ assert.ok(T/n<=newCore);
 assert.ok(T/(n-1)>newCore);
 const maxContrast=.2*l/w,noise=.002,threshold=.04;
 assert.ok(maxContrast+noise<threshold);
-console.log(JSON.stringify({independent_replay:'PASS',grid_counts:counts,
+// Exploratory post-freeze nuisance-correlation control: a single shared clock
+// offset is NOT the independent-per-pulse adversary used in the primary test.
+const commonHits={};
+for(const d of [-u,0,u]) {
+  const n=8,step=.05/n,phases=Math.ceil(2*T/step-1e-12)+1;
+  let hits=0;
+  for(let i=0;i<phases;i++) if(hit(i*step+d)) hits++;
+  assert.ok(hits>0);
+  commonHits[String(d)]=hits;
+}
+console.log(JSON.stringify({independent_replay:'PASS',grid_counts:counts,exploratory_common_offset_hits:commonHits,
   old_core_ms:oldCore,improved_core_ms:newCore,min_even_phases_per_period:n,
   narrow_island_max_contrast:maxContrast,threshold_with_noise:threshold+noise,
   physical_validation:'NOT_ESTABLISHED'},null,2));
