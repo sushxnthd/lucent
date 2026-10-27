@@ -22,7 +22,7 @@ for lower endpoint aperture bounds l0,l1>c. A hard-Lipschitz assumption would ex
 
 ## Local synthetic adversarial run (not human evidence)
 
-The deterministic fixture deliberately includes a held-out faster closing trajectory, a nonclosing control, a blur failure and a missing-frame failure. Ten Python adversarial tests passed locally. Exact fixture output:
+The deterministic fixture deliberately includes a held-out faster closing trajectory, a nonclosing control, a blur failure and a missing-frame failure. Eleven Python adversarial tests passed locally. Exact fixture output:
 
 | Measure | Synthetic result |
 |---|---:|
