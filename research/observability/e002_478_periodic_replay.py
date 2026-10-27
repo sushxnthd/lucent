@@ -69,6 +69,8 @@ def evaluate_periodicity(manifest_path, camera_path, clock_path, raw_path, *,
         checked = 0
         max_ratio = 0.0
         for row, entries in sorted(by_row.items()):
+            if max(c for _, c in entries) < floor:
+                return indeterminate("INSUFFICIENT_OPTICAL_RESPONSE_ROW")
             entries.sort()
             first = [(t, c) for t, c in entries if 0 <= t < T]
             second = [(t, c) for t, c in entries if T <= t < 2 * T + step]
