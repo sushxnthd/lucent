@@ -1,6 +1,6 @@
 # E002-478 RESULT — frame-attribution ambiguity falsifies an unqualified periodic-shutter interpretation
 
-Date: 2026-10-27. Kernel E002-371. **Evidence tier: synthetic instrument-model falsification only. Physical acquisitions: 0. New human anatomical reference trajectories: 0.** Protocol frozen in [E002_478_FROZEN.md](E002_478_FROZEN.md) at commit `dccf90015dc90510271c4a7fce497e99d87e4203` before implementation.
+Date: 2026-10-27. Kernel E002-371. **Evidence tier: synthetic instrument-model falsification only. Physical acquisitions: 0. New human anatomical reference trajectories: 0.** Protocol frozen in [E002_478_FROZEN.md](E002_478_FROZEN.md) at commit `dccf90015dc90510271c4a7fce497e99d87e4203` before implementation. **This was a post-hoc hypothesis informed by inspection of the E002-477 fixture, not a blinded or independent preregistration.**
 
 ## Finding
 
