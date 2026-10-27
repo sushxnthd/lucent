@@ -37,6 +37,10 @@
     "missing_independent_slope": {
       "periodicity_status": "INDETERMINATE",
       "reason": "INDEPENDENT_BUDGETS_REQUIRED"
+    },
+    "one_dark_row": {
+      "periodicity_status": "INDETERMINATE",
+      "reason": "INSUFFICIENT_OPTICAL_RESPONSE_ROW"
     }
   },
   "interpretive_limit": "The CSV does not identify which camera frame generated each response; rejection is conditional on repeated-frame attribution. A single-target-frame scan may legitimately be nonperiodic in the reported response.",
