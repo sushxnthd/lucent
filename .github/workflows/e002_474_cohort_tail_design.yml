@@ -1,0 +1,39 @@
+name: Lucent E002-474 cohort-tail instrument design stress
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_474_*.md'
+      - 'research/observability/e002_474_cohort_tail_design.py'
+      - 'research/observability/test_e002_474_cohort_tail_design.py'
+      - 'research/observability/E002_459_HUMAN_AGGREGATE.json'
+      - 'research/observability/e002_472_design_feasibility.py'
+      - 'research/observability/e002_473_literature_stress.py'
+      - '.github/workflows/e002_474_cohort_tail_design.yml'
+  workflow_dispatch:
+jobs:
+  human-tail-design-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run adversarial tests against existing conservative evaluator
+        working-directory: research/observability
+        run: python -m unittest -v test_e002_474_cohort_tail_design.py
+      - name: Recompute aggregate and enforce fail-closed product gate
+        working-directory: research/observability
+        run: |
+          python e002_474_cohort_tail_design.py --output /tmp/e002_474_result.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/e002_474_result.json'))
+          assert d['physical_release_authorized'] is False
+          assert d['product_claim']=='ABSTAIN_UNCALIBRATED'
+          assert len(d['rows'])==10
+          assert d['conservative_240fps_pilot_tail_supported'] is False
+          print('PASS: 240-fps pilot conservative exclusion rejected; no physical release')
+          PY
