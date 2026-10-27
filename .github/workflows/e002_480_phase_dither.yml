@@ -1,0 +1,29 @@
+name: E002-480 bounded-jitter phase-dither falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_480_phase_dither.py'
+      - 'research/observability/test_e002_480_phase_dither.py'
+      - 'research/observability/e002_480_independent_replay.cjs'
+      - '.github/workflows/e002_480_phase_dither.yml'
+  workflow_dispatch:
+jobs:
+  independent-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python adversarial and positive-control tests
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_480_phase_dither
+      - name: Independent JavaScript arithmetic
+        run: node research/observability/e002_480_independent_replay.cjs
+      - name: Verify frozen aggregate reproducibility
+        run: |
+          python research/observability/e002_480_phase_dither.py > /tmp/e002_480_actual.json
+          diff -u research/observability/E002_480_AGGREGATE.json /tmp/e002_480_actual.json
