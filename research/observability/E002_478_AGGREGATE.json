@@ -1,0 +1,45 @@
+{
+  "schema": "lucent-e002-478-synthetic-periodicity-v1",
+  "evidence_tier": "synthetic model consistency only; no physical or human measurements",
+  "frozen_protocol": "E002_478_FROZEN.md",
+  "nominal_frame_period_ms": 4.166666666666667,
+  "phase_step_ms": 0.05,
+  "source_fixture": "E002-477 synthetic one-shot response over two nominal periods",
+  "external_budget_assumptions": {
+    "slope_response_per_ms": 1,
+    "contrast_error": 0.0005,
+    "interperiod_drift": 0.001,
+    "pulse_phase_error_ms": 0.001,
+    "period_error_ms": 0,
+    "minimum_contrast": 0.02
+  },
+  "cases": {
+    "original_e002477_fixture": {
+      "intake_status": "PASS_INTAKE_ONLY",
+      "periodicity_status": "REJECT_STATIONARY_PERIODIC_MODEL",
+      "matched_phase_pairs": 166,
+      "violations": 42,
+      "max_discrepancy_budget_ratio": 4.83871
+    },
+    "periodic_rectangular_control": {
+      "periodicity_status": "CONSISTENT_WITH_PERIODICITY_ONLY",
+      "matched_phase_pairs": 166,
+      "violations": 0,
+      "max_discrepancy_budget_ratio": 0.806452
+    },
+    "unmodeled_brightness_shift": {
+      "periodicity_status": "REJECT_STATIONARY_PERIODIC_MODEL"
+    },
+    "all_dark": {
+      "periodicity_status": "INDETERMINATE",
+      "reason": "INSUFFICIENT_OPTICAL_RESPONSE"
+    },
+    "missing_independent_slope": {
+      "periodicity_status": "INDETERMINATE",
+      "reason": "INDEPENDENT_BUDGETS_REQUIRED"
+    }
+  },
+  "interpretive_limit": "The CSV does not identify which camera frame generated each response; rejection is conditional on repeated-frame attribution. A single-target-frame scan may legitimately be nonperiodic in the reported response.",
+  "physical_release_authorized": false,
+  "product_claim": "ABSTAIN_UNCALIBRATED"
+}
