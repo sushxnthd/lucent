@@ -116,7 +116,7 @@ def encode_frames(directory, ticks, output):
         expr = f'if(eq(N,{i}),{ticks[i]},{expr})'
     filt = 'settb=1/1000,setpts='+expr.replace(',','\\,')
     run(['ffmpeg','-hide_banner','-loglevel','error','-y','-framerate','25',
-         '-i',str(directory/'f%03d.ppm'),'-vf',filt,'-fps_mode','vfr',
+         '-i',str(directory/'f%03d.ppm'),'-vf',filt,'-fps_mode','vfr','-enc_time_base:v','1:1000',
          '-c:v','ffv1',str(output)])
 
 def video_frames(path):
@@ -142,7 +142,7 @@ def experiment(workdir):
     retimed=workdir/'retimed.mkv'
     encode_frames(workdir/'frames',TICKS,original)
     run(['ffmpeg','-hide_banner','-loglevel','error','-y','-i',str(original),
-         '-vf','settb=1/1000,setpts=2*PTS','-fps_mode','vfr',
+         '-vf','settb=1/1000,setpts=2*PTS','-fps_mode','vfr','-enc_time_base:v','1:1000',
          '-c:v','ffv1',str(retimed)])
     a,b=video_frames(original),video_frames(retimed)
     original_report=adjudicate_frames(a)
@@ -156,9 +156,9 @@ def experiment(workdir):
     if len(source_pts)!=len(TICKS) or len(retimed_pts)!=len(TICKS):
         raise AssertionError('PTS/frame count mismatch')
     if any(abs(x-t)>1 for x,t in zip(source_pts,TICKS)):
-        raise AssertionError('source PTS mismatch')
+        raise AssertionError(f'source PTS mismatch: observed={source_pts!r}, expected={TICKS!r}')
     if any(abs(x-2*t)>1 for x,t in zip(retimed_pts,TICKS)):
-        raise AssertionError('retimed PTS mismatch')
+        raise AssertionError(f'retimed PTS mismatch: observed={retimed_pts!r}, expected={[2*t for t in TICKS]!r}')
     dropped=a[:5]+a[6:]
     loss_report=adjudicate_frames(dropped)
     if loss_report['ticks']!=list(TICKS[:5]+TICKS[6:]):
