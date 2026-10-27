@@ -74,6 +74,12 @@ class PeriodicityTests(unittest.TestCase):
         self.mutate_camera(lambda rows: [r.__setitem__("response", r["dark_reference"]) for r in rows])
         self.assertEqual(self.run_eval()["reason"], "INSUFFICIENT_OPTICAL_RESPONSE")
 
+    def test_one_dark_row_abstains_instead_of_passing(self):
+        self.periodic()
+        self.mutate_camera(lambda rows: [r.__setitem__("response", r["dark_reference"])
+                                         for r in rows if r["row_stratum"] == "bottom"])
+        self.assertEqual(self.run_eval()["reason"], "INSUFFICIENT_OPTICAL_RESPONSE_ROW")
+
     def test_missing_independent_slope_budget_abstains(self):
         self.assertEqual(self.run_eval(response_slope_bound_per_ms=None)["reason"],
                          "INDEPENDENT_BUDGETS_REQUIRED")
