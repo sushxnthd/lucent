@@ -28,9 +28,10 @@ where p bounds the independently verified period error. The test pairs first- an
 | Unbudgeted second-period brightness shift | REJECT_STATIONARY_PERIODIC_MODEL | Fails the stationary response assumption, not necessarily camera hardware |
 | All-dark response | INDETERMINATE | No measurable optical signal |
 | Missing slope budget | INDETERMINATE | Refuses uncalibrated model |
+| One dark row with another responding | INDETERMINATE | Refuses to infer shutter repeatability for an unobserved sensor row |
 | Deliberately enlarged justified drift budget | CONSISTENT_WITH_PERIODICITY_ONLY | Correctly avoids claiming a contradiction beyond the declared uncertainty |
 
-The standalone standard-library [evaluator](e002_478_periodic_replay.py), [nine adversarial tests](test_e002_478_periodic_replay.py), and [aggregate](E002_478_AGGREGATE.json) are committed. Nine local tests passed against a reconstructed E002-477 fixture with a lightweight SHA-integrity intake stand-in. Dedicated hosted CI runs the same tests against the **actual** repository E002-477 intake. The hosted result must be checked independently before claiming that verification.
+The standalone standard-library [evaluator](e002_478_periodic_replay.py), [nine adversarial tests](test_e002_478_periodic_replay.py), and [aggregate](E002_478_AGGREGATE.json) are committed. Ten local tests passed against a reconstructed E002-477 fixture with a lightweight SHA-integrity intake stand-in. Dedicated hosted CI runs the same tests against the **actual** repository E002-477 intake. The hosted result must be checked independently before claiming that verification.
 
 ## Acquisition change and decisive next step
 
