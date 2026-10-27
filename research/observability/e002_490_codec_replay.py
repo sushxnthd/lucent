@@ -74,7 +74,7 @@ def run():
         expression = str(TICKS[-1])
         for i in range(len(TICKS) - 2, -1, -1):
             expression = f'if(eq(N,{i}),{TICKS[i]},{expression})'
-        filt = 'settb=1/1000,setpts=' + expression.replace(',', r'\\,')
+        filt = 'settb=1/1000,setpts=' + expression.replace(',', chr(92) + ',')
         original, retimed = root / 'original.mkv', root / 'retimed.mkv'
         command('ffmpeg', '-v', 'error', '-y', '-framerate', '25', '-i',
                 str(root / 'f%03d.ppm'), '-vf', filt, '-fps_mode', 'vfr',
