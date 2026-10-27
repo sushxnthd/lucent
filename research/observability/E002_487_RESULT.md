@@ -20,10 +20,14 @@ The primary [2025 *Scientific Data* paper](https://doi.org/10.1038/s41597-025-04
 
 [Hosted acquisition run 40514211441](https://github.com/sushxnthd/lucent/actions/runs/40514211441) was **queued** when this report was written. No download success, actual camera rate, timestamp statistics, or real anatomical result can be claimed yet. If the run fails, preserve its failure artifact and diagnose that specific obstacle before doing more synthetic science.
 
-Even if it succeeds, **verified S24 AVI metadata is not independently authenticated exposure timing**. It also does not supply eyelid-aperture annotations. The next gate is independent high-rate aperture annotation and reviewer disagreement quantification on this pilot, then the previously frozen participant-disjoint 20/11 validation and physical shutter/moving-aperture controls.
+Even if it succeeds, **verified S24 AVI metadata is not independently authenticated exposure timing**. It also does not supply eyelid-aperture annotations. The next gate is independent high-rate aperture annotation and reviewer disagreement quantification on a **calibration participant**, not S24. S24 is reserved for metadata-only intake and must not be used for model/threshold selection. If S24 anatomical frames are ever viewed for development, S24 must be removed from the frozen held-out set and a new split declared **before** any held-out outcome analysis; the original 20/11 test would no longer be intact. Physical shutter/moving-aperture controls remain mandatory.
 
 ## Product decision
 
 `ABSTAIN_UNCALIBRATED` for hidden closure, blink duration, PERCLOS, fatigue and medical measurements. `BLOCKED` for product release. This work validates a possible acquisition pathway, **not** E002-371's physical law.
 
 No Hush branch/PR changes, merges, force-pushes or deployments.
+
+## Split-integrity correction
+
+The original E002-485 frozen split assigns S24 to the held-out subjects S21–S31. S24 was chosen for this **metadata-only** feasibility pilot because its archive is the smallest. Its anatomy must remain blinded to retain the original 20/11 split. A future annotation pilot must use S01–S20 instead. This correction was made before any S24 video was downloaded or viewed in this run.
