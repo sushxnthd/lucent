@@ -2,7 +2,7 @@
 import unittest
 from e002_480_phase_dither import (
     T, W, U, CENTER, ISLAND_WIDTH, AMPLITUDE, ABSTAIN,
-    adversarial_grid, avoid_island, response, grid, coverage,
+    adversarial_grid, avoid_island, response, grid, coverage, periodic_overlap,
     even_starts, core_width, threshold_ceiling, experiment,
 )
 
@@ -71,6 +71,13 @@ class PhaseDitherTests(unittest.TestCase):
             threshold_ceiling(.2,.001,0)
         with self.assertRaises(ValueError):
             adversarial_grid(0)
+
+    def test_exploratory_shared_clock_offset_is_different(self):
+        # Post-freeze control. The primary counterexample permits independent
+        # pulse errors; it must not be generalized to a single common offset.
+        for delta in (-U, 0, U):
+            hits=sum(periodic_overlap(t+delta,t+delta+W)>1e-13 for t in grid(8))
+            self.assertGreater(hits,0)
 
     def test_aggregate_never_authorizes_product(self):
         r=experiment()
