@@ -1,0 +1,25 @@
+name: E002-477 independently timed optical intake
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_477_*'
+      - 'research/observability/test_e002_477_optical_intake.py'
+      - 'research/observability/E002_477_*'
+      - '.github/workflows/e002_477_optical_intake.yml'
+  workflow_dispatch:
+jobs:
+  optical-intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Synthetic adversarial acquisition-intake tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_477_optical_intake.py' -v
+      - name: Regenerate deidentified fixture aggregate
+        run: python research/observability/generate_e002_477_aggregate.py > /tmp/E002_477_AGGREGATE.json
+      - name: Require byte-for-byte frozen aggregate match
+        run: cmp /tmp/E002_477_AGGREGATE.json research/observability/E002_477_AGGREGATE.json
