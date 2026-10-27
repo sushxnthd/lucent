@@ -21,7 +21,7 @@ Proof: For iid continuous participant-level proxy maxima, the global maximum amo
 - The standalone Python implementation [e002_475_tail_calibration.py](e002_475_tail_calibration.py) uses exact fractions, high-precision decimal tolerance arithmetic, a separate exhaustive 120-permutation n=3/m=2 check, and seeded synthetic trials. **12 local Python regression tests passed.** The script rejects substitution of the **1,657 calibration blinks** for the 12 independent participants.
 - An independent [JavaScript replay](e002_475_independent_replay.cjs), with no Python imports, reproduced all boundary integers, 72/120 successful permutations, and 45.963991% 12-person tolerance confidence. Local replay passed.
 - A 25,000-trial iid Uniform(0,1) synthetic test gave **0.60204** joint eight-person coverage, within the frozen 0.02 tolerance of 0.6. An explicit **nonexchangeable** calibration Uniform(0,1) / future Uniform(2,3) control gave **0/25,000** coverage. These are synthetic sanity checks, not estimates of human failure rates.
-- Dedicated hosted CI runs the Python suite, executable JSON output and independent JavaScript replay. **Do not claim hosted success until the workflow has completed.** The [aggregate](E002_475_AGGREGATE.json) contains no raw human rows.
+- Dedicated hosted CI runs the Python suite, executable JSON output and independent JavaScript replay. **Hosted verification completed successfully**: [Actions run 40432452812](https://github.com/sushxnthd/lucent/actions/runs/40432452812). All adversarial Python tests, independent JavaScript replay, and byte-for-byte aggregate reproduction passed. The [aggregate](E002_475_AGGREGATE.json) contains no raw human rows.
 
 ## Priority and scientific scope
 
