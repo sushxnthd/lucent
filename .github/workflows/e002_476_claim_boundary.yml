@@ -1,0 +1,30 @@
+name: E002-476 interval claim-boundary falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_456_prospective_gate.py'
+      - 'research/observability/e002_476_claim_boundary.py'
+      - 'research/observability/test_e002_476_claim_boundary.py'
+      - 'research/observability/E002_476_AGGREGATE.json'
+      - '.github/workflows/e002_476_claim_boundary.yml'
+  workflow_dispatch:
+jobs:
+  product-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Claim boundary adversarial regressions
+        run: python -m unittest discover -s research/observability -p 'test_e002_476_claim_boundary.py' -v
+      - name: Existing prospective evaluator regressions
+        run: python -m unittest discover -s research/observability -p 'test_e002_456_prospective_gate.py' -v
+      - name: Reference-gap correction regressions
+        run: python -m unittest discover -s research/observability -p 'test_e002_471_reference_gap.py' -v
+      - name: Generate deterministic deidentified aggregate
+        run: python research/observability/e002_476_claim_boundary.py --output /tmp/e002_476_aggregate.json
+      - name: Compare aggregate to committed frozen result
+        run: cmp research/observability/E002_476_AGGREGATE.json /tmp/e002_476_aggregate.json
