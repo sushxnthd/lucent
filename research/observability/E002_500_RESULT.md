@@ -10,7 +10,7 @@ The previous E002-496 checker attested `TECHNICAL_PACKET_INTEGRITY_PASS` after c
 
 The preregistered attack constructs 260 syntactically valid synthetic grayscale PNGs and the actual frozen E002-492 manifest/templates. It predicts the old E002-496 checker will accept the forged packet, even after changing one image to a different valid PNG, whereas the new source replay must reject it.
 
-Nine software tests exercise the legacy acceptance prediction, source replay success, first/last-frame substitution, extra/missing frames, symlink substitution, independent extraction invocation and post-extraction tampering. **At report creation these tests are implemented but hosted outcomes have not been verified.** Do not claim an observed falsification until the CI result is checked.
+Nine software tests exercise the legacy acceptance prediction, source replay success, first/last-frame substitution, extra/missing frames, symlink substitution, independent extraction invocation and post-extraction tampering. **Hosted verification:** [E002-500 run 40622624177](https://github.com/sushxnthd/lucent/actions/runs/40622624177) completed the **nine synthetic adversarial tests successfully**, including the frozen prediction that the old E002-496 checker accepts a complete forged packet and a single valid-PNG substitution while the source-bound comparator rejects it. The authentic S01 replay stage was still running at the latest check; no authentic replay success is claimed yet.
 
 ## New source-bound evidence gate
 
