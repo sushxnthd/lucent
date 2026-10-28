@@ -24,6 +24,10 @@ Sixteen self-contained `unittest` test methods encode these frozen cases and are
 
 Before accepting a hosted result, inspection of the constructed 4.2 px threshold-touching case identified a floating-point boundary hazard: ordinary binary arithmetic can make the mathematical lower bound 4.1/41 = 0.10 appear strictly greater than 0.10. This could falsely produce a static ABOVE decision. Commit `759ee2c` replaced threshold-critical numerator and denominator operations with decimal-text arithmetic and added a separate exact-threshold regression test. This is a numerical soundness correction found **before** any E002-504 hosted pass, not a new physiological observation. The frozen scientific expectation was unchanged. CI must verify the corrected commit.
 
+## Hosted pre-correction falsification
+
+[GitHub Actions run 40652911423](https://github.com/sushxnthd/lucent/actions/runs/40652911423) completed **FAILURE** on the original binary-float implementation: 13/15 tests passed; both prespecified E002-503 scale-bias cases failed. The evaluator incorrectly returned `RESEARCH_STATIC_ABOVE` and `RESEARCH_STATIC_BELOW` where `ABSTAIN_THRESHOLD_CROSSED` was required. Job logs establish that the failure was an actual hosted execution, not a hypothetical calculation. Preserve this negative result. The decimal-arithmetic correction in commit `759ee2c` and a 16th threshold-boundary regression are committed; their **new hosted result remains pending** and must be checked separately. Do not claim the fix verified until that check succeeds.
+
 ## External evidence still required
 
 Two independent blinded S01 anatomical reviews, independently authenticated optical camera timebase/shutter, physically justified continuous-time eyelid-speed upper envelopes, participant-disjoint high-rate reference predictions and external reproduction. No new human ratings, videos or physical measurements were obtained here. E002-501 optical alias proxy remains retired; E002-503 remains synthetic. No raw imagery or individual ratings were committed.
