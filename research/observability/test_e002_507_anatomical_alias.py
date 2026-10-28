@@ -1,4 +1,6 @@
 import unittest
+import copy
+from e002_508_manifest_attack import mutations
 from e002_492_anatomical_review import build_manifest, template
 from e002_507_anatomical_alias import evaluate, classify, frozen_start
 
@@ -103,6 +105,20 @@ class Tests(unittest.TestCase):
         self.assertFalse(r['iris_scale_calibration_authenticated_by_code'])
         self.assertEqual(r['release'], 'BLOCKED')
 
+
+
+    def test_e002_508_source_provenance_substitution_rejected(self):
+        self.fill()
+        for name, bad in mutations(self.m).items():
+            with self.subTest(name=name):
+                with self.assertRaisesRegex(ValueError, 'NONCANONICAL_FROZEN_SOURCE_MANIFEST'):
+                    evaluate(bad, self.a, self.b, self.d)
+
+    def test_e002_508_canonical_copy_accepted(self):
+        self.fill()
+        result = evaluate(copy.deepcopy(self.m), self.a, self.b, self.d)
+        self.assertEqual(result['windows'], 20)
+        self.assertEqual(result['product'], 'ABSTAIN_UNCALIBRATED')
 
 if __name__ == '__main__':
     unittest.main()
