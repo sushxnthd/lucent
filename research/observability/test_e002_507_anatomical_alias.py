@@ -85,8 +85,9 @@ class Tests(unittest.TestCase):
             evaluate(self.m, self.a, self.b, self.d)
 
     def test_duplicate_clips_rejected(self):
+        # E002-508 checks exact source provenance before clip-set consistency.
         self.m['review_clips'][0]['clip'] = self.m['review_clips'][1]['clip']
-        with self.assertRaisesRegex(ValueError, 'CLIP_SET_MISMATCH'):
+        with self.assertRaisesRegex(ValueError, 'NONCANONICAL_FROZEN_SOURCE_MANIFEST'):
             evaluate(self.m, self.a, self.b, self.d)
 
     def test_bad_frame_order_rejected(self):
