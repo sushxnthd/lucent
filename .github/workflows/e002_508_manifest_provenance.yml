@@ -1,0 +1,24 @@
+name: E002-508 frozen source provenance attack
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_508_manifest_attack.py'
+      - 'research/observability/e002_507_anatomical_alias.py'
+      - '.github/workflows/e002_508_manifest_provenance.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_508_manifest_attack.py'
+      - 'research/observability/e002_507_anatomical_alias.py'
+      - '.github/workflows/e002_508_manifest_provenance.yml'
+jobs:
+  provenance-attack:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify frozen prepatch substitution is accepted (synthetic only)
+        run: python research/observability/e002_508_manifest_attack.py --expect vulnerable
