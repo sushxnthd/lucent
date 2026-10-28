@@ -139,7 +139,7 @@ class FrozenInstrumentTests(unittest.TestCase):
 
     def test_zero_mean_error_exact_open_means(self):
         a = fixture(mean="1", mean_error="0")
-        self.assertEqual(a["deficit_bound"], "0")
+        self.assertEqual(dec(a["deficit_bound"]), Decimal(0))
         self.assertEqual(a["conditional_scalar_result"], "CONDITIONAL_EXCLUSION")
 
 
