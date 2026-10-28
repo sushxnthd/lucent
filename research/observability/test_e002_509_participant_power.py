@@ -71,5 +71,44 @@ class TestParticipantPower(unittest.TestCase):
         with self.assertRaises(ValueError): evaluate([r])
 
 
+    def test_e002_511_sparse_coverage_cannot_clear_conditional_risk(self):
+        for k in (1, 8, 298):
+            cohort = [participant(i, certificates=int(i < k)) for i in range(299)]
+            r = evaluate(cohort)
+            self.assertEqual(r['risk_gate'], 'INSUFFICIENT_COVERED_PARTICIPANTS')
+            self.assertEqual(r['conditional_risk_denominator'], k)
+            self.assertEqual(r['unconditional_risk_denominator'], 299)
+            self.assertAlmostEqual(r['conditional_zero_failure_upper'],
+                                   zero_failure_upper(k), places=13)
+            self.assertAlmostEqual(r['unconditional_zero_failure_upper'],
+                                   zero_failure_upper(299), places=13)
+            self.assertEqual(r['product'], 'ABSTAIN_UNCALIBRATED')
+            self.assertEqual(r['release'], 'BLOCKED')
+
+    def test_e002_511_all_abstain_has_no_conditional_estimate(self):
+        r = evaluate([participant(i, certificates=0) for i in range(299)])
+        self.assertEqual(r['risk_gate'], 'NO_USEFUL_COVERAGE')
+        self.assertIsNone(r['conditional_zero_failure_upper'])
+        self.assertEqual(r['conditional_risk_denominator'], 0)
+        self.assertFalse(r['coverage_utility_target_preregistered'])
+
+    def test_e002_511_full_coverage_preserves_statistical_only_gate(self):
+        r = evaluate([participant(i) for i in range(299)])
+        self.assertEqual(r['risk_gate'], 'PASSES_STATISTICAL_ZERO_EVENT_GATE_ONLY')
+        self.assertEqual(r['certificate_participant_coverage'], 1)
+        self.assertAlmostEqual(r['conditional_zero_failure_upper'],
+                               zero_failure_upper(299), places=13)
+        self.assertFalse(r['hard_physical_guarantee'])
+
+    def test_e002_511_failures_never_get_zero_event_bounds(self):
+        cohort = [participant(i, certificates=int(i < 8),
+                              false_exclusions=int(i == 0)) for i in range(299)]
+        r = evaluate(cohort)
+        self.assertEqual(r['risk_gate'], 'NONZERO_FAILURES_REQUIRE_EXACT_INTERVAL')
+        self.assertIsNone(r['conditional_zero_failure_upper'])
+        self.assertIsNone(r['unconditional_zero_failure_upper'])
+        self.assertIsNone(r['zero_failure_upper'])
+
+
 if __name__ == '__main__':
     unittest.main()
