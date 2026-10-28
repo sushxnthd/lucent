@@ -32,3 +32,7 @@ An exploratory independent arithmetic sweep (not part of the preregistered 3/300
 This instrument result is a **new conditional clock-calibration design test**, not a validated boundary law for human eyelids. There are zero new human ratings, zero authenticated camera/shutter measurements, zero independently certified human continuous-time speed envelopes, and zero participant-disjoint physical predictions. Do not perform another synthetic refinement on this example without external observations.
 
 E002-371 physically unvalidated. Product `ABSTAIN_UNCALIBRATED`. Release `BLOCKED`. Hush remains on its separate branch and draft PR.
+
+## Hosted independent verification (2026-10-28)
+
+[GitHub Actions run 40686150586](https://github.com/sushxnthd/lucent/actions/runs/40686150586) **completed successfully** on executable/workflow commit `c594ef118688d80fca2fad98dbba188ab9ccabe6`. The frozen Python adversarial-controls step and independent Node arithmetic step both succeeded. The Python source defines **11** frozen test methods. This verifies software arithmetic and input rejection under stipulated synthetic premises, **not** any physical optical clock, camera exposure, eyelid velocity, anatomy, or held-out human prediction. Subsequent report-only commits do not change the verified executable. Product and release gates remain unchanged.
