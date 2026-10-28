@@ -12,7 +12,7 @@ The *synthetic* forward model assumes eight perfectly separated binary optical c
 
 ## Frozen held-out result
 
-Five prespecified seeds (101, 103, 107, 109, 113), 40 frames each:
+Development disclosure: before the preregistration commit, the forward model and candidate search were explored on seeds 11, 23, 37, 51 and 79 with a narrower nominal-time search, and five frames of seed 11 were inspected under a full-record search. Those development observations are **not** independent held-out evidence. After freezing the full-record search, thresholds, and seeds, the separate 101/103/107/109/113 cohort was executed once without post-outcome tuning.\n\nFive prespecified seeds (101, 103, 107, 109, 113), 40 frames each:
 
 | Seed | True exposure contained | Unique interval | Gaps evaluated | Unsafe underbounds | Maximum gap conservatism |
 |---|---:|---:|---:|---:|---:|
