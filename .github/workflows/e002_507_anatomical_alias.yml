@@ -1,0 +1,26 @@
+name: E002-507 anatomical alias witness fail-closed tests
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_507_anatomical_alias.py'
+      - 'research/observability/test_e002_507_anatomical_alias.py'
+      - '.github/workflows/e002_507_anatomical_alias.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_507_anatomical_alias.py'
+      - 'research/observability/test_e002_507_anatomical_alias.py'
+      - '.github/workflows/e002_507_anatomical_alias.yml'
+
+jobs:
+  frozen-adversaries:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Execute 13 synthetic tests, no human images or downloads
+        run: python -m unittest discover -s research/observability -p 'test_e002_507_anatomical_alias.py' -v
