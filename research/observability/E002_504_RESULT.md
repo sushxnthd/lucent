@@ -18,7 +18,11 @@ E002-504 adds a separate, fail-closed, dependency-free *research-only* interpret
 - Equal-to-threshold, invalid scale, nonfinite values, missing provenance, nuisance, frame mismatch, disjoint raters and geometry errors -> abstain.
 - Changing nominal rater iris diameters without changing external reference must not change the decision.
 
-Fifteen self-contained `unittest` test methods encode these frozen cases and are executed by [E002-504 CI](../../.github/workflows/e002-504-static-claim-gate.yml) using Python 3.11. **At this report's creation, hosted CI results have not yet been independently verified. Do not describe the tests as passed until their job conclusion is inspected.**
+Sixteen self-contained `unittest` test methods encode these frozen cases and are executed by [E002-504 CI](../../.github/workflows/e002-504-static-claim-gate.yml) using Python 3.11. **At this report's creation, hosted CI results have not yet been independently verified. Do not describe the tests as passed until their job conclusion is inspected.**
+
+## Pre-CI numerical falsification and correction
+
+Before accepting a hosted result, inspection of the constructed 4.2 px threshold-touching case identified a floating-point boundary hazard: ordinary binary arithmetic can make the mathematical lower bound 4.1/41 = 0.10 appear strictly greater than 0.10. This could falsely produce a static ABOVE decision. Commit `759ee2c` replaced threshold-critical numerator and denominator operations with decimal-text arithmetic and added a separate exact-threshold regression test. This is a numerical soundness correction found **before** any E002-504 hosted pass, not a new physiological observation. The frozen scientific expectation was unchanged. CI must verify the corrected commit.
 
 ## External evidence still required
 
