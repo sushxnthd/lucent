@@ -18,7 +18,7 @@ The frozen runner encodes four attacks and the canonical control. The correction
 
 ## Hosted verification, exact commit heads
 
-- Prepatch frozen attack: [run 40697202101](https://github.com/sushxnthd/lucent/actions/runs/40697202101), commit `33b58d28012519da991aaa300422505d404c9ab7`, **queued at report creation**. The workflow expects acceptance of all four synthetic forgeries.
+- Prepatch frozen attack: [run 40697202101](https://github.com/sushxnthd/lucent/actions/runs/40697202101), commit `33b58d28012519da991aaa300422505d404c9ab7`, **completed successfully**. Hosted job log confirms all four forgeries accepted, zero rejected, with one synthetic fixture witness. This is a verified source-provenance vulnerability, not human evidence.
 - Postpatch provenance attack: [run 40697307679](https://github.com/sushxnthd/lucent/actions/runs/40697307679), commit `4e15c811b402ada4ad5a0597cd6dd58400253f5c`, **queued at report creation**. The workflow expects rejection of all four.
 - Existing E002-507 regression suite with two new tests: [run 40697297885](https://github.com/sushxnthd/lucent/actions/runs/40697297885), commit `94ef6e684be006b8409bc3a8a9a0869051f83ed6`, **queued at report creation**.
 
