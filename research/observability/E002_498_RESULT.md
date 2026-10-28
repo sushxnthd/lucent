@@ -37,3 +37,8 @@ If a real independently authenticated upper velocity cannot be certified between
 **E002-371 physical validation:** NOT ESTABLISHED. **Human anatomical labels:** 0. **Authenticated camera/shutter calibration:** 0. **Held-out physical prediction:** 0. **Product:** `ABSTAIN_UNCALIBRATED`. **Release:** `BLOCKED`.
 
 Next substantive work: obtain two independent S01 anatomical review sheets and independent physical timing; do not substitute more mathematical rehearsal for either. Hush PR #45 and existing Lucent hourly automation remain unchanged.
+
+
+## Hosted verification (2026-10-28 00:45 UTC)
+
+[GitHub Actions run 40610676412](https://github.com/sushxnthd/lucent/actions/runs/40610676412) **completed successfully** on exact implementation/test/workflow commit `28b5a64420aaec74b80b7072fd8dfadb3143fd87`. Hosted Python executed **18/18 adversarial tests successfully**; the independently written Node.js boundary check printed `INDEPENDENT_ORDER_STATISTIC_BOUNDARIES_PASS`. This verifies software behavior and known sample-size arithmetic across two runtimes. It does **not** validate a physical camera, any human upper eyelid speed, the exchangeability assumption, or any E002-371 hidden-closure prediction. No product release.
