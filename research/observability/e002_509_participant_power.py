@@ -77,16 +77,35 @@ def evaluate(records, alpha=0.05, target=0.01):
         'product': 'ABSTAIN_UNCALIBRATED', 'release': 'BLOCKED',
         'hard_physical_guarantee': False,
     }
+    # E002-511: distinguish unconditional session risk (all enrolled)
+    # from conditional risk GIVEN >=1 certificate (covered participants).
+    # A large abstaining cohort must never imply conditional certificate safety.
+    result['unconditional_risk_denominator'] = n
+    result['conditional_risk_denominator'] = covered
+    result['certificate_participant_coverage'] = covered / n
+    result['coverage_utility_target_preregistered'] = False
+    result['conditional_estimand'] = 'P(any_false_exclusion | at_least_one_certificate)'
+    result['unconditional_estimand'] = 'P(any_false_exclusion_per_enrolled_session)'
     if failures:
         result['risk_gate'] = 'NONZERO_FAILURES_REQUIRE_EXACT_INTERVAL'
         result['zero_failure_upper'] = None
+        result['unconditional_zero_failure_upper'] = None
+        result['conditional_zero_failure_upper'] = None
     else:
+        # Retain the legacy field for compatibility, but explicitly label it
+        # UNCONDITIONAL; never use it for a conditional safety gate.
         result['zero_failure_upper'] = zero_failure_upper(n, alpha)
-        result['risk_gate'] = ('PASSES_STATISTICAL_ZERO_EVENT_GATE_ONLY'
-                               if result['zero_failure_upper'] <= target
-                               else 'INSUFFICIENT_PARTICIPANTS')
-    if covered == 0:
-        result['risk_gate'] = 'NO_USEFUL_COVERAGE'
+        result['unconditional_zero_failure_upper'] = result['zero_failure_upper']
+        result['conditional_zero_failure_upper'] = (
+            zero_failure_upper(covered, alpha) if covered else None)
+        if covered == 0:
+            result['risk_gate'] = 'NO_USEFUL_COVERAGE'
+        elif result['conditional_zero_failure_upper'] <= target:
+            result['risk_gate'] = 'PASSES_STATISTICAL_ZERO_EVENT_GATE_ONLY'
+        elif covered < n:
+            result['risk_gate'] = 'INSUFFICIENT_COVERED_PARTICIPANTS'
+        else:
+            result['risk_gate'] = 'INSUFFICIENT_PARTICIPANTS'
     result['human_data_authenticated_by_code'] = False
     return result
 
