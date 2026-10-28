@@ -1,0 +1,28 @@
+name: E002-504 static aperture claim abstention
+on:
+  push:
+    paths:
+      - 'research/observability/e002_504_static_claim_gate.py'
+      - 'research/observability/E002_504_FROZEN.md'
+      - '.github/workflows/e002-504-static-claim-gate.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_504_static_claim_gate.py'
+      - 'research/observability/E002_504_FROZEN.md'
+      - '.github/workflows/e002-504-static-claim-gate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  frozen-static-geometry-controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile executable
+        run: python -m py_compile research/observability/e002_504_static_claim_gate.py
+      - name: Run 15 frozen synthetic controls
+        run: python research/observability/e002_504_static_claim_gate.py --self-test
