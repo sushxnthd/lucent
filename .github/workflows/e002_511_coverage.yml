@@ -1,0 +1,33 @@
+name: E002-511 conditional coverage falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_511_*'
+      - 'research/observability/e002_511_*'
+      - 'research/observability/e002_509_participant_power.py'
+      - 'research/observability/test_e002_509_participant_power.py'
+      - '.github/workflows/e002_511_coverage.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  conditional-coverage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Historical prepatch falsification
+        run: python research/observability/e002_511_coverage_falsifier.py --phase prepatch
+      - name: Independent JavaScript denominator cross-check
+        run: |
+          node - <<'JS'
+          const alpha=.05, target=.01;
+          const bound=k=>k ? -Math.expm1(Math.log(alpha)/k) : null;
+          for(const [k,lo,hi] of [[1,.949,.951],[8,.312,.313],[298,.0100,.01001],[299,.0099,.01]]) {
+            const v=bound(k);
+            if(!(v>lo && v<hi)) throw new Error('independent bound mismatch '+k+' '+v);
+          }
+          if(!(bound(298)>target && bound(299)<target)) throw new Error('wrong conditional threshold');
+          console.log('Independent conditional-risk denominators verified');
+          JS
