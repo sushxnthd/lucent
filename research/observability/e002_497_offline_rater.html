@@ -19,7 +19,7 @@ section{display:flex;flex-wrap:wrap;gap:24px}aside{flex:1;min-width:280px}label{
 <section><div><canvas id="view" width="320" height="288"></canvas>
 <div><button id="prev">Previous</button><button id="next">Save & next</button><button id="save">Save frame</button><button id="undo">Undo point</button></div></div>
 <aside><div id="position">No frame loaded</div>
-<p>Click the upper lid and then lower lid at the same iris-center image column (within 3 native pixels). Do not infer obscured anatomy. Enter iris diameter from a separately visible clean open reference and uncertainty in pixels per landmark.</p>
+<p>E002-499 pre-label amendment: measure only at the visible fixed native image column x=160 (vertical guide), with click precision within half a native pixel. If reliable iris/lid anatomy is absent there, select POOR_GEOMETRY, GAZE or MISSING_ANATOMY and abstain. Never move to another column. Do not infer obscured anatomy. Enter iris diameter from a separately visible clean open reference and uncertainty in pixels per landmark.</p>
 <label>Iris diameter, native pixels <input id="diameter" type="number" min="0.01" max="288" step="0.1"></label>
 <label>Landmark uncertainty, pixels <input id="uncertainty" type="number" min="0" max="30" step="0.1"></label>
 <div id="points">No landmarks</div>
@@ -58,10 +58,12 @@ async function verifyPNG(file){
  const sig=[137,80,78,71,13,10,26,10];if(sig.some((v,i)=>b[i]!==v)||String.fromCharCode(...b.slice(12,16))!=="IHDR")throw Error("Bad PNG header");
  const dv=new DataView(b.buffer);if(dv.getUint32(16)!==320||dv.getUint32(20)!==288)throw Error("Wrong native image geometry");
 }
+function nativeColumn(x){return Number.isFinite(x)&&Math.abs(x-160)<=0.5}
 function current(){const p=positions[idx];return packet.clips[p.clip][p.frame]}
 function checked(){return [...document.querySelectorAll("fieldset input:checked")].map(x=>x.value)}
 function draw(){
  ctx.clearRect(0,0,320,288);if(im)ctx.drawImage(im,0,0);
+ ctx.beginPath();ctx.moveTo(160,0);ctx.lineTo(160,288);ctx.strokeStyle="rgba(255,255,255,.5)";ctx.lineWidth=0.5;ctx.stroke();
  ctx.font="12px system-ui";pts.forEach((p,i)=>{ctx.fillStyle=i===0?"#fbbf24":"#38bdf8";ctx.beginPath();ctx.arc(p[0],p[1],3,0,Math.PI*2);ctx.fill();ctx.fillText(i===0?"U":"L",p[0]+5,p[1]-5)});
  $("points").textContent=pts.map((p,i)=>(i===0?"Upper":"Lower")+": ("+p[0].toFixed(1)+","+p[1].toFixed(1)+")").join(" | ")||"No landmarks";
 }
@@ -84,10 +86,10 @@ function save(){
  const f=current(),flags=checked();
  if(flags.length){f.upper_y=null;f.lower_y=null;f.iris_diameter=null;f.uncertainty_px=null;f.flags=flags;return true}
  const d=Number($("diameter").value),e=Number($("uncertainty").value);
- if(pts.length!==2||Math.abs(pts[0][0]-pts[1][0])>3||pts[1][1]<pts[0][1]||!Number.isFinite(d)||d<=0||d>288||!Number.isFinite(e)||e<0||e>30||$("diameter").value===""||$("uncertainty").value===""){fail("Two ordered same-column lid points, positive iris diameter and bounded uncertainty required. Or flag nuisance.");return false}
+ if(pts.length!==2||pts.some(p=>p[0]!==160)||pts[1][1]<pts[0][1]||!Number.isFinite(d)||d<=0||d>288||!Number.isFinite(e)||e<0||e>30||$("diameter").value===""||$("uncertainty").value===""){fail("Two ordered same-column lid points at x=160, positive iris diameter and bounded uncertainty required. Or flag POOR_GEOMETRY or another nuisance.");return false}
  f.upper_y=pts[0][1];f.lower_y=pts[1][1];f.iris_diameter=d;f.uncertainty_px=e;f.flags=[];return true;
 }
-canvas.addEventListener("click",ev=>{if(!packet||!im||pts.length===2||checked().length)return;const r=canvas.getBoundingClientRect();const x=(ev.clientX-r.left)*320/r.width,y=(ev.clientY-r.top)*288/r.height;if(x<0||x>=320||y<0||y>=288)return;pts.push([Math.round(x*10)/10,Math.round(y*10)/10]);draw()});
+canvas.addEventListener("click",ev=>{if(!packet||!im||pts.length===2||checked().length)return;const r=canvas.getBoundingClientRect();const x=(ev.clientX-r.left)*320/r.width,y=(ev.clientY-r.top)*288/r.height;if(x<0||x>=320||y<0||y>=288)return;if(!nativeColumn(x)){fail("Off-column click rejected. Use x=160 guide or flag POOR_GEOMETRY.");return}pts.push([160,Math.round(y*10)/10]);draw()});
 $("undo").onclick=()=>{pts.pop();draw()};
 $("save").onclick=()=>{if(save())$("status").textContent="Saved private annotation "+progress()+"/260"};
 $("prev").onclick=async()=>{if(!packet||idx===0)return;if(!save())return;idx--;try{await show()}catch(e){fail(e.message)}};
