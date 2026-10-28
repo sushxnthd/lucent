@@ -10,6 +10,7 @@ import json
 import math
 import sys
 import unittest
+from decimal import Decimal
 
 C = 0.10
 NATIVE_HEIGHT = 288
@@ -49,9 +50,12 @@ def frame_interval(frame, d_lo, d_hi):
     upper, lower, nominal_d, error = vals
     if not (0 <= upper <= lower <= NATIVE_HEIGHT and 0 < nominal_d <= NATIVE_HEIGHT and 0 <= error <= 30):
         return None
-    gap = lower - upper
-    return (max(0.0, gap - 2 * error) / d_hi,
-            (gap + 2 * error) / d_lo)
+    # Use decimal-text arithmetic: 4.2 - 0.1 must not round ABOVE 4.1,
+    # which would turn a boundary-touching uncertainty interval into a claim.
+    gap = Decimal(str(lower)) - Decimal(str(upper))
+    e = Decimal(str(error))
+    return (max(Decimal(0), gap - 2 * e) / Decimal(str(d_hi)),
+            (gap + 2 * e) / Decimal(str(d_lo)))
 
 
 def evaluate(a, b, reference, threshold=C):
@@ -87,16 +91,17 @@ def evaluate(a, b, reference, threshold=C):
         return base("ABSTAIN_INVALID_GEOMETRY")
     if max(ia[0], ib[0]) > min(ia[1], ib[1]):
         return base("ABSTAIN_RATER_DISAGREEMENT")
-    if ia[1] < threshold and ib[1] < threshold:
+    t = Decimal(str(threshold))
+    if ia[1] < t and ib[1] < t:
         decision = "RESEARCH_STATIC_BELOW"
-    elif ia[0] > threshold and ib[0] > threshold:
+    elif ia[0] > t and ib[0] > t:
         decision = "RESEARCH_STATIC_ABOVE"
     else:
         decision = "ABSTAIN_THRESHOLD_CROSSED"
     result = base(decision)
     # Only a conditional aggregate interval; no raw landmarks or participant data.
     result["conservative_interval_union"] = [
-        round(min(ia[0], ib[0]), 9), round(max(ia[1], ib[1]), 9)
+        float(round(min(ia[0], ib[0]), 9)), float(round(max(ia[1], ib[1]), 9))
     ]
     result["reference_provenance_independently_authenticated_by_software"] = False
     return result
@@ -139,6 +144,12 @@ class FrozenControls(unittest.TestCase):
     def test_false_open_nominal_503(self):
         a, b = pair(3.8, 36)
         self.check(a, b, ref(), "ABSTAIN_THRESHOLD_CROSSED")
+
+    def test_decimal_boundary_touch_is_unresolved(self):
+        a, b = pair(4.2, 44, error=0.05)
+        self.check(a, b, ref(), "ABSTAIN_THRESHOLD_CROSSED")
+        # The numerator's lower bound is exactly 4.1 and D_hi exactly 41.
+        self.assertEqual(Decimal("4.1") / Decimal("41"), Decimal("0.1"))
 
     def test_clear_above(self):
         a, b = pair(8)
