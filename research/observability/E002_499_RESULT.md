@@ -28,3 +28,9 @@ Before any real ratings, the E002-497 offline interface was amended to require n
 New exact-fraction/actual-adjudicator tests and independent Node predicate checks were added. Hosted verification status must be checked on the exact final commit before claiming success. **Human anatomical ratings: 0.** **Authenticated camera clock/shutter: 0.** **Held-out physical predictions: 0.** E002-371 remains physically unvalidated. Product `ABSTAIN_UNCALIBRATED`; release `BLOCKED`.
 
 Next decisive step: two independent raters on the checksum-verified S01 private packet, with prespecified fixed-column coverage and disagreement rates, then independently authenticated acquisition timing. Do not repeat synthetic geometry refinements in place of these observations. Hush PR #45 untouched.
+
+## Hosted verification (2026-10-28 02:18 UTC)
+
+[GitHub Actions run 40620041876](https://github.com/sushxnthd/lucent/actions/runs/40620041876) completed **successfully** on implementation/workflow commit `1133a0f490d849fcced5c9796c7b5feb32bb5c8b`. The hosted runner passed **8/8 E002-499 frozen geometry and executable Node predicate tests**, **8/8 existing E002-497 interface/security/schema tests**, and executed the actual E002-492 adjudicator counterexample. Its synthetic aggregate reproduced one false inter-rater disagreement for different columns, zero disagreement at the shared column, and spurious normalized aperture drift 0.075 with no physical motion. The post-report exact-head run `40620047516` was still queued at the last check; do not claim that separate run succeeded.
+
+This is a successful hosted *synthetic instrument-falsification test*. It neither measures eyelids on real humans nor authenticates exposure, camera clock or velocity. The fixed-column patch is a conservative pre-label protocol correction; its usability and anatomical coverage on S01 remain untested.
