@@ -1,0 +1,39 @@
+name: E002-514 coded-optical shutter feasibility
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_514_coded_optical.py'
+      - 'research/observability/test_e002_514_coded_optical.py'
+      - '.github/workflows/e002_514_coded_optical.yml'
+
+jobs:
+  coded-optical:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Frozen held-out synthetic trial and adversarial tests
+        run: |
+          cd research/observability
+          python3 -m unittest -v test_e002_514_coded_optical
+          python3 e002_514_coded_optical.py > /tmp/e002_514_result.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('/tmp/e002_514_result.json'))
+          assert r['held_out_simulation_gate']=='PASS'
+          assert r['real_physical_instrument_used'] is False
+          assert r['physical_calibration_gate']['status']=='ABSTAIN_UNCALIBRATED'
+          assert r['release']=='BLOCKED'
+          print('Synthetic-only E002-514 trial passed; physical release blocked')
+          PY
+      - name: Independent JavaScript interval-set envelope control
+        run: |
+          node - <<'JS'
+          const left=[[0,10],[0,8]], right=[[20,30],[24,35]];
+          const upper=Math.max(0,Math.max(...right.map(x=>x[0]))-Math.min(...left.map(x=>x[1])));
+          if(upper!==16)throw Error('Independent set-valued gap envelope mismatch');
+          if(!(upper>=Math.max(0,20-10)))throw Error('Unsafe underbound');
+          console.log('Independent interval arithmetic passed');
+          JS
