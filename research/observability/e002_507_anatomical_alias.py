@@ -9,6 +9,7 @@ import argparse
 import json
 import math
 from pathlib import Path
+from e002_492_anatomical_review import build_manifest
 
 THRESHOLD = 0.10
 STRIDE = 5
@@ -62,6 +63,10 @@ def evaluate(manifest, a, b, calibration):
         raise ValueError('WRONG_RATERS')
     if a.get('experiment') != 'E002-492' or b.get('experiment') != 'E002-492':
         raise ValueError('WRONG_RATER_EXPERIMENT')
+    # E002-508: bind ratings to the exact previously frozen owner-only source map.
+    # This is provenance validation, NOT proof of image-byte or human identity.
+    if manifest != build_manifest():
+        raise ValueError('NONCANONICAL_FROZEN_SOURCE_MANIFEST')
     clips = manifest.get('review_clips')
     if not isinstance(clips, list) or len(clips) != 20:
         raise ValueError('WRONG_CLIP_COUNT')
