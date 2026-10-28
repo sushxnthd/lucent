@@ -143,7 +143,7 @@ def make_packet(outdir, archive=None):
         'S01 calibration only. Do not upload frames or annotations to GitHub.\n'
         'Keep OWNER_ONLY_MAPPING.json hidden from raters. Share only clip_XX frames\n'
         'and one rater template per independent rater. Annotate frame positions 0..12.\n'
-        'upper_y/lower_y at same fixed iris-center x, iris_diameter from an open\n'
+        'upper_y/lower_y at fixed native x=160 (E002-499), iris_diameter from an open\n'
         'reference frame, and conservative uncertainty_px per landmark. Use flags\n'
         'or UNREVIEWED when anatomy is not reliably visible. No fps assumptions.\n')
     if archive is not None:
