@@ -17,12 +17,25 @@ E002-482/484 established *synthetic* shutter and exposure aliases. E002-493 fals
 
 [Executable](e002_501_temporal_alias.py) · [Synthetic tests](test_e002_501_temporal_alias.py) · [Hosted workflow](../../.github/workflows/e002_501_temporal_alias.yml).
 
-The authentic S01 hosted experiment was launched by commit `21234eb40cdc8fba86c73e41f4bb68f27a090ee7`. [Push run 40629467422](https://github.com/sushxnthd/lucent/actions/runs/40629467422) and [PR run 40629473278](https://github.com/sushxnthd/lucent/actions/runs/40629473278) were **queued/pending at the time of this report**. Authentic alias counts, hosted test success and any nuisance-survivor finding are **not yet verified**. The workflow publishes only an aggregate JSON, which must be inspected and persisted after success; failure must be reported honestly.
+The authentic S01 [push run 40629467422](https://github.com/sushxnthd/lucent/actions/runs/40629467422) **completed successfully on 2026-10-28 at approximately 04:30 UTC**. It executed the frozen synthetic controls, downloaded and checksum-checked the S01 source, and uploaded an aggregate-only artifact. The exact downloaded ZIP SHA-256 `a425fc5f72a2a426d350d65b629e986aba4c380bdd8ad89add5ce1237ef3866a` matches the GitHub artifact digest. The parsed [aggregate JSON](E002_501_HOSTED_AGGREGATE.json) has exactly 2,399 windows in each of four conditions. The first PR-triggered run 40629473278 was cancelled; a later PR run 40629513457 was still pending at verification. Do not conflate that pending run with the verified successful push run.
+
+### Prespecified authentic outcome: zero positive optical aliases
+
+| Frozen condition | Nuisance abstentions / 2,399 | Endpoint different | No alias evidence | Image alias candidates |
+| --- | ---: | ---: | ---: | ---: |
+| Original S01 | 2,221 (92.58%) | 64 | 114 | **0** |
+| Uniform brightness +8 | 2,221 (92.58%) | 64 | 114 | **0** |
+| 3x3 blur | 2,182 (90.95%) | 89 | 128 | **0** |
+| Alternating +/-1px horizontal jitter | **2,399 (100%)** | 0 | 0 | **0** |
+
+All four conditions had zero image-alias candidates and zero all-condition survivors. In baseline, only 178/2,399 windows (7.42%) survived nuisance abstention, so the zero candidate count has **very low screening coverage**. Jitter drove abstention to 100%, an especially strong **coverage failure**. No positive event can be compared across conditions, so this does not measure candidate sensitivity or robustness. It does not establish absence of blink aliases in human video, much less absence of hidden eyelid closures.
+
+**Prespecified decision:** This source and frozen detector yield **no positive optical-alias evidence**. Retire E002-501 as a candidate source for any product observable. Preserve the high abstention rates as a negative result, do not relax thresholds or optimize another optical proxy on S01. The next decisive experiment must involve real blinded anatomical annotations and authenticated camera/shutter timing, not more image-motion screening.
 
 ## Scientific interpretation and release
 
-A positive image-alias count would demonstrate only reversible optical image variation between sparse *frame-sample surrogates* in this single calibration participant. A zero count would show only that the prespecified optical threshold found none, not that hidden blinks are absent. Neither outcome validates E002-371's sharp physical shutter-gap/eyelid-velocity law.
+The observed zero image-alias count shows only that this prespecified optical threshold found none among 2,399 windows on one calibration participant, with 92.58% baseline abstention. It cannot exclude hidden blinks, establish physiological timing, or validate a physical observability boundary. Neither outcome validates E002-371's sharp physical shutter-gap/eyelid-velocity law.
 
 There are still **zero independent anatomical ratings**, **zero authenticated camera clocks/shutters**, **zero certified human continuous-time velocity upper bounds**, and **zero held-out participant physical predictions**. No participant S21-S31 was used. E002-371 remains physically unvalidated. Product `ABSTAIN_UNCALIBRATED`; release `BLOCKED`.
 
-**Next:** verify the hosted authentic aggregate, then stop optical proxy iteration and obtain two independent S01 anatomical review sheets plus physical clock/shutter calibration. Hush PR #45 remains untouched.
+**Next:** obtain two independent S01 anatomical review sheets plus physical clock/shutter calibration, then freeze participant-disjoint predictions. The E002-501 optical surrogate is closed with a negative/low-coverage result. Hush PR #45 remains untouched.
