@@ -17,8 +17,10 @@ jobs:
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
-      - name: Historical prepatch falsification
-        run: python research/observability/e002_511_coverage_falsifier.py --phase prepatch
+      - name: Corrected conditional-risk gate
+        run: python research/observability/e002_511_coverage_falsifier.py --phase patched
+      - name: Existing E002-509 regression tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_509_participant_power.py' -v
       - name: Independent JavaScript denominator cross-check
         run: |
           node - <<'JS'
