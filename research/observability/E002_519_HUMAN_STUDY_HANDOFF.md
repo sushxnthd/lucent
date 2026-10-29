@@ -33,3 +33,16 @@ Allowed reference decisions: `FALSIFIED_BY_REFERENCE_WITNESS`, `REFERENCE_CENSOR
 - Even a successful pilot does not certify a universal human velocity bound, no-blink guarantee, sleepiness, PERCLOS or medical-grade measurement.
 
 **Evidence count at handoff:** independent human S01 ratings 0; physical calibrated captures 0; independently certified continuous-time speed bounds 0; held-out human predictions 0. Product ABSTAIN_UNCALIBRATED; release BLOCKED. No merge, deployment or scheduling change.
+
+## Local, noncertifying witness-intake executable
+
+The [E002-519 reference-censoring evaluator](e002_519_reference_censoring.py) accepts a **private, adjudicated** JSON with `version: "E002-519-v1"` and a nonempty `gaps` array. Each gap has `id`, frozen `prediction` (`EXCLUDE` or `ABSTAIN`), `left_end_max_ms`, `right_start_min_ms`, and a `references` array. Each reference has `id`, `start_min_ms`, `end_max_ms`, `anatomy` (`CLOSED_WITNESS`, `OPEN_OBSERVED` or `UNKNOWN`), and explicit booleans for `two_independent_raters`, `photometry_valid`, `clock_valid`, `native_provenance_valid`, `nuisance_clear`. These booleans are **human/instrument attestations, not facts independently verified by the program**.
+
+```bash
+python research/observability/e002_519_reference_censoring.py \
+  --input /secure/owner_private_adjudication.json \
+  --output /secure/owner_private_e002_519_decisions.json
+python -m unittest discover -s research/observability -p 'test_e002_519_reference_censoring.py' -v
+```
+
+The evaluator only outputs `FALSIFIED_BY_REFERENCE_WITNESS`, `REFERENCE_CENSORED_NOT_FALSIFIED`, `UNKNOWN`, or `NOT_TESTABLE`. It rejects duplicate IDs, missing evidence flags and invalid times. It **never outputs a no-hidden-closure certificate** and always leaves product `ABSTAIN_UNCALIBRATED`, release `BLOCKED`. The 11 adversarial controls passed locally on 2026-10-29; hosted CI is separately required. No actual reference record was entered.
