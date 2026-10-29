@@ -38,6 +38,9 @@ jobs:
           with (p/'reference.csv').open('w',newline='') as f:
               w=csv.writer(f);w.writerow(['frame_id','start_ms','end_ms','uncertainty_ms'])
               w.writerow(['f0',2,12,0]);w.writerow(['f1',16,26,0])
+          with (p/'sequence.csv').open('w',newline='') as f:
+              w=csv.writer(f);w.writerow(['frame_id','native_index'])
+              w.writerow(['f0',100]);w.writerow(['f1',101])
           PY
           python3 e002_515_physical_replay.py --photodiode /tmp/e002_515_fixture/photodiode.csv --camera /tmp/e002_515_fixture/camera.csv --reference /tmp/e002_515_fixture/reference.csv --residual-max 0 --timing-envelope-ms 0 > /tmp/e002_515_result.json
           python3 - <<'PY'
@@ -45,8 +48,21 @@ jobs:
           r=json.load(open('/tmp/e002_515_result.json'))
           assert r['reference_exposures_not_covered']==0
           assert r['unsafe_gap_underbounds_vs_reference_envelope']==0
-          assert r['instrument_validation_result']=='REPLAY_CONSISTENT_NOT_PHYSICALLY_AUTHENTICATED'
+          assert r['instrument_validation_result']=='INSUFFICIENT_NATIVE_SEQUENCE_PROVENANCE'
+          assert r['evaluated_adjacent_gaps']==0
+          assert r['unverified_csv_row_pairs']==1
           assert r['independent_instrument_identity_verified_by_code'] is False
           assert r['product']=='ABSTAIN_UNCALIBRATED' and r['release']=='BLOCKED'
-          print('Artificial CSV fixture passes; no physical measurements or release clearance')
+          print('No native ledger: correct fail-closed abstention')
+          PY
+          python3 e002_515_physical_replay.py --photodiode /tmp/e002_515_fixture/photodiode.csv --camera /tmp/e002_515_fixture/camera.csv --reference /tmp/e002_515_fixture/reference.csv --sequence /tmp/e002_515_fixture/sequence.csv --residual-max 0 --timing-envelope-ms 0 > /tmp/e002_515_sequence_result.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('/tmp/e002_515_sequence_result.json'))
+          assert r['instrument_validation_result']=='REPLAY_CONSISTENT_SEQUENCE_UNATTESTED'
+          assert r['evaluated_adjacent_gaps']==1
+          assert r['native_adjacent_gaps_proven_by_code']==0
+          assert r['native_frame_continuity_independently_attested'] is False
+          assert r['product']=='ABSTAIN_UNCALIBRATED' and r['release']=='BLOCKED'
+          print('Claimed native ledger: conditional diagnostics only; no hardware attestation')
           PY
