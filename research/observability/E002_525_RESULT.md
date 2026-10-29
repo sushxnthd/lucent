@@ -8,13 +8,13 @@ E002-519 receives both the ordinary-camera `prediction` and subsequent high-spee
 
 Frozen artificial two-gap attack (no real participants or measurements):
 
-| Replay | Valid contained synthetic closure | E002-519 falsifications | E002-519 not-testable |
+| Replay | Syntactically qualified synthetic E002-519 label | E002-519 falsifications | E002-519 not-testable |
 | --- | --- | ---: | ---: |
 | Original, g1 EXCLUDE + g2 EXCLUDE | g1 | 1 | 0 |
 | Posthoc g1 changed to ABSTAIN | g1 | 0 | 1 |
 | Posthoc g1 omitted entirely | g1 removed from submission | 0 | 0 |
 
-These are deterministic consequences of the existing evaluator's public input contract, not allegations of actual data manipulation. They mean that an **unlocked** zero-falsification report cannot support a prospective product-risk estimate, even if the reference adjudicator itself is mathematically correct.
+These are deterministic consequences of the existing evaluator's public input contract, not allegations of actual data manipulation. The artificial E002-519 categorical witness does not establish E002-520's separate quantitative cross-camera transport, so even the unedited synthetic falsification is not a physical closure observation. They mean that an **unlocked** zero-falsification report cannot support a prospective product-risk estimate, even if the reference adjudicator itself is mathematically correct.
 
 ## Correction
 
