@@ -52,3 +52,8 @@ This counterexample applies to **continuous scalar threshold closure**, not a pa
 The next decisive work is two genuinely independent blinded S01 anatomical reviews and independently authenticated optical shutter/clock measurements, followed by participant-disjoint physical predictions. **No more synthetic dwell-bound refinements without new physical or human data.** E002-529 does not change any production measurement.
 
 Human anatomical ratings **0**; physical shutter/clock calibrations **0**; certified continuous-time human velocity bounds **0**; held-out physical predictions **0**. Lucent `ABSTAIN_UNCALIBRATED`, release `BLOCKED`. Hush draft PR #45 remains separate and unchanged.
+
+
+## Hosted independent verification (2026-10-29)
+
+[GitHub Actions run 40887066293](https://github.com/sushxnthd/lucent/actions/runs/40887066293) completed with **success**. The `exact-replay` job independently reports **success** for all three substantive steps: 18 Python adversarial test methods, Node.js BigInt replay, and research-only CLI JSON assertions. This verifies the exact conditional scalar construction and executable checks, **not** any camera or human measurement. The frozen prediction and original pending language above are preserved as historical provenance. No release gate changed.
