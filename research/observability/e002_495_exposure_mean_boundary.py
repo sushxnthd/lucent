@@ -115,7 +115,7 @@ def main():
             not cap['constructed_witness_respects_cap']):
         raise AssertionError('FROZEN_PREDICTION_FAILED')
     report = {'frozen_case': case, 'strict_exclusion_control': fail,
-              'cap_warning_control': cap, 'independent_midpoint_means': list(quad),
+              'cap_warning_control': cap, 'independent_midpoint_means': [float(f'{x:.12g}') for x in quad],
               'deterministic_adversarial_sweep': sweep()}
     with open(args.output, 'w') as f:
         json.dump(report, f, indent=2, sort_keys=True)
