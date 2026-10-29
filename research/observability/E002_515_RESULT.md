@@ -10,7 +10,7 @@ The physical measurement contract was frozen **before any real optical data were
 
 ## Software verification
 
-Twelve local Python tests passed. These cover an artificial optical consistency fixture, independently shifted exposure reference causing a predeclared coverage failure, empty candidate sets, duplicate frame IDs, missing photodiode time, nonfinite values, missing references, out-of-range truth, timing-envelope monotonicity, reference uncertainty, invalid residual bounds and no FPS dependency. A GitHub Actions workflow additionally exercises the actual three-CSV CLI intake with a deliberately artificial fixture and checks hard-blocked product status. **Hosted success is pending verification**; the tests do not constitute instrument or human evidence.
+Twelve local Python tests passed. These cover an artificial optical consistency fixture, independently shifted exposure reference causing a predeclared coverage failure, empty candidate sets, duplicate frame IDs, missing photodiode time, nonfinite values, missing references, out-of-range truth, timing-envelope monotonicity, reference uncertainty, invalid residual bounds and no FPS dependency. A GitHub Actions workflow additionally exercises the actual three-CSV CLI intake with a deliberately artificial fixture and checks hard-blocked product status. **Hosted verification passed**: [GitHub Actions run 40791695887](https://github.com/sushxnthd/lucent/actions/runs/40791695887) completed successfully on commit cd2c4160, running the 12 adversarial Python controls and end-to-end three-CSV artificial-fixture CLI. This confirms reproducible software behavior, **not** instrument or human evidence.
 
 ## How to obtain the decisive physical result
 
