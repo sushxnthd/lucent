@@ -54,3 +54,7 @@ A and B are two 400-Hz native-marker worlds, both open (`a=1`) at all observed t
 **Rejected claims:** any population blink sensitivity, hard continuous-time speed ceiling, fatigue inference, PERCLOS accuracy, physical shutter timing, or deployment readiness.
 
 Lucent: `ABSTAIN_UNCALIBRATED`; release `BLOCKED`. Independent blinded human anatomical ratings **0**; authenticated physical shutter/clock measurements **0**; certified human speed ceilings **0**; held-out physical predictions **0**. Hush PR #45 untouched.
+
+## Relationship to earlier E002-432 (novelty guard)
+
+[E002-432](E002_432_RESULT.md) already proved a **different missing-frame failure**: dropping an ordinary-camera exposure and compressing timestamps can falsely certify a no-closure gap. E002-531 does **not** rediscover the general missing-data theorem. Its distinct target is **high-speed reference-ground-truth construction**: a real published 400-Hz human marker pipeline fills sub-25-ms tracking gaps before filtering, and this exact counterexample proves why a *reference* absence derived from those imputed intervals cannot falsify a predicted hidden closure. The new empirical next step is obtaining approved **pre-interpolation 400-Hz native markers**, not running another generic missingness sweep. No new human data or physical measurements were obtained.
