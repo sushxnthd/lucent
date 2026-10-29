@@ -1,0 +1,52 @@
+name: E002-515 physical optical replay intake
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_515_physical_replay.py'
+      - 'research/observability/test_e002_515_physical_replay.py'
+      - '.github/workflows/e002_515_physical_replay.yml'
+
+jobs:
+  physical-replay-intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test measured-input parser and independent-reference falsification
+        run: |
+          cd research/observability
+          python3 -m unittest -v test_e002_515_physical_replay
+      - name: Exercise full offline CSV ingestion on artificial software fixture
+        run: |
+          cd research/observability
+          python3 - <<'PY'
+          import csv
+          from pathlib import Path
+          p=Path('/tmp/e002_515_fixture')
+          p.mkdir(exist_ok=True)
+          cols=[f'ch{i}' for i in range(8)]
+          with (p/'photodiode.csv').open('w',newline='') as f:
+              w=csv.writer(f);w.writerow(['start_ms','end_ms',*cols])
+              for i in range(30):
+                  w.writerow([i,i+1,*[(i>>k)&1 for k in range(8)]])
+          with (p/'camera.csv').open('w',newline='') as f:
+              w=csv.writer(f);w.writerow(['frame_id',*cols])
+              for name,a,b in [('f0',2,12),('f1',16,26)]:
+                  w.writerow([name,*[sum((i>>k)&1 for i in range(a,b))/(b-a) for k in range(8)]])
+          with (p/'reference.csv').open('w',newline='') as f:
+              w=csv.writer(f);w.writerow(['frame_id','start_ms','end_ms','uncertainty_ms'])
+              w.writerow(['f0',2,12,0]);w.writerow(['f1',16,26,0])
+          PY
+          python3 e002_515_physical_replay.py --photodiode /tmp/e002_515_fixture/photodiode.csv --camera /tmp/e002_515_fixture/camera.csv --reference /tmp/e002_515_fixture/reference.csv --residual-max 0 --timing-envelope-ms 0 > /tmp/e002_515_result.json
+          python3 - <<'PY'
+          import json
+          r=json.load(open('/tmp/e002_515_result.json'))
+          assert r['reference_exposures_not_covered']==0
+          assert r['unsafe_gap_underbounds_vs_reference_envelope']==0
+          assert r['instrument_validation_result']=='REPLAY_CONSISTENT_NOT_PHYSICALLY_AUTHENTICATED'
+          assert r['independent_instrument_identity_verified_by_code'] is False
+          assert r['product']=='ABSTAIN_UNCALIBRATED' and r['release']=='BLOCKED'
+          print('Artificial CSV fixture passes; no physical measurements or release clearance')
+          PY
