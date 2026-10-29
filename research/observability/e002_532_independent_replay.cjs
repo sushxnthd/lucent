@@ -2,7 +2,7 @@
 // Independent quarter-millisecond integer integration. No Python imports.
 const assert = require('node:assert/strict');
 const offsets = [1,1,3,0,1,2,2,2,1,3,2,2,0,0,2,0,0,2,2,1,0,0,2,3,2,3,3,0,3,2,1,1,1,0,3,0,2,2,3,2];
-const widths = [6,2,4,2,5,3,6,6,2,2,3,6,6,3,3,5,6,4,6,2,6,6,2,2,4,6,2,4,5,2,2,5,5,4,2,6];
+const widths = [6,2,4,2,5,3,6,3,4,3,6,6,2,2,3,6,6,3,3,5,6,4,6,2,6,6,2,2,4,6,2,4,5,2,2,5,5,4,2,6];
 const pulses = offsets.map((v,k) => [BigInt(20*k+v), BigInt(20*k+v+widths[k])]);
 const min=(a,b)=>a<b?a:b, max=(a,b)=>a>b?a:b;
 function duty(tq, row, deltaq, exposureq, delayq, led=pulses) {
