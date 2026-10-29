@@ -34,6 +34,8 @@ All values are **hypothetical**, not measured camera or human data.
 
 The 240-Hz/1-ms example has an entire interval from approximately 3.17 to 5.17 ms in which every phase overlaps a frame, but some phases still lack a fully contained reference exposure. This directly affects the minimum useful reference-camera speed and duty cycle for prospective E002-371 falsification. A physically calibrated camera may have different exposure widths or rolling-shutter timing.
 
+[Vector phase-censoring figure](E002_524_REFERENCE_WITNESS.svg) illustrates why an overlapping high-speed frame need not be a fully contained anatomical witness. The figure is hypothetical, not a source frame.
+
 ## Verification and adversarial checks
 
 - [Exact-rational Python evaluator](e002_524_reference_sampling.py) constructs explicit counterexample phases at and below both boundaries, distinguishes overlap from strict containment, and requires explicit externally verified maximum native-frame gap for any conditional operational conclusion.
