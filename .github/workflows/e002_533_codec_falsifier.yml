@@ -1,0 +1,52 @@
+name: E002-533 real-codec optical model falsification
+on:
+  push:
+    paths:
+      - 'research/observability/e002_533_*'
+      - 'research/observability/test_e002_533_*'
+      - 'research/observability/e002_532_optical_calibration.py'
+      - 'research/observability/E002_533_*'
+      - '.github/workflows/e002_533_codec_falsifier.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_533_*'
+      - 'research/observability/test_e002_533_*'
+      - 'research/observability/e002_532_optical_calibration.py'
+      - 'research/observability/E002_533_*'
+      - '.github/workflows/e002_533_codec_falsifier.yml'
+jobs:
+  real-codec-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install video and Python dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+          python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Verify frozen adversarial cases with two decoders
+        run: python -m unittest -v test_e002_533_codec_falsifier.py
+        working-directory: research/observability
+      - name: Reproduce full aggregate without participant material
+        run: python research/observability/e002_533_codec_falsifier.py --output e002_533_hosted.json > /dev/null
+      - name: Verify no physical certification
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('e002_533_hosted.json'))
+          assert d['_environment']['physical_measurements']==0
+          assert d['_environment']['human_measurements']==0
+          assert all(v['product']=='ABSTAIN_UNCALIBRATED' and v['release']=='BLOCKED'
+                     for k,v in d.items() if not k.startswith('_'))
+          assert d['h264_gamma_uncorrected']['decision'] in ('MODEL_FALSIFIED','FALSIFIED_HELDOUT')
+          assert d['h264_heldout_glare']['decision']=='FALSIFIED_HELDOUT'
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-533-hosted-aggregate
+          path: e002_533_hosted.json
+          retention-days: 30
