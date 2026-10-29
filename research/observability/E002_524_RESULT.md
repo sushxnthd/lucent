@@ -6,7 +6,7 @@ Date: 2026-10-29. Primary E002-371 kernel; existing `research/observability-huma
 
 ## New falsifiable instrument consequence
 
-E002-519/520 require a high-speed reference exposure **entirely contained** in a genuine anatomical closure to produce a robust contradiction of an ordinary-camera no-hidden-closure prediction. High FPS alone does not guarantee such a reference witness.
+E002-519 requires reference exposure containment in the ordinary camera's **blind gap**, not necessarily in a continuous anatomical closure. E002-520/522 can certify a threshold crossing or positive total closure measure from a calibrated **partial-exposure mean**. The stricter E002-524 experiment asks when high FPS guarantees the *sufficient but not necessary* opportunity to capture one reference exposure wholly inside a continuous closure. See [Amendment A](E002_524_AMENDMENT_A.md); the original frozen protocol is preserved.
 
 Let reference exposure intervals be `[phi+kP,phi+kP+e]`, with independently established start-to-start period `P`, shutter duration `0<e<P`, and unknown acquisition phase `phi`. A real continuous closure lasts `d`.
 
@@ -32,7 +32,7 @@ All values are **hypothetical**, not measured camera or human data.
 | 1000 Hz, 0.5-ms exposure | 0.5 ms | 1.5 ms | 1.5 ms (u=0) |
 | 240 Hz, 1-ms exposure, one missing frame | Not established from original cadence | Not established from original cadence | 9.333333 ms (G=8.333333 ms, u=0) |
 
-The 240-Hz/1-ms example has an entire interval from approximately 3.17 to 5.17 ms in which every phase overlaps a frame, but some phases still lack a fully contained reference exposure. This directly affects the minimum useful reference-camera speed and duty cycle for prospective E002-371 falsification. A physically calibrated camera may have different exposure widths or rolling-shutter timing.
+The 240-Hz/1-ms example has an entire interval from approximately 3.17 to 5.17 ms in which every phase overlaps a frame, but some phases still lack a fully contained reference exposure. This informs reference-camera speed and duty-cycle selection for **full-closure exposure opportunities**. It is **not** a minimum measurable blink duration: a calibrated partial-exposure quantitative witness can still falsify an exclusion under E002-520/522. A physically calibrated camera may have different exposure widths or rolling-shutter timing.
 
 [Vector phase-censoring figure](E002_524_REFERENCE_WITNESS.svg) illustrates why an overlapping high-speed frame need not be a fully contained anatomical witness. The figure is hypothetical, not a source frame.
 
@@ -45,7 +45,7 @@ The 240-Hz/1-ms example has an entire interval from approximately 3.17 to 5.17 m
 
 ## Human/physical study acceptance consequence
 
-Before inspecting held-out reference anatomy, measure exposure starts and durations with an independent optical clock, verify native indices, characterize rolling-shutter row timing and missingness, and preregister the reference-witness sensitivity envelope. Freeze ordinary-camera EXCLUDE/ABSTAIN gaps before two genuine blinded human raters inspect high-speed reference anatomy. Require cross-camera scale/brightness/geometry, gaze, glasses, blur, exposure integration and uncertainty containment. A positive fully contained anatomical witness can falsify a specific exclusion. **An apparently open or phase-censored reference sequence never verifies no hidden blink.** No reference-camera sensitivity bound supplies the missing hard human eyelid-velocity ceiling.
+Before inspecting held-out reference anatomy, measure exposure starts and durations with an independent optical clock, verify native indices, characterize rolling-shutter row timing and missingness, and preregister the reference-witness sensitivity envelope. Freeze ordinary-camera EXCLUDE/ABSTAIN gaps before two genuine blinded human raters inspect high-speed reference anatomy. Require cross-camera scale/brightness/geometry, gaze, glasses, blur, exposure integration and uncertainty containment. A valid cross-camera-contained anatomical witness, including a calibrated **partial-exposure** quantitative witness under E002-520/522, can falsify a specific exclusion. A full-closure exposure is one stronger sufficient case, never a mandatory prerequisite. **An apparently open or phase-censored reference sequence never verifies no hidden blink.** No reference-camera sensitivity bound supplies the missing hard human eyelid-velocity ceiling.
 
 The eight-person pilot is suitable for finding counterexamples, not for claiming a 1% participant-session risk bound. E002-509's separate statistical conditions still apply.
 
