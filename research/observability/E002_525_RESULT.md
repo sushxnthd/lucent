@@ -48,7 +48,7 @@ The CLI outputs aggregate counts and blocked product state, never a no-hidden-cl
 
 ## Verification status
 
-[16 adversarial Python test groups](test_e002_525_prediction_lock.py) were committed, including an executable **prepatch** post-hoc-selection demonstration, commitment mismatch, denominator edits, timestamp-bound edits, attribution changes, malformed nonce, duplicate gaps, reference censoring and canonicalization. [Dedicated hosted workflow](../../.github/workflows/e002_525_prediction_lock.yml), [run 40852051733](https://github.com/sushxnthd/lucent/actions/runs/40852051733) was **queued at report creation**. Do not claim hosted success until its completed result is checked.
+[16 adversarial Python test groups](test_e002_525_prediction_lock.py) were committed, including an executable **prepatch** post-hoc-selection demonstration, commitment mismatch, denominator edits, timestamp-bound edits, attribution changes, malformed nonce, duplicate gaps, reference censoring and canonicalization. [Dedicated hosted workflow](../../.github/workflows/e002_525_prediction_lock.yml), [run 40852051733](https://github.com/sushxnthd/lucent/actions/runs/40852051733) **completed successfully** on commit \`c5d5ce81fb4b3feb2a86db3e2742c7a00ec468fd\`. GitHub Actions independently executed all 16 adversarial Python test groups and syntax validation. This is software verification, not a prospective human study or instrument calibration.
 
 ## Product and evidence gates
 
