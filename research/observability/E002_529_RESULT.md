@@ -38,6 +38,7 @@ Held-out construction with 0.01-ms below-threshold dwell also remains V-Lipschit
 
 ## Verification and limitations
 
+- [Vector schematic of excursion versus closure dwell](E002_529_SPEED_DWELL.svg). The inset is magnified and is not a measured trace.
 - [Exact-rational construction and independent piecewise dwell integrator](e002_529_dwell_counterexample.py).
 - [18 adversarial Python test methods](test_e002_529_dwell_counterexample.py): endpoints, Lipschitz slopes, strict threshold duration, frozen and held-out cameras, exact phase grid, critical-gap refusal, invalid inputs, and fail-closed product claims.
 - [Independent Node.js BigInt replay](e002_529_independent_replay.cjs) checks rational excursion and crossing durations, camera probabilities, invalid substitution, held-out 10,000-Hz case and 10,000 reference phases without importing Python code.
