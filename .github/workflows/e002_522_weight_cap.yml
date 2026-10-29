@@ -1,0 +1,57 @@
+name: E002-522 bounded shutter-response concentration
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_522_weight_cap.yml'
+      - 'research/observability/e002_522_weight_cap.py'
+      - 'research/observability/test_e002_522_weight_cap.py'
+      - 'research/observability/e002_522_independent_replay.cjs'
+      - 'research/observability/E002_522_SYNTHETIC_EXAMPLE.json'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_522_weight_cap.yml'
+      - 'research/observability/e002_522_weight_cap.py'
+      - 'research/observability/test_e002_522_weight_cap.py'
+      - 'research/observability/e002_522_independent_replay.cjs'
+      - 'research/observability/E002_522_SYNTHETIC_EXAMPLE.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-522-weight-cap
+  cancel-in-progress: false
+jobs:
+  bounded-shutter-inference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Frozen Python adversarial tests and held-out synthetic responses
+        run: python -m unittest discover -s research/observability -p 'test_e002_522_weight_cap.py' -v
+      - name: Independent BigInt exact and held-out replay
+        run: node research/observability/e002_522_independent_replay.cjs
+      - name: Synthetic CLI intake and release block
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/observability/e002_522_weight_cap.py \
+            --input research/observability/E002_522_SYNTHETIC_EXAMPLE.json \
+            --output "$RUNNER_TEMP/e002_522.json"
+          python - "$RUNNER_TEMP/e002_522.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1]))
+          assert d['decisions'][0]['decision']=='FALSIFIED_WITH_CONDITIONAL_WEIGHTED_SHUTTER_DURATION'
+          assert d['decisions'][0]['total_closure_time_ms_lower_bound_exact']=='1/5'
+          assert d['release']=='BLOCKED' and d['product']=='ABSTAIN_UNCALIBRATED'
+          assert not d['instrument_or_human_provenance_authenticated_by_code']
+          assert not d['verified_no_hidden_closure']
+          PY
