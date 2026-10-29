@@ -25,7 +25,7 @@ The same files were decoded through OpenCV VideoCapture and a separate ffmpeg CL
 - [Executable](e002_533_codec_falsifier.py), [tests](test_e002_533_codec_falsifier.py), [frozen protocol](E002_533_FROZEN.md) and [dedicated workflow](../../.github/workflows/e002_533_codec_falsifier.yml).
 - Reproduce: `python -m unittest -v test_e002_533_codec_falsifier.py` from `research/observability`; `python research/observability/e002_533_codec_falsifier.py --output e002_533_local.json` from repository root. Requires ffmpeg with libx264/FFV1 and Python NumPy/OpenCV.
 - No subject video is generated or committed. Generated encoded files are ephemeral unless `--retain-videos` is explicitly used. The workflow uploads a reproducible JSON aggregate, not human material.
-- Hosted GitHub Actions was running when this report was committed; hosted success is **not** claimed here. File hashes depend on encoder builds and are reported in the generated JSON, not used as cross-platform equality certificates.
+- Hosted [GitHub Actions run 40948947510](https://github.com/sushxnthd/lucent/actions/runs/40948947510) **completed successfully** on the executable/test/workflow head (5fa348a); the later report-only head must be checked separately. This confirms the reproducible software experiment, not physical camera calibration. File hashes depend on encoder builds and are reported in the generated JSON, not used as cross-platform equality certificates.
 
 ## Scientific and product consequence
 
