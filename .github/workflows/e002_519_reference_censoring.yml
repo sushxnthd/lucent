@@ -6,6 +6,8 @@ on:
       - 'research/observability/e002_519_reference_censoring.py'
       - 'research/observability/test_e002_519_reference_censoring.py'
       - '.github/workflows/e002_519_reference_censoring.yml'
+      - 'research/observability/e002_520_cross_camera.py'
+      - 'research/observability/test_e002_520_cross_camera.py'
   workflow_dispatch:
 jobs:
   test:
@@ -17,3 +19,4 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m unittest discover -s research/observability -p 'test_e002_519_reference_censoring.py' -v
+      - run: python -m unittest discover -s research/observability -p 'test_e002_520_cross_camera.py' -v
