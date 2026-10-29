@@ -132,8 +132,8 @@ def replay(wave, camera, truth, residual_max, timing_envelope_ms):
         unique += len(feasible) == 1
         # Boundary grid and independent timing error are conservative,
         # but reference uncertainty is NOT subtracted from the truth.
-        covered += any(abs(s-a) <= timing_envelope_ms+u+1e-9 and
-                       abs(e-b) <= timing_envelope_ms+u+1e-9 for s,e in feasible)
+        covered += any(abs(s-a)+u <= timing_envelope_ms+1e-9 and
+                       abs(e-b)+u <= timing_envelope_ms+1e-9 for s,e in feasible)
     for (na, fa), (nb, fb) in zip(predicted, predicted[1:]):
         if not fa or not fb:
             continue
@@ -152,6 +152,8 @@ def replay(wave, camera, truth, residual_max, timing_envelope_ms):
         'evidence_tier': 'OFFLINE_MEASURED_INPUT_REPLAY_NOT_HARDWARE_ATTESTATION',
         'frame_count': len(camera),
         'waveform_bins': len(wave),
+        'precalibrated_radiometric_residual_max': residual_max,
+        'precalibrated_timing_envelope_ms': timing_envelope_ms,
         'empty_candidate_frames': empty,
         'unique_candidate_frames': unique,
         'reference_exposures_with_matching_candidate': covered,
