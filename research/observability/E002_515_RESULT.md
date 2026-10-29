@@ -20,6 +20,10 @@ The correction now demands a conservative **universal** coverage witness: for ea
 
 The frozen artificial fixture with `u=0` remains a software consistency check. A separate adversarial test with `u=0.5 ms`, exact nominal candidate boundaries, and a zero timing envelope must now fail coverage. All 12 tests passed locally after the correction. The **earlier hosted CI success at 40791695887 predates this correction** and must not be cited as verification of the final universal-coverage rule; postpatch CI must be checked separately. This directly changes which future physical measurements can be considered supported, and prevents an unjustified conditional clearance.
 
+
+
+**Postpatch verification closure (2026-10-29):** [GitHub Actions run 40791909652](https://github.com/sushxnthd/lucent/actions/runs/40791909652) completed with `conclusion: success` on commit `d0151b734797b837fca79553c3ddc0c6264dc3f5`. This hosted result verifies the corrected reference-uncertainty software tests, not a physical measurement, authenticated clock, or eyelid-speed bound. The earlier warning is preserved as a historical record of the verification state at initial report creation.
+
 ## How to obtain the decisive physical result
 
 1. Physically drive eight spatially separated LED regions with an external hardware clock and record **measured emitted light** with independent photodiodes/logic analyzer. Record the measured waveform, not merely the commanded LED sequence.
