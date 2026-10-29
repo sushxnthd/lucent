@@ -8,7 +8,7 @@ Two targeted public-data searches this run identified 600-fps published blink ki
 ## New question, distinct from E002-520
 E002-520's transported reference mean at or below the ordinary-camera closure threshold establishes at least one threshold contact, but a **threshold touch is not a sustained blink**. Freeze whether a *strict* exposure-mean margin can certify a minimum **total time spent below threshold** inside the blind gap, without inventing a speed ceiling. This is total measure, not a contiguous closure episode.
 
-Assume (i) ordinary physical aperture a(t) in [0,1] is measurable, (ii) a single independently timed reference exposure E has uniform, linear temporal weighting and duration w >= w_min > 0, (iii) E is strictly inside the ordinary-camera guaranteed blind interior under all clock/row uncertainties, (iv) a calibrated pointwise cross-camera transport a_o(t) <= K a_r(t)+B with K,B>=0, (v) an independently validated reference exposure-mean bound mean_E(a_r)<=U, and (vi) the ordinary threshold theta is frozen with 0<theta<=1.
+Assume (i) ordinary physical aperture a(t) in [0,1] is measurable, (ii) a single independently timed reference exposure E has uniform, linear temporal weighting and duration w >= w_min > 0, (iii) E is strictly inside the ordinary-camera guaranteed blind interior under all clock/row uncertainties, (iv) a calibrated pointwise cross-camera transport a_o(t) <= K a_r(t)+B with K,B>=0, (v) an independently validated reference exposure-mean bound mean_E(a_r)<=U, and (vi) the ordinary threshold theta is frozen with 0<theta<1 (theta=1 is degenerate because all bounded apertures are then closed).
 
 Let M=K U+B. For C={t in E:a_o(t)<=theta}, derive the dimensionless measure fraction p=|C|/w. Prediction:
 - If M<theta, p >= 1-M/theta >0, hence |C| >= w_min(1-M/theta). This bound is sharp as an **infimum** over measurable [0,1]-valued trajectories with no derivative constraint, not necessarily sharp under a separately bounded velocity.
@@ -23,7 +23,7 @@ Let M=K U+B. For C={t in E:a_o(t)<=theta}, derive the dimensionless measure frac
 3. U=0.20, K=1: contact-only (if continuity), **zero** positive-duration bound.
 4. Explicit two-level constructions with a=0 on a fraction p_eps=1-U/(theta+eps) and a=theta+eps elsewhere approach the bound from above as eps->0, for U<theta; continuous ramps may approximate but not equal this infimum.
 5. Missing independently calibrated uniform integration, exposure-duration lower bound, cross-camera transport, geometry, clock, native frame provenance, independent raters, or nuisance control => UNKNOWN, not false clearance.
-6. Invalid threshold, nonfinite bounds, duplicate IDs, negative durations, noncontaining timing, or malformed evidence => reject/UNKNOWN. A reference OPEN observation never proves no hidden closure.
+6. Invalid threshold (including theta=1), nonfinite bounds, duplicate IDs, negative durations, noncontaining timing, or malformed evidence => reject/UNKNOWN. A reference OPEN observation never proves no hidden closure.
 7. Use exact rational arithmetic on finite-decimal input to prevent floating-point near-equality creating a fictitious positive margin. Independently cross-check frozen numbers using a second implementation.
 
 ## Decision and release
