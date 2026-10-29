@@ -1,0 +1,57 @@
+name: E002-521 conditional closure-measure bound
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_521_closure_measure.yml'
+      - 'research/observability/e002_521_closure_measure.py'
+      - 'research/observability/test_e002_521_closure_measure.py'
+      - 'research/observability/e002_521_independent_replay.cjs'
+      - 'research/observability/E002_521_SYNTHETIC_EXAMPLE.json'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_521_closure_measure.yml'
+      - 'research/observability/e002_521_closure_measure.py'
+      - 'research/observability/test_e002_521_closure_measure.py'
+      - 'research/observability/e002_521_independent_replay.cjs'
+      - 'research/observability/E002_521_SYNTHETIC_EXAMPLE.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-521-closure-measure
+  cancel-in-progress: false
+jobs:
+  exact-conditional-bound:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Adversarial Python regression
+        run: python -m unittest discover -s research/observability -p 'test_e002_521_closure_measure.py' -v
+      - name: Independent BigInt rational replay
+        run: node research/observability/e002_521_independent_replay.cjs
+      - name: CLI synthetic intake and explicit fail-closed status
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/observability/e002_521_closure_measure.py \
+            --input research/observability/E002_521_SYNTHETIC_EXAMPLE.json \
+            --output "$RUNNER_TEMP/e002_521.json"
+          python - "$RUNNER_TEMP/e002_521.json" <<'PY'
+          import json, sys
+          d = json.load(open(sys.argv[1]))
+          assert d['decisions'][0]['decision'] == 'FALSIFIED_WITH_POSITIVE_CLOSURE_MEASURE'
+          assert d['decisions'][0]['total_closure_time_ms_lower_bound_exact'] == '2/5'
+          assert d['product'] == 'ABSTAIN_UNCALIBRATED' and d['release'] == 'BLOCKED'
+          assert d['contiguous_blink_certified'] is False
+          assert d['calibration_or_human_provenance_authenticated_by_code'] is False
+          PY
