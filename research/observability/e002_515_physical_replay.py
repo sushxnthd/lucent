@@ -92,6 +92,44 @@ def reference(path):
     return result
 
 
+def native_sequence(path):
+    """Read a claimed native-index ledger. This is NOT hardware attestation."""
+    rows = read_csv(path, ('frame_id', 'native_index'))
+    ledger = []
+    seen_ids = set()
+    seen_indices = set()
+    for row in rows:
+        name, raw = row['frame_id'], row['native_index']
+        if (not name or len(name) > 80 or
+                any(ch not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for ch in name)):
+            raise ValueError('INVALID_NATIVE_FRAME_ID')
+        if not raw.isascii() or not raw.isdecimal():
+            raise ValueError('INVALID_NATIVE_INDEX')
+        index = int(raw)
+        if index > 10**12:
+            raise ValueError('INVALID_NATIVE_INDEX')
+        if name in seen_ids or index in seen_indices:
+            raise ValueError('DUPLICATE_NATIVE_SEQUENCE_ENTRY')
+        seen_ids.add(name)
+        seen_indices.add(index)
+        ledger.append((name, index))
+    return ledger
+
+
+def validate_native_sequence(camera, truth, ledger):
+    """Fail closed for an explicitly claimed contiguous native segment."""
+    if ledger is None:
+        return False
+    ids = [name for name, _ in camera]
+    if [name for name, _ in ledger] != ids:
+        raise ValueError('NATIVE_SEQUENCE_ORDER_MISMATCH')
+    if any(b != a+1 for (_, a), (_, b) in zip(ledger, ledger[1:])):
+        raise ValueError('NATIVE_SEQUENCE_GAP')
+    if any(truth[nb][0] <= truth[na][0] for na, nb in zip(ids, ids[1:])):
+        raise ValueError('REFERENCE_CAMERA_ORDER_MISMATCH')
+    return True
+
+
 def candidates(wave, obs, residual_max):
     """Search measured optical boundaries, not synthetic nominal frame times."""
     if not 0 <= residual_max <= 1:
@@ -115,12 +153,13 @@ def candidates(wave, obs, residual_max):
     return found
 
 
-def replay(wave, camera, truth, residual_max, timing_envelope_ms):
+def replay(wave, camera, truth, residual_max, timing_envelope_ms, native_ledger=None):
     """Truth is accessed only after all optical candidate sets are frozen."""
     if not 0 <= timing_envelope_ms <= 5:
         raise ValueError('INVALID_TIMING_ENVELOPE')
     if set(truth) != {name for name, _ in camera}:
         raise ValueError('REFERENCE_FRAME_SET_MISMATCH')
+    claimed_contiguous = validate_native_sequence(camera, truth, native_ledger)
     predicted = [(name, candidates(wave, obs, residual_max)) for name, obs in camera]
     if any(truth[name][0] < wave[0][0] or truth[name][1] > wave[-1][1] for name, _ in camera):
         raise ValueError('REFERENCE_OUTSIDE_WAVEFORM')
@@ -134,7 +173,9 @@ def replay(wave, camera, truth, residual_max, timing_envelope_ms):
         # but reference uncertainty is NOT subtracted from the truth.
         covered += any(abs(s-a)+u <= timing_envelope_ms+1e-9 and
                        abs(e-b)+u <= timing_envelope_ms+1e-9 for s,e in feasible)
-    for (na, fa), (nb, fb) in zip(predicted, predicted[1:]):
+    # A row-pair is not a native-adjacent exposure without a capture ledger.
+    # The ledger remains a claim until independently authenticated.
+    for (na, fa), (nb, fb) in (zip(predicted, predicted[1:]) if claimed_contiguous else ()):
         if not fa or not fb:
             continue
         true_a, true_b, true_u = truth[na]
@@ -159,11 +200,16 @@ def replay(wave, camera, truth, residual_max, timing_envelope_ms):
         'reference_exposures_with_matching_candidate': covered,
         'reference_exposures_not_covered': len(camera)-covered,
         'evaluated_adjacent_gaps': gap_count,
+        'unverified_csv_row_pairs': max(0, len(camera)-1) if not claimed_contiguous else 0,
+        'native_sequence_ledger_supplied': claimed_contiguous,
+        'native_frame_continuity_independently_attested': False,
+        'native_adjacent_gaps_proven_by_code': 0,
         'unsafe_gap_underbounds_vs_reference_envelope': underbounds,
         'worst_gap_margin_ms': min(gap_overestimates) if gap_overestimates else None,
         'instrument_validation_result': ('FAIL_REFERENCE_COVERAGE' if covered != len(camera) or underbounds
+                                         else 'INSUFFICIENT_NATIVE_SEQUENCE_PROVENANCE' if not claimed_contiguous
                                          else 'INSUFFICIENT_GAP_COVERAGE' if gap_count == 0
-                                         else 'REPLAY_CONSISTENT_NOT_PHYSICALLY_AUTHENTICATED'),
+                                         else 'REPLAY_CONSISTENT_SEQUENCE_UNATTESTED'),
         'independent_instrument_identity_verified_by_code': False,
         'continuous_time_eyelid_speed_certified': False,
         'product': 'ABSTAIN_UNCALIBRATED', 'release': 'BLOCKED'
@@ -175,13 +221,15 @@ def main():
     p.add_argument('--photodiode', required=True)
     p.add_argument('--camera', required=True)
     p.add_argument('--reference', required=True)
+    p.add_argument('--sequence', help='Claimed native frame index CSV; NOT independent hardware attestation')
     p.add_argument('--residual-max', type=float, required=True,
                    help='Pre-calibrated radiometric residual bound, NOT fitted on evaluation data')
     p.add_argument('--timing-envelope-ms', type=float, required=True,
                    help='Pre-calibrated optical-grid and phase uncertainty, NOT inferred from camera metadata')
     args = p.parse_args()
     out = replay(waveform(args.photodiode), observations(args.camera), reference(args.reference),
-                 args.residual_max, args.timing_envelope_ms)
+                 args.residual_max, args.timing_envelope_ms,
+                 native_sequence(args.sequence) if args.sequence else None)
     print(json.dumps(out, sort_keys=True, indent=2))
 
 
