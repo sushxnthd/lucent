@@ -80,6 +80,8 @@ class PhysicalReplay(unittest.TestCase):
 
     def test_reference_uncertainty_makes_gap_test_stricter(self):
         r = m.replay(self.wave, self.camera, {'f0':(2.,12.,0.5),'f1':(16.,26.,0.5)},0.,0.)
+        self.assertGreater(r['reference_exposures_not_covered'], 0)
+        self.assertEqual(r['instrument_validation_result'], 'FAIL_REFERENCE_COVERAGE')
         self.assertEqual(r['product'], 'ABSTAIN_UNCALIBRATED')
 
     def test_unbounded_residual_rejected(self):
