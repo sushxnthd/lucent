@@ -16,7 +16,7 @@ import re
 from e002_519_reference_censoring import evaluate as evaluate_519
 
 VERSION = "E002-525-v1"
-DOMAIN = b"LUCENT/E002-525/v1\\x00"
+DOMAIN = b"LUCENT/E002-525/v1\x00"
 
 
 def finite_number(x):
