@@ -44,6 +44,14 @@ Crucially, the existing E002-514 **set-valued inverse behaves correctly**: it re
 - No nominal FPS, inferred camera metadata or human video enters the experiment. The result is deterministic **synthetic codebook analysis**.
 - Seven adversarial software tests and a hosted workflow are committed. Hosted verification must be checked before claiming a CI pass.
 
+## Sharp codebook-separation criterion (elementary, not a novelty claim)
+
+For a finite set of candidate shutter intervals `I`, let `f(I)` be the exact eight-channel exposure-mean vector, and assume independently calibrated additive observation error bounded by `epsilon` in maximum norm. Define `delta = min_{I != J} ||f(I)-f(J)||_infinity`. **Every admissible observation has at most one feasible interval if and only if `delta > 2*epsilon`**. Sufficiency follows from the triangle inequality; necessity follows by choosing the midpoint of two vectors whose distance is at most `2*epsilon`. For positive error, the dimensionless separation ratio `delta/(2*epsilon)` must exceed one. This is the familiar disjoint-noise-ball condition from coding/identification theory, not a newly discovered theorem.
+
+E002-517's exact same-duration collisions establish `delta = 0` for each of the five tested full-record codebooks, so **no nonnegative error tolerance can make these particular codebooks universally injective**. With unknown gains, crosstalk, blur, line delay or clock phase, replace the point vectors by the *sets of observations reachable under every allowed nuisance*. A unique certificate is permitted only when the relevant reachable sets are disjoint. A small fitted residual alone is not evidence of disjointness.
+
+**Hosted verification:** [GitHub Actions run 40802272798](https://github.com/sushxnthd/lucent/actions/runs/40802272798) completed successfully on the executable/test commit, verifying all seven frozen software controls and the deterministic aggregate. This is independent hosted execution, not independent physical verification.
+
 ## Product and scientific consequence
 
 A known eight-channel random LED pattern is **not automatically an injective timestamp code** over a long acquisition window. E002-514's 199/200 selected-frame uniqueness remains a valid synthetic observation but cannot justify a claim of unique per-frame timing for all exposures. For a future instrument, require either (a) a codebook with a **prevalidated minimum signature-separation margin** over every admissible start/duration under independently calibrated noise and radiometry, or (b) full set-valued timing with worst-case blind gaps and explicit abstention. A single plausible optical fit is not enough. Unknown gain, mixing, ambient light, line delay and clock error can only expand the set of possible worlds unless separately bounded.
