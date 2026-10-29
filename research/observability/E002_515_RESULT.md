@@ -46,3 +46,10 @@ python research/observability/e002_515_physical_replay.py \
 Do not upload identifiable camera imagery, human annotations, raw reviewer data or owner-only frame mappings to GitHub. The CSV replay itself cannot prove hardware identity, timing independence, model correctness or human anatomy. No instrument truth, human labels, hard velocity ceiling or held-out physical predictions were obtained during this run.
 
 **Product:** `ABSTAIN_UNCALIBRATED`. **Release:** `BLOCKED`. No claim that Lucent is production-ready. The separate Hush branch/PR is untouched.
+
+
+## E002-518 addendum: native sequence is an additional measurement input
+
+The original E002-515 three-CSV intake did **not** identify which exported rows were consecutive native camera frames, although it labeled every successive camera-row pair as an `evaluated_adjacent_gaps` test. [E002-518](E002_518_RESULT.md) freezes and corrects this sampling-provenance error. Without an independently auditable native-frame index ledger, the updated evaluator reports `INSUFFICIENT_NATIVE_SEQUENCE_PROVENANCE`, evaluates **zero** claimed native-adjacent gaps and retains per-exposure reference coverage diagnostics only. A separate optional `--sequence` CSV with `frame_id,native_index` enables conditional consecutive-index diagnostics but cannot authenticate its own capture provenance. Such a replay is `REPLAY_CONSISTENT_SEQUENCE_UNATTESTED`, never a physical certificate. The old workflow's successful three-CSV result is historical software evidence and is **not** sufficient under this stronger gate.
+
+No physical data, human labels or hard eyelid-velocity ceiling were added. Product and release remain blocked.
