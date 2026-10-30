@@ -54,4 +54,14 @@ class TestExposureAverage(unittest.TestCase):
     def test_model_never_claims_human_certification(self):
         self.assertIn('NOT_HUMAN_CERTIFIED',symmetric_hidden_floor(.9,.2,40,.01,1/30)['evidence'])
 
+    def test_exploratory_cap_aware_reversal_vs_unbounded_extrapolation(self):
+        # Post-hoc distinction from E002-421's interior-headroom theorem.
+        # E002-421's unbounded formula is INAPPLICABLE to this saturated case.
+        b, V, E, T, c = .9, 45, .01, 1/30, .16
+        invalid_extrapolated_floor = b - V*T/2
+        self.assertLess(invalid_extrapolated_floor, c)
+        cap_aware = symmetric_hidden_floor(b,c,V,E,T)
+        self.assertTrue(cap_aware["conditional_exclusion"])
+        self.assertGreater(cap_aware["hidden_floor"],c)
+
 if __name__=='__main__': unittest.main()
