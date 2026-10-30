@@ -1,0 +1,29 @@
+name: E002-545 paired randomized optical edge
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_545_*'
+      - 'research/observability/E002_545_*'
+      - '.github/workflows/e002-545-randomized-edge.yml'
+  workflow_dispatch:
+jobs:
+  independent-verification:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Frozen adversarial Python tests
+        run: python research/observability/e002_545_paired_randomization.py --self-test
+      - name: Seeded synthetic nuisance experiment
+        run: |
+          cd research/observability
+          python e002_545_simulation.py > /tmp/e002_545_aggregate.json
+          diff -u E002_545_SYNTHETIC_AGGREGATE.json /tmp/e002_545_aggregate.json
+      - name: Independent JavaScript enumeration
+        run: node research/observability/e002_545_independent_replay.cjs
