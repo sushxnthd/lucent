@@ -21,6 +21,13 @@ jobs:
           python-version: '3.11'
       - name: Install fixed software dependencies
         run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Install and verify FFmpeg/ffprobe for actual FFV1 integrity test
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          command -v ffmpeg
+          command -v ffprobe
+          ffmpeg -hide_banner -version | head -n 1
       - name: Run twelve independent adversarial controls and FFV1 roundtrip
         run: |
           python -m py_compile research/observability/e002_535_independent_human_replay.py
@@ -41,6 +48,13 @@ jobs:
           python-version: '3.11'
       - name: Install parser dependencies; FFmpeg CLI is a separate decoder entry point
         run: python -m pip install --disable-pip-version-check numpy opencv-python-headless
+      - name: Install and verify FFmpeg/ffprobe before expensive human source downloads
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          command -v ffmpeg
+          command -v ffprobe
+          ffprobe -hide_banner -version | head -n 1
       - name: Download and hash-check authentic source privately
         env:
           PARTICIPANT: ${{ matrix.participant }}
