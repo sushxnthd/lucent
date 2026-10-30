@@ -1,0 +1,30 @@
+name: E002-536 literature velocity certificate falsifier
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_536_*'
+      - 'research/observability/test_e002_536_*'
+      - '.github/workflows/e002_536_literature_velocity_gate.yml'
+  workflow_dispatch:
+jobs:
+  exact-literature-stress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python adversarial controls
+        working-directory: research/observability
+        run: python -m unittest -v test_e002_536_literature_velocity_gate.py
+      - name: Frozen exact-rational output
+        working-directory: research/observability
+        run: python e002_536_literature_velocity_gate.py --frozen
+      - name: Independent BigInt arithmetic
+        working-directory: research/observability
+        run: node e002_536_independent_replay.cjs
