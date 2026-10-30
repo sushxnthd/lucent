@@ -8,6 +8,13 @@ on:
       - 'research/observability/e002_544_independent_rank.cjs'
       - 'research/observability/E002_544_SYNTHETIC_AGGREGATE.json'
       - '.github/workflows/e002_544_session_fwer.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_544_session_fwer.py'
+      - 'research/observability/test_e002_544_session_fwer.py'
+      - 'research/observability/e002_544_independent_rank.cjs'
+      - 'research/observability/E002_544_SYNTHETIC_AGGREGATE.json'
+      - '.github/workflows/e002_544_session_fwer.yml'
   workflow_dispatch:
 jobs:
   replay:
