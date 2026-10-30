@@ -1,0 +1,33 @@
+name: E002-544 session-wise optical edge false-alarm stress
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_544_session_fwer.py'
+      - 'research/observability/test_e002_544_session_fwer.py'
+      - 'research/observability/e002_544_independent_rank.cjs'
+      - 'research/observability/E002_544_SYNTHETIC_AGGREGATE.json'
+      - '.github/workflows/e002_544_session_fwer.yml'
+  workflow_dispatch:
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python adversarial tests
+        working-directory: research/observability
+        run: python -m unittest -v test_e002_544_session_fwer.py
+      - name: Independent Node.js rank replay
+        run: node research/observability/e002_544_independent_rank.cjs
+      - name: Reproduce frozen Monte Carlo aggregate byte-for-byte
+        run: |
+          python research/observability/e002_544_session_fwer.py --simulate --output /tmp/e002_544_replay.json
+          diff -u research/observability/E002_544_SYNTHETIC_AGGREGATE.json /tmp/e002_544_replay.json
