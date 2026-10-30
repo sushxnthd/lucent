@@ -1,0 +1,39 @@
+name: E002-549 prospective human-evidence claim gate
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_549_split_lock.yml'
+      - 'research/observability/e002_549_split_lock.py'
+      - 'research/observability/test_e002_549_split_lock.py'
+      - 'research/observability/e002_549_independent.cjs'
+      - 'research/observability/e002_548_witness.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_549_split_lock.yml'
+      - 'research/observability/e002_549_split_lock.py'
+      - 'research/observability/test_e002_549_split_lock.py'
+      - 'research/observability/e002_549_independent.cjs'
+      - 'research/observability/e002_548_witness.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-549-split-lock
+  cancel-in-progress: false
+jobs:
+  prospective-claim-gate:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run 19 frozen adversarial Python controls against actual E002-548 witness parser
+        run: python -m unittest discover -s research/observability -p 'test_e002_549_split_lock.py' -v
+      - name: Independent Node.js canonical SHA-256 and participant-split replay
+        run: node research/observability/e002_549_independent.cjs
