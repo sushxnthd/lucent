@@ -60,6 +60,9 @@ def audit(bundle):
             raise ValueError("invalid gap/threshold")
         if p.get("prediction") not in ("EXCLUDE", "ABSTAIN"):
             raise ValueError("prediction must be EXCLUDE or ABSTAIN")
+        for field in ("participant_id", "session_id", "roi_id"):
+            if not isinstance(p.get(field), str) or not p[field]:
+                raise ValueError(f"prediction missing {field}")
         eye = p.get("eye")
         if eye not in ("left", "right"):
             raise ValueError("eye invalid")
@@ -82,6 +85,8 @@ def audit(bundle):
             continue
         candidate = False
         for f in grouped[gap]:
+            if any(f.get(field) != p[field] for field in ("participant_id", "session_id", "roi_id")):
+                continue
             if f.get("eye") != p["eye"] or f.get("quality") != "valid":
                 continue
             # Certificates are ASSERTED by input, not authenticated by parser.
