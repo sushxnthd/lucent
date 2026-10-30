@@ -3,13 +3,13 @@ on:
   push:
     branches: [research/observability-human-boundary]
     paths:
-      - 'research/observability/e002_556_partition_calibration.cjs'
-      - 'research/observability/test_e002_556_partition_calibration.cjs'
+      - 'research/observability/e002_556_*'
+      - 'research/observability/test_e002_556_*'
       - '.github/workflows/e002_556_instrument.yml'
   pull_request:
     paths:
-      - 'research/observability/e002_556_partition_calibration.cjs'
-      - 'research/observability/test_e002_556_partition_calibration.cjs'
+      - 'research/observability/e002_556_*'
+      - 'research/observability/test_e002_556_*'
       - '.github/workflows/e002_556_instrument.yml'
 jobs:
   instrument-audit:
@@ -24,3 +24,5 @@ jobs:
         run: node research/observability/e002_556_partition_calibration.cjs --self-test
       - name: Adversarial Node regression tests
         run: node research/observability/test_e002_556_partition_calibration.cjs
+      - name: Independent Python direct-moment oracle
+        run: python research/observability/e002_556_independent_oracle.py
