@@ -66,7 +66,7 @@ class CrossedStimulusTests(unittest.TestCase):
 
     def test_unmatched_reference_cannot_freeze(self):
         with self.assertRaises(AssertionError):
-            frozen_fit(light('coded', 20261031), simulate(self.signal))
+            frozen_fit(light('coded', 20261031), self.signal)
 
     def test_no_physical_or_human_certification(self):
         self.assertEqual(self.results['evidence_tier'], 'SYNTHETIC_INSTRUMENT_ONLY')
