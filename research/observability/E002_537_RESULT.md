@@ -38,3 +38,7 @@ The synthetic generator tests the finite-sample guarantee and two failure modes,
 ## Verification
 
 Local: `python -m unittest -v test_e002_537_participant_calibration.py` **11/11 passed**; `python e002_537_participant_calibration.py` produced the frozen results above. Dedicated [hosted workflow](../../.github/workflows/e002_537_participant_calibration.yml) pins Python 3.11 / NumPy 2.3.5. **Hosted success was not verified when this report was first committed.** Do not convert queued or failed CI into a passing claim.
+
+## Hosted verification (2026-10-30 UTC)
+
+[GitHub Actions run 40998919723](https://github.com/sushxnthd/lucent/actions/runs/40998919723) **completed successfully** at commit `ac4faa4db69d16008e544f1c4dd7b688ba4e77ac`. The dedicated Ubuntu/Python 3.11/NumPy 2.3.5 workflow executed the 11 adversarial tests and frozen 20,000-trial seeded simulation. This confirms hosted implementation behavior, **not** physical eyelid measurement, human risk calibration or transport validity. Subsequent documentation-only PR checks are separate and may still be pending.
