@@ -57,7 +57,7 @@ def simulation(n=10000, seed=551):
     rng = random.Random(seed)
     gates = {k: True for k in REQUIRED_GATES}
     stats = dict(seed=seed, target_trials=n, accepted=0, excluded=0,
-                 true_closures=0, false_exclusions=0, discarded_out_of_range=0)
+                 true_closures=0, false_exclusions=0, discarded_out_of_range=0, speed_only_excluded=0)
     for _ in range(n):
         d = rng.uniform(.002, .02)
         u = rng.uniform(0., min(.0004, d/5))
@@ -83,6 +83,10 @@ def simulation(n=10000, seed=551):
         stats['true_closures'] += int(closure)
         is_excluded = r.decision == 'CONDITIONAL_EXCLUSION_ONLY'
         stats['excluded'] += int(is_excluded)
+        Dmax = d+2*u
+        Vcert = (abs(y1-y0)+2*e)/(d-2*u) + A*Dmax/2
+        speed_only_lower = min(y0-e,y1-e) - Vcert*Dmax/2
+        stats['speed_only_excluded'] += int(speed_only_lower > .2)
         stats['false_exclusions'] += int(is_excluded and closure)
     return stats
 
