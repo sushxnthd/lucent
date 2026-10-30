@@ -34,3 +34,25 @@ The hosted workflow is [E002-535 independent frozen human-null replay](../../.gi
 If both human replays match, E002-534's negative image-return finding gains an independent *software-level* replication. If they disagree, investigate decoder/normalization differences and withhold any stronger inference. In neither case does this prove absence of hidden anatomical closure, authenticate physical shutter timing or validate a hard continuous-time human speed ceiling. The killed E002-534 pixel-return observable stays rejected and **must not be retuned on S01/S19**.
 
 **Human anatomical ratings: 0; independently timed physical camera captures: 0; certified human velocity ceilings: 0; participant-disjoint physical predictions: 0.** Product `ABSTAIN_UNCALIBRATED`; release `BLOCKED`. Next decisive experiment remains the existing E002-502 two-human blinded anatomical review and E002-532 photodiode-timed physical camera study. Hush PR #45 is unchanged.
+
+## Hosted independent human replay: 2026-10-30 UTC (verified)
+
+**Evidence tier: checksum-pinned real-human-video, independent software replay of a frozen image-space null. This is not independently rated anatomy, physical camera timing, participant-disjoint validation, or a new physiological law.**
+
+The first E002-535 hosted attempt, [run 40983540709](https://github.com/sushxnthd/lucent/actions/runs/40983540709), **failed** after successfully downloading and verifying both source archives. Both human jobs stopped before video analysis because `ffprobe` was absent from the runner (`FileNotFoundError`). The original integrity job passed, but its optional codec roundtrip was not sufficient evidence that the CLI was installed. The workflow was repaired at commit [a12bfe5](https://github.com/sushxnthd/lucent/commit/a12bfe5c44f176c17f6e7fa57d290290586daf4c) by explicitly installing and verifying FFmpeg and ffprobe in both jobs, before human source download.
+
+The repaired [run 40988238089](https://github.com/sushxnthd/lucent/actions/runs/40988238089) **completed successfully across all three jobs**. Its integrity job verified FFmpeg 6.1.1-3ubuntu5 and ran all **12/12 adversarial tests**, including an actual FFV1 command-line encode/decode roundtrip. The two human jobs each downloaded and MD5-verified their authentic source archives and ran the independent FFmpeg CLI grayscale decoder and separate float64 ROI implementation.
+
+| Participant | Phase | Eligible | Rejected time/ID | Eye-return | Eye-specific | Background-return | Frozen replay decision |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| S01 | 0 | 2,379 | 22 | 0 | 0 | 0 | Agreement |
+| S01 | 2 | 2,378 | 22 | 0 | 0 | 0 | Agreement |
+| S19 | 0 | 2,380 | 21 | 0 | 0 | 0 | Agreement |
+| S19 | 2 | 2,379 | 21 | 0 | 0 | 0 | Agreement |
+| **Total** | both | **9,516** | **86** | **0** | **0** | **0** | **Agreement** |
+
+These are **observed E002-535 outputs**, not copied predicted counts. Both human jobs emitted `original_frozen_counts_reproduced: true` and `decision: REPLAY_AGREEMENT`. The original E002-534 null therefore **replicates at the aggregate level across the two software implementations**. This supports the narrow decision to **keep the frozen image-return observable rejected** rather than retune it.
+
+**Independence limits:** Both pipelines read the same previously studied participants and source metadata parser; FFmpeg CLI and OpenCV may share libavcodec internally. The grayscale conversion and float precision differ, but the zero aggregate agreement is not proof of bitwise identity, independent physiological measurement, or that no true eyelid closure occurred. No frame-level agreement statistics were exported, by design. Phase windows are dependent, and the two participants do not support a population false-negative confidence claim.
+
+**Stop decision:** Close E002-534/535 image-return investigation at these frozen thresholds. Do not retune S01/S19, relabel null image events as anatomical absence, or promote the pixel observable. Future primary work must use independently timed physical camera exposures, native-frame anatomical aperture with two blinded raters, explicit missing/unknown intervals, and participant-disjoint prospective gap predictions under a defensible velocity envelope. Product `ABSTAIN_UNCALIBRATED`; release `BLOCKED`. Hush PR #45 was not modified.
