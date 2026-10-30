@@ -85,7 +85,7 @@ def simulation(n=10000, seed=551):
         stats['excluded'] += int(is_excluded)
         Dmax = d+2*u
         Vcert = (abs(y1-y0)+2*e)/(d-2*u) + A*Dmax/2
-        speed_only_lower = min(y0-e,y1-e) - Vcert*Dmax/2
+        speed_only_lower = ((y0-e)+(y1-e)-Vcert*Dmax)/2
         stats['speed_only_excluded'] += int(speed_only_lower > .2)
         stats['false_exclusions'] += int(is_excluded and closure)
     return stats
