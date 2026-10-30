@@ -34,3 +34,7 @@ The research gate reports `ILLUSTRATIVE_NOT_CERTIFIED` unless a hard continuous-
 The literature supplies an actionable low-cost **240-fps smartphone pilot**, not a validated reference. Record independently timed optical pulses and native high-speed anatomy, obtain two blinded human raters, and precommit participant-disjoint tests of the dimensionless gap boundary. Explicitly distinguish spontaneous, voluntary and reflex blink strata. A true empirical speed ceiling requires an independent physical or model-based *continuous-time* argument, not the maximum sampled finite difference. No further literature-derived constant tuning is warranted.
 
 **Human anatomical ratings: 0. Authenticated physical camera studies: 0. Certified continuous-time velocity ceilings: 0. Participant-disjoint physical predictions: 0.** Product `ABSTAIN_UNCALIBRATED`; release `BLOCKED`. Hush PR #45 untouched.
+
+## Hosted verification (2026-10-30 UTC)
+
+[GitHub Actions run 40991592818](https://github.com/sushxnthd/lucent/actions/runs/40991592818) **completed successfully** on code/workflow commit `e9b45e02449886f4a9996426a869a43107e5f3b6`. This independently hosted Python 3.11's 11 adversarial tests, the frozen exact-rational output and Node 22 BigInt arithmetic replay. The hosted pass validates implementation arithmetic and evidence-tier controls, **not** human physiological speed, independently measured shutter timing, or a product certificate. Subsequent documentation-only PR checks may be pending; no broader hosted success is implied.
