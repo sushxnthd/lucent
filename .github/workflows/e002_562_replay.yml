@@ -1,0 +1,28 @@
+name: E002-562 one-sided human replay (synthetic regression)
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_562_replay.py'
+      - 'research/observability/test_e002_562_replay.py'
+      - '.github/workflows/e002_562_replay.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_562_replay.py'
+      - 'research/observability/test_e002_562_replay.py'
+      - '.github/workflows/e002_562_replay.yml'
+  workflow_dispatch:
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Adversarial one-sided replay tests
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_562_replay.py
