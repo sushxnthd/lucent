@@ -77,8 +77,8 @@ def check_owner(owner, audit):
     frame_audit = {}
     for row in audit.get('frames', []):
         k = (row.get('blind_clip'), row.get('frame_in_clip'))
-        if k in frame_audit or k[0] not in mapping_by_clip or
-                type(k[1]) is not int or not 0 <= k[1] < WINDOW:
+        if (k in frame_audit or k[0] not in mapping_by_clip or
+                type(k[1]) is not int or not 0 <= k[1] < WINDOW):
             raise ValueError('DUPLICATE_OR_UNKNOWN_AUDIT_FRAME')
         m = mapping_by_clip[k[0]]
         if (row.get('participant_id') != m['participant_id'] or
