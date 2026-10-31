@@ -1,0 +1,42 @@
+name: Lucent E002-564 independent physiological cohort-ratio challenge
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_564_*'
+      - 'research/observability/e002_564_*'
+      - 'research/observability/test_e002_564_*'
+      - '.github/workflows/e002_564_cohort_ratio.yml'
+  workflow_dispatch:
+jobs:
+  exact-cohort-ratio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Frozen Python adversarial controls
+        working-directory: research/observability
+        run: python -m unittest -v test_e002_564_cohort_ratio.py
+      - name: Independent exact BigInt replay
+        working-directory: research/observability
+        run: node e002_564_independent_replay.cjs
+      - name: Sanitized evidence-tier and product-gate check
+        working-directory: research/observability
+        run: |
+          python e002_564_cohort_ratio.py > /tmp/lucent564.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/lucent564.json'))
+          assert r['cohorts'][0]['necessary_observed_speed']['numerator']==24300
+          assert r['cohorts'][1]['necessary_observed_speed']['numerator']==4270
+          assert r['product']=='ABSTAIN_UNCALIBRATED' and r['release']=='BLOCKED'
+          assert not r['sun1997_primary_numeric_table_verified']
+          assert not r['hard_continuous_time_human_upper_bound_certified']
+          print('E002-564 exact ratio + honest release gate: PASS')
+          PY
