@@ -8,6 +8,7 @@ on:
       - 'research/observability/test_e002_565_provenance_guard.py'
       - 'research/observability/e002_565_guarded_replay.py'
       - 'research/observability/test_e002_565_guarded_replay.py'
+      - 'research/observability/test_e002_565_real_replay.py'
       - 'research/observability/e002_565_independent_replay.cjs'
   workflow_dispatch:
 permissions:
