@@ -1,0 +1,27 @@
+name: E002-576 LPW blinded alias adjudication
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_576_lpw_alias.py'
+      - 'research/observability/test_e002_576_lpw_alias.py'
+      - '.github/workflows/e002_576_lpw_alias.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_576_lpw_alias.py'
+      - 'research/observability/test_e002_576_lpw_alias.py'
+      - '.github/workflows/e002_576_lpw_alias.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  adversarial:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run synthetic adversarial controls without downloading human imagery
+        run: python -m unittest discover -s research/observability -p 'test_e002_576_lpw_alias.py' -v
