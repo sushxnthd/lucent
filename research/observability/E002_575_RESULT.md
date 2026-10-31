@@ -39,3 +39,7 @@ Next: acquire LPW once in an authorized no-cost environment; independently verif
 **Evidence ledger:** verified LPW footage 0; independent human anatomical rater pairs 0; physical shutter captures 0; certified continuous-time human eyelid-speed upper bounds 0; held-out physical closure predictions 0.
 
 **Product:** `ABSTAIN_UNCALIBRATED`; **release:** `BLOCKED`. Hush's separate branch and PR remain untouched.
+
+## Hosted CI correction (2026-11-01)
+
+The initial [hosted E002-575 PR run 41236997139](https://github.com/sushxnthd/lucent/actions/runs/41236997139) **FAILED before running any tests**. Its Ubuntu runner lacked both `ffmpeg` and `ffprobe`; `setUpClass` raised `FileNotFoundError`, and **zero** of the 13 synthetic tests executed. This is an environment dependency failure, not a scientific falsification or successful hosted verification. Commit [7a5c7d6](https://github.com/sushxnthd/lucent/commit/7a5c7d66474692fe8ca70b307c79c35c341353d7) explicitly installs FFmpeg before the decoder checks. [Corrected CI run 41240163141](https://github.com/sushxnthd/lucent/actions/runs/41240163141) was queued at inspection; success is not yet established. Preserve the original failed run in the evidence chain.
