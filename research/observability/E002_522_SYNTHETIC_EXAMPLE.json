@@ -1,0 +1,35 @@
+{
+  "version": "E002-522-v1",
+  "gaps": [
+    {
+      "id": "synthetic-g1",
+      "prediction": "EXCLUDE",
+      "left_end_max_ms": 10,
+      "right_start_min_ms": 30,
+      "ordinary_closure_threshold": 0.2,
+      "references": [
+        {
+          "id": "synthetic-r1",
+          "start_min_ms": 12,
+          "end_max_ms": 22,
+          "exposure_duration_lower_ms": 8,
+          "anatomy": "CLOSED_WITNESS",
+          "reference_weighted_mean_aperture_upper": 0.19,
+          "transport_scale_upper": 1,
+          "transport_offset_upper": 0,
+          "shutter_weight_concentration_upper": 2,
+          "two_independent_raters": true,
+          "radiometry_linear_valid": true,
+          "shutter_response_nonnegative_valid": true,
+          "shutter_response_normalized_valid": true,
+          "shutter_response_envelope_calibrated": true,
+          "clock_valid": true,
+          "native_provenance_valid": true,
+          "geometry_transport_valid": true,
+          "nuisance_clear": true,
+          "ordinary_aperture_bounded_01": true
+        }
+      ]
+    }
+  ]
+}

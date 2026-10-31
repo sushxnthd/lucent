@@ -1,0 +1,42 @@
+name: E002-443 human S19 sparse frame-event test
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_443_sparse_frame_clock.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  s19-events:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate preregistered sparse-event adversarial fixtures
+        run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_443_sparse_frame_clock.py' -v
+      - name: Acquire hash-verified human S19 and evaluate sparse frame-event clock
+        id: human
+        continue-on-error: true
+        run: python research/observability/e002_443_sparse_frame_clock.py --output /tmp/e002_443_s19.json
+      - name: Record only nonidentifying aggregate evidence
+        if: always()
+        run: |
+          if [ -f /tmp/e002_443_s19.json ]; then
+            cat /tmp/e002_443_s19.json
+            echo 'Candidate table events do not authenticate physical shutter time or closure.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '{"status":"HUMAN_ANALYSIS_FAILED","e002_371_physical_validation":"FAIL","physical_release_authorized":false}' > /tmp/e002_443_s19.json
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-443-s19-event-clock-aggregate
+          path: /tmp/e002_443_s19.json
+          retention-days: 14
+      - name: Fail if human-data experiment did not execute
+        if: steps.human.outcome != 'success'
+        run: exit 1

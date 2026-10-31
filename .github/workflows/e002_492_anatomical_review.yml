@@ -1,0 +1,52 @@
+name: E002-492 blinded anatomical review integrity tests
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_492_anatomical_review.yml'
+      - 'research/observability/e002_492_anatomical_review.py'
+      - 'research/observability/test_e002_492_anatomical_review.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_492_anatomical_review.yml'
+      - 'research/observability/e002_492_anatomical_review.py'
+      - 'research/observability/test_e002_492_anatomical_review.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-492-review-integrity
+  cancel-in-progress: false
+jobs:
+  review-integrity:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run blinded human-review protocol adversarial tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_492_anatomical_review.py' -v
+      - name: Assert no human frames or source data are acquired by CI
+        shell: bash
+        run: |
+          set -euo pipefail
+          test ! -e research/observability/S01.zip
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'research/observability')
+          from e002_492_anatomical_review import build_manifest, template, adjudicate
+          m=build_manifest()
+          a,b=template(m,'A'),template(m,'B')
+          r=adjudicate(m,a,b)
+          assert r['unreviewed']==260
+          assert r['dual_measurable']==0
+          assert r['product']=='ABSTAIN_UNCALIBRATED'
+          assert r['release']=='BLOCKED'
+          assert not r['human_reference_validated']
+          print('E002-492 fail-closed review without human labels: PASS')
+          PY

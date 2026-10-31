@@ -1,0 +1,45 @@
+{
+  "clock_uncertainty_s": 0.0001,
+  "counts": {
+    "NEGATIVE_CONDITIONAL": 585,
+    "UNRESOLVED": 242,
+    "WITNESSED_CROSSING": 373,
+    "actual_crossing": 432,
+    "actual_crossing_unresolved": 59,
+    "actual_non_crossing_unresolved": 183
+  },
+  "evidence_tier": "SYNTHETIC_INDEPENDENT_PIECEWISE_LINEAR_TRUTH",
+  "examples": {
+    "NEGATIVE_CONDITIONAL": {
+      "minimum_true_aperture_mm": 2.689009012081472,
+      "reference_lower_envelope_mm": 2.415361554772862,
+      "reference_reason": "exact_lipschitz_envelope_excludes_crossing",
+      "trial_index": 8
+    },
+    "UNRESOLVED": {
+      "minimum_true_aperture_mm": 2.1618867684190994,
+      "reference_lower_envelope_mm": 1.8721838863020832,
+      "reference_reason": "reference_sampling_cannot_exclude_crossing",
+      "trial_index": 0
+    },
+    "WITNESSED_CROSSING": {
+      "minimum_true_aperture_mm": 1.695068810443401,
+      "reference_lower_envelope_mm": null,
+      "reference_reason": "dual_rater_interval_below_threshold",
+      "trial_index": 2
+    }
+  },
+  "experiment": "E002-436",
+  "external_physical_provenance_authenticated": false,
+  "false_conditional_negative_against_synthetic_truth": 0,
+  "human_sequences": 0,
+  "participants": 0,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "product_claim_authorized": false,
+  "reference_sampling_hz": 200,
+  "seed": 436,
+  "stipulated_velocity_mm_s": 120,
+  "synthetic_trials": 1200,
+  "threshold_mm": 2,
+  "truth_time_step_s": 0.00025
+}

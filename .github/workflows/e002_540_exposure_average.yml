@@ -1,0 +1,38 @@
+name: E002-540 exposure-integrated endpoint falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_540_*'
+      - 'research/observability/e002_540_*'
+      - 'research/observability/test_e002_540_*'
+      - '.github/workflows/e002_540_exposure_average.yml'
+  workflow_dispatch:
+
+jobs:
+  ideal-shutter-falsifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install independent LP optimizer
+        run: python -m pip install --disable-pip-version-check numpy scipy
+      - name: Exact rational witness and unseen speed control
+        run: python research/observability/e002_540_exposure_average.py
+      - name: Adversarial mathematical and evidence-tier controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_540_exposure_average.py' -v
+      - name: Independent LP at two grids and both speeds
+        run: |
+          python research/observability/e002_540_independent_lp.py --q 10 --speed 45
+          python research/observability/e002_540_independent_lp.py --q 20 --speed 45
+          python research/observability/e002_540_independent_lp.py --q 10 --speed 40
+          python research/observability/e002_540_independent_lp.py --q 20 --speed 40
+      - name: Independent Node BigInt shutter-integral replay
+        run: node research/observability/e002_540_independent_replay.cjs

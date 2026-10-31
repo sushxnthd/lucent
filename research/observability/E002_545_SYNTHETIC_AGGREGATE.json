@@ -1,0 +1,15 @@
+{
+  "alpha": 0.05,
+  "effect_rate": 1.0,
+  "effect_rejections": 1000,
+  "evidence": "synthetic_only",
+  "human_measurements": 0,
+  "injected_effect_at_one_position": 4,
+  "null_rate": 0.05,
+  "null_rejections": 50,
+  "pairs": 8,
+  "physical_measurements": 0,
+  "positions": 20,
+  "replications_per_condition": 1000,
+  "seed": 5452026
+}

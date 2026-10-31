@@ -1,0 +1,43 @@
+name: E002-569 fail-closed claim gate
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'src/lucent/measurement_claim_gate.py'
+      - 'tests/test_measurement_claim_gate.py'
+      - '.github/workflows/e002_569_claim_gate.yml'
+  pull_request:
+    paths:
+      - 'src/lucent/measurement_claim_gate.py'
+      - 'tests/test_measurement_claim_gate.py'
+      - '.github/workflows/e002_569_claim_gate.yml'
+  workflow_dispatch:
+
+jobs:
+  release-claim-falsification:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Adversarial claim-gate unit tests
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -p test_measurement_claim_gate.py -v
+      - name: Explicit fail-closed product contract
+        env:
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          from lucent.measurement_claim_gate import evaluate_claim
+          for claim in ('NO_HIDDEN_CLOSURE','BLINK_DURATION','PERCLOS','SLEEPINESS','FATIGUE'):
+              r = evaluate_claim({'claim':claim,'observed_frames':30,'expected_frames':30,
+                  'nominal_fps':30,'evidence':{'certified':True}})
+              assert r.decision == 'ABSTAIN_UNCALIBRATED'
+              assert r.release == 'BLOCKED'
+              assert r.frame_completeness is None
+          PY

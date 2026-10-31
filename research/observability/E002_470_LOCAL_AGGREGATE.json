@@ -1,0 +1,157 @@
+{
+  "experiment": "E002-470",
+  "seed": 470371,
+  "provenance": "LOCAL_FAITHFUL_STANDIN_ONLY_PENDING_HOSTED_ACTUAL_REPOSITORY_GATE",
+  "evidence_tier": "SYNTHETIC_CONTINUOUS_APERTURE_ORACLE",
+  "clean": {
+    "by_stratum": {
+      "30fps_0.5ms": {
+        "EXCLUDED_CONDITIONALLY": 155,
+        "NOT_EXCLUDED": 1345,
+        "true_hidden_closures": 466,
+        "false_exclusions": 0,
+        "unexpected_abstentions": 0
+      },
+      "30fps_1.5ms": {
+        "EXCLUDED_CONDITIONALLY": 138,
+        "NOT_EXCLUDED": 1362,
+        "true_hidden_closures": 437,
+        "false_exclusions": 0,
+        "unexpected_abstentions": 0
+      },
+      "60fps_0.5ms": {
+        "EXCLUDED_CONDITIONALLY": 228,
+        "NOT_EXCLUDED": 1272,
+        "true_hidden_closures": 494,
+        "false_exclusions": 0,
+        "unexpected_abstentions": 0
+      },
+      "60fps_1.5ms": {
+        "EXCLUDED_CONDITIONALLY": 230,
+        "NOT_EXCLUDED": 1270,
+        "true_hidden_closures": 485,
+        "false_exclusions": 0,
+        "unexpected_abstentions": 0
+      },
+      "120fps_0.5ms": {
+        "EXCLUDED_CONDITIONALLY": 399,
+        "NOT_EXCLUDED": 1101,
+        "true_hidden_closures": 524,
+        "false_exclusions": 0,
+        "unexpected_abstentions": 0
+      },
+      "120fps_1.5ms": {
+        "EXCLUDED_CONDITIONALLY": 343,
+        "NOT_EXCLUDED": 1157,
+        "true_hidden_closures": 478,
+        "false_exclusions": 0,
+        "unexpected_abstentions": 0
+      },
+      "240fps_0.5ms": {
+        "EXCLUDED_CONDITIONALLY": 614,
+        "NOT_EXCLUDED": 886,
+        "true_hidden_closures": 531,
+        "false_exclusions": 0,
+        "unexpected_abstentions": 0
+      },
+      "240fps_1.5ms": {
+        "EXCLUDED_CONDITIONALLY": 556,
+        "NOT_EXCLUDED": 944,
+        "true_hidden_closures": 504,
+        "false_exclusions": 0,
+        "unexpected_abstentions": 0
+      }
+    },
+    "total": {
+      "EXCLUDED_CONDITIONALLY": 2663,
+      "NOT_EXCLUDED": 9337,
+      "true_hidden_closures": 3919,
+      "false_exclusions": 0,
+      "unexpected_abstentions": 0
+    }
+  },
+  "nuisance": {
+    "baseline_decision": "NOT_EXCLUDED",
+    "baseline_dark_gap_min_mm": 1.99,
+    "baseline_true_hidden_closure": true,
+    "by_nuisance": {
+      "geometry": {
+        "injection": "3% aperture scale inflation",
+        "misdeclared_pass_decision": "EXCLUDED_CONDITIONALLY",
+        "declared_fail_decision": "ABSTAIN",
+        "misdeclared_pass_false_exclusion": true,
+        "declared_fail_abstains": true
+      },
+      "brightness": {
+        "injection": "+0.075 mm apparent-aperture offset",
+        "misdeclared_pass_decision": "EXCLUDED_CONDITIONALLY",
+        "declared_fail_decision": "ABSTAIN",
+        "misdeclared_pass_false_exclusion": true,
+        "declared_fail_abstains": true
+      },
+      "missingness": {
+        "injection": "+0.075 mm apparent-aperture offset",
+        "misdeclared_pass_decision": "EXCLUDED_CONDITIONALLY",
+        "declared_fail_decision": "ABSTAIN",
+        "misdeclared_pass_false_exclusion": true,
+        "declared_fail_abstains": true
+      },
+      "blur": {
+        "injection": "+0.075 mm apparent-aperture offset",
+        "misdeclared_pass_decision": "EXCLUDED_CONDITIONALLY",
+        "declared_fail_decision": "ABSTAIN",
+        "misdeclared_pass_false_exclusion": true,
+        "declared_fail_abstains": true
+      },
+      "gaze": {
+        "injection": "+0.075 mm apparent-aperture offset",
+        "misdeclared_pass_decision": "EXCLUDED_CONDITIONALLY",
+        "declared_fail_decision": "ABSTAIN",
+        "misdeclared_pass_false_exclusion": true,
+        "declared_fail_abstains": true
+      },
+      "glasses": {
+        "injection": "+0.075 mm apparent-aperture offset",
+        "misdeclared_pass_decision": "EXCLUDED_CONDITIONALLY",
+        "declared_fail_decision": "ABSTAIN",
+        "misdeclared_pass_false_exclusion": true,
+        "declared_fail_abstains": true
+      },
+      "sampling": {
+        "injection": "+0.65 ms unreported effective frame separation",
+        "misdeclared_pass_decision": "EXCLUDED_CONDITIONALLY",
+        "declared_fail_decision": "ABSTAIN",
+        "misdeclared_pass_false_exclusion": true,
+        "declared_fail_abstains": true
+      },
+      "clock": {
+        "injection": "+0.65 ms unreported effective frame separation",
+        "misdeclared_pass_decision": "EXCLUDED_CONDITIONALLY",
+        "declared_fail_decision": "ABSTAIN",
+        "misdeclared_pass_false_exclusion": true,
+        "declared_fail_abstains": true
+      },
+      "rolling_shutter": {
+        "injection": "+0.65 ms unreported effective frame separation",
+        "misdeclared_pass_decision": "EXCLUDED_CONDITIONALLY",
+        "declared_fail_decision": "ABSTAIN",
+        "misdeclared_pass_false_exclusion": true,
+        "declared_fail_abstains": true
+      }
+    },
+    "false_exclusions_if_pass_misdeclared": 9,
+    "abstentions_if_fail_declared": 9,
+    "total_fault_strata": 9
+  },
+  "independent_numeric_integration_control": {
+    "controls": 12,
+    "max_absolute_difference_mm": 4.779243667485389e-10,
+    "within_1e_minus_6_mm": true
+  },
+  "real_human_anatomical_measurements": 0,
+  "real_physical_instrument_acquisitions": 0,
+  "velocity_cap_independently_verified": false,
+  "shutter_timing_independently_verified": false,
+  "physical_release_authorized": false,
+  "product_claim": "ABSTAIN_UNCALIBRATED"
+}

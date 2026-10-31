@@ -1,0 +1,34 @@
+name: E002-433 joint nuisance composition falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_433_*'
+      - 'research/observability/e002_433_*'
+      - 'research/observability/test_e002_433_*'
+      - '.github/workflows/e002_433_joint_nuisance.yml'
+  workflow_dispatch:
+jobs:
+  joint-nuisance-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent synthetic tests
+        run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_433_joint_nuisance.py
+      - name: Fail closed on physical certification
+        run: |
+          PYTHONPATH=research/observability python - <<'PY'
+          import e002_433_joint_nuisance as e
+          result=e.experiment()
+          assert result['incomplete_checks_false_candidates']
+          assert result['joint_abstains']
+          assert result['holdout']['false_certificates']==0
+          assert result['physical_certificate_authorized'] is False
+          assert result['product']=='ABSTAIN_UNCALIBRATED'
+          print('SYNTHETIC ONLY: joint photometric/geometry calibration required.')
+          PY

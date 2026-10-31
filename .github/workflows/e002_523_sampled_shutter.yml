@@ -1,0 +1,57 @@
+name: E002-523 finite shutter-response sampling falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_523_sampled_shutter.yml'
+      - 'research/observability/e002_523_sampled_shutter.py'
+      - 'research/observability/test_e002_523_sampled_shutter.py'
+      - 'research/observability/e002_523_independent_replay.cjs'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_523_sampled_shutter.yml'
+      - 'research/observability/e002_523_sampled_shutter.py'
+      - 'research/observability/test_e002_523_sampled_shutter.py'
+      - 'research/observability/e002_523_independent_replay.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-523-sampled-shutter
+  cancel-in-progress: false
+jobs:
+  exact-identifiability-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fifteen frozen Python adversarial tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_523_sampled_shutter.py' -v
+      - name: Independent Node.js exact BigInt replay
+        run: node research/observability/e002_523_independent_replay.cjs
+      - name: Fail-closed JSON output contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/observability/e002_523_sampled_shutter.py --output "$RUNNER_TEMP/e002_523.json"
+          python - "$RUNNER_TEMP/e002_523.json" <<'PY'
+          import json,sys
+          d=json.load(open(sys.argv[1]))
+          assert d['product']=='ABSTAIN_UNCALIBRATED'
+          assert d['release']=='BLOCKED'
+          assert len(d['frozen_worlds'])==2
+          for world in d['frozen_worlds']:
+              assert world['point_samples_only_decision']=='ABSTAIN_UNCALIBRATED'
+              assert world['sampled_response_values_equal']
+              assert world['sampled_peak_R_hat']['fraction']=='1'
+              assert world['unsafe_naive_lower_ms']['decimal'] > world['world1_closed_duration_ms']['decimal']
+              assert world['valid_true_cap_lower_ms']['decimal'] <= world['world1_closed_duration_ms']['decimal']
+          PY

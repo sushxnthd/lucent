@@ -1,0 +1,36 @@
+name: E002-563 original human Phantom provenance (private ephemeral)
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_563_public_phantom_probe.py'
+      - 'research/observability/test_e002_563_public_phantom_probe.py'
+      - '.github/workflows/e002-563-public-human-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  original-human-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Ensure FFmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Local synthetic fixture and security tests
+        working-directory: research/observability
+        run: python3 -m unittest -v test_e002_563_public_phantom_probe.py
+      - name: Probe published original human AVI without persisting media
+        working-directory: research/observability
+        run: |
+          timeout 1100 python3 e002_563_public_phantom_probe.py --output /tmp/lucent-e002-563-aggregate.json
+          python3 - <<'PY'
+          import json
+          p=json.load(open('/tmp/lucent-e002-563-aggregate.json'))
+          assert p['archive_md5_verified'] and not p['sensor_clock_verified']
+          assert p['release']=='BLOCKED' and p['independent_raters']==0
+          print('E002-563 sanitized report verified; no raw human media retained')
+          PY
+      - name: Remove private acquisition bytes
+        if: always()
+        run: rm -f /tmp/lucent-e002-563-aggregate.json

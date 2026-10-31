@@ -1,0 +1,62 @@
+name: E002-468 independent human video acquisition
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - .github/workflows/e002_468_human_video_acquisition.yml
+      - research/observability/e002_468_video_acquisition.py
+      - research/observability/test_e002_468_video_acquisition.py
+      - research/observability/E002_468_FROZEN.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e002-468-human-acquisition-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  acquire-development-video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install required video tools (explicit runner dependency)
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+          fi
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Test frozen acquisition adapter on synthetic fixtures
+        run: python -m unittest discover -s research/observability -p 'test_e002_468_video_acquisition.py' -v
+      - name: Download one development participant, verify checksum, inspect video
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --silent --show-error --retry 1 --connect-timeout 20 --max-time 600 --max-filesize 450000000 \
+            --output "$RUNNER_TEMP/S19.zip" \
+            'https://zenodo.org/records/18971758/files/S19.zip?download=1'
+          python research/observability/e002_468_video_acquisition.py \
+            --archive "$RUNNER_TEMP/S19.zip" \
+            --output "$RUNNER_TEMP/E002_468_HUMAN_SIGNAL_AGGREGATE.json"
+          echo 'Acquired real public video; aggregate diagnostics only. No anatomical/physical validation.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Record failed acquisition without fabricating observations
+        if: failure()
+        shell: bash
+        run: |
+          printf '%s\n' '{"protocol":"E002-468-frozen-v1","status":"ACQUISITION_FAILED","anatomical_closure_labels":0,"physical_hidden_closure_exclusion":"ABSTAIN_UNCALIBRATED","product_release_authorized":false}' > "$RUNNER_TEMP/E002_468_HUMAN_SIGNAL_AGGREGATE.json"
+          echo 'Acquisition or verification failed; no human evidence is claimed.' >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload aggregate only, never raw video
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-468-public-aggregate
+          path: ${{ runner.temp }}/E002_468_HUMAN_SIGNAL_AGGREGATE.json
+          retention-days: 7
+          if-no-files-found: error

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-label="Idealized global-shutter exposure averages conceal a speed-limited aperture dip below the closure threshold">
+<rect width="1200" height="600" fill="#fafbfc"/>
+<text x="86" y="50" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#142536">Exposure averages are not pointwise eyelid apertures</text>
+<text x="86" y="77" font-family="Arial,sans-serif" font-size="15" fill="#506276">E002-540 | Exact idealized scalar witness | Not human or physical-camera data</text>
+<rect x="100" y="100" width="208" height="290" rx="5" fill="#e3f0f8"/>
+<rect x="308" y="100" width="484" height="290" rx="5" fill="#f2f3f5"/>
+<rect x="792" y="100" width="208" height="290" rx="5" fill="#e3f0f8"/>
+<line x1="100" y1="390" x2="1000" y2="390" stroke="#526475" stroke-width="2"/>
+<line x1="100" y1="90" x2="100" y2="390" stroke="#526475" stroke-width="2"/>
+<g font-family="Arial,sans-serif" font-size="14" fill="#43596c">
+<text x="76" y="94">1.0</text><text x="76" y="124">0.9</text><text x="76" y="184">0.7</text><text x="76" y="334">0.2</text><text x="76" y="394">0.0</text>
+<text x="97" y="413">0</text><text x="289" y="413">10 ms</text><text x="772" y="413">33.33 ms</text><text x="977" y="413">43.33 ms</text>
+<text x="140" y="125">Exposure 1</text><text x="468" y="125">Fully blind interval</text><text x="836" y="125">Exposure 2</text>
+</g>
+<line x1="100" y1="330" x2="1000" y2="330" stroke="#d04d54" stroke-width="2" stroke-dasharray="7 6"/>
+<text x="1007" y="335" font-family="Arial,sans-serif" font-size="13" fill="#a5353f">closure c = 0.2</text>
+<line x1="100" y1="120" x2="308" y2="120" stroke="#397ca5" stroke-width="2" stroke-dasharray="5 5"/>
+<line x1="792" y1="120" x2="1000" y2="120" stroke="#397ca5" stroke-width="2" stroke-dasharray="5 5"/>
+<polyline points="308,120 550,277.5 792,120" fill="none" stroke="#9a7b53" stroke-width="3" stroke-dasharray="9 6"/>
+<polyline points="100,90 169.23,90 308,180 550,337.5 792,180 930.77,90 1000,90" fill="none" stroke="#176e75" stroke-width="4" stroke-linejoin="round"/>
+<circle cx="550" cy="337.5" r="6" fill="#d04d54" stroke="#fff" stroke-width="2"/>
+<text x="555" y="363" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="#a5353f">Actual minimum 0.175</text>
+<text x="472" y="265" font-family="Arial,sans-serif" font-size="14" fill="#86613b">False pointwise floor 0.375</text>
+<text x="117" y="154" font-family="Arial,sans-serif" font-size="13" fill="#397ca5">mean = 0.9</text>
+<text x="808" y="154" font-family="Arial,sans-serif" font-size="13" fill="#397ca5">mean = 0.9</text>
+<text x="100" y="465" font-family="Arial,sans-serif" font-size="16" font-weight="700" fill="#142536">Identical exposure means, opposite closure decisions</text>
+<line x1="100" y1="497" x2="150" y2="497" stroke="#176e75" stroke-width="4"/>
+<text x="163" y="502" font-family="Arial,sans-serif" font-size="14" fill="#425568">Admissible 45/s aperture path (hidden closure feasible)</text>
+<line x1="650" y1="497" x2="700" y2="497" stroke="#9a7b53" stroke-width="3" stroke-dasharray="9 6"/>
+<text x="713" y="502" font-family="Arial,sans-serif" font-size="14" fill="#425568">Invalid point-sample shortcut</text>
+<text x="100" y="540" font-family="Arial,sans-serif" font-size="14" fill="#506276">The below-threshold dwell is only 1/900 s. Linear frame-mean/aperture response is assumed, not measured.</text>
+</svg>

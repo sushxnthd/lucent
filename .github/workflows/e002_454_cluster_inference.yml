@@ -1,0 +1,43 @@
+name: E002-454 participant-cluster falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_454_cluster_inference.py'
+      - 'research/observability/test_e002_454_cluster_inference.py'
+      - 'research/observability/E002_453_HUMAN_AGGREGATE.json'
+      - 'research/observability/E002_454_CLUSTER_AGGREGATE.json'
+      - '.github/workflows/e002_454_cluster_inference.yml'
+  workflow_dispatch:
+jobs:
+  cluster-inference:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run independent adversarial tests
+        working-directory: research/observability
+        run: python -m unittest -v test_e002_454_cluster_inference.py
+      - name: Replay committed human aggregate without fetching participant data
+        working-directory: research/observability
+        run: |
+          python e002_454_cluster_inference.py --aggregate E002_453_HUMAN_AGGREGATE.json --out /tmp/e002454.json
+          python - <<'PY'
+          import json, math
+          with open('/tmp/e002454.json') as f: replay = json.load(f)
+          with open('E002_454_CLUSTER_AGGREGATE.json') as f: frozen = json.load(f)
+          assert replay.keys() == frozen.keys()
+          for k, value in replay.items():
+              expected = frozen[k]
+              if isinstance(value, float):
+                  assert math.isclose(value, expected, rel_tol=1e-12, abs_tol=1e-12), k
+              else:
+                  assert value == expected, k
+          assert replay['preregistered_kill_triggered']
+          assert replay['product_claim'] == 'ABSTAIN_UNCALIBRATED'
+          print('E002-454 deterministic replay and release gate PASSED')
+          PY

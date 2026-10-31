@@ -1,0 +1,47 @@
+name: E002-550 conditional human-kinematics velocity envelope
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_550_*'
+      - 'research/observability/e002_550_*'
+      - 'research/observability/test_e002_550_*'
+      - '.github/workflows/e002_550_kinematics.yml'
+  pull_request:
+    paths:
+      - 'research/observability/E002_550_*'
+      - 'research/observability/e002_550_*'
+      - 'research/observability/test_e002_550_*'
+      - '.github/workflows/e002_550_kinematics.yml'
+permissions:
+  contents: read
+jobs:
+  synthetic-and-independent:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python adversarial tests
+        working-directory: research/observability
+        run: python -m unittest -v test_e002_550_conditional_velocity
+      - name: Independent Node.js replay
+        run: node research/observability/e002_550_independent.cjs
+      - name: Verify no human certification is claimed
+        working-directory: research/observability
+        run: |
+          python - <<'PY'
+          from e002_550_conditional_velocity import evaluate, REQUIRED_NUISANCES
+          obj={"assumptions":{"acceleration_upper":1000,"aperture_error_upper":0.01,
+               "clock_error_upper":0.0,"complete_coverage":True,
+               "nuisance_pass":{k:True for k in REQUIRED_NUISANCES}},
+               "observations":[{"t":0.0,"a":0.4,"quality":"OK"},
+                               {"t":0.0025,"a":0.5,"quality":"OK"}]}
+          r=evaluate(obj)
+          assert r["status"]=="CONDITIONAL_BOUND_ONLY_NOT_AUTHENTICATED"
+          assert r["release"]=="BLOCKED" and r["human_validation"] is False
+          print(r)
+          PY

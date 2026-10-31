@@ -1,0 +1,35 @@
+name: E002-430 high-rate reference sampling falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_430_*'
+      - 'research/observability/e002_430_*'
+      - 'research/observability/test_e002_430_*'
+      - '.github/workflows/e002_430_reference_sampling.yml'
+  workflow_dispatch:
+jobs:
+  synthetic-reference-alias:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent reference-alias and cone-envelope falsification
+        run: python -m unittest -v research/observability/test_e002_430_reference_sampling.py
+      - name: Assert research-only output and no physical release
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'research/observability')
+          import e002_430_reference_sampling as e
+          result=e.experiment()
+          assert result['evidence_tier']=='SYNTHETIC_HIGH_RATE_REFERENCE_ALIAS'
+          assert result['physical_certificate_authorized'] is False
+          assert result['product']=='ABSTAIN_UNCALIBRATED'
+          assert len(result['cases'])==4
+          print('SYNTHETIC ONLY: high-speed reference cannot authorize physical no-closure labels.')
+          PY

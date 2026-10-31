@@ -1,0 +1,32 @@
+name: E002-570 exposure-mean counterexample
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_570_*'
+      - 'research/observability/test_e002_570_*'
+      - '.github/workflows/e002_570_exposure_average.yml'
+  workflow_dispatch:
+jobs:
+  exact-instrument-model:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exact synthetic instrument falsification and nuisance checks
+        working-directory: research/observability
+        run: python -m unittest -v test_e002_570_exposure_average.py
+      - name: Independent exact BigInt replay
+        working-directory: research/observability
+        run: node e002_570_independent_replay.cjs
+      - name: Explicit nonhuman evidence tier
+        working-directory: research/observability
+        run: python e002_570_exposure_average.py

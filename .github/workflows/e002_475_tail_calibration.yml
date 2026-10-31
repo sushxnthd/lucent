@@ -1,0 +1,30 @@
+name: E002-475 participant-tail calibration falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_475_tail_calibration.py'
+      - 'research/observability/test_e002_475_tail_calibration.py'
+      - 'research/observability/e002_475_independent_replay.cjs'
+      - '.github/workflows/e002_475_tail_calibration.yml'
+  workflow_dispatch:
+jobs:
+  participant-tail:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Adversarial tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_475_tail_calibration.py' -v
+      - name: Independent JavaScript rank replay
+        run: node research/observability/e002_475_independent_replay.cjs
+      - name: Generate deidentified aggregate
+        run: python research/observability/e002_475_tail_calibration.py --output /tmp/e002_475_aggregate.json
+      - name: Check committed aggregate is reproduced byte-for-byte
+        run: cmp research/observability/E002_475_AGGREGATE.json /tmp/e002_475_aggregate.json

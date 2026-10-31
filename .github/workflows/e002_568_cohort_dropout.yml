@@ -1,0 +1,45 @@
+name: Lucent E002-568 cohort-constrained missed-frame no-go
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_568_*'
+      - 'research/observability/e002_568_*'
+      - 'research/observability/test_e002_568_*'
+      - '.github/workflows/e002_568_cohort_dropout.yml'
+  workflow_dispatch:
+jobs:
+  exact-product-no-go:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exact Python adversarial controls
+        working-directory: research/observability
+        run: python -m unittest -v test_e002_568_cohort_dropout.py
+      - name: Independent BigInt replay
+        working-directory: research/observability
+        run: node e002_568_independent_replay.cjs
+      - name: No-human-claim and fail-closed product assertions
+        working-directory: research/observability
+        run: |
+          python e002_568_cohort_dropout.py > /tmp/e002568.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/e002568.json'))
+          assert r['necessary_speed_floor_per_second']=={'numerator':24300,'denominator':983}
+          assert [x['structural_result'].startswith('POSITIVE_DURATION') for x in r['cases']]==[False,False,True,True]
+          assert all(x['product_decision']=='ABSTAIN_UNCALIBRATED' for x in r['cases'])
+          assert all(x['human_closure_observed'] is False for x in r['cases'])
+          assert r['physical_shutter_captures']==0
+          assert r['independent_human_anatomical_rater_pairs']==0
+          assert r['heldout_physical_closure_predictions']==0
+          assert r['product']=='ABSTAIN_UNCALIBRATED' and r['release']=='BLOCKED'
+          print('E002-568 conditional structural no-go + product fail-closed: PASS')
+          PY

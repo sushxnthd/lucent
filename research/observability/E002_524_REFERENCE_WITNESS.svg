@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="510" viewBox="0 0 920 510" role="img" aria-label="Reference-camera phase censoring diagram: overlap does not guarantee an exposure fully inside a continuous closure">
+  <rect width="920" height="510" fill="#ffffff"/>
+  <text x="52" y="44" fill="#0f172a" font-family="Arial, sans-serif" font-size="24" font-weight="700">Overlap does not guarantee a full-closure exposure</text>
+  <text x="52" y="70" fill="#475569" font-family="Arial, sans-serif" font-size="13">Hypothetical 240 Hz reference, 1 ms exposure, unknown phase. Not measured human data.</text>
+  <rect x="48" y="94" width="824" height="169" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="70" y="122" fill="#0f172a" font-family="Arial, sans-serif" font-size="15" font-weight="700">A  ·  4.0 ms closure</text>
+  <text x="70" y="142" fill="#64748b" font-family="Arial, sans-serif" font-size="12">Both reference exposures overlap; neither is fully contained.</text>
+  <rect x="150" y="159" width="400" height="28" rx="5" fill="#f4b183" opacity=".8"/>
+  <text x="160" y="177" fill="#7c2d12" font-family="Arial, sans-serif" font-size="12" font-weight="700">Anatomical closure [0, 4 ms]</text>
+  <rect x="92" y="201" width="100" height="28" rx="4" fill="#94a3b8"/>
+  <rect x="508" y="201" width="100" height="28" rx="4" fill="#94a3b8"/>
+  <text x="219" y="221" fill="#64748b" font-family="Arial, sans-serif" font-size="12">Reference exposures</text>
+  <rect x="48" y="281" width="824" height="169" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+  <text x="70" y="309" fill="#0f172a" font-family="Arial, sans-serif" font-size="15" font-weight="700">B  ·  5.3 ms closure</text>
+  <text x="70" y="329" fill="#64748b" font-family="Arial, sans-serif" font-size="12">The second exposure is strictly contained, creating a clean full-closure exposure opportunity.</text>
+  <rect x="150" y="346" width="530" height="28" rx="5" fill="#f4b183" opacity=".8"/>
+  <text x="160" y="364" fill="#7c2d12" font-family="Arial, sans-serif" font-size="12" font-weight="700">Anatomical closure [0, 5.3 ms]</text>
+  <rect x="92" y="388" width="100" height="28" rx="4" fill="#94a3b8"/>
+  <rect x="508" y="388" width="100" height="28" rx="4" fill="#0d9488"/>
+  <text x="620" y="408" fill="#0f766e" font-family="Arial, sans-serif" font-size="12" font-weight="700">Fully contained exposure</text>
+  <line x1="150" y1="465" x2="750" y2="465" stroke="#94a3b8" stroke-width="1.5"/>
+  <g font-family="Arial, sans-serif" font-size="11" fill="#475569" text-anchor="middle">
+    <line x1="150" y1="460" x2="150" y2="470" stroke="#64748b"/><text x="150" y="486">0</text>
+    <line x1="250" y1="460" x2="250" y2="470" stroke="#64748b"/><text x="250" y="486">1</text>
+    <line x1="350" y1="460" x2="350" y2="470" stroke="#64748b"/><text x="350" y="486">2</text>
+    <line x1="450" y1="460" x2="450" y2="470" stroke="#64748b"/><text x="450" y="486">3</text>
+    <line x1="550" y1="460" x2="550" y2="470" stroke="#64748b"/><text x="550" y="486">4</text>
+    <line x1="650" y1="460" x2="650" y2="470" stroke="#64748b"/><text x="650" y="486">5</text>
+    <line x1="750" y1="460" x2="750" y2="470" stroke="#64748b"/><text x="750" y="486">6 ms</text>
+  </g>
+  <text x="52" y="501" fill="#64748b" font-family="Arial, sans-serif" font-size="10">E002-524 · illustrative fixed phase φ≈3.583 ms · full-exposure guarantee across all phases requires d &gt; P+e ≈ 5.167 ms</text>
+</svg>

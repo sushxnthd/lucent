@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="530" viewBox="0 0 1120 530">
+<rect width="1120" height="530" fill="#fff"/>
+<g font-family="Arial,Helvetica,sans-serif">
+<text x="55" y="51" font-size="27" font-weight="700" fill="#1a2938">E002-445  |  Human S19 optical gap association</text>
+<text x="55" y="81" font-size="15" fill="#536579">12,000 decoded human frames; 21 candidate 10–100-ms gaps vs 11,972 ≤10-ms gaps; S21/S22 sealed.</text>
+<line x1="55" y1="100" x2="1065" y2="100" stroke="#dae3ec" stroke-width="2"/>
+<g transform="translate(55 132)">
+<rect width="320" height="297" rx="8" fill="#f5f8fa"/>
+<text x="18" y="31" font-size="17" font-weight="700" fill="#203245">Raw frame-change enrichment</text>
+<text x="18" y="51" font-size="12" fill="#5a6b7b">Median medium-gap / short-gap change</text>
+<line x1="45" y1="234" x2="280" y2="234" stroke="#8ea1b0"/>
+<rect x="78" y="115.3" width="65" height="118.7" fill="#276f8b"/>
+<rect x="178" y="179.3" width="65" height="54.7" fill="#a3bbc8"/>
+<text x="110" y="106" text-anchor="middle" font-size="16" font-weight="700" fill="#1c5066">33.918×</text>
+<text x="210" y="170" text-anchor="middle" font-size="16" font-weight="700" fill="#587384">15.615×</text>
+<text x="110" y="258" text-anchor="middle" font-size="14" fill="#203245">Center</text>
+<text x="210" y="258" text-anchor="middle" font-size="14" fill="#203245">Border</text>
+<text x="18" y="283" font-size="13" fill="#566879">Center / border = 2.172×</text>
+</g>
+<g transform="translate(400 132)">
+<rect width="320" height="297" rx="8" fill="#f5f8fa"/>
+<text x="18" y="31" font-size="17" font-weight="700" fill="#203245">Conservative adjusted change</text>
+<text x="18" y="51" font-size="12" fill="#5a6b7b">Per-pixel min(|D|, |D−median(D)|)</text>
+<line x1="45" y1="234" x2="280" y2="234" stroke="#8ea1b0"/>
+<rect x="78" y="132.1" width="65" height="101.9" fill="#276f8b"/>
+<rect x="178" y="187.2" width="65" height="46.8" fill="#a3bbc8"/>
+<text x="110" y="123" text-anchor="middle" font-size="16" font-weight="700" fill="#1c5066">7.277×</text>
+<text x="210" y="178" text-anchor="middle" font-size="16" font-weight="700" fill="#587384">3.340×</text>
+<text x="110" y="258" text-anchor="middle" font-size="14" fill="#203245">Center</text>
+<text x="210" y="258" text-anchor="middle" font-size="14" fill="#203245">Border</text>
+<text x="18" y="283" font-size="13" font-weight="700" fill="#246f53">Center / border = 2.179×</text>
+</g>
+<g transform="translate(745 132)">
+<rect width="320" height="297" rx="8" fill="#f5f8fa"/>
+<text x="18" y="31" font-size="17" font-weight="700" fill="#203245">Circular-shift contrast</text>
+<text x="18" y="51" font-size="12" fill="#5a6b7b">512 fixed shifts; descriptive only</text>
+<line x1="45" y1="234" x2="280" y2="234" stroke="#8ea1b0"/>
+<rect x="78" y="124.99" width="65" height="109.01" fill="#276f8b"/>
+<rect x="178" y="190.19" width="65" height="43.81" fill="#a3bbc8"/>
+<text x="110" y="116" text-anchor="middle" font-size="16" font-weight="700" fill="#1c5066">0.779</text>
+<text x="210" y="181" text-anchor="middle" font-size="16" font-weight="700" fill="#587384">0.313</text>
+<text x="110" y="258" text-anchor="middle" font-size="14" fill="#203245">Observed</text>
+<text x="210" y="258" text-anchor="middle" font-size="14" fill="#203245">Shift p95</text>
+<text x="18" y="283" font-size="13" fill="#566879">Rank 2/513 ≠ inferential p-value</text>
+</g>
+<rect x="55" y="449" width="1010" height="51" rx="6" fill="#edf3f6"/>
+<text x="72" y="470" font-size="15" font-weight="700" fill="#223b4e">Interpretation:</text>
+<text x="182" y="470" font-size="15" fill="#223b4e">Spatial optical association survives this screen, but is not calibrated eyelid motion or shutter timing.</text>
+<text x="72" y="489" font-size="13" fill="#566b7c">Physical E002-371 validation NOT ESTABLISHED  |  Product ABSTAIN_UNCALIBRATED  |  Hosted run 40208482955</text>
+</g></svg>

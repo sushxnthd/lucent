@@ -1,0 +1,29 @@
+name: E002-547 exposure-integrated reference falsifier
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_547_exposure_reference.py
+      - research/observability/e002_547_independent.cjs
+      - research/observability/E002_547_*.md
+      - .github/workflows/e002-547-exposure-reference.yml
+  workflow_dispatch:
+
+jobs:
+  independent-exposure-oracles:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exact-rational Python adversarial checks
+        run: python research/observability/e002_547_exposure_reference.py --self-test
+      - name: Independent BigInt trapezoid oracle
+        run: node research/observability/e002_547_independent.cjs

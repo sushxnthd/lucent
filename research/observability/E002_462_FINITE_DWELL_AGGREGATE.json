@@ -1,0 +1,50 @@
+[
+  {
+    "baseline_mm": 2.3,
+    "dwell_ms": 0.1,
+    "evidence_tier": "SYNTHETIC_ONLY",
+    "excursion_support_ms": [
+      0.2828291734209256,
+      2.274505383851216
+    ],
+    "fps": 400,
+    "identical_to_constant_open": true,
+    "max_shutter_mean_difference_mm": 0,
+    "minimum_mm": 1.95,
+    "physical_certification": false,
+    "plateau_start_ms": 0.9,
+    "shutter_dark_gap_ms": [
+      0.15,
+      2.35
+    ],
+    "subthreshold_duration_ms": 0.370239458632899,
+    "subthreshold_support_ms": [
+      0.8118327390601321,
+      1.182072197693031
+    ]
+  },
+  {
+    "baseline_mm": 2.1,
+    "dwell_ms": 0.03,
+    "evidence_tier": "SYNTHETIC_ONLY",
+    "excursion_support_ms": [
+      0.1683985737443171,
+      0.8469732744632746
+    ],
+    "fps": 1000,
+    "identical_to_constant_open": true,
+    "max_shutter_mean_difference_mm": 0,
+    "minimum_mm": 1.98,
+    "physical_certification": false,
+    "plateau_start_ms": 0.38,
+    "shutter_dark_gap_ms": [
+      0.15,
+      0.85
+    ],
+    "subthreshold_duration_ms": 0.1380957834531596,
+    "subthreshold_support_ms": [
+      0.34473309562405285,
+      0.48282887907721245
+    ]
+  }
+]

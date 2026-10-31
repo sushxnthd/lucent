@@ -1,0 +1,32 @@
+name: E002-552 exact exposure-aware curvature falsification
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_552_boxcar_curvature.py'
+      - 'research/observability/test_e002_552_boxcar_curvature.py'
+      - 'research/observability/e002_552_independent.cjs'
+      - '.github/workflows/e002-552-boxcar-curvature.yml'
+  workflow_dispatch:
+
+jobs:
+  exposure-curvature:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run 15 adversarial Python tests
+        run: python -m unittest -v test_e002_552_boxcar_curvature.py
+        working-directory: research/observability
+      - name: Independently replay exact BigInt instrument witness
+        run: node e002_552_independent.cjs
+        working-directory: research/observability
+      - name: Reproduce frozen seeded aggregate
+        run: python e002_552_boxcar_curvature.py
+        working-directory: research/observability

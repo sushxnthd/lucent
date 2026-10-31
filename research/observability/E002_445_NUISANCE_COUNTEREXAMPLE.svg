@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="530" viewBox="0 0 1100 530">
+<rect width="1100" height="530" fill="#ffffff"/>
+<text x="56" y="57" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="700" fill="#172334">E002-445  |  Majority-border nuisance counterexample</text>
+<text x="56" y="86" font-family="Arial,Helvetica,sans-serif" font-size="15" fill="#586474">Synthetic grayscale frames; center remains unchanged while 75% of image changes by +30 gray levels.</text>
+<line x1="56" y1="105" x2="1044" y2="105" stroke="#dce3ea" stroke-width="2"/>
+<g font-family="Arial,Helvetica,sans-serif">
+<text x="66" y="144" font-size="17" font-weight="700" fill="#253246">1  Actual pixel change |D|</text>
+<text x="409" y="144" font-size="17" font-weight="700" fill="#253246">2  Naive |D − median(D)|</text>
+<text x="755" y="144" font-size="17" font-weight="700" fill="#253246">3  Conservative min(1, 2)</text>
+<rect x="65" y="165" width="270" height="220" fill="#e3a17b"/>
+<rect x="132.5" y="220" width="135" height="110" fill="#ffffff" stroke="#263b51" stroke-width="2"/>
+<rect x="410" y="165" width="270" height="220" fill="#ffffff" stroke="#d7dce3"/>
+<rect x="477.5" y="220" width="135" height="110" fill="#e3a17b" stroke="#263b51" stroke-width="2"/>
+<rect x="755" y="165" width="270" height="220" fill="#ffffff" stroke="#d7dce3"/>
+<rect x="822.5" y="220" width="135" height="110" fill="#ffffff" stroke="#263b51" stroke-width="2"/>
+<text x="200" y="282" text-anchor="middle" font-size="18" font-weight="700" fill="#263b51">0</text>
+<text x="545" y="282" text-anchor="middle" font-size="18" font-weight="700" fill="#263b51">30</text>
+<text x="890" y="282" text-anchor="middle" font-size="18" font-weight="700" fill="#263b51">0</text>
+<text x="200" y="409" text-anchor="middle" font-size="16" fill="#455365">Center = 0 / 255</text>
+<text x="545" y="409" text-anchor="middle" font-size="16" font-weight="700" fill="#b44e36">False center = 30 / 255</text>
+<text x="890" y="409" text-anchor="middle" font-size="16" font-weight="700" fill="#257c59">Center = 0 / 255</text>
+<rect x="56" y="448" width="988" height="51" rx="7" fill="#eef3f7"/>
+<text x="75" y="469" font-size="15" font-weight="700" fill="#23394d">Result:</text>
+<text x="134" y="469" font-size="15" fill="#23394d">Unconditional median subtraction fabricates central optical activity; the conservative minimum does not.</text>
+<text x="75" y="490" font-size="13" fill="#52677a">Instrument-only falsification. No eyelid aperture, human velocity, shutter timing, or physical product claim is established.</text>
+</g></svg>

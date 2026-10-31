@@ -1,0 +1,44 @@
+name: E002-565 cross-paradigm human-source identity guard
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_565_provenance_guard.yml'
+      - 'research/observability/e002_565_provenance_guard.py'
+      - 'research/observability/test_e002_565_provenance_guard.py'
+      - 'research/observability/e002_565_guarded_replay.py'
+      - 'research/observability/test_e002_565_guarded_replay.py'
+      - 'research/observability/test_e002_565_real_replay.py'
+      - 'research/observability/e002_565_independent_replay.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-identity:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python adversarial identity and replay controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_565_*.py' -v
+      - name: Independent Node.js source join
+        run: node research/observability/e002_565_independent_replay.cjs
+      - name: Assert no physical claim
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'research/observability')
+          from e002_565_provenance_guard import adjudicate_source
+          r = adjudicate_source({}, {})
+          assert r['release'] == 'BLOCKED'
+          assert r['physical_validation'] is False
+          assert r['product'] == 'ABSTAIN_UNCALIBRATED'
+          PY

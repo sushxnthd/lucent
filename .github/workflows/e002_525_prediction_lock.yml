@@ -1,0 +1,30 @@
+name: E002-525 prospective prediction-lock falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_525_prediction_lock.py'
+      - 'research/observability/e002_519_reference_censoring.py'
+      - 'research/observability/test_e002_525_prediction_lock.py'
+      - '.github/workflows/e002_525_prediction_lock.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_525_prediction_lock.py'
+      - 'research/observability/e002_519_reference_censoring.py'
+      - 'research/observability/test_e002_525_prediction_lock.py'
+      - '.github/workflows/e002_525_prediction_lock.yml'
+permissions:
+  contents: read
+jobs:
+  frozen-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Adversarial prepatch exploit and locked-replay regression
+        run: python -m unittest discover -s research/observability -p 'test_e002_525_prediction_lock.py' -v
+      - name: Syntax validation
+        run: python -m py_compile research/observability/e002_525_prediction_lock.py

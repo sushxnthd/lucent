@@ -1,0 +1,62 @@
+name: E002-495 sharp exposure-mean boundary independent replay
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_495_exposure_mean_boundary.yml'
+      - 'research/observability/E002_495_FROZEN.md'
+      - 'research/observability/E002_495_LOCAL_AGGREGATE.json'
+      - 'research/observability/e002_495_exposure_mean_boundary.py'
+      - 'research/observability/e002_495_independent_replay.cjs'
+      - 'research/observability/test_e002_495_exposure_mean_boundary.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_495_exposure_mean_boundary.yml'
+      - 'research/observability/e002_495_exposure_mean_boundary.py'
+      - 'research/observability/e002_495_independent_replay.cjs'
+      - 'research/observability/test_e002_495_exposure_mean_boundary.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-495-mean-boundary
+  cancel-in-progress: false
+jobs:
+  exact-replay:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Adversarial exact-rational tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_495_exposure_mean_boundary.py' -v
+      - name: Independent Node witness and negative controls
+        run: node research/observability/e002_495_independent_replay.cjs
+      - name: Regenerate and byte-compare frozen aggregate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/observability/e002_495_exposure_mean_boundary.py --output "$RUNNER_TEMP/e002_495_replay.json"
+          diff -u research/observability/E002_495_LOCAL_AGGREGATE.json "$RUNNER_TEMP/e002_495_replay.json"
+      - name: Fail-closed research-only release gate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('research/observability/E002_495_LOCAL_AGGREGATE.json').read_text())
+          for key in ('frozen_case','strict_exclusion_control','cap_warning_control'):
+              a=r[key]
+              assert a['product']=='ABSTAIN_UNCALIBRATED'
+              assert a['release']=='BLOCKED'
+              assert a['physical_camera_calibrated'] is False
+              assert a['human_reference_validated'] is False
+          print('RESEARCH_ONLY; RELEASE_BLOCKED')
+          PY

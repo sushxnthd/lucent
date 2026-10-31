@@ -1,0 +1,56 @@
+{
+  "experiment": "E002-482",
+  "tier": "SYNTHETIC_MOVING_APERTURE_AND_SPATIAL_FORWARD_MODEL",
+  "period_ms": 33.333333333333336,
+  "exposure_ms": 20,
+  "minimum_moving_aperture_mm": 0,
+  "moving_peak_speed_mm_per_s": 200,
+  "scalar_stationary_mm": 1,
+  "scalar_moving_mm": 1,
+  "rolling_2ms_moving_mm": 0.98,
+  "rolling_5ms_moving_mm": 0.875,
+  "rolling_2ms_pm2ms_guaranteed_difference_mm": 0,
+  "rolling_5ms_pm1ms_guaranteed_difference_mm": 0.07999999999999996,
+  "occluded_half_pixels": {
+    "visible_pixels": 21,
+    "max_residual": 0.01809083665659894,
+    "observational_overlap": true
+  },
+  "spatial_cases": [
+    {
+      "sigma_mm": 0.2,
+      "pixels": 41,
+      "pitch_mm": 0.1,
+      "gain": 0.8277048506807037,
+      "offset": 0.08614757464955453,
+      "max_calibrated_difference": 0.283198601608115,
+      "max_affine_residual": 0.20856158879526562,
+      "overlap_exists_at_0p01_per_world": false
+    },
+    {
+      "sigma_mm": 1,
+      "pixels": 41,
+      "pitch_mm": 0.1,
+      "gain": 0.9228757764953127,
+      "offset": 0.038562111741089256,
+      "max_calibrated_difference": 0.036570455999014984,
+      "max_affine_residual": 0.01809083665659894,
+      "overlap_exists_at_0p01_per_world": true
+    },
+    {
+      "sigma_mm": 2,
+      "pixels": 41,
+      "pitch_mm": 0.1,
+      "gain": 0.9669659089834828,
+      "offset": 0.016517045496466543,
+      "max_calibrated_difference": 0.009834545092794439,
+      "max_affine_residual": 0.0014414680015684134,
+      "overlap_exists_at_0p01_per_world": true
+    }
+  ],
+  "max_independent_quadrature_discrepancy": 6.45411914468319e-8,
+  "physical_shutter_acquisitions": 0,
+  "new_human_reference_sequences": 0,
+  "anatomical_claim": "ABSTAIN_UNCALIBRATED",
+  "physically_validated": false
+}

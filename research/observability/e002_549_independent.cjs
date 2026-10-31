@@ -1,0 +1,15 @@
+'use strict';
+const assert = require('node:assert/strict');
+const {createHash} = require('node:crypto');
+const sort = x => Array.isArray(x) ? x.map(sort) : (x && typeof x === 'object') ? Object.fromEntries(Object.keys(x).sort().map(k => [k, sort(x[k])])) : x;
+const p = {gap_id:'g1', participant_id:'S-24', session_id:'session-1', roi_id:'left-eye', eye:'left', blind_start_ms:'100', blind_end_ms:'110', closure_threshold:'0.2', prediction:'EXCLUDE', lock_sha256:'a'.repeat(64)};
+const digest = arr => createHash('sha256').update('lucent-e002-549-v1\n'+JSON.stringify(sort({schema:'lucent-e002-549-v1', predictions:arr}))).digest('hex');
+assert.equal(digest([p]), '0a2376820a8af51762ef43fbd4ddb048089dbff3751a8081596a7e83c0aa4a47');
+assert.notEqual(digest([{...p,prediction:'ABSTAIN'}]), digest([p]));
+assert.notEqual(digest([{...p,participant_id:'S-08'}]), digest([p]));
+const exploratory = ['S-24','S-22','S-27','S-17','S-23','S-01','S-18','S-04','S-19','S-29','S-14','S-12','S-05','S-11','S-25'];
+const heldout = ['S-08','S-28','S-16','S-21','S-31','S-07','S-10','S-02','S-15','S-20','S-30','S-06','S-26','S-09','S-03','S-13'];
+assert.equal(new Set([...exploratory,...heldout]).size,31);
+assert.ok(exploratory.includes('S-24') && !heldout.includes('S-24'));
+assert.ok(heldout.includes('S-08') && !exploratory.includes('S-08'));
+console.log('E002-549 independent Node SHA-256 + split controls PASS');

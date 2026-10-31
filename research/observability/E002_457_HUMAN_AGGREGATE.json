@@ -1,0 +1,72 @@
+{
+  "experiment": "E002-457",
+  "artifact": "hosted_external_human_directional_velocity_aggregate",
+  "generated_from_workflow_run": "https://github.com/sushxnthd/lucent/actions/runs/40271077293",
+  "verified_utc": "2026-10-26",
+  "source_url": "https://osf.io/download/m34qd/",
+  "source_sha256": "6248c00b3c2849115f913eb184821d05efe069dd081587a84472c054494bbc43",
+  "evidence_tier": "PUBLISHED_HUMAN_PER_BLINK_ESTIMATES_NOT_HARD_BOUNDS",
+  "participants": {
+    "calibration": 12,
+    "holdout": 5
+  },
+  "blinks": {
+    "calibration": 1657,
+    "holdout": 649
+  },
+  "opening_velocity_original_signs": {
+    "positive": 2306
+  },
+  "calibration_estimated_peaks_mm_s": {
+    "closing_max": 567.1039281430776,
+    "opening_abs_max": 274.61633650153254,
+    "symmetric_max": 567.1039281430776
+  },
+  "holdout_exceedances": {
+    "closing": 0,
+    "opening": 0,
+    "either": 0,
+    "participants_either": 0
+  },
+  "illustrative_1mm_equal_endpoint_margin": {
+    "directional_critical_gap_ms": 5.404789178822827,
+    "symmetric_critical_gap_ms": 3.526690436704945,
+    "relative_increase": 0.5325385870478119,
+    "fps_decisions": {
+      "30": {
+        "nominal_gap_ms": 33.333333333333336,
+        "directional_conditional_exclusion": false,
+        "symmetric_conditional_exclusion": false
+      },
+      "60": {
+        "nominal_gap_ms": 16.666666666666668,
+        "directional_conditional_exclusion": false,
+        "symmetric_conditional_exclusion": false
+      },
+      "120": {
+        "nominal_gap_ms": 8.333333333333334,
+        "directional_conditional_exclusion": false,
+        "symmetric_conditional_exclusion": false
+      },
+      "240": {
+        "nominal_gap_ms": 4.166666666666667,
+        "directional_conditional_exclusion": true,
+        "symmetric_conditional_exclusion": false
+      },
+      "480": {
+        "nominal_gap_ms": 2.0833333333333335,
+        "directional_conditional_exclusion": true,
+        "symmetric_conditional_exclusion": true
+      },
+      "1000": {
+        "nominal_gap_ms": 1,
+        "directional_conditional_exclusion": true,
+        "symmetric_conditional_exclusion": true
+      }
+    }
+  },
+  "human_anatomical_trajectory_validation": "NOT_ESTABLISHED",
+  "physical_release_authorized": false,
+  "product_claim": "ABSTAIN_UNCALIBRATED",
+  "caution": "Per-blink sample peak velocities from 12 calibration participants are not hard physiological limits; 649 holdout blinks represent only five held-out people. The 240-fps decision reversal is conditional on unverified hard speed caps, instantaneous mm-calibrated endpoints, and zero nuisance uncertainty."
+}

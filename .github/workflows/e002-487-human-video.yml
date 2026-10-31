@@ -1,0 +1,60 @@
+name: E002-487 one-shot authentic human-video metadata intake
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - .github/workflows/e002-487-human-video.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lucent-e002-487-single-subject-intake
+  cancel-in-progress: false
+
+jobs:
+  s24-intake:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Provision video metadata tools (runner has no ffmpeg by default)
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Verify local synthetic adversarial tests
+        run: python research/observability/test_e002_487_human_video_intake.py
+      - name: Download one published S24 archive and audit video metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/lucent487"
+          REPORT="$RUNNER_TEMP/lucent487/E002_487_REAL_INTAKE.json"
+          URL="https://zenodo.org/records/18970793/files/S24.zip?download=1"
+          if ! curl --fail --location --silent --show-error \
+              --retry 2 --retry-delay 8 --connect-timeout 30 \
+              --max-time 900 --max-filesize 600000000 \
+              --output "$RUNNER_TEMP/lucent487/S24.zip" "$URL"; then
+            printf '{"protocol":"E002-487","pilot_acquisition_status":"FAILED_DOWNLOAD","evidence_tier":"NO_AUTHENTICATED_HUMAN_VIDEO","physical_claims":"ABSTAIN_UNCALIBRATED","product_release":"BLOCKED"}\n' > "$REPORT"
+            exit 1
+          fi
+          printf '%s  %s\n' '3e8eb615d4a3415115f61dad5265ef12' "$RUNNER_TEMP/lucent487/S24.zip" | md5sum --check
+          python research/observability/e002_487_human_video_intake.py \
+            --archive "$RUNNER_TEMP/lucent487/S24.zip" --output "$REPORT"
+          rm -f "$RUNNER_TEMP/lucent487/S24.zip"
+      - name: Publish aggregate JSON only, never raw human images/video
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-487-s24-metadata-only
+          path: ${{ runner.temp }}/lucent487/E002_487_REAL_INTAKE.json
+          if-no-files-found: warn
+          retention-days: 7

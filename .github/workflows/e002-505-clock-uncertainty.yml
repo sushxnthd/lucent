@@ -1,0 +1,26 @@
+name: E002-505 frozen clock-uncertainty instrument controls
+
+on:
+  pull_request:
+    paths:
+      - "research/observability/e002_505_clock_uncertainty.py"
+      - "research/observability/E002_505_*.md"
+      - ".github/workflows/e002-505-clock-uncertainty.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  frozen-instrument-falsifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Run 12 frozen instrument sensitivity controls
+        run: python research/observability/e002_505_clock_uncertainty.py --self-test
+      - name: Print research-only numerical predictions
+        run: python research/observability/e002_505_clock_uncertainty.py

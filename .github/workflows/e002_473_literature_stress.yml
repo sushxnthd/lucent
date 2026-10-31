@@ -1,0 +1,41 @@
+name: E002-473 published human velocity stress and product abstention
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - .github/workflows/e002_473_literature_stress.yml
+      - research/observability/e002_473_literature_stress.py
+      - research/observability/test_e002_473_literature_stress.py
+      - research/observability/e002_472_design_feasibility.py
+      - research/observability/e002_456_prospective_gate.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e002-473-literature-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  published-human-stress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Adversarial independent and actual evaluator tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_473_literature_stress.py' -v
+      - name: Reproduce all twelve scenarios and enforce abstention
+        run: |
+          python research/observability/e002_473_literature_stress.py --output /tmp/e002_473_grid.json
+          python - <<'PY'
+          import json
+          x = json.load(open('/tmp/e002_473_grid.json'))
+          assert x['n_rows'] == 12
+          assert x['counts'] == {'EXCLUSION_FEASIBLE_CONDITIONALLY': 7,
+                                 'EXCLUSION_NOT_SUPPORTED': 5, 'ABSTAIN_DESIGN': 0}
+          assert not x['physical_release_authorized']
+          assert all(not r['physical_release_authorized'] for r in x['rows'])
+          print(x['counts'])
+          PY

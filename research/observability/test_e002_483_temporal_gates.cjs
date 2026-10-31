@@ -1,0 +1,16 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const m=require('./e002_483_temporal_gates.cjs');
+const close=(a,b,tol=1e-10)=>assert.ok(Math.abs(a-b)<tol,String(a)+' != '+String(b));
+test('full 20ms mean is aliased despite two distinct half-gates',()=>{const [a,b]=m.means();close((a+b)/2,1);close(a,1.5);close(b,.5);assert.deepEqual(m.means(0,false),[1,1]);});
+test('adversarial stationary contrast interval is +/- 0.13',()=>{const c=m.contrastInterval([1,1]);close(c.low,-.13);close(c.high,.13);});
+test('moving contrast at zero phase is separated under frozen nuisance',()=>{const x=m.compare();close(x.moving.low,.74/1.9);assert.ok(x.margin>.25);});
+test('six frozen held-out phases remain distinguishable',()=>{for(const s of [-2,-1.5,-.5,.5,1.5,2])assert.ok(m.compare(s).certified_distinguishable);});
+test('fine phase grid plus conservative Lipschitz certificate stays positive',()=>{const r=m.experiment();assert.ok(r.phase_pm2_grid_min_margin>r.phase_pm2_continuum_margin_lower_bound);assert.ok(r.phase_pm2_continuum_margin_lower_bound>0);});
+test('phase +/-5ms is not automatically certified',()=>{const r=m.experiment();assert.ok(r.phase_pm5_controls.some(x=>!x.certified_distinguishable));});
+test('independent 30% gain drift destroys separation',()=>assert.equal(m.compare(0,.3,.03).certified_distinguishable,false));
+test('large independent additive nuisance destroys separation',()=>assert.equal(m.compare(0,.1,.25).certified_distinguishable,false));
+test('no gate means or uncertain shutter provenance must authorize physical claim',()=>{const r=m.experiment();assert.equal(r.anatomical_claim,'ABSTAIN_UNCALIBRATED');assert.equal(r.physically_validated,false);});
+test('invalid sensor values and nuisance are rejected',()=>{for(const x of [-11,NaN,Infinity])assert.throws(()=>m.means(x));for(const d of [-.1,1,NaN])assert.throws(()=>m.contrastInterval([1,1],d,.03));assert.throws(()=>m.contrastInterval([1,1],.1,1));assert.throws(()=>m.contrastInterval([0,1]));});
+test('independent numeric quadrature checks integral',()=>{for(const s of [-2,0,2]){const [a,b]=m.means(s);for(const [j,actual] of [[0,a],[1,b]]){let sum=0,n=100000;for(let k=0;k<n;k++)sum+=m.deviation(s+j*10+(k+.5)*10/n);close(actual,1+sum/n,3e-7);}}});
+test('no false full-frame equivalence for shifted phase',()=>{const [a,b]=m.means(2);assert.ok(Math.abs((a+b)/2-1)>.001);});

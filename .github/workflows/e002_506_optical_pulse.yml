@@ -1,0 +1,39 @@
+name: E002-506 optical pulse instrument falsifier
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_506_optical_pulse.py
+      - research/observability/E002_506_FROZEN.md
+      - .github/workflows/e002_506_optical_pulse.yml
+  workflow_dispatch:
+
+jobs:
+  frozen-instrument:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen Python adversarial controls
+        run: python research/observability/e002_506_optical_pulse.py --self-test
+      - name: Independent Node arithmetic
+        shell: bash
+        run: |
+          node <<'JS'
+          const v=60, w=.010, eta=.002, th=.2;
+          const deficit=Math.sqrt(2*v*w*eta);
+          function risk(n,wmin=w) {
+            const Tupper=1/30+(w+2*.0001)/n;
+            return deficit+v*(Tupper-wmin)/2;
+          }
+          const long=risk(300), short=risk(3), unknown=risk(300,0);
+          if (!(long<1-th && short>1-th && unknown>1-th)) throw Error('INDEPENDENT_PULSE_REVERSAL_FAILED');
+          if (Math.abs(long-.7500097948556636)>1e-10 || Math.abs(short-.8509897948556636)>1e-10) throw Error('INDEPENDENT_NUMERIC_MISMATCH');
+          console.log('INDEPENDENT_OPTICAL_PULSE_REVERSAL_PASS', {long,short,unknown});
+          JS
