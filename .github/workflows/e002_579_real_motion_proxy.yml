@@ -25,8 +25,7 @@ jobs:
       - name: Install native video decoder and numpy
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y ffmpeg
-          python3 -m pip install --user numpy
+          sudo apt-get install -y ffmpeg python3-numpy
       - name: Verify frozen motion proxy and nuisance controls
         run: python3 research/observability/e002_579_real_motion_proxy.py --self-test
       - name: Execute non-anatomical motion proxy on authentic development video
