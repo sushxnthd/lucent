@@ -21,3 +21,21 @@ A future `AUTHENTIC_RATER_BUNDLES_VERIFIED` would establish only that source-bou
 No physical shutter/clock acquisition or certified continuous-time physiological speed ceiling exists. A native-frame alias witness, even if observed, would not validate a shutter-integrated E002-371 hidden-closure claim. Further software-only work is deprioritized after hosted verification.
 
 **Evidence:** human rater pairs 0; authenticated physical shutter captures 0; certified continuous-time human speed ceilings 0; held-out physical closure predictions 0. Product `ABSTAIN_UNCALIBRATED`; release `BLOCKED`. Hush branch and draft PR #45 unchanged.
+
+## Post-freeze hosted observation (2026-10-31, verified after original report)
+
+The previously pending **authentic-source end-to-end** experiment completed successfully in [GitHub Actions run 41185934001](https://github.com/sushxnthd/lucent/actions/runs/41185934001), commit `d0708dd5ed206b1c62abf664d6bc1d8c5634fac9`. The actual `authentic-private-handoff` job 124492742369 reports success for the original seven synthetic controls, eight independent tampering/privacy controls, native decoder provisioning, authentic-source download, packet generation, and independent post-handoff audit. This result was checked against the completed job's decoded logs, not inferred from the queued run.
+
+The successful private-run output was:
+
+```json
+{"continuous_time_speed_certified":false,"experiment":"E002-566","frames_per_rater":260,"heldout_physical_predictions":0,"independent_human_raters":0,"physical_clock_authenticated":false,"private_rater_bundles":2,"product":"ABSTAIN_UNCALIBRATED","release":"BLOCKED","shutter_calibrated":false,"source_bound_native_frames":260,"status":"AUTHENTIC_RATER_BUNDLES_VERIFIED"}
+```
+
+The 438-byte sanitized aggregate ZIP was uploaded as [artifact 13037410025](https://github.com/sushxnthd/lucent/actions/runs/41185934001/artifacts/13037410025). Raw footage and reviewer packets were not published as artifacts. The archive was not independently downloaded or opened during this follow-up; the result above is directly observed in the job log.
+
+**Interpretation:** An authentic human-source 260-frame packet can now be transformed into two separate intact, unannotated, blinded reviewer bundles in the hosted acquisition environment. This removes a *software acquisition feasibility* blocker, not a *human measurement* blocker. It does not verify sensor frame timing, true eyelid closure, rater reliability, continuous-time velocity, shutter response, or ordinary-camera exclusion accuracy. Two generated reviewer bundles do not equal two human raters.
+
+**Prospective human evidence gate:** Distribute the private packets to two independent human annotators under the existing E002-502/E002-507 instructions; prohibit source indices, timestamps, predictions or cross-rater discussion until both exports are sealed. Retain separate immutable video/frame hashes and rater exports. Report disagreement, abstentions, and adjudicated positive *visible-frame* closure witnesses, without treating unmarked frames as confirmed open. Only use a time axis if authenticated independently of AVI presentation metadata. Keep the E002-371 hidden-closure/physical-camera claim blocked until independently measured velocity *upper* bounds, shutter timing, clock uncertainty and held-out prospective tests exist. If access to authorized reviewers or hardware cannot be arranged, report the absence explicitly rather than simulating raters.
+
+**Evidence tier after hosted completion:** authentic source-to-blinded-reviewer packet generation **verified**; independently blinded anatomical rater pairs **0**; authenticated physical shutter captures **0**; certified continuous-time physiological speed ceilings **0**; held-out physical closure predictions **0**. Product `ABSTAIN_UNCALIBRATED`, release `BLOCKED`.
