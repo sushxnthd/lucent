@@ -4,7 +4,7 @@ Synthetic media only; no human images or ratings are used or uploaded.
 """
 import hashlib, json, os, shutil, subprocess, sys, tempfile
 from pathlib import Path
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, expect
 HERE=Path(__file__).resolve().parent
 sys.path.insert(0,str(HERE))
 from e002_492_anatomical_review import build_manifest, template, adjudicate
@@ -43,11 +43,11 @@ def test_native(browser,work):
         page.locator("#template").set_input_files(str(t))
         page.locator("#fallback").set_input_files(frames[:-1])
         page.locator("#load").click()
-        page.wait_for_function('document.getElementById("status").textContent.includes("BLOCKED:")')
+        expect(page.locator("#status")).to_contain_text("BLOCKED:")
         assert "Exactly 260" in page.locator("#status").inner_text()
         page.locator("#fallback").set_input_files(frames)
         page.locator("#load").click()
-        page.wait_for_function('document.getElementById("status").textContent.includes("Private local frame loaded")')
+        expect(page.locator("#status")).to_contain_text("Private local frame loaded")
         assert "1/260" in page.locator("#position").inner_text()
         page.locator("#export").click()
         assert "BLOCKED:" in page.locator("#status").inner_text()
@@ -55,8 +55,8 @@ def test_native(browser,work):
             page.locator('fieldset input[value="POOR_GEOMETRY"]').check()
             page.locator("#next").click()
             if k<259:
-                page.wait_for_function('(n)=>document.getElementById("position").textContent.includes(n+"/260")',arg=k+2)
-                page.wait_for_function('document.getElementById("status").textContent.includes("Private local frame loaded")')
+                expect(page.locator("#position")).to_contain_text(f"{k+2}/260")
+                expect(page.locator("#status")).to_contain_text("Private local frame loaded")
         with page.expect_download() as dl:page.locator("#export").click()
         output=work/f"rater_{rater}.json";dl.value.save_as(output)
         packet=json.loads(output.read_text())
@@ -87,12 +87,12 @@ def test_video(browser,work):
         page.locator("#rater").fill(rater)
         page.locator("#sample").fill("synthetic-frame-01")
         page.locator("#file").set_input_files(str(video))
-        page.wait_for_function('(s)=>document.getElementById("digest").textContent.includes(s)',arg=sha)
-        page.wait_for_function('document.getElementById("video").videoWidth>0')
+        expect(page.locator("#digest")).to_contain_text(sha)
+        expect(page.locator("#video")).to_have_js_property("videoWidth", 320)
         page.evaluate('document.getElementById("video").currentTime=0.5')
-        page.wait_for_function('Math.abs(document.getElementById("video").currentTime-0.5)<1e-6')
+        expect(page.locator("#video")).to_have_js_property("currentTime", 0.5)
         page.locator("#capture").click()
-        page.wait_for_function('document.getElementById("points").textContent.includes("Click the upper")')
+        expect(page.locator("#points")).to_contain_text("Click the upper")
         page.locator("#canvas").click(position={"x":160,"y":95})
         page.locator("#canvas").click(position={"x":160,"y":125})
         page.locator("#label").select_option("closed")
