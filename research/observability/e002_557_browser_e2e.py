@@ -101,11 +101,13 @@ def test_native(browser,work):
     return {"packets":2,"frames_each":260,"synthetic_nuisance_abstentions":260}
 
 def test_video(browser,work,origin):
-    video=work/"synthetic_eye.mp4"
+    # CI Chromium is built without proprietary H.264 decoding. Use browser-native VP8/WebM
+    # to validate the annotation workflow; this does NOT validate arbitrary human codecs.
+    video=work/"synthetic_eye.webm"
     subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-f","lavfi",
         "-i","color=c=gray:s=320x240:r=30:d=2",
         "-vf","drawbox=x=100:y=100:w=120:h=20:color=black:t=fill",
-        "-an","-c:v","libx264","-preset","ultrafast","-pix_fmt","yuv420p",str(video)],
+        "-an","-c:v","libvpx","-deadline","realtime","-cpu-used","8","-b:v","500k",str(video)],
         check=True,timeout=60)
     sha=hashlib.sha256(video.read_bytes()).hexdigest()
     packets=[]
@@ -122,7 +124,7 @@ def test_video(browser,work,origin):
             expect(page.locator("#video")).to_have_js_property("videoWidth", 320, timeout=15000)
         except AssertionError as exc:
             diagnostic=page.locator("#video").evaluate(
-                "(v)=>({width:v.videoWidth,readyState:v.readyState,networkState:v.networkState,errorCode:v.error?.code,errorMessage:v.error?.message,src:v.src,canPlayMp4:v.canPlayType('video/mp4; codecs=avc1.42E01E')})"
+                "(v)=>({width:v.videoWidth,readyState:v.readyState,networkState:v.networkState,errorCode:v.error?.code,errorMessage:v.error?.message,src:v.src,canPlayWebm:v.canPlayType('video/webm; codecs=vp8')})"
             )
             raise AssertionError("VIDEO_DECODE_BLOCKED: "+json.dumps(diagnostic,sort_keys=True)) from exc
         page.evaluate('document.getElementById("video").currentTime=0.5')
