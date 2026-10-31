@@ -39,5 +39,8 @@ class TestCohortRatio(unittest.TestCase):
         self.assertEqual(r['cohorts'][0]['evidence'], 'primary_table')
         self.assertTrue(all(c['evidence']=='secondary_table_transcription' for c in r['cohorts'][1:]))
         self.assertEqual(r['release'], 'BLOCKED')
+        self.assertTrue(r['cohorts'][0]['supports_initial_aperture_normalized_E002_371'])
+        self.assertTrue(all(not x['supports_initial_aperture_normalized_E002_371'] for x in r['cohorts'][1:]))
+        self.assertTrue(r['sun1997_excursion_normalization_is_not_initial_aperture'])
 
 if __name__ == '__main__': unittest.main()
