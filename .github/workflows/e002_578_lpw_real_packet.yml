@@ -8,6 +8,13 @@ on:
       - research/observability/e002_578_real_lpw_packet.py
       - research/observability/E002_578_FROZEN.md
       - .github/workflows/e002_578_lpw_real_packet.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - research/observability/e002_578_real_lpw_packet.py
+      - research/observability/E002_578_FROZEN.md
+      - .github/workflows/e002_578_lpw_real_packet.yml
   workflow_dispatch:
 
 permissions:
