@@ -126,7 +126,8 @@ def predict(data):
                             if s0['a']-e > theta and s1['a']-e > theta and lower > theta+1e-12:
                                 decision, reason = 'EXCLUDE_CONDITIONAL', 'IDEAL_POINT_ONLY'
                 rows.append({'participant_id':p['id'], 'phase':phase, 't0':s0['t_s'],
-                             't1':s1['t_s'], 'decision':decision, 'reason':reason,
+                             't1':s1['t_s'], 'time_guard_s':u if calibrated else None,
+                             'decision':decision, 'reason':reason,
                              'lower':lower})
     payload = {'schema':SCHEMA, 'source_sha256':data['source_sha256'],
                'heldout_split_hash':digest(sorted(held)), 'fps':FPS,
@@ -169,7 +170,9 @@ def adjudicate(pred, witness):
         reasons[r['reason']] = reasons.get(r['reason'], 0) + 1
         if r['decision'] == 'EXCLUDE_CONDITIONAL':
             for pid, t, uncertainty in positive:
-                if pid == r['participant_id'] and r['t0']+uncertainty < t < r['t1']-uncertainty:
+                if (pid == r['participant_id'] and r['time_guard_s'] is not None and
+                    r['t0']+r['time_guard_s']+uncertainty < t <
+                    r['t1']-r['time_guard_s']-uncertainty):
                     candidates += 1
                     affected.add(pid)
     return {'schema':SCHEMA, 'prediction_sha256':supplied,
