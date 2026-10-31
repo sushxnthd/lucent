@@ -1,0 +1,32 @@
+name: E002-578 authentic LPW development packet
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_578_real_lpw_packet.py
+      - research/observability/E002_578_FROZEN.md
+      - .github/workflows/e002_578_lpw_real_packet.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authentic-development-packet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install native video decoder
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Frozen selection and blinding self-test
+        run: python3 research/observability/e002_578_real_lpw_packet.py --self-test
+      - name: Execute authentic LPW source-bound packet and destroy private output
+        run: python3 research/observability/e002_578_real_lpw_packet.py
