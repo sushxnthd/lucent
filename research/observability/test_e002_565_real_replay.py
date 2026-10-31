@@ -13,7 +13,7 @@ def source():
 
 
 class ActualReplayIntegrationTests(unittest.TestCase):
-    def test_actual_sealed_replay_remains_uncalibrated(self):
+    def test_eight_person_synthetic_bundle_cannot_claim_one_video_source(self):
         people = []
         for n in range(8):
             samples = []
@@ -37,9 +37,9 @@ class ActualReplayIntegrationTests(unittest.TestCase):
             {'participant_id': pid, 't_s': .0125, 'timing_error_s': 0}
             for pid in held]}
         result = guarded_replay(pred, witness, source(), source())
-        self.assertTrue(result['adjudication_attempted'])
-        self.assertGreater(result['positive_witness_candidates'], 0)
-        self.assertEqual(result['heldout_participants'], 4)
+        self.assertFalse(result['adjudication_attempted'])
+        self.assertEqual(result['status'], 'REJECT_SAMPLE_NAMESPACE')
+        self.assertEqual(result['positive_witness_candidates'], 0)
         self.assertFalse(result['physical_validation'])
         self.assertEqual(result['release'], 'BLOCKED')
 
