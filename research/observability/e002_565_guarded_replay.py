@@ -18,6 +18,17 @@ def guarded_replay(prediction, witness, prediction_source, witness_source, repla
         return {**guard, 'status': 'REJECT_VIDEO_IDENTITY',
                 'source_match_only': False, 'positive_witness_candidates': 0,
                 'adjudication_attempted': False}
+    # One native video digest cannot authenticate an eight-participant replay.
+    # Every row and positive must refer to the same participant as the video.
+    rows = prediction.get('rows')
+    positives = witness.get('positives')
+    if (not isinstance(rows, list) or not rows or
+        not isinstance(positives, list) or
+        any(not isinstance(row, dict) or row.get('participant_id') != prediction_source['participant_id'] for row in rows) or
+        any(not isinstance(x, dict) or x.get('participant_id') != witness_source['participant_id'] for x in positives)):
+        return {**guard, 'status': 'REJECT_SAMPLE_NAMESPACE',
+                'source_match_only': False, 'positive_witness_candidates': 0,
+                'adjudication_attempted': False}
     if replay_fn is None:
         from e002_562_replay import adjudicate as replay_fn
     result = replay_fn(prediction, witness)
