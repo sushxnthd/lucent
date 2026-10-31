@@ -2,7 +2,9 @@
 """E002-557: real-browser integration of existing blinded-rater tools.
 Synthetic media only; no human images or ratings are used or uploaded.
 """
-import hashlib, json, os, shutil, subprocess, sys, tempfile
+import hashlib, json, os, shutil, subprocess, sys, tempfile, threading
+from contextlib import contextmanager
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
 HERE=Path(__file__).resolve().parent
@@ -15,10 +17,38 @@ def chromium(p):
     if not binary: raise RuntimeError("CHROMIUM_MISSING")
     return p.chromium.launch(headless=True,executable_path=binary,args=["--no-sandbox","--disable-dev-shm-usage"])
 
-def blocked_requests(page):
+def blocked_requests(page, allowed_loopback_origin=None):
     out=[]
-    page.on("request",lambda r:out.append(r.url) if r.url.startswith(("http://","https://")) else None)
+    def record(r):
+        if r.url.startswith(("http://","https://")) and not (
+            allowed_loopback_origin and r.url.startswith(allowed_loopback_origin+"/")
+        ):
+            out.append(r.url)
+    page.on("request",record)
+    if allowed_loopback_origin:
+        page.route("**/*", lambda route: route.continue_() if (
+            not route.request.url.startswith(("http://","https://")) or
+            route.request.url.startswith(allowed_loopback_origin+"/")
+        ) else route.abort())
     return out
+
+@contextmanager
+def local_only_video_rater():
+    # file:// is an opaque origin on some Chrome builds; a loopback secure
+    # context gives blob: URLs a real origin without uploading private video.
+    class QuietHandler(SimpleHTTPRequestHandler):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, directory=str(HERE), **kwargs)
+        def log_message(self, *args): pass
+    server=ThreadingHTTPServer(("127.0.0.1",0),QuietHandler)
+    worker=threading.Thread(target=server.serve_forever,daemon=True)
+    worker.start()
+    try:
+        yield "http://127.0.0.1:"+str(server.server_port)
+    finally:
+        server.shutdown()
+        server.server_close()
+        worker.join(timeout=5)
 
 def png_packet(work):
     from PIL import Image, ImageDraw
@@ -70,7 +100,7 @@ def test_native(browser,work):
     assert r["human_reference_validated"] is False,r
     return {"packets":2,"frames_each":260,"synthetic_nuisance_abstentions":260}
 
-def test_video(browser,work):
+def test_video(browser,work,origin):
     video=work/"synthetic_eye.mp4"
     subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-f","lavfi",
         "-i","color=c=gray:s=320x240:r=30:d=2",
@@ -81,14 +111,20 @@ def test_video(browser,work):
     packets=[]
     for rater in ("rater-A","rater-B"):
         ctx=browser.new_context(accept_downloads=True);page=ctx.new_page()
-        leaks=blocked_requests(page)
-        page.goto((HERE/"e002_555_offline_rater.html").as_uri())
+        leaks=blocked_requests(page,origin)
+        page.goto(origin+"/e002_555_offline_rater.html")
         page.locator("#packet").fill("synthetic-e002-557")
         page.locator("#rater").fill(rater)
         page.locator("#sample").fill("synthetic-frame-01")
         page.locator("#file").set_input_files(str(video))
         expect(page.locator("#digest")).to_contain_text(sha)
-        expect(page.locator("#video")).to_have_js_property("videoWidth", 320)
+        try:
+            expect(page.locator("#video")).to_have_js_property("videoWidth", 320, timeout=15000)
+        except AssertionError as exc:
+            diagnostic=page.locator("#video").evaluate(
+                "(v)=>({width:v.videoWidth,readyState:v.readyState,networkState:v.networkState,errorCode:v.error?.code,errorMessage:v.error?.message,src:v.src,canPlayMp4:v.canPlayType('video/mp4; codecs=avc1.42E01E')})"
+            )
+            raise AssertionError("VIDEO_DECODE_BLOCKED: "+json.dumps(diagnostic,sort_keys=True)) from exc
         page.evaluate('document.getElementById("video").currentTime=0.5')
         expect(page.locator("#video")).to_have_js_property("currentTime", 0.5)
         page.locator("#capture").click()
@@ -114,7 +150,8 @@ def main():
             b=chromium(p)
             try:
                 native=test_native(b,Path(td))
-                video=test_video(b,Path(td))
+                with local_only_video_rater() as origin:
+                    video=test_video(b,Path(td),origin)
             finally:b.close()
     print(json.dumps({"experiment":"E002-557","status":"SYNTHETIC_BROWSER_E2E_PASS",
         "native":native,"video":video,"real_human_raters":0,"physical_captures":0,
