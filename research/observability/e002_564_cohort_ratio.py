@@ -41,7 +41,10 @@ def report():
         conservative = r * Fraction(9, 11)  # Hypothetical systematic bias, NOT a CI.
         rows.append({'cohort': name, 'source': source, 'evidence': evidence,
                      'n': n, 'mean_peak_speed_mm_per_s': speed,
-                     'mean_aperture_mm': aperture, 'necessary_observed_speed': serialize(r),
+                     'mean_aperture_mm': aperture,
+                     'denominator_definition': ('initial_palpebral_aperture' if evidence == 'primary_table' else 'closing_excursion_amplitude'),
+                     'supports_initial_aperture_normalized_E002_371': evidence == 'primary_table',
+                     'necessary_observed_speed': serialize(r),
                      'illustrative_10pct_adverse_systematic_bias': serialize(conservative)})
     prior = Fraction(243, 1) / Fraction('12.8')
     improvement = ratio_bound('243', '9.83') / prior
@@ -51,6 +54,7 @@ def report():
             'kwon2013_strengthening_factor': serialize(improvement),
             'systematic_bias_scenario_is_certified': False,
             'sun1997_primary_numeric_table_verified': False,
+            'sun1997_excursion_normalization_is_not_initial_aperture': True,
             'hard_continuous_time_human_upper_bound_certified': False,
             'human_video_annotations_obtained': 0,
             'physical_shutter_captures_obtained': 0,
