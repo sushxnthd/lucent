@@ -62,7 +62,7 @@ function expected(t){
  assert(names.length===10,"Expected exactly ten blinded clips");
  const result=[];
  for(const clip of names){
-  assert(/^[A-Za-z0-9_-]{1,100}$/.test(clip),"Unsafe blind clip ID");
+  assert(/^[A-Za-z0-9_-]{1,100}$/.test(clip)&&!["__proto__","constructor","prototype"].includes(clip),"Unsafe blind clip ID");
   const rows=t.clips[clip];
   assert(Array.isArray(rows)&&rows.length===6,"Expected six frames per clip");
   for(let n=0;n<6;n++){
@@ -91,7 +91,7 @@ async function verifyImage(f){
 async function load(){
  ready=false;template=null;files=new Map();answers=new Map();keys=[];clicks=[];
  try{
-  const tFile=$("template").files[0], imageList=Array.from($("images").files);
+  const tFile=$("template").files[0], imageList=Array.from($("images").files).filter(f=>/\.png$/i.test(f.name));
   assert(tFile&&imageList.length,"Select a template and its assigned ARM image folder");
   assert(tFile.size<200000,"Template unexpectedly large");
   const t=await readJSON(tFile), expectedRows=expected(t);
