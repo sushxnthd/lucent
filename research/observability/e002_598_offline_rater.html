@@ -18,7 +18,7 @@ code{background:#edf1f5;padding:2px 4px}.muted{color:#52616f}.error{color:#a51c3
 <div class="panel">
 <h2>1. Load private packet</h2>
 <label>Blank reviewer template <input id="template" type="file" accept=".json,application/json"></label>
-<label>Assigned ARM folder <input id="images" type="file" webkitdirectory directory multiple accept=".png"></label>
+<label>Assigned native or ARM folder <input id="images" type="file" webkitdirectory directory multiple accept=".png"></label>
 <button id="load">Verify packet and start</button>
 <p id="status" role="status">Not loaded.</p>
 </div>
@@ -56,7 +56,10 @@ const keyOf=(clip,n)=>clip+"::"+n;
 const fail=msg=>{ $("status").textContent="REFUSED: "+msg; $("status").className="error"; ready=false; };
 const assert=(condition,msg)=>{if(!condition)throw Error(msg);};
 function expected(t){
- assert(t&&t.experiment==="E002-595"&&["A","B"].includes(t.rater)&&/^ARM_[012]$/.test(t.arm),"Invalid E002-595 reviewer template");
+ const native=t&&t.experiment==="E002-574"&&!Object.prototype.hasOwnProperty.call(t,"arm");
+ const phase=t&&t.experiment==="E002-595"&&/^ARM_[012]$/.test(t.arm);
+ assert(t&&["A","B"].includes(t.rater)&&(native||phase),"Invalid reviewer template");
+ const framesPerClip=native?19:6;
  assert(t.clips&&typeof t.clips==="object"&&!Array.isArray(t.clips),"Invalid clips object");
  const names=Object.keys(t.clips).sort();
  assert(names.length===10,"Expected exactly ten blinded clips");
@@ -64,14 +67,14 @@ function expected(t){
  for(const clip of names){
   assert(/^[A-Za-z0-9_-]{1,100}$/.test(clip)&&!["__proto__","constructor","prototype"].includes(clip),"Unsafe blind clip ID");
   const rows=t.clips[clip];
-  assert(Array.isArray(rows)&&rows.length===6,"Expected six frames per clip");
-  for(let n=0;n<6;n++){
+  assert(Array.isArray(rows)&&rows.length===framesPerClip,"Incorrect frames per clip");
+  for(let n=0;n<framesPerClip;n++){
    const row=rows[n];
    assert(row&&row.frame===n&&row.upper_y===null&&row.lower_y===null&&row.iris_diameter===null&&row.uncertainty_px===null&&Array.isArray(row.flags)&&row.flags.length===1&&row.flags[0]==="UNREVIEWED","Nonblank or malformed template");
    result.push({clip,n,key:keyOf(clip,n)});
   }
  }
- assert(result.length===60,"Incorrect expected frame count");
+ assert(result.length===10*framesPerClip,"Incorrect expected frame count");
  return result;
 }
 function fileKey(f){
@@ -107,7 +110,7 @@ async function load(){
   assert(seen.size===wanted.size,"Missing frames: "+seen.size+"/"+wanted.size);
   for(const f of seen.values())await verifyImage(f);
   template=t;files=seen;keys=expectedRows;index=0;
-  $("status").textContent="Verified "+keys.length+" local PNGs; "+t.rater+" / "+t.arm+". No source identity loaded.";
+  $("status").textContent="Verified "+keys.length+" local PNGs; "+t.rater+" / "+(t.arm||"NATIVE")+". No source identity loaded.";
   $("status").className="ok";
   await show();
  }catch(e){fail(e.message);}
@@ -136,7 +139,7 @@ async function show(){
  await new Promise((resolve,reject)=>{im.onload=resolve;im.onerror=()=>reject(Error("Image failed during review"));im.src=currentUrl;});
  assert(im.width===640&&im.height===480,"Image dimensions changed");
  canvas._image=im;ready=true;draw();
- $("counter").textContent="Reviewer "+template.rater+" / "+template.arm+" | blind clip "+row.clip+" | frame "+row.n+" | "+(index+1)+"/"+keys.length;
+ $("counter").textContent="Reviewer "+template.rater+" / "+(template.arm||"NATIVE")+" | blind clip "+row.clip+" | frame "+row.n+" | "+(index+1)+"/"+keys.length;
  $("instruction").textContent="Click measurement x, upper lid y, lower lid y. Saved state: "+(answers.has(row.key)?JSON.stringify(answers.get(row.key).flags):"UNREVIEWED");
  updateProgress();
 }
@@ -177,7 +180,8 @@ $("next").onclick=()=>{if(ready&&index<keys.length-1){index++;show().catch(e=>fa
 $("load").onclick=()=>load();
 $("export").onclick=()=>{
  if(!ready||!template)return;
- const out={experiment:template.experiment,rater:template.rater,arm:template.arm,clips:{}};
+ const out={experiment:template.experiment,rater:template.rater,clips:{}};
+ if(template.arm)out.arm=template.arm;
  for(const clip of Object.keys(template.clips)){
   out.clips[clip]=template.clips[clip].map((row)=>{
    const a=answers.get(keyOf(clip,row.frame));
@@ -189,7 +193,7 @@ $("export").onclick=()=>{
  }
  const data=JSON.stringify(out,null,2);
  const blob=new Blob([data],{type:"application/json"}),url=URL.createObjectURL(blob);
- const a=document.createElement("a");a.href=url;a.download="E002_598_"+out.rater+"_"+out.arm+"_RATINGS.json";
+ const a=document.createElement("a");a.href=url;a.download="E002_598_"+out.rater+"_"+(out.arm||"NATIVE")+"_RATINGS.json";
  document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
 };
 </script>
