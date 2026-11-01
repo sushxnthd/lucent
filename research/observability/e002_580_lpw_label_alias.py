@@ -53,6 +53,10 @@ class RangeReader(io.RawIOBase):
 
     def read(self, size=-1):
         if size is None or size < 0:
+            # zipfile uses read() after seeking to the end-of-central-directory.
+            # Allow only a bounded remainder, never a full archive download.
+            size = self.total - self.pos
+        if size > 1024 * 1024:
             raise Reject("UNBOUNDED_ZIP_READ")
         n = min(size, self.total - self.pos)
         if n <= 0:
