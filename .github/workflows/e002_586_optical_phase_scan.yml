@@ -1,0 +1,29 @@
+name: E002-586 optical phase-scan shutter-support falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_586_optical_phase_scan.py
+      - research/observability/e002_586_independent_replay.cjs
+      - .github/workflows/e002_586_optical_phase_scan.yml
+  workflow_dispatch:
+jobs:
+  synthetic-instrument:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compile Python instrument
+        run: python -m py_compile research/observability/e002_586_optical_phase_scan.py
+      - name: Frozen adversarial synthetic controls
+        run: python research/observability/e002_586_optical_phase_scan.py --self-test
+      - name: Independent Node.js replay
+        run: node research/observability/e002_586_independent_replay.cjs
