@@ -1,0 +1,26 @@
+name: E002-598 offline human-review instrument
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_598_offline_rater.html'
+      - 'research/observability/e002_598_offline_rater_test.cjs'
+      - '.github/workflows/e002_598_offline_rater.yml'
+  workflow_dispatch:
+jobs:
+  synthetic-instrument:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify offline reviewer UI, privacy gates and adversarial fixtures
+        run: node research/observability/e002_598_offline_rater_test.cjs
+      - name: Assert no source or reviewer artifacts are produced
+        shell: bash
+        run: |
+          test -z "$(find . -type f \( -name '*.avi' -o -name '*.png' -o -name '*RATINGS.json' \) -print -quit)"
