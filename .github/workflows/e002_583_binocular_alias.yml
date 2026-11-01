@@ -5,6 +5,7 @@ on:
     paths:
       - "research/observability/E002_583_FROZEN.md"
       - "research/observability/e002_583_binocular_alias.py"
+      - "research/observability/e002_583_independent_replay.cjs"
       - ".github/workflows/e002_583_binocular_alias.yml"
   workflow_dispatch:
 permissions:
@@ -22,3 +23,11 @@ jobs:
         run: python research/observability/e002_583_binocular_alias.py
       - name: Analyze source SHA-pinned original human binocular annotations
         run: python research/observability/e002_583_binocular_alias.py --source
+      - name: Independent Node.js original-source replay
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp)"
+          trap 'rm -f "$tmp"' EXIT
+          curl -fsSL --retry 2 --max-time 60 -o "$tmp" 'https://www.blinkingmatters.com/files/upload/research/Silesian5%28Basler5%29Annotations.zip'
+          node research/observability/e002_583_independent_replay.cjs "$tmp"
