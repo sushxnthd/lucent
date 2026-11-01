@@ -1,4 +1,4 @@
-name: E002-586 optical phase-scan shutter-support falsification
+name: E002-586/587 optical phase-scan and continuous shutter-support falsification
 on:
   push:
     branches:
@@ -6,6 +6,8 @@ on:
     paths:
       - research/observability/e002_586_optical_phase_scan.py
       - research/observability/e002_586_independent_replay.cjs
+      - research/observability/e002_587_continuous_phase_lp.py
+      - research/observability/e002_587_independent_dual_replay.cjs
       - .github/workflows/e002_586_optical_phase_scan.yml
   workflow_dispatch:
 jobs:
@@ -21,9 +23,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Compile Python instrument
+      - name: Compile E002-586 instrument
         run: python -m py_compile research/observability/e002_586_optical_phase_scan.py
-      - name: Frozen adversarial synthetic controls
+      - name: Frozen E002-586 adversarial synthetic controls
         run: python research/observability/e002_586_optical_phase_scan.py --self-test
-      - name: Independent Node.js replay
+      - name: E002-586 independent Node.js replay
         run: node research/observability/e002_586_independent_replay.cjs
+      - name: Install E002-587 continuous LP solver
+        run: python -m pip install 'scipy>=1.11,<2'
+      - name: Compile E002-587 instrument
+        run: python -m py_compile research/observability/e002_587_continuous_phase_lp.py
+      - name: E002-587 frozen continuous-grid falsification controls
+        run: python research/observability/e002_587_continuous_phase_lp.py --self-test
+      - name: E002-587 independent primal-dual optimality replay
+        run: python research/observability/e002_587_continuous_phase_lp.py --certificates | node research/observability/e002_587_independent_dual_replay.cjs
