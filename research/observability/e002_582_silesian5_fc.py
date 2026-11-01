@@ -60,6 +60,30 @@ def parse_text(raw):
     return rows
 
 
+def source_structure(data):
+    """Privacy-safe format diagnostics, no row values or source filenames."""
+    summary = []
+    with zipfile.ZipFile(io.BytesIO(data)) as z:
+        for info in z.infolist():
+            if not info.filename.lower().endswith(".tag"):
+                continue
+            raw = z.read(info)
+            lines = raw.decode("utf-8-sig", errors="replace").splitlines()
+            fields = collections.Counter()
+            starts = collections.Counter()
+            for line in lines:
+                line = line.strip()
+                if not line:
+                    continue
+                fields[len([x for x in TOKEN.split(line) if x])] += 1
+                starts["digit" if line[0].isdigit() else "other"] += 1
+            summary.append({"line_count": len(lines),
+                            "field_count_histogram": dict(sorted(fields.items())),
+                            "leading_character_class": dict(starts)})
+    return {"experiment": "E002-582", "tier": "SOURCE_SHAPE_ONLY",
+            "tag_members": len(summary), "tag_shape_summaries": summary}
+
+
 def parse_archive(data):
     if not zipfile.is_zipfile(io.BytesIO(data)):
         raise ValueError("INVALID_ZIP")
@@ -230,4 +254,5 @@ if __name__ == "__main__":
     self_test()
     if "--source" in sys.argv:
         raw = retrieve()
+        print(json.dumps(source_structure(raw), sort_keys=True))
         print(json.dumps(analyze(parse_archive(raw), hashlib.sha256(raw).hexdigest()), sort_keys=True))
