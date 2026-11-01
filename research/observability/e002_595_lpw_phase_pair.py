@@ -158,5 +158,7 @@ if __name__=="__main__":
     parser=argparse.ArgumentParser()
     parser.add_argument("--self-test",action="store_true")
     args=parser.parse_args()
-    print(json.dumps((self_test() if args.self_test else execute()),
-                     sort_keys=True))
+    if args.self_test:
+        self_test()
+    else:
+        print(json.dumps(execute(), sort_keys=True))
