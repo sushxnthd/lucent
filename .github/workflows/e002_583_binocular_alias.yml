@@ -1,0 +1,24 @@
+name: E002-583 binocular FC source alias test
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_583_FROZEN.md"
+      - "research/observability/e002_583_binocular_alias.py"
+      - ".github/workflows/e002_583_binocular_alias.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  binocular-human-label-alias:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test frozen synthetic adversarial controls
+        run: python research/observability/e002_583_binocular_alias.py
+      - name: Analyze source SHA-pinned original human binocular annotations
+        run: python research/observability/e002_583_binocular_alias.py --source
