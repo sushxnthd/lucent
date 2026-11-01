@@ -32,6 +32,12 @@ The initial one-shot [source-format probe #41278525392](https://github.com/sushx
 
 The successful hosted run passed the synthetic controls for 1/2/3/4+ phase counts, nonfrontal abstention, missing frame indices, malformed flags, source parser behavior, and source-member-order invariant replay. The identity **7×7 + 28×4 + 41×1 + 491×0 = 202** independently checks the aggregate arithmetic. The per-phase vector also sums to 202. These arithmetic checks are independent of the code's report formatting but **not** independent replication of the original human labels.
 
+## Independent cross-language source replay
+
+A separately implemented [Node.js ZIP/TAG parser and modular phase sampler](e002_582_independent_replay.cjs) was run against a fresh download of the same SHA-256-pinned original annotation ZIP. Unlike the Python implementation's explicit retained-index sets, Node uses the three residues `{phi,phi+3,phi+6} mod 10` to test each FC run. [Hosted Actions #41279290875](https://github.com/sushxnthd/lucent/actions/runs/41279290875), job `124767716645`, **completed success** at 2026-11-01 06:07 UTC. The Node job independently reproduced **58,884 frames, 567 eligible FC runs, 76 runs omitted in at least one phase, all 567 interior phase-law checks, length histogram [7,28,41,491], and the exact ten-phase omission vector [29,18,21,17,20,18,25,20,14,20]**. The workflow ran both source parsers, synthetic controls, and the independent replay without publishing source rows, images or archive artifacts.
+
+This is **independent computational replication of the source-derived measurement**, not independent human anatomical relabeling or a second physiological cohort. The two implementations share the published investigators' labels, source archive and nominal 100-fps premise. They therefore cannot independently certify source annotation correctness, shutter integration or camera clock.
+
 ## What this does and does not validate
 
 **Supported:** In an independent published human annotation source with reported 100-fps acquisition, some *positive per-frame 90%-100% eyelid-closure labels* are completely absent under a prospectively fixed nominal 30-fps **index-only** sampling schedule. This is a real human-label demonstration of temporal aliasing and a held-out-from-LPW test of the exact 7/4/1/0 phase law.
