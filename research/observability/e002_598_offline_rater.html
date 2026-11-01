@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lucent E002-598 | Offline blinded eyelid annotation</title>
+<style>
+body{font:15px system-ui,sans-serif;max-width:1040px;margin:24px auto;padding:0 16px;color:#17212b;background:#f7f9fb}
+h1{font-size:24px}h2{font-size:17px}.panel{background:white;border:1px solid #d8dfe5;border-radius:12px;padding:16px;margin:14px 0}
+label{display:inline-block;margin:6px 12px 6px 0}button,input,select{font:inherit}button{padding:8px 12px;margin:4px;cursor:pointer}
+canvas{max-width:100%;background:#222;border:1px solid #bbc;cursor:crosshair}
+code{background:#edf1f5;padding:2px 4px}.muted{color:#52616f}.error{color:#a51c30}.ok{color:#155b3b}
+</style>
+</head>
+<body>
+<h1>Lucent E002-598 | Blinded anatomical review</h1>
+<p class="muted">Offline research instrument. No telemetry or autosave. Select only the assigned private reviewer packet. Never upload human images or ratings to a public repository. This tool cannot certify shutter timing, physiological velocity, or reviewer independence.</p>
+<div class="panel">
+<h2>1. Load private packet</h2>
+<label>Blank reviewer template <input id="template" type="file" accept=".json,application/json"></label>
+<label>Assigned ARM folder <input id="images" type="file" webkitdirectory directory multiple accept=".png"></label>
+<button id="load">Verify packet and start</button>
+<p id="status" role="status">Not loaded.</p>
+</div>
+<div class="panel">
+<h2>2. Mark one frame at a time</h2>
+<p id="counter">No frame loaded.</p>
+<canvas id="view" width="640" height="480" aria-label="Eye image for anatomical review"></canvas>
+<p id="instruction">Select a verified packet to begin.</p>
+<label>Landmark uncertainty (pixels, minimum 0.5)
+<input id="uncertainty" type="number" min="0.5" max="50" step="0.5" value="2"></label>
+<label>Unable to measure because of
+<select id="flag"><option value="">No nuisance flag</option><option>OCCLUSION</option><option>BLUR</option><option>GAZE</option><option>GLASSES</option><option>GEOMETRY</option><option>BRIGHTNESS</option><option>MISSING</option><option>OTHER</option></select></label>
+<div>
+<button id="save">Save measured lid margins</button>
+<button id="abstain">Record nuisance / abstain</button>
+<button id="clear">Clear frame to UNREVIEWED</button>
+<button id="prev">Previous</button>
+<button id="next">Next</button>
+</div>
+<p class="muted">For a measurable frame: click the iris-centered measurement column (x), then the upper eyelid margin (y), then the lower eyelid margin (y). Both lid margins use the same x column. Do not infer iris diameter from occluded frames. Independent iris-scale calibration is required downstream.</p>
+</div>
+<div class="panel">
+<h2>3. Export without claiming anatomical truth</h2>
+<button id="export">Export reviewer JSON</button>
+<p id="progress">0 reviewed.</p>
+<p class="muted">An export with unreviewed or flagged frames is permitted and remains explicitly incomplete. The conservative downstream evaluator must abstain whenever anatomical scale, visibility or other physical premises are missing.</p>
+</div>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const canvas=$("view"), ctx=canvas.getContext("2d");
+let template=null, files=new Map(), keys=[], index=0, currentUrl=null, ready=false, clicks=[], answers=new Map();
+const allowedFlags=new Set(["OCCLUSION","BLUR","GAZE","GLASSES","GEOMETRY","BRIGHTNESS","MISSING","OTHER"]);
+const keyOf=(clip,n)=>clip+"::"+n;
+const fail=msg=>{ $("status").textContent="REFUSED: "+msg; $("status").className="error"; ready=false; };
+const assert=(condition,msg)=>{if(!condition)throw Error(msg);};
+function expected(t){
+ assert(t&&t.experiment==="E002-595"&&["A","B"].includes(t.rater)&&/^ARM_[012]$/.test(t.arm),"Invalid E002-595 reviewer template");
+ assert(t.clips&&typeof t.clips==="object"&&!Array.isArray(t.clips),"Invalid clips object");
+ const names=Object.keys(t.clips).sort();
+ assert(names.length===10,"Expected exactly ten blinded clips");
+ const result=[];
+ for(const clip of names){
+  assert(/^[A-Za-z0-9_-]{1,100}$/.test(clip),"Unsafe blind clip ID");
+  const rows=t.clips[clip];
+  assert(Array.isArray(rows)&&rows.length===6,"Expected six frames per clip");
+  for(let n=0;n<6;n++){
+   const row=rows[n];
+   assert(row&&row.frame===n&&row.upper_y===null&&row.lower_y===null&&row.iris_diameter===null&&row.uncertainty_px===null&&Array.isArray(row.flags)&&row.flags.length===1&&row.flags[0]==="UNREVIEWED","Nonblank or malformed template");
+   result.push({clip,n,key:keyOf(clip,n)});
+  }
+ }
+ assert(result.length===60,"Incorrect expected frame count");
+ return result;
+}
+function fileKey(f){
+ const p=(f.webkitRelativePath||f.name).replace(/\\/g,"/");
+ const m=p.match(/(?:^|\/)clips\/([A-Za-z0-9_-]+)\/frame_(\d{2})\.png$/);
+ return m?keyOf(m[1],Number(m[2])):null;
+}
+async function readJSON(f){return JSON.parse(await f.text());}
+async function verifyImage(f){
+ return new Promise((resolve,reject)=>{
+  const url=URL.createObjectURL(f), im=new Image();
+  im.onload=()=>{URL.revokeObjectURL(url); im.width===640&&im.height===480?resolve():reject(Error("PNG geometry mismatch"));};
+  im.onerror=()=>{URL.revokeObjectURL(url);reject(Error("Image decoding failed"));};
+  im.src=url;
+ });
+}
+async function load(){
+ ready=false;template=null;files=new Map();answers=new Map();keys=[];clicks=[];
+ try{
+  const tFile=$("template").files[0], imageList=Array.from($("images").files);
+  assert(tFile&&imageList.length,"Select a template and its assigned ARM image folder");
+  assert(tFile.size<200000,"Template unexpectedly large");
+  const t=await readJSON(tFile), expectedRows=expected(t);
+  const wanted=new Set(expectedRows.map(r=>r.key));
+  const seen=new Map();
+  for(const f of imageList){
+   const k=fileKey(f);
+   assert(k&&wanted.has(k),"Unexpected image or folder: "+f.name);
+   assert(!seen.has(k),"Duplicate image mapping: "+k);
+   assert(f.size>0&&f.size<3000000,"Invalid PNG file size");
+   seen.set(k,f);
+  }
+  assert(seen.size===wanted.size,"Missing frames: "+seen.size+"/"+wanted.size);
+  for(const f of seen.values())await verifyImage(f);
+  template=t;files=seen;keys=expectedRows;index=0;
+  $("status").textContent="Verified "+keys.length+" local PNGs; "+t.rater+" / "+t.arm+". No source identity loaded.";
+  $("status").className="ok";
+  await show();
+ }catch(e){fail(e.message);}
+}
+function draw(){
+ ctx.clearRect(0,0,640,480);
+ if(!ready)return;
+ const im=$("view")._image;
+ if(im)ctx.drawImage(im,0,0,640,480);
+ const k=keys[index].key, a=answers.get(k);
+ const points=clicks.length?clicks:(a&&a.measurement_x!==undefined?[{x:a.measurement_x,y:0},{x:a.measurement_x,y:a.upper_y},{x:a.measurement_x,y:a.lower_y}]:[]);
+ if(points.length){
+  ctx.strokeStyle="#00e0c0";ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(points[0].x,0);ctx.lineTo(points[0].x,480);ctx.stroke();
+  for(let i=1;i<points.length;i++){
+   if(!Number.isFinite(points[i].y))continue;
+   ctx.fillStyle=i===1?"#ffda45":"#ff557a";
+   ctx.beginPath();ctx.arc(points[0].x,points[i].y,5,0,Math.PI*2);ctx.fill();
+  }
+ }
+}
+async function show(){
+ ready=false;clicks=[];
+ if(currentUrl)URL.revokeObjectURL(currentUrl);
+ const row=keys[index];currentUrl=URL.createObjectURL(files.get(row.key));
+ const im=new Image();
+ await new Promise((resolve,reject)=>{im.onload=resolve;im.onerror=()=>reject(Error("Image failed during review"));im.src=currentUrl;});
+ assert(im.width===640&&im.height===480,"Image dimensions changed");
+ canvas._image=im;ready=true;draw();
+ $("counter").textContent="Reviewer "+template.rater+" / "+template.arm+" | blind clip "+row.clip+" | frame "+row.n+" | "+(index+1)+"/"+keys.length;
+ $("instruction").textContent="Click measurement x, upper lid y, lower lid y. Saved state: "+(answers.has(row.key)?JSON.stringify(answers.get(row.key).flags):"UNREVIEWED");
+ updateProgress();
+}
+canvas.addEventListener("click",e=>{
+ if(!ready)return;
+ const r=canvas.getBoundingClientRect(),x=Math.max(0,Math.min(639,(e.clientX-r.left)*640/r.width)),y=Math.max(0,Math.min(479,(e.clientY-r.top)*480/r.height));
+ if(clicks.length===3)clicks=[];
+ clicks.push({x:Math.round(x*10)/10,y:Math.round(y*10)/10});
+ if(clicks.length===3&&clicks[2].y<=clicks[1].y){clicks=clicks.slice(0,2);$("instruction").textContent="Lower lid must be below upper lid; click lower lid again.";}
+ else $("instruction").textContent=["Click upper lid y","Click lower lid y","Ready to save measured lid margins"][clicks.length-1];
+ draw();
+});
+function updateProgress(){
+ const measured=Array.from(answers.values()).filter(a=>a.flags.length===0).length;
+ const abstained=Array.from(answers.values()).filter(a=>a.flags.length>0).length;
+ $("progress").textContent=measured+" measured, "+abstained+" flagged, "+(keys.length-measured-abstained)+" unreviewed out of "+keys.length+".";
+}
+function store(value){if(!ready)return;answers.set(keys[index].key,value);clicks=[];draw();updateProgress();}
+$("save").onclick=()=>{
+ if(!ready)return;
+ const u=Number($("uncertainty").value);
+ if(clicks.length!==3||!Number.isFinite(u)||u<0.5||u>50){$("instruction").textContent="REFUSED: three clicks and 0.5–50 px uncertainty required.";return;}
+ const [x,upper,lower]=clicks;
+ if(lower.y<=upper.y){$("instruction").textContent="REFUSED: lower lid must be below upper.";return;}
+ store({upper_y:upper.y,lower_y:lower.y,iris_diameter:null,uncertainty_px:u,measurement_x:x.x,flags:[]});
+ $("instruction").textContent="Lid coordinates recorded; iris scale uncalibrated, downstream anatomical classification must abstain.";
+};
+$("abstain").onclick=()=>{
+ if(!ready)return;
+ const f=$("flag").value;
+ if(!allowedFlags.has(f)){$("instruction").textContent="Select an explicit nuisance reason.";return;}
+ store({upper_y:null,lower_y:null,iris_diameter:null,uncertainty_px:null,flags:[f]});
+ $("instruction").textContent="Nuisance recorded; no anatomical coordinates inferred.";
+};
+$("clear").onclick=()=>{if(!ready)return;answers.delete(keys[index].key);clicks=[];draw();updateProgress();};
+$("prev").onclick=()=>{if(ready&&index>0){index--;show().catch(e=>fail(e.message));}};
+$("next").onclick=()=>{if(ready&&index<keys.length-1){index++;show().catch(e=>fail(e.message));}};
+$("load").onclick=()=>load();
+$("export").onclick=()=>{
+ if(!ready||!template)return;
+ const out={experiment:template.experiment,rater:template.rater,arm:template.arm,clips:{}};
+ for(const clip of Object.keys(template.clips)){
+  out.clips[clip]=template.clips[clip].map((row)=>{
+   const a=answers.get(keyOf(clip,row.frame));
+   return {frame:row.frame,upper_y:a?a.upper_y:null,lower_y:a?a.lower_y:null,
+    iris_diameter:null,uncertainty_px:a?a.uncertainty_px:null,
+    ...(a&&a.measurement_x!==undefined?{measurement_x:a.measurement_x}:{}),
+    flags:a?a.flags:["UNREVIEWED"]};
+  });
+ }
+ const data=JSON.stringify(out,null,2);
+ const blob=new Blob([data],{type:"application/json"}),url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download="E002_598_"+out.rater+"_"+out.arm+"_RATINGS.json";
+ document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+};
+</script>
+</body>
+</html>
