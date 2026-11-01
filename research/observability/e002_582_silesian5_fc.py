@@ -183,7 +183,7 @@ def analyze(sequences, archive_sha):
             "source_sequences": len(sequences),
             "fc_runs": dict(sorted(totals.items())),
             "eligible_run_lengths_native_frames": {k:lengths[k] for k in ("1","2","3","4+")},
-            "phase_missed_fc_runs": phases, "per_sequence_aggregate": sequence_counts,
+            "phase_missed_fc_runs": phases, "per_sequence_aggregate": sorted(sequence_counts, key=lambda x: (x["rows"], x["eligible_fc_runs"], x["runs_missed_any_phase"])),
             "positive_index_alias_witness": totals["runs_missed_any_phase"] > 0,
             "human_shutter_gap_bound_validated": False,
             "product": "ABSTAIN_UNCALIBRATED", "release": "BLOCKED"}
@@ -210,6 +210,9 @@ def self_test():
     assert t["missing_index_abstain"] == 1
     t, _, _ = analyze_sequence(make(["X"]*20+["C"]+["X"]*20))
     assert t["runs_missed_all_phases"] == 0
+    s1 = make(["X"]*20+["C"]+["X"]*20)
+    s2 = make(["X"]*20+["C"]*2+["X"]*20)
+    assert analyze([s1,s2], "0"*64) == analyze([s2,s1], "0"*64)
     good = "0:0:X:C:X:X:X:1:2:3:4:5:6:7:8:9:10:11:12\n"
     assert len(parse_text(good.encode())) == 1
     for bad in ("0:0:X:C:X:X:X:1:2\n", "0:0:X:Z:X:X:X:1:2:3:4:5:6:7:8:9:10:11:12\n"):
