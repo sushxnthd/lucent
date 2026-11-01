@@ -15,7 +15,7 @@ Let one frame period be dimensionless `u in [0,1]`, with observed normalized ape
 
 Freeze predictions BEFORE running code:
 1. All 24 consecutive, full-duty frame exposure averages are **exactly 1/2** in both worlds. There are **no uncovered shutter intervals**. Frame-boundary aperture samples also match exactly. Any inequality kills the witness.
-2. World C reaches zero at `u=1/4`, has `a_C<=1/5` over the exact interval `[7/40,13/40]` (duration `3/20` of a frame), whereas O never closes. Both have `0<=a<=1` and maximal absolute slope <=4. Any violation kills the witness.
+2. World C reaches zero at `u=1/4`, has `a_C<=1/5` over the exact interval `[1/5,3/10]` (duration `1/10` of a frame), whereas O never closes. Both have `0<=a<=1` and maximal absolute slope <=4. Any violation kills the witness.
 3. Prospective, not used to fit the worlds: a *half-frame* optical exposure over `[0,1/2]` produces `Y_O=1/2`, `Y_C=3/8`; over `[1/2,1]` produces `Y_O=1/2`, `Y_C=5/8`. If these fail, the held-out discriminator is killed.
 4. A pre-integration nonlinear sensor `g(a)=a^2` breaks the full-duty equality: O `1/4`, C `7/24`. This is a required nuisance sensitivity control, not a universal non-identifiability claim.
 5. A single-sided perturbation to the positive bump (peak 9/10 instead of 1) must break equality. A calibrated hard velocity ceiling `L<3/5` (dimensionless per frame) with verified boundary apertures 1/2 excludes any `a<=1/5` by the elementary two-endpoint Lipschitz envelope; this is a *separate conditional certificate*, not evidence that a real human has such a ceiling.
@@ -27,3 +27,5 @@ Implement exact-rational integration over all knots in Python and an independent
 ## Product and scope
 
 If confirmed, **full optical duty cycle is not itself a certificate that an exposure-integrating image observed or excluded a brief anatomical closure**. Keep `ABSTAIN_UNCALIBRATED` unless the real sensor's exposure-to-aperture observation operator, physical shutter timing, geometry and independently justified human velocity ceiling are authenticated. An exposure-averaged proxy is not an instantaneous endpoint anatomical measurement. A calibrated faster/shorter-exposure capture is a prospective discriminator, not a universal solution. No novelty claim over temporal aliasing, exposure integration or classical sampling theory.
+
+**Pre-execution correction:** the closure interval was corrected from an arithmetic typo in the initial freeze before implementing or executing the experiment. The knot locations and all other predictions are unchanged.
