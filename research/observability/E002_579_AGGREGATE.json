@@ -1,0 +1,327 @@
+{
+  "anatomical_closure_labels": 0,
+  "baseline": {
+    "abstained": 0,
+    "eligible": 1997,
+    "flagged": 0,
+    "native_frames": 2000,
+    "phase": [
+      {
+        "eligible": 666,
+        "endpoint_p50_p90_p99": [
+          0.009,
+          0.039853,
+          0.112032
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.001946,
+          0.012374,
+          0.046505
+        ],
+        "phase": 0,
+        "quadruples": 666
+      },
+      {
+        "eligible": 666,
+        "endpoint_p50_p90_p99": [
+          0.00905,
+          0.037154,
+          0.11408
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.00195,
+          0.012175,
+          0.044272
+        ],
+        "phase": 1,
+        "quadruples": 666
+      },
+      {
+        "eligible": 665,
+        "endpoint_p50_p90_p99": [
+          0.009498,
+          0.038949,
+          0.119951
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.002045,
+          0.012303,
+          0.044279
+        ],
+        "phase": 2,
+        "quadruples": 665
+      }
+    ],
+    "quadruples": 1997
+  },
+  "blur_flag_stability": {
+    "both_flagged": 0,
+    "jaccard": null,
+    "union_flagged": 0
+  },
+  "dropout_flag_stability": {
+    "both_flagged": 0,
+    "jaccard": null,
+    "union_flagged": 0
+  },
+  "every_twentieth_frame_missing": {
+    "abstained": 397,
+    "eligible": 1600,
+    "flagged": 0,
+    "native_frames": 2000,
+    "phase": [
+      {
+        "eligible": 533,
+        "endpoint_p50_p90_p99": [
+          0.009238,
+          0.041288,
+          0.11113
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.00199,
+          0.012395,
+          0.045028
+        ],
+        "phase": 0,
+        "quadruples": 666
+      },
+      {
+        "eligible": 534,
+        "endpoint_p50_p90_p99": [
+          0.009129,
+          0.038946,
+          0.115911
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.001999,
+          0.012254,
+          0.043405
+        ],
+        "phase": 1,
+        "quadruples": 666
+      },
+      {
+        "eligible": 533,
+        "endpoint_p50_p90_p99": [
+          0.009748,
+          0.040679,
+          0.10938
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.002058,
+          0.013262,
+          0.041482
+        ],
+        "phase": 2,
+        "quadruples": 665
+      }
+    ],
+    "quadruples": 1997
+  },
+  "evidence_tier": "AUTHENTIC_HUMAN_VIDEO_NONANATOMICAL_PROXY_ONLY",
+  "experiment": "E002-579",
+  "heldout_physical_predictions": 0,
+  "human_anatomical_rater_pairs": 0,
+  "jitter_flag_stability": {
+    "both_flagged": 0,
+    "jaccard": null,
+    "union_flagged": 0
+  },
+  "one_pixel_alternating_jitter": {
+    "abstained": 0,
+    "eligible": 1997,
+    "flagged": 0,
+    "native_frames": 2000,
+    "phase": [
+      {
+        "eligible": 666,
+        "endpoint_p50_p90_p99": [
+          0.04191,
+          0.091615,
+          0.144963
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.049856,
+          0.074235,
+          0.094262
+        ],
+        "phase": 0,
+        "quadruples": 666
+      },
+      {
+        "eligible": 666,
+        "endpoint_p50_p90_p99": [
+          0.042658,
+          0.090048,
+          0.137115
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.049776,
+          0.074653,
+          0.096358
+        ],
+        "phase": 1,
+        "quadruples": 666
+      },
+      {
+        "eligible": 665,
+        "endpoint_p50_p90_p99": [
+          0.042818,
+          0.088384,
+          0.141362
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.049702,
+          0.073954,
+          0.096415
+        ],
+        "phase": 2,
+        "quadruples": 665
+      }
+    ],
+    "quadruples": 1997
+  },
+  "photometric_max_distance_error": 0,
+  "physical_shutter_authenticated": false,
+  "positive_affine_light": {
+    "abstained": 0,
+    "eligible": 1997,
+    "flagged": 0,
+    "native_frames": 2000,
+    "phase": [
+      {
+        "eligible": 666,
+        "endpoint_p50_p90_p99": [
+          0.009,
+          0.039853,
+          0.112032
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.001946,
+          0.012374,
+          0.046505
+        ],
+        "phase": 0,
+        "quadruples": 666
+      },
+      {
+        "eligible": 666,
+        "endpoint_p50_p90_p99": [
+          0.00905,
+          0.037154,
+          0.11408
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.00195,
+          0.012175,
+          0.044272
+        ],
+        "phase": 1,
+        "quadruples": 666
+      },
+      {
+        "eligible": 665,
+        "endpoint_p50_p90_p99": [
+          0.009498,
+          0.038949,
+          0.119951
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.002045,
+          0.012303,
+          0.044279
+        ],
+        "phase": 2,
+        "quadruples": 665
+      }
+    ],
+    "quadruples": 1997
+  },
+  "product": "ABSTAIN_UNCALIBRATED",
+  "proxy_cannot_establish_blink_or_fatigue": true,
+  "release": "BLOCKED",
+  "reported_fps_not_physically_authenticated": "95/1",
+  "source": "LPW/1/1.avi",
+  "source_sha256": "158d8654ff9e19162ec7f1316eee3d3046024ad81b355b2b3e5f9e566f5abe86",
+  "three_by_three_blur": {
+    "abstained": 0,
+    "eligible": 1997,
+    "flagged": 0,
+    "native_frames": 2000,
+    "phase": [
+      {
+        "eligible": 666,
+        "endpoint_p50_p90_p99": [
+          0.0025,
+          0.012399,
+          0.045418
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.000437,
+          0.00377,
+          0.014664
+        ],
+        "phase": 0,
+        "quadruples": 666
+      },
+      {
+        "eligible": 666,
+        "endpoint_p50_p90_p99": [
+          0.002572,
+          0.012123,
+          0.054112
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.000454,
+          0.003404,
+          0.014069
+        ],
+        "phase": 1,
+        "quadruples": 666
+      },
+      {
+        "eligible": 665,
+        "endpoint_p50_p90_p99": [
+          0.002589,
+          0.012157,
+          0.054528
+        ],
+        "flagged": 0,
+        "m_p50_p90_p99": [
+          0.000456,
+          0.003773,
+          0.014078
+        ],
+        "phase": 2,
+        "quadruples": 665
+      }
+    ],
+    "quadruples": 1997
+  },
+  "thresholds": {
+    "endpoint_dissimilarity_max": 0.02,
+    "native_step_dissimilarity_min": 0.05
+  },
+  "velocity_ceiling_certified": false,
+  "provenance": {
+    "hosted_run_id": 41252756295,
+    "hosted_job_id": 124689530629,
+    "run_url": "https://github.com/sushxnthd/lucent/actions/runs/41252756295",
+    "protocol": "E002_579_FROZEN.md",
+    "decision": "REJECT_PROXY_AS_ANATOMICAL_REVIEW_SELECTOR"
+  }
+}
