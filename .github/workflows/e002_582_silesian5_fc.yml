@@ -1,4 +1,4 @@
-name: E002-582 Silesian5 annotation source probe
+name: E002-582 Silesian5 human full-closure index alias
 on:
   push:
     branches: [research/observability-human-boundary]
@@ -11,13 +11,15 @@ on:
 permissions:
   contents: read
 jobs:
-  source-structure:
+  human-annotation-index-alias:
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 9
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Verify source structure without publishing annotations
-        run: python research/observability/e002_582_source_probe.py
+      - name: Test exact phase law and source parser against adversarial fixtures
+        run: python research/observability/e002_582_silesian5_fc.py
+      - name: Analyze original public Silesian5 FC labels without publishing rows
+        run: python research/observability/e002_582_silesian5_fc.py --source
