@@ -73,5 +73,34 @@
   "heldout_physical_closure_prediction": false,
   "evidence_tier": "INVESTIGATOR_HUMAN_FC_LABEL_INDEX_ALIAS_ONLY",
   "product": "ABSTAIN_UNCALIBRATED",
-  "release": "BLOCKED"
+  "release": "BLOCKED",
+  "independent_replay": {
+    "status": "PASS",
+    "run": "https://github.com/sushxnthd/lucent/actions/runs/41279290875",
+    "job_id": 124767716645,
+    "implementation": "Node.js independent ZIP/TAG parser and modular 100-to-30 phase sampler",
+    "matched_frames": 58884,
+    "matched_fc_runs": 567,
+    "matched_eligible": 567,
+    "matched_any_phase_omissions": 76,
+    "matched_lengths": [
+      7,
+      28,
+      41,
+      491
+    ],
+    "matched_phase_vector": [
+      29,
+      18,
+      21,
+      17,
+      20,
+      18,
+      25,
+      20,
+      14,
+      20
+    ],
+    "physical_shutter_validated": false
+  }
 }
