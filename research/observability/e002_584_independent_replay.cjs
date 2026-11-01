@@ -61,8 +61,8 @@ function analyze(rows,kind){
   return out;
 }
 function main(file){
-  if(!robustMiss(5,5,0,0,1)||robustMiss(4,4,0,0,1))fail('SYNTHETIC_GAP_FIXTURE');
-  if(robustMiss(5,5,0,0,2)||!possibleMiss(5,5,0,0,1))fail('SYNTHETIC_JITTER_FIXTURE');
+  if(!robustMiss(8,8,0,0,1)||robustMiss(7,7,0,0,1))fail('SYNTHETIC_GAP_FIXTURE');
+  if(robustMiss(8,8,0,0,2)||!possibleMiss(8,8,0,0,1))fail('SYNTHETIC_JITTER_FIXTURE');
   const zip=fs.readFileSync(file);
   if(crypto.createHash('sha256').update(zip).digest('hex')!==SHA)fail('SHA_CHANGED');
   const names=cp.execFileSync('unzip',['-Z','-1',file],{encoding:'utf8',maxBuffer:2e6})
