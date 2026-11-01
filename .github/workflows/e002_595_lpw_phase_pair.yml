@@ -8,6 +8,7 @@ on:
       - research/observability/e002_595_lpw_phase_pair.py
       - research/observability/E002_595_FROZEN.md
       - .github/workflows/e002_595_lpw_phase_pair.yml
+      - research/observability/e002_595_independent_replay.cjs
   pull_request:
     branches:
       - main
@@ -35,6 +36,8 @@ jobs:
           sudo apt-get install -y ffmpeg
       - name: Verify frozen phase grid and adversarial invalid inputs
         run: python3 research/observability/e002_595_lpw_phase_pair.py --self-test
+      - name: Independent integer-only Node.js replay
+        run: node research/observability/e002_595_independent_replay.cjs
       - name: Build and verify private human-source paired packets then destroy them
         run: python3 research/observability/e002_595_lpw_phase_pair.py
       - name: Confirm no private reviewer artifacts uploaded
