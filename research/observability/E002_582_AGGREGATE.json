@@ -1,0 +1,77 @@
+{
+  "experiment": "E002-582",
+  "executed_utc": "2026-11-01T06:01:57Z",
+  "protocol": "research/observability/E002_582_FROZEN.md",
+  "prediction": "research/observability/E002_582_PHASE_PREDICTION.md",
+  "hosted_run": "https://github.com/sushxnthd/lucent/actions/runs/41279060143",
+  "hosted_job_id": 124767045875,
+  "hosted_conclusion": "success",
+  "source": "https://www.blinkingmatters.com/research",
+  "source_archive_sha256": "a73bf84981b84f626a3cc7b3b3d1962360354740bc6cf3de5d9c92d6d380c223",
+  "source_sequences": 5,
+  "total_annotated_frames": 58884,
+  "nominal_reference_fps": 100,
+  "nominal_target_fps": 30,
+  "full_closure_semantics": "investigator per-eye FC=C means 90-100 percent closed, not a calibrated normalized aperture",
+  "all_fc_runs": 567,
+  "eligible_fc_runs": 567,
+  "nuisance_or_boundary_abstained": 0,
+  "eligible_run_lengths_native_frames": {
+    "1": 7,
+    "2": 28,
+    "3": 41,
+    "4+": 491
+  },
+  "interior_phase_law_checked": 567,
+  "phase_missed_fc_runs": [
+    29,
+    18,
+    21,
+    17,
+    20,
+    18,
+    25,
+    20,
+    14,
+    20
+  ],
+  "runs_missed_any_phase": 76,
+  "run_phase_omissions_total": 202,
+  "run_phase_combinations_total": 5670,
+  "runs_missed_all_phases": 0,
+  "per_sequence_anonymized_sorted": [
+    {
+      "rows": 8109,
+      "eligible_fc_runs": 64,
+      "runs_missed_any_phase": 2
+    },
+    {
+      "rows": 10088,
+      "eligible_fc_runs": 99,
+      "runs_missed_any_phase": 24
+    },
+    {
+      "rows": 11498,
+      "eligible_fc_runs": 196,
+      "runs_missed_any_phase": 7
+    },
+    {
+      "rows": 13178,
+      "eligible_fc_runs": 149,
+      "runs_missed_any_phase": 33
+    },
+    {
+      "rows": 16011,
+      "eligible_fc_runs": 59,
+      "runs_missed_any_phase": 10
+    }
+  ],
+  "independent_anatomical_rater_pair": false,
+  "physical_exposure_verified": false,
+  "camera_clock_verified": false,
+  "velocity_ceiling_certified": false,
+  "heldout_physical_closure_prediction": false,
+  "evidence_tier": "INVESTIGATOR_HUMAN_FC_LABEL_INDEX_ALIAS_ONLY",
+  "product": "ABSTAIN_UNCALIBRATED",
+  "release": "BLOCKED"
+}
