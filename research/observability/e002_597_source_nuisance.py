@@ -13,6 +13,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageFilter
 
+import e002_597_independent_oracle as oracle
 import e002_575_lpw_packet as packet
 import e002_577_lpw_range_probe as source
 import e002_578_real_lpw_packet as base
@@ -53,17 +54,6 @@ def variants(img):
         yield name, occluded, ROI
 
 
-def independent_small_oracle(rows):
-    """Separate stdlib implementation for small arrays; no numpy or Pillow."""
-    h = len(rows)
-    w = len(rows[0])
-    dark = sum(1 for row in rows for x in row if x < 80) / (h * w)
-    total = sum(abs(rows[y + 1][x] - rows[y][x])
-                for y in range(h - 1) for x in range(w))
-    edge = total / ((h - 1) * w * 255)
-    return dark, edge
-
-
 def self_test():
     arrays = (
         [[0, 79, 80], [255, 80, 79], [20, 20, 20]],
@@ -75,7 +65,7 @@ def self_test():
         h, w = len(rows), len(rows[0])
         im = Image.fromarray(np.asarray(rows, dtype=np.uint8), "L")
         a = measure(im, (0, 0, w, h))
-        b = independent_small_oracle(rows)
+        b = oracle.measure_rows(rows)
         if any(abs(x - y) > 1e-12 for x, y in zip(a, b)):
             raise AssertionError("INDEPENDENT_ORACLE_MISMATCH")
     flat = Image.new("L", (640, 480), 79)
