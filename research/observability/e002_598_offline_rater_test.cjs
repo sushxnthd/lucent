@@ -65,7 +65,7 @@ async function tryLoad(t,images){
 (async()=>{
  const files=fakeFiles();
  assert.equal(files.length,60);
- assert.match(await tryLoad(template,files),/^Verified 60 local PNGs/);
+ assert.match(await tryLoad(template,[...files,{name:"BLANK_ANATOMICAL_RATINGS.json",webkitRelativePath:"ARM_0/BLANK_ANATOMICAL_RATINGS.json",size:1000}]),/^Verified 60 local PNGs/);
  assert.equal(run("keys.length"),60);
  assert.equal(run('fileKey({webkitRelativePath:"ARM_0/clips/clip_0001/frame_03.png"})'),"clip_0001::3");
  assert.equal(run('fileKey({webkitRelativePath:"ARM_0/owner_mapping.json"})'),null);
