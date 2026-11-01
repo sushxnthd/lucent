@@ -22,6 +22,7 @@ FLAGS_FC = {"X", "C"}
 FLAGS_NV = {"X", "N"}
 EXPECTED_ROWS = 58884
 EXPECTED_SEQUENCES = 5
+SOURCE_SHA256 = 'a73bf84981b84f626a3cc7b3b3d1962360354740bc6cf3de5d9c92d6d380c223'
 
 
 def parse_text(raw):
@@ -85,6 +86,8 @@ def source_structure(data):
 
 
 def parse_archive(data):
+    if hashlib.sha256(data).hexdigest() != SOURCE_SHA256:
+        raise ValueError("SOURCE_ARCHIVE_HASH_CHANGED")
     if not zipfile.is_zipfile(io.BytesIO(data)):
         raise ValueError("INVALID_ZIP")
     sequences = []
@@ -100,6 +103,8 @@ def parse_archive(data):
                 raise ValueError("UNSAFE_MEMBER")
             if info.flag_bits & 1:
                 raise ValueError("ENCRYPTED_MEMBER")
+            if path.suffix.lower() != ".tag":
+                continue  # Published frame-level labels; .txt timestamps and .csv metadata are separate.
             raw = z.read(info)
             if len(raw) != info.file_size:
                 raise ValueError("ZIP_MEMBER_INTEGRITY")
