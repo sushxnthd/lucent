@@ -41,3 +41,8 @@ Secure two genuinely independent, blinded anatomical raters; privately distribut
 - **Pending hosted verification:** actual source packet construction, hash binding, cleanup and hosted independent replay.
 - **Still zero:** independent human rater pairs, human closure labels, physical shutter/clock certificates, defensible hard human velocity ceilings and participant-disjoint physical exclusion predictions.
 - **Product:** `ABSTAIN_UNCALIBRATED`. **Release:** `BLOCKED`. **Draft PR #26:** unmerged. **Hush:** separate branch/PR #45 untouched in this urgent primary run.
+
+
+## E002-596 prospective phase-completeness correction (2026-11-02)
+
+The three phase maps and missed-pulse counts above are correct **for the frozen p=0,1,2 arms only**, but these phases do not exhaust nominal 95-to-30 conversion: the allowed continuous phase interval is [0,19/6) native-frame units. A fourth valid integer phase p=3 selects native indices [3,6,9,13,16], including the index 9 absent from the original three-arm union. The complete continuous-phase enumeration has 19 distinct index signatures, with 5-6 retained frames and worst-case discrete pulse misses of 14,8,2,0 for widths 1-4. See [E002-596 frozen protocol](E002_596_FROZEN.md) and [falsification result](E002_596_RESULT.md). **Do not interpret index 9 as an intrinsic blind index of the sampling-rate conversion, and do not claim three phases exhaust phase uncertainty.** No human or physical-camera evidence was added.
