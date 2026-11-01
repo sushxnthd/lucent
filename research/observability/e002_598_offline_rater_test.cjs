@@ -75,7 +75,7 @@ async function tryLoad(t,images){
  prefilled.clips.clip_0000[0].upper_y=12;
  assert.match(await tryLoad(prefilled,files),/^REFUSED: Nonblank or malformed template/);
  const wrong=JSON.parse(JSON.stringify(template));wrong.rater="C";
- assert.match(await tryLoad(wrong,files),/^REFUSED: Invalid E002-595 reviewer template/);
+ assert.match(await tryLoad(wrong,files),/^REFUSED: Invalid reviewer template/);
  assert.match(await tryLoad(template,files),/^Verified 60 local PNGs/);
  const canvas=el("view");
  canvas._event_click({clientX:320,clientY:200});
@@ -106,10 +106,34 @@ async function tryLoad(t,images){
  assert(!JSON.stringify(output).includes("native_frame_index"));
  el("clear").onclick();
  assert.equal(run('answers.has(keys[1].key)'),false);
+ const nativeClips={};
+ for(let c=0;c<10;c++){
+  const id="clip_"+String(c).padStart(4,"0");
+  nativeClips[id]=Array.from({length:19},(_,frame)=>({
+   frame,upper_y:null,lower_y:null,iris_diameter:null,uncertainty_px:null,flags:["UNREVIEWED"]
+  }));
+ }
+ const native={experiment:"E002-574",rater:"B",clips:nativeClips};
+ const nativeFiles=Object.entries(nativeClips).flatMap(([clip,rows])=>rows.map(row=>({
+  name:"frame_"+String(row.frame).padStart(2,"0")+".png",
+  webkitRelativePath:"RATER_B/clips/"+clip+"/frame_"+String(row.frame).padStart(2,"0")+".png",
+  size:1000
+ })));
+ assert.match(await tryLoad(native,nativeFiles.slice(1)),/^REFUSED: Missing frames/);
+ assert.match(await tryLoad(native,nativeFiles),/^Verified 190 local PNGs/);
+ assert.equal(run("keys.length"),190);
+ el("export").onclick();
+ assert.equal(downloads[1],"E002_598_B_NATIVE_RATINGS.json");
+ const nativeOutput=JSON.parse(lastBlob.parts.join(""));
+ assert.deepEqual(Object.keys(nativeOutput).sort(),["clips","experiment","rater"]);
+ assert.equal(nativeOutput.clips.clip_0000.length,19);
+ assert.deepEqual(nativeOutput.clips.clip_0000[18].flags,["UNREVIEWED"]);
+ const mixed=JSON.parse(JSON.stringify(native));mixed.arm="ARM_0";
+ assert.match(await tryLoad(mixed,nativeFiles),/^REFUSED: Invalid reviewer template/);
  console.log(JSON.stringify({experiment:"E002-598",status:"SYNTHETIC_UI_TEST_PASS",
   checks:["syntax","no-network/no-storage","60-image source-blind mapping","missing/duplicate refusal",
   "prefilled template refusal","wrong-rater refusal","lid coordinates and uncertainty",
   "nuisance abstention","explicit unreviewed export","no iris-scale fabrication",
-  "owner identifiers absent","clear/revert"],human_annotations:0,
+  "owner identifiers absent","clear/revert","190-frame native reference","native/ARM separation"],human_annotations:0,
   physical_shutter_calibrations:0,product:"ABSTAIN_UNCALIBRATED",release:"BLOCKED"}));
 })().catch(e=>{console.error(e);process.exitCode=1;});
