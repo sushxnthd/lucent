@@ -1,0 +1,23 @@
+name: E002-582 Silesian5 annotation source probe
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_582_FROZEN.md"
+      - "research/observability/e002_582_source_probe.py"
+      - "research/observability/e002_582_silesian5_fc.py"
+      - ".github/workflows/e002_582_silesian5_fc.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  source-structure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify source structure without publishing annotations
+        run: python research/observability/e002_582_source_probe.py
