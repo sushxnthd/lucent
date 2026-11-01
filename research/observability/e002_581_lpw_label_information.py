@@ -104,9 +104,16 @@ def self_test():
     assert audit(kink, reps=9)["moving_exact_linear"]["longest_junction_run"] < 18
     tiny = linear * 0.01
     assert audit(tiny, reps=9)["moving_exact_linear"]["junctions"] == 0
-    d = increments(linear)
+    # Nontrivial vector-pair multiset and block-boundary preservation test.
+    d = np.c_[np.arange(119, dtype=float), -np.arange(119, dtype=float) ** 2]
     p = permute_blocks(d, np.random.default_rng(SEED))
-    assert np.array_equal(np.sort(p, axis=0), np.sort(d, axis=0))
+    assert np.array_equal(p, permute_blocks(d, np.random.default_rng(SEED)))
+    for start in range(0, len(d), BLOCK):
+        stop = min(start + BLOCK, len(d))
+        before = sorted(map(tuple, d[start:stop].tolist()))
+        after = sorted(map(tuple, p[start:stop].tolist()))
+        assert before == after
+    assert not np.array_equal(p, d)
     for bad in (np.ones((3, 2)), np.ones((20, 3)),
                 np.array([[1, 2], [3, 4], [5, 6], [float("nan"), 0]])):
         try:
