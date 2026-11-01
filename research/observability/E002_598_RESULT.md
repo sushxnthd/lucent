@@ -29,3 +29,7 @@ This work advances the **operational feasibility of acquiring independent human 
 The decisive next step is genuinely independent human review, followed by prospectively frozen synchronized-camera predictions under independently validated timing, anatomical and motion premises. A confirmed closure in any supposedly excluded physical gap falsifies the claim or its premises. If no hard velocity envelope can be established, deterministic no-hidden-closure claims remain forbidden.
 
 **Product:** `ABSTAIN_UNCALIBRATED`. **Release:** `BLOCKED`. **Draft PR #26:** open, unmerged. **Hush:** separate branch and PR #45 not modified in this primary-validation run.
+
+## Native-reference coverage added after initial ARM-only freeze
+
+An explicit [prospective extension](E002_598_NATIVE_EXTENSION_FROZEN.md) was committed before expanding the UI. The same tool now accepts **E002-574 native 95-fps templates** (ten clips x 19 frames = 190 PNGs, no arm field), alongside the original E002-595 nominal 30-fps ARM templates (ten clips x six frames = 60 PNGs). It preserves each template's export schema, refuses mixed native/ARM shapes, and never claims the 95-fps images are instantaneous anatomical ground truth. The [regression suite](e002_598_offline_rater_test.cjs) includes native missing-frame refusal, 190-image mapping, native export, and mixed-template refusal. These added checks are committed, not yet hosted-verified. This closes the practical gap in collecting both sides of a paired blinded human-review study; **no reviewer has yet supplied real annotations**.
