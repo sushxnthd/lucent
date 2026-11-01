@@ -66,5 +66,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(velocity_bound([F(2,5),F(1,2)],F(1,100),F(0),F(0),self.p)['bound'],F(10))
 
 if __name__=='__main__':
-    unittest.main(exit=False,verbosity=2)
+    test_run=unittest.main(exit=False,verbosity=2)
+    if not test_run.result.wasSuccessful():
+        raise SystemExit(1)
     print('E002594_AGGREGATE='+json.dumps(synthetic_report(),sort_keys=True))
