@@ -140,6 +140,7 @@ def grade(truth, export):
         or len(export['clips']) != N_CLIPS):
         raise ValueError('INVALID_REVIEW_EXPORT')
     clean = measured = covered = false_closed = false_open = 0
+    clean_open = clean_closed = correct_open = correct_closed = ambiguous_measured = 0
     nuisance = abstained_nuisance = 0
     for clip, ground_rows in truth['clips'].items():
         rows = export['clips'][clip]
@@ -152,6 +153,9 @@ def grade(truth, export):
                 abstained_nuisance += int(not is_measured)
                 continue
             clean += 1
+            truth_closed = g['gap_px'] <= THRESHOLD * IRIS_PX
+            clean_closed += int(truth_closed)
+            clean_open += int(not truth_closed)
             if not is_measured:
                 continue
             measured += 1
@@ -167,11 +171,24 @@ def grade(truth, export):
                 'OPEN' if lo/IRIS_PX > THRESHOLD else 'ABSTAIN')
             if true_gap > THRESHOLD*IRIS_PX and pred == 'CLOSED': false_closed += 1
             if true_gap <= THRESHOLD*IRIS_PX and pred == 'OPEN': false_open += 1
+            if pred == 'ABSTAIN':
+                ambiguous_measured += 1
+            elif pred == 'OPEN' and not truth_closed:
+                correct_open += 1
+            elif pred == 'CLOSED' and truth_closed:
+                correct_closed += 1
     qualified = (measured*100 >= 80*clean and covered*100 >= 95*measured
-                 and false_closed <= 1 and false_open <= 1)
+                 and false_closed <= 1 and false_open <= 1
+                 and clean_open > 0 and clean_closed > 0 and nuisance > 0
+                 and correct_open*100 >= 80*clean_open
+                 and correct_closed*100 >= 80*clean_closed
+                 and abstained_nuisance*100 >= 75*nuisance)
     return {'experiment': 'E002-600', 'rater': export['rater'],
             'clean_frames': clean, 'clean_measured': measured,
             'clean_interval_covered': covered,
+            'clean_open_frames': clean_open, 'clean_closed_frames': clean_closed,
+            'correct_decisive_open': correct_open, 'correct_decisive_closed': correct_closed,
+            'ambiguous_measured': ambiguous_measured,
             'clean_false_closed': false_closed, 'clean_false_open': false_open,
             'nuisance_frames': nuisance, 'nuisance_abstentions': abstained_nuisance,
             'qualified_on_synthetic_challenge': qualified,
