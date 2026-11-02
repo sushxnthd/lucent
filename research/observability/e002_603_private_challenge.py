@@ -124,6 +124,11 @@ def selftest():
                               rows[0]["nuisance"]) for clip,rows in sorted(truth["clips"].items()))
             schedules.append(schedule)
             fingerprints.append(tuple(row["sha256"] for rows in truth["clips"].values() for row in rows))
+            replay_output = Path(td) / "replay"
+            build_private(replay_output, seed)
+            replay_truth = json.loads((replay_output / "private" / "truth.json").read_text())
+            assert replay_truth == truth, "same-seed truth replay mismatch"
+            assert verify_images(replay_output, replay_truth)
             # A modified image must be rejected before any grade can be issued.
             path = output / "reviewer" / "clips" / "clip_0000" / "frame_00.png"
             path.write_bytes(path.read_bytes() + b"tamper")
