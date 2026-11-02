@@ -73,19 +73,20 @@ def calibration_budgets(cal):
         delta = row.get("iris_error_px")
         xref = row.get("x_ref_px")
         tol = row.get("registration_tolerance_px")
+        slope = row.get("max_lid_slope_px_per_px")
         if (clip not in CLIPS or clip in budgets
-                or not all(finite(v) for v in (d, delta, xref, tol))
+                or not all(finite(v) for v in (d, delta, xref, tol, slope))
                 or not 0 < delta < d <= 480 or not 0 <= xref <= 639
-                or not 0 < tol <= 1):
+                or not 0 < tol <= 1 or not 0 <= slope <= 100):
             raise ValueError("INVALID_CALIBRATION_BUDGET")
-        budgets[clip] = (d, delta, xref, tol)
+        budgets[clip] = (d, delta, xref, tol, slope)
     return budgets
 
 
 def classify(a, b, budget):
     if budget is None or a["flags"] or b["flags"]:
         return "UNCERTAIN"
-    d, delta, xref, tol = budget
+    d, delta, xref, tol, slope = budget
     xa, xb = a["measurement_x"], b["measurement_x"]
     if abs(xa - xb) > 1:
         return "DISAGREEMENT"
@@ -94,8 +95,9 @@ def classify(a, b, budget):
     intervals = []
     for f in (a, b):
         u, l, e = f["upper_y"], f["lower_y"], f["uncertainty_px"]
-        intervals.append((max(0.0, l - u - 2*e)/(d+delta),
-                          max(0.0, l - u + 2*e)/(d-delta)))
+        effective_error = e + slope*abs(f["measurement_x"] - xref)
+        intervals.append((max(0.0, l - u - 2*effective_error)/(d+delta),
+                          max(0.0, l - u + 2*effective_error)/(d-delta)))
     (al, ah), (bl, bh) = intervals
     if max(al, bl) > min(ah, bh):
         return "DISAGREEMENT"
