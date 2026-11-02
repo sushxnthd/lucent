@@ -12,11 +12,13 @@ A stipulated **linear** sensor model is `y=b+g*average[L(t)*a(t)]`, with anatomi
 - Widen only the illumination lower bound to `Lmin=0.5`: upper mean aperture `15/49 ~= 0.306122`, above threshold; **no witness**. Zero or unknown positive flux lower bound: **ABSTAIN**.
 - The same observed `y=0.2` arises from `(a,L)=(0.2,1)` or `(0.5,0.4)` with gain 1 and background 0. Thus a dark pixel does not identify a closure even in a linear radiometric model unless illumination is independently constrained.
 
+**Additional precommitted nonlinearity kill test:** a hypothetical gamma-2 sensor maps a truly open constant aperture `a=0.4` to `y=a^2=0.16`. If the image is falsely treated as linear intensity at unit illumination, the model emits a closure witness for `tau=0.2` even though `a=0.4` throughout. Explicitly withholding the `raw_linear_light` attestation changes the output to `ABSTAIN_ATTESTATION`. This is a **synthetic counterexample under violated calibration premises**, not an observed false positive on a human video. It makes raw linear sensor response or independently validated inverse response a non-negotiable physical release blocker.
+
 ## Seeded adversarial synthetic sweep
 
 A fixed-seed 10,000-trajectory test varied 16 within-exposure aperture bins (sinusoidal motion) and illumination bins, then compared tight `L in [0.95,1.05]` against the *same exact synthetic observations* evaluated under loose `L in [0.4,1.6]`. Synthetic true aperture mean `<=0.2` occurred in **4,971/10,000** trajectories. The interval model emitted **4,473** conditional witnesses under tight flux bounds versus **1,718** under loose bounds, a **61.6% decrease** in witnesses. Across both arms: **0** computed-upper-bound violations and **0** false witnesses on this seeded finite test. These are simulator-specific counts, **not** real human sensitivity, false-negative rates, clinical validity, or proof of model soundness outside its assumptions.
 
-Eleven local Python adversarial tests passed. A separately implemented Node.js BigInt rational verifier passed exact `25/147`, `15/49`, and two-world controls. No actual camera or photodiode was connected. [Python executable](e002_610_photometric_bound.py), [tests](test_e002_610_photometric_bound.py), [independent verifier](e002_610_independent.cjs), [CI](../../.github/workflows/e002_610_photometric_bound.yml). **Hosted CI not yet confirmed at report creation.**
+Twelve local Python adversarial tests passed. A separately implemented Node.js BigInt rational verifier passed exact `25/147`, `15/49`, and two-world controls. No actual camera or photodiode was connected. [Python executable](e002_610_photometric_bound.py), [tests](test_e002_610_photometric_bound.py), [independent verifier](e002_610_independent.cjs), [CI](../../.github/workflows/e002_610_photometric_bound.yml). **Hosted CI not yet confirmed at report creation.**
 
 ## Product and empirical consequence
 
