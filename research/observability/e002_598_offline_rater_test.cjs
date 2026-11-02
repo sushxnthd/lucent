@@ -5,6 +5,8 @@ const fs=require("node:fs");
 const vm=require("node:vm");
 const assert=require("node:assert/strict");
 const path=require("node:path");
+const {createHash,webcrypto}=require("node:crypto");
+const {TextEncoder}=require("node:util");
 const html=fs.readFileSync(path.join(__dirname,"e002_598_offline_rater.html"),"utf8");
 const match=html.match(/<script>([\s\S]*?)<\/script>/);
 assert(match,"Missing inline script");
@@ -33,7 +35,7 @@ class FakeImage{
  constructor(){this.width=640;this.height=480;}
  set src(_){queueMicrotask(()=>this.onload&&this.onload());}
 }
-const context=vm.createContext({document:doc,URL:fakeURL,Blob:FakeBlob,Image:FakeImage,console,setTimeout});
+const context=vm.createContext({document:doc,URL:fakeURL,Blob:FakeBlob,Image:FakeImage,console,setTimeout,crypto:webcrypto,TextEncoder});
 vm.runInContext(match[1],context);
 const run=code=>vm.runInContext(code,context);
 const clips={};
@@ -50,7 +52,8 @@ function fakeFiles(){
   for(const row of rows)out.push({
    name:"frame_"+String(row.frame).padStart(2,"0")+".png",
    webkitRelativePath:"ARM_0/clips/"+clip+"/frame_"+String(row.frame).padStart(2,"0")+".png",
-   size:1000
+   size:1000,
+   async arrayBuffer(){return Uint8Array.from(Buffer.from(clip+":"+row.frame)).buffer;}
   });
  return out;
 }
@@ -67,6 +70,33 @@ async function tryLoad(t,images){
  assert.equal(files.length,60);
  assert.match(await tryLoad(template,[...files,{name:"BLANK_ANATOMICAL_RATINGS.json",webkitRelativePath:"ARM_0/BLANK_ANATOMICAL_RATINGS.json",size:1000}]),/^Verified 60 local PNGs/);
  assert.equal(run("keys.length"),60);
+ // E002-614: prepatch filenames/dimensions accepted byte-substituted images.
+ const originalKey=(f)=>{const m=f.webkitRelativePath.match(/clips\\/([^/]+)\\/frame_(\\d{2})\\.png$/);return m[1]+"::"+Number(m[2]);};
+ const hashes=Object.fromEntries(files.map(f=>{
+  const key=originalKey(f), [clip,n]=key.split("::");
+  return [key,createHash("sha256").update(Buffer.from(clip+":"+n)).digest("hex")];
+ }));
+ const canonical=Object.keys(hashes).sort().map(k=>k+"\\t"+hashes[k]+"\\n").join("");
+ const packetDigest=createHash("sha256").update(canonical).digest("hex");
+ const bound={...template,frame_sha256:hashes,packet_sha256:packetDigest};
+ const replaced=files.map((f,i)=>i===0?{...f,async arrayBuffer(){return Uint8Array.from([255,1,2]).buffer;}}:f);
+ assert.match(await tryLoad(template,replaced),/UNBOUND_DEMONSTRATION_ONLY/,"Legacy accepts swapped bytes; negative control");
+ assert.match(await tryLoad(bound,replaced),/^REFUSED: SOURCE_FRAME_SUBSTITUTION/,"Bound packet must refuse same-name same-dimension substituted bytes");
+ assert.match(await tryLoad(bound,files),/SHA256_PACKET_MATCH/);
+ assert.equal(run("sourceBound"),true);
+ const badDigest={...bound,packet_sha256:"0".repeat(64)};
+ assert.match(await tryLoad(badDigest,files),/^REFUSED: PACKET_DIGEST_MISMATCH/);
+ const missingHash={...bound,frame_sha256:{...hashes}};
+ delete missingHash.frame_sha256["clip_0000::0"];
+ assert.match(await tryLoad(missingHash,files),/^REFUSED: INVALID_FRAME_HASH_MANIFEST/);
+ assert.match(await tryLoad({...template,packet_sha256:packetDigest},files),/^REFUSED: INCOMPLETE_PACKET_MANIFEST/);
+ assert.match(await tryLoad(bound,files),/SHA256_PACKET_MATCH/);
+ el("export").onclick();
+ const boundOutput=JSON.parse(lastBlob.parts.join(""));
+ assert.equal(boundOutput.source_integrity.status,"SHA256_PACKET_MATCH");
+ assert.equal(boundOutput.source_integrity.packet_sha256,packetDigest);
+ downloads.length=0;
+
  assert.equal(run('fileKey({webkitRelativePath:"ARM_0/clips/clip_0001/frame_03.png"})'),"clip_0001::3");
  assert.equal(run('fileKey({webkitRelativePath:"ARM_0/owner_mapping.json"})'),null);
  assert.match(await tryLoad(template,files.slice(1)),/^REFUSED: Missing frames/);
@@ -76,7 +106,7 @@ async function tryLoad(t,images){
  assert.match(await tryLoad(prefilled,files),/^REFUSED: Nonblank or malformed template/);
  const wrong=JSON.parse(JSON.stringify(template));wrong.rater="C";
  assert.match(await tryLoad(wrong,files),/^REFUSED: Invalid reviewer template/);
- assert.match(await tryLoad(template,files),/^Verified 60 local PNGs/);
+ assert.match(await tryLoad(template,files),/UNBOUND_DEMONSTRATION_ONLY/);
  const canvas=el("view");
  // E002-599: cross-column synthetic slanted-lid false closure.
  // u(x)=100+0.5*x; l(x)=130+0.5*x; true aperture=30px everywhere.
@@ -108,7 +138,8 @@ async function tryLoad(t,images){
  assert.equal(downloads.length,1);
  assert.equal(downloads[0],"E002_598_A_ARM_0_RATINGS.json");
  const output=JSON.parse(lastBlob.parts.join(""));
- assert.deepEqual(Object.keys(output).sort(),["arm","clips","experiment","rater"]);
+ assert.deepEqual(Object.keys(output).sort(),["arm","clips","experiment","rater","source_integrity"]);
+ assert.equal(output.source_integrity.status,"UNBOUND_DEMONSTRATION_ONLY");
  assert.equal(output.clips.clip_0000[0].upper_y,210);
  assert.equal(output.clips.clip_0000[0].iris_diameter,null);
  assert.deepEqual(output.clips.clip_0000[1].flags,["BLUR"]);
@@ -137,7 +168,8 @@ async function tryLoad(t,images){
  el("export").onclick();
  assert.equal(downloads[1],"E002_598_B_NATIVE_RATINGS.json");
  const nativeOutput=JSON.parse(lastBlob.parts.join(""));
- assert.deepEqual(Object.keys(nativeOutput).sort(),["clips","experiment","rater"]);
+ assert.deepEqual(Object.keys(nativeOutput).sort(),["clips","experiment","rater","source_integrity"]);
+ assert.equal(nativeOutput.source_integrity.status,"UNBOUND_DEMONSTRATION_ONLY");
  assert.equal(nativeOutput.clips.clip_0000.length,19);
  assert.deepEqual(nativeOutput.clips.clip_0000[18].flags,["UNREVIEWED"]);
  const mixed=JSON.parse(JSON.stringify(native));mixed.arm="ARM_0";
@@ -146,6 +178,6 @@ async function tryLoad(t,images){
   checks:["syntax","no-network/no-storage","60-image source-blind mapping","missing/duplicate refusal",
   "prefilled template refusal","wrong-rater refusal","lid coordinates and uncertainty",
   "nuisance abstention","explicit unreviewed export","no iris-scale fabrication",
-  "owner identifiers absent","clear/revert","190-frame native reference","native/ARM separation","cross-column synthetic false-closure refusal"],human_annotations:0,
+  "owner identifiers absent","clear/revert","190-frame native reference","native/ARM separation","cross-column synthetic false-closure refusal","SHA256 source substitution rejection","manifest tamper rejection","legacy unbound marking"],human_annotations:0,
   physical_shutter_calibrations:0,product:"ABSTAIN_UNCALIBRATED",release:"BLOCKED"}));
 })().catch(e=>{console.error(e);process.exitCode=1;});
