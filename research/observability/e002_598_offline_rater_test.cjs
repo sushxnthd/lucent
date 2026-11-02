@@ -78,6 +78,18 @@ async function tryLoad(t,images){
  assert.match(await tryLoad(wrong,files),/^REFUSED: Invalid reviewer template/);
  assert.match(await tryLoad(template,files),/^Verified 60 local PNGs/);
  const canvas=el("view");
+ // E002-599: cross-column synthetic slanted-lid false closure.
+ // u(x)=100+0.5*x; l(x)=130+0.5*x; true aperture=30px everywhere.
+ canvas._event_click({clientX:58,clientY:200});
+ canvas._event_click({clientX:58,clientY:129});
+ canvas._event_click({clientX:0,clientY:130});
+ assert.equal(run("clicks.length"),2,"Off-column lower margin must be refused");
+ assert.match(el("instruction").textContent,/REFUSED:.*measurement column/);
+ canvas._event_click({clientX:58,clientY:159});
+ el("uncertainty").value="1";
+ el("save").onclick();
+ assert.equal(run('answers.get(keys[0].key).lower_y-answers.get(keys[0].key).upper_y'),30);
+ el("clear").onclick();
  canvas._event_click({clientX:320,clientY:200});
  canvas._event_click({clientX:320,clientY:210});
  canvas._event_click({clientX:320,clientY:240});
@@ -134,6 +146,6 @@ async function tryLoad(t,images){
   checks:["syntax","no-network/no-storage","60-image source-blind mapping","missing/duplicate refusal",
   "prefilled template refusal","wrong-rater refusal","lid coordinates and uncertainty",
   "nuisance abstention","explicit unreviewed export","no iris-scale fabrication",
-  "owner identifiers absent","clear/revert","190-frame native reference","native/ARM separation"],human_annotations:0,
+  "owner identifiers absent","clear/revert","190-frame native reference","native/ARM separation","cross-column synthetic false-closure refusal"],human_annotations:0,
   physical_shutter_calibrations:0,product:"ABSTAIN_UNCALIBRATED",release:"BLOCKED"}));
 })().catch(e=>{console.error(e);process.exitCode=1;});
