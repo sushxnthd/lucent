@@ -1,0 +1,42 @@
+name: E002-601 adversarial synthetic rater qualification audit
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_600_phantom_rater_challenge.py'
+      - 'research/observability/e002_600_independent_replay.cjs'
+      - 'research/observability/e002_601_qualification_attack.py'
+      - 'research/observability/E002_601_FROZEN.md'
+      - '.github/workflows/e002_601_qualification_attack.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_600_phantom_rater_challenge.py'
+      - 'research/observability/e002_600_independent_replay.cjs'
+      - 'research/observability/e002_601_qualification_attack.py'
+      - '.github/workflows/e002_601_qualification_attack.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reviewer-gate-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install deterministic synthetic image dependency
+        run: python -m pip install 'Pillow==11.3.0'
+      - name: Run frozen adversarial audit against original gate
+        run: cd research/observability && python e002_601_qualification_attack.py --expect vulnerable
+      - name: Ensure no private images or reviewer ratings were retained
+        run: |
+          test ! -d research/observability/private
+          test ! -d research/observability/reviewer
+          test -z "$(git status --porcelain)"
