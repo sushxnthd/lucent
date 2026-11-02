@@ -29,7 +29,7 @@ jobs:
       - name: Install synthetic-image generator dependency
         run: python -m pip install 'Pillow>=10,<12'
       - name: Deterministic synthetic generation, independent score replay and negative controls
-        run: python -m unittest -v research/observability/test_e002_600_phantom_rater_challenge.py
+        run: cd research/observability && python -m unittest -v test_e002_600_phantom_rater_challenge.py
       - name: Ensure no synthetic PNGs, private truths or reviewer ratings were committed
         run: |
           if git ls-files | grep -E '(^|/)(private|reviewer)/|E002_600_.*RATINGS|[.]png$' | grep -E 'E002_600|research/observability/(private|reviewer)/'; then
