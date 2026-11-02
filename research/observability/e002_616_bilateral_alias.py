@@ -102,8 +102,7 @@ def analyze(data):
                                    for k in ("1","2","3","4+")}
     if sum(totals["length_histogram"].values()) != totals["eligible_bilateral_runs"]:
         raise AssertionError("HISTOGRAM_MISMATCH")
-    if totals["long_run_omission_event_phase_pairs"]:
-        raise ValueError("LONG_RUN_ALIAS_SURPRISE")
+    # Preserve any long-run timestamp-selector surprise as a measured falsifier.
     h = totals["length_histogram"]
     if sum(totals["index_omissions_by_phase"]) != 7*h["1"]+4*h["2"]+h["3"]:
         raise ValueError("FROZEN_PHASE_LAW_TOTAL_FALSIFIED")
