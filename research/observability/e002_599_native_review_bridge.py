@@ -74,6 +74,8 @@ def calibration_budgets(cal):
         xref = row.get("x_ref_px")
         tol = row.get("registration_tolerance_px")
         slope = row.get("max_lid_slope_px_per_px")
+        if slope is None and clip in CLIPS and clip not in budgets:
+            continue  # Missing slope: no budget; every affected frame abstains.
         if (clip not in CLIPS or clip in budgets
                 or not all(finite(v) for v in (d, delta, xref, tol, slope))
                 or not 0 < delta < d <= 480 or not 0 <= xref <= 639
