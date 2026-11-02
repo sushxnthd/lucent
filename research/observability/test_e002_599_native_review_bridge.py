@@ -25,7 +25,8 @@ def cal():
         frozen_before_review=True, external_reference_id="owner-only-study-reference",
         clips=[dict(blind_clip="clip_0000", iris_diameter_px=100,
                     iris_error_px=1, x_ref_px=320,
-                    registration_tolerance_px=1)])
+                    registration_tolerance_px=1,
+                    max_lid_slope_px_per_px=10)])
 
 class GeometryBridgeTests(unittest.TestCase):
     def setUp(self):
@@ -63,8 +64,24 @@ class GeometryBridgeTests(unittest.TestCase):
             mark(p, 1, 129, 130, x=58)
         self.assertEqual(classify(a["clips"]["clip_0000"][1],
                                   b["clips"]["clip_0000"][1],
-                                  (100, 1, 320, 1)), "UNCERTAIN")
+                                  (100, 1, 320, 1, 10)), "UNCERTAIN")
         self.assertEqual(analyze(a, b, cal())["phase_positive_alias_pairs"], [0, 0, 0])
+
+    def test_missing_slope_refuses_classification(self):
+        bad = cal()
+        del bad["clips"][0]["max_lid_slope_px_per_px"]
+        with self.assertRaises(ValueError):
+            analyze(self.a, self.b, bad)
+
+    def test_offset_slope_inflation_abstains(self):
+        for p in (self.a, self.b):
+            mark(p, 1, 200, 202, x=321)
+        c = cal()
+        self.assertEqual(analyze(self.a, self.b, c)["frame_states"]["UNCERTAIN"], 188)
+        # With the same x as reference, the original closed interval remains.
+        for p in (self.a, self.b):
+            mark(p, 1, 200, 202, x=320)
+        self.assertEqual(analyze(self.a, self.b, c)["frame_states"]["CLOSED"], 1)
 
     def test_cross_rater_columns_disagree(self):
         self.b["clips"]["clip_0000"][1]["measurement_x"] = 315
