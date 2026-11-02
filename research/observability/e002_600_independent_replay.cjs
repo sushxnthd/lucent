@@ -11,6 +11,7 @@ function oracle(truth,review){
   const keys=Object.keys(truth.clips).sort();
   if(keys.length!==10||Object.keys(review.clips).sort().join('|')!==keys.join('|')) throw Error('INVALID_CLIPS');
   let clean=0,measured=0,covered=0,falseClosed=0,falseOpen=0,nuisance=0,abstainedNuisance=0;
+  let cleanOpen=0,cleanClosed=0,correctOpen=0,correctClosed=0,ambiguousMeasured=0;
   for(const clip of keys){
     const gs=truth.clips[clip],rs=review.clips[clip];
     if(!Array.isArray(gs)||!Array.isArray(rs)||gs.length!==19||rs.length!==19) throw Error('INVALID_FRAME_COUNT');
@@ -28,6 +29,8 @@ function oracle(truth,review){
       }else if([r.upper_y,r.lower_y,r.uncertainty_px].some(v=>v!==null)) throw Error('INVALID_ABSTENTION');
       if(!g.clean){nuisance++;if(!has)abstainedNuisance++;continue;}
       clean++;
+      const truthClosed=g.gap_px<=20;
+      if(truthClosed)cleanClosed++;else cleanOpen++;
       if(!has)continue;
       measured++;
       const trueU=g.upper_at_x320+g.slope*(r.measurement_x-320);
@@ -40,11 +43,20 @@ function oracle(truth,review){
       const pred=hi/100<=.2?'CLOSED':lo/100>.2?'OPEN':'ABSTAIN';
       if(truthGap>20&&pred==='CLOSED')falseClosed++;
       if(truthGap<=20&&pred==='OPEN')falseOpen++;
+      if(pred==='ABSTAIN')ambiguousMeasured++;
+      else if(pred==='OPEN'&&!truthClosed)correctOpen++;
+      else if(pred==='CLOSED'&&truthClosed)correctClosed++;
     }
   }
-  const qualified=measured*100>=80*clean&&covered*100>=95*measured&&falseClosed<=1&&falseOpen<=1;
+  const qualified=measured*100>=80*clean&&covered*100>=95*measured&&falseClosed<=1&&falseOpen<=1&&
+    cleanOpen>0&&cleanClosed>0&&nuisance>0&&
+    correctOpen*100>=80*cleanOpen&&correctClosed*100>=80*cleanClosed&&
+    abstainedNuisance*100>=75*nuisance;
   return {experiment:'E002-600',rater:review.rater,clean_frames:clean,clean_measured:measured,
-    clean_interval_covered:covered,clean_false_closed:falseClosed,clean_false_open:falseOpen,
+    clean_interval_covered:covered,clean_open_frames:cleanOpen,clean_closed_frames:cleanClosed,
+    correct_decisive_open:correctOpen,correct_decisive_closed:correctClosed,
+    ambiguous_measured:ambiguousMeasured,
+    clean_false_closed:falseClosed,clean_false_open:falseOpen,
     nuisance_frames:nuisance,nuisance_abstentions:abstainedNuisance,
     qualified_on_synthetic_challenge:qualified,human_validation_of_E002_371:false,
     evidence_tier:'SYNTHETIC_REVIEWER_QUALIFICATION_ONLY',product:'ABSTAIN_UNCALIBRATED',release:'BLOCKED'};
