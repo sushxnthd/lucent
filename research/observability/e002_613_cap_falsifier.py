@@ -31,7 +31,7 @@ def decimal(v):
 def answer(status, **extra):
     return {'experiment': 'E002-613', 'status': status,
             'evidence_tier': 'CONDITIONAL_FALSIFICATION_INSTRUMENT_ONLY',
-            'human_data_used': False, 'physical_authentication': 'NOT_VERIFIED_BY_CODE',
+            'human_data_verified_by_code': False, 'physical_authentication': 'NOT_VERIFIED_BY_CODE',
             'velocity_ceiling_certified': False,
             'product': 'ABSTAIN_UNCALIBRATED', 'release': 'BLOCKED', **extra}
 
