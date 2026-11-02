@@ -71,12 +71,12 @@ async function tryLoad(t,images){
  assert.match(await tryLoad(template,[...files,{name:"BLANK_ANATOMICAL_RATINGS.json",webkitRelativePath:"ARM_0/BLANK_ANATOMICAL_RATINGS.json",size:1000}]),/^Verified 60 local PNGs/);
  assert.equal(run("keys.length"),60);
  // E002-614: prepatch filenames/dimensions accepted byte-substituted images.
- const originalKey=(f)=>{const m=f.webkitRelativePath.match(/clips\\/([^/]+)\\/frame_(\\d{2})\\.png$/);return m[1]+"::"+Number(m[2]);};
+ const originalKey=(f)=>{const m=f.webkitRelativePath.match(/clips\/([^/]+)\/frame_(\d{2})\.png$/);return m[1]+"::"+Number(m[2]);};
  const hashes=Object.fromEntries(files.map(f=>{
   const key=originalKey(f), [clip,n]=key.split("::");
   return [key,createHash("sha256").update(Buffer.from(clip+":"+n)).digest("hex")];
  }));
- const canonical=Object.keys(hashes).sort().map(k=>k+"\\t"+hashes[k]+"\\n").join("");
+ const canonical=Object.keys(hashes).sort().map(k=>k+"\t"+hashes[k]+"\n").join("");
  const packetDigest=createHash("sha256").update(canonical).digest("hex");
  const bound={...template,frame_sha256:hashes,packet_sha256:packetDigest};
  const replaced=files.map((f,i)=>i===0?{...f,async arrayBuffer(){return Uint8Array.from([255,1,2]).buffer;}}:f);
