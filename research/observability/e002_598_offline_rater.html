@@ -50,7 +50,7 @@ code{background:#edf1f5;padding:2px 4px}.muted{color:#52616f}.error{color:#a51c3
 "use strict";
 const $=id=>document.getElementById(id);
 const canvas=$("view"), ctx=canvas.getContext("2d");
-let template=null, files=new Map(), keys=[], index=0, currentUrl=null, ready=false, clicks=[], answers=new Map();
+let template=null, files=new Map(), keys=[], index=0, currentUrl=null, ready=false, clicks=[], answers=new Map(), sourceBound=false;
 const allowedFlags=new Set(["OCCLUSION","BLUR","GAZE","GLASSES","GEOMETRY","BRIGHTNESS","MISSING","OTHER"]);
 const keyOf=(clip,n)=>clip+"::"+n;
 const fail=msg=>{ $("status").textContent="REFUSED: "+msg; $("status").className="error"; ready=false; };
@@ -83,6 +83,31 @@ function fileKey(f){
  return m?keyOf(m[1],Number(m[2])):null;
 }
 async function readJSON(f){return JSON.parse(await f.text());}
+async function sha256(data){
+ assert(globalThis.crypto&&globalThis.crypto.subtle&&typeof globalThis.crypto.subtle.digest==="function","SHA256_UNAVAILABLE");
+ const raw=await globalThis.crypto.subtle.digest("SHA-256",data);
+ return Array.from(new Uint8Array(raw),b=>b.toString(16).padStart(2,"0")).join("");
+}
+async function verifyBoundPacket(t,rows,seen){
+ const hasHashes=Object.prototype.hasOwnProperty.call(t,"frame_sha256");
+ const hasPacket=Object.prototype.hasOwnProperty.call(t,"packet_sha256");
+ assert(hasHashes===hasPacket,"INCOMPLETE_PACKET_MANIFEST");
+ if(!hasHashes)return false;
+ const hashes=t.frame_sha256, digest=t.packet_sha256;
+ const validHash=h=>typeof h==="string"&&/^[0-9a-f]{64}$/.test(h);
+ assert(hashes&&typeof hashes==="object"&&!Array.isArray(hashes),"INVALID_FRAME_HASH_MANIFEST");
+ const wanted=rows.map(r=>r.key).sort();
+ assert(Object.keys(hashes).length===wanted.length&&wanted.every(k=>Object.prototype.hasOwnProperty.call(hashes,k)&&validHash(hashes[k])),"INVALID_FRAME_HASH_MANIFEST");
+ assert(validHash(digest),"INVALID_PACKET_DIGEST");
+ const canonical=wanted.map(k=>k+"\t"+hashes[k]+"\n").join("");
+ assert(await sha256(new TextEncoder().encode(canonical))===digest,"PACKET_DIGEST_MISMATCH");
+ for(const key of wanted){
+  const f=seen.get(key);
+  assert(f&&typeof f.arrayBuffer==="function","IMAGE_BYTES_UNAVAILABLE");
+  assert(await sha256(await f.arrayBuffer())===hashes[key],"SOURCE_FRAME_SUBSTITUTION: "+key);
+ }
+ return true;
+}
 async function verifyImage(f){
  return new Promise((resolve,reject)=>{
   const url=URL.createObjectURL(f), im=new Image();
@@ -92,7 +117,7 @@ async function verifyImage(f){
  });
 }
 async function load(){
- ready=false;template=null;files=new Map();answers=new Map();keys=[];clicks=[];
+ ready=false;sourceBound=false;template=null;files=new Map();answers=new Map();keys=[];clicks=[];
  try{
   const tFile=$("template").files[0], imageList=Array.from($("images").files).filter(f=>/\.png$/i.test(f.name));
   assert(tFile&&imageList.length,"Select a template and its assigned ARM image folder");
@@ -109,8 +134,9 @@ async function load(){
   }
   assert(seen.size===wanted.size,"Missing frames: "+seen.size+"/"+wanted.size);
   for(const f of seen.values())await verifyImage(f);
-  template=t;files=seen;keys=expectedRows;index=0;
-  $("status").textContent="Verified "+keys.length+" local PNGs; "+t.rater+" / "+(t.arm||"NATIVE")+". No source identity loaded.";
+  const bound=await verifyBoundPacket(t,expectedRows,seen);
+  template=t;files=seen;keys=expectedRows;index=0;sourceBound=bound;
+  $("status").textContent="Verified "+keys.length+" local PNGs; "+t.rater+" / "+(t.arm||"NATIVE")+". "+(sourceBound?"SHA256_PACKET_MATCH (owner provenance not authenticated).":"UNBOUND_DEMONSTRATION_ONLY; not admissible as physical human evidence.")+" No source identity loaded.";
   $("status").className="ok";
   await show();
  }catch(e){fail(e.message);}
@@ -185,7 +211,7 @@ $("next").onclick=()=>{if(ready&&index<keys.length-1){index++;show().catch(e=>fa
 $("load").onclick=()=>load();
 $("export").onclick=()=>{
  if(!ready||!template)return;
- const out={experiment:template.experiment,rater:template.rater,clips:{}};
+ const out={experiment:template.experiment,rater:template.rater,clips:{},source_integrity:{status:sourceBound?"SHA256_PACKET_MATCH":"UNBOUND_DEMONSTRATION_ONLY",packet_sha256:sourceBound?template.packet_sha256:null}};
  if(template.arm)out.arm=template.arm;
  for(const clip of Object.keys(template.clips)){
   out.clips[clip]=template.clips[clip].map((row)=>{
