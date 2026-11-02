@@ -64,8 +64,11 @@ def run_synthetic():
     assert TRUE in strict
     assert all(all(abs(prediction(code,f,r,c)-v) <= Fraction(1,100)
                    for f,r,v in holdout) for c in strict)
-    shifted_candidates = identify(code, fit, Fraction(1,100))
-    assert shifted_candidates == strict
+    shifted = [(f+1,r,v) for f,r,v in fit]
+    shifted_candidates = identify(code, shifted, Fraction(1,100))
+    assert shifted_candidates == [(2,4,2)]  # clock-origin alias, not authenticated
+    reversed_rows = [(f,2-r,v) for f,r,v in fit]
+    assert identify(code, reversed_rows, Fraction(1,100)) == []
     dropped = identify(code, fit[:-1], Fraction(1,100))
     assert set(strict).issubset(set(dropped))
     return {'experiment':'E002-607','tier':'SYNTHETIC_LED_INSTRUMENT_ONLY',
@@ -75,6 +78,8 @@ def run_synthetic():
             'loose_candidates':len(loose),
             'constant_led_candidates':len(constant),
             'dropped_sample_candidates':len(dropped),
+            'shifted_clock_candidates':shifted_candidates,
+            'reversed_rows_rejected':True,
             'true_candidate_retained':TRUE in strict,
             'holdout_all_consistent':True,
             'human_measurements':0,'physical_camera_measurements':0,
