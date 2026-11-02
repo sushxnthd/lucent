@@ -49,3 +49,8 @@ Do not share the `private/truth.json` with reviewers before they complete the ch
 The instrument supplies a falsifiable **pre-human-study rater qualification gate**. Human raters should not be promoted to the E002-371 anatomical-validation cohort unless they meet the frozen qualification criteria on genuinely independently completed challenge packets. The independent human study still requires actual native human eye footage, blinded distinct raters, calibrated shutter and clock, a defensible continuous-time velocity bound, and prospectively frozen held-out physical predictions.
 
 **Evidence obtained this run:** reproducible synthetic images and independent score checks. **Evidence not obtained:** any new human annotation, human accuracy estimate, physical shutter calibration, certified human velocity ceiling, or held-out physical closure prediction. Product `ABSTAIN_UNCALIBRATED`; production `BLOCKED`. PR #26 remains draft/unmerged. Hush branch and PR #45 were not changed.
+
+
+## Superseding instrument-validity finding (E002-601, 2026-11-02)
+
+**Do not use the original E002-600 aggregate qualification rule to qualify human reviewers.** The frozen E002-601 attack demonstrated that it accepted a reviewer with zero decisive classifications (50-px blanket uncertainty) and a reviewer who abstained on every closed frame. Both attacks passed the original gate in a source-pinned hosted execution, with matching independent Node.js replay. See [E002-601 result](E002_601_RESULT.md). The corrected grader requires class-balanced decisive coverage and nuisance abstention. Neither the original nor corrected synthetic qualification supplies actual human rater evidence or physical E002-371 validation.
