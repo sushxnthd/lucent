@@ -7,6 +7,12 @@ on:
       - 'research/observability/e002_605_*'
       - 'research/observability/test_e002_605_*'
       - '.github/workflows/e002_605_human_blink_alias.yml'
+  pull_request:
+    paths:
+      - 'research/observability/E002_605_*'
+      - 'research/observability/e002_605_*'
+      - 'research/observability/test_e002_605_*'
+      - '.github/workflows/e002_605_human_blink_alias.yml'
   workflow_dispatch:
 jobs:
   label-assay:
