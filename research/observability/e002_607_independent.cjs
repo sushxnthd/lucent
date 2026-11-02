@@ -29,4 +29,8 @@ for(const f of starts.slice(0,3))for(const r of [0,1,2])flatObs.push({f,r,v:1});
 assert.equal(find(flatObs,.01,flat).length,315);
 const dropped=find(fit.slice(0,-1),.01);
 assert.ok(dropped.length>=strict.length);
+const clockShift=find(fit.map(s=>({...s,f:s.f+1})),.01);
+assert.deepEqual(clockShift,[[2,4,2]]);
+const reversed=find(fit.map(s=>({...s,r:2-s.r})),.01);
+assert.equal(reversed.length,0);
 console.log(JSON.stringify({experiment:'E002-607',independent:'PASS',strict_candidates:strict.length,loose_candidates:loose.length,constant_candidates:315,dropped_candidates:dropped.length,release:'BLOCKED'}));
