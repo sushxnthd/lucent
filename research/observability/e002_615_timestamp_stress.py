@@ -147,6 +147,11 @@ def eligible_runs(rows):
     return result
 
 
+def count_outside(deltas, median, scale):
+    """Strict relative threshold with exact decimal comparisons (no float drift)."""
+    return sum(abs(dt - median) * scale > median for dt in deltas)
+
+
 def analyze_sequence(rows, ts):
     ids = [r[0] for r in rows]
     times = [ts[fid] for fid in ids]
@@ -182,8 +187,8 @@ def analyze_sequence(rows, ts):
         "median_time_step_source_units":str(d),
         "dimensionless_dt_over_median_quantiles":{
             str(p):round(quantile(ratios,p),6) for p in (0,.01,.5,.99,1)},
-        "outside_10_percent":sum(abs(v-1)>.1 for v in ratios),
-        "outside_25_percent":sum(abs(v-1)>.25 for v in ratios),
+        "outside_10_percent":count_outside(consecutive, d, 10),
+        "outside_25_percent":count_outside(consecutive, d, 4),
         "eligible_fc_runs":len(runs),
         "omitted_event_phases_actual_timestamp_nearest":actual,
         "omitted_event_phases_uniform_timestamp_nearest":uniform_n,
@@ -234,6 +239,11 @@ def self_test():
     for p in range(10):
         assert time_nearest_samples(ids,ts,d,p)==time_nearest_samples(
             ids,[t*3+Decimal(71) for t in ts],d*3,p)
+    # Boundary cases must not be misclassified by binary float rounding.
+    assert count_outside([Decimal('0.009'), Decimal('0.010'), Decimal('0.011')], Decimal('0.010'), 10) == 0
+    assert count_outside([Decimal('0.0089'), Decimal('0.0111')], Decimal('0.010'), 10) == 2
+    assert count_outside([Decimal('0.0075'), Decimal('0.0125')], Decimal('0.010'), 4) == 0
+    assert count_outside([Decimal('0.0074'), Decimal('0.0126')], Decimal('0.010'), 4) == 2
     # Timestamp perturbation is visible in cadence, not silently smoothed.
     rows=[(i,"X","C" if i==20 else "X","X","X","X") for i in ids]
     good=analyze_sequence(rows,dict(zip(ids,ts)))
