@@ -34,7 +34,7 @@ jobs:
       - name: Install deterministic synthetic image dependency
         run: python -m pip install 'Pillow==11.3.0'
       - name: Run frozen adversarial audit against repaired gate
-        run: cd research/observability && python e002_601_qualification_attack.py --expect repaired
+        run: cd research/observability && PYTHONDONTWRITEBYTECODE=1 python e002_601_qualification_attack.py --expect repaired
       - name: Ensure no private images or reviewer ratings were retained
         run: |
           test ! -d research/observability/private
