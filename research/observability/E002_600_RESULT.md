@@ -54,3 +54,8 @@ The instrument supplies a falsifiable **pre-human-study rater qualification gate
 ## Superseding instrument-validity finding (E002-601, 2026-11-02)
 
 **Do not use the original E002-600 aggregate qualification rule to qualify human reviewers.** The frozen E002-601 attack demonstrated that it accepted a reviewer with zero decisive classifications (50-px blanket uncertainty) and a reviewer who abstained on every closed frame. Both attacks passed the original gate in a source-pinned hosted execution, with matching independent Node.js replay. See [E002-601 result](E002_601_RESULT.md). The corrected grader requires class-balanced decisive coverage and nuisance abstention. Neither the original nor corrected synthetic qualification supplies actual human rater evidence or physical E002-371 validation.
+
+
+## Superseding stimulus-blinding finding (E002-602, 2026-11-02)
+
+**The fixed E002-600 challenge is not a valid blinded human-reviewer qualification instrument, even with the E002-601 corrected grader.** Its publicly exposed pulse indices, nuisance clips and nominal aperture geometry let an attacker who never sees any PNG obtain 114/114 covered clean measurements, 103/103 correct decisive OPEN, 11/11 correct decisive CLOSED and 76/76 nuisance abstentions. The actual patched Python grader and independent Node.js oracle both qualified the attacker in [successful hosted CI #41387555887](https://github.com/sushxnthd/lucent/actions/runs/41387555887). See [E002-602 result](E002_602_RESULT.md). All original fixed-schedule qualification scores are now **NONBLIND_DEMONSTRATION_ONLY**. E002-603 develops a separate private-answer replacement; no real human qualification or E002-371 physical validation has occurred.
