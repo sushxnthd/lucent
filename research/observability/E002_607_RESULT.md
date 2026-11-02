@@ -14,14 +14,16 @@ The negative control is decisive for instrument design: a constant LED yields **
 | Six held-out row intensities | All consistent |
 | Constant LED, nine training intensities | 315 surviving |
 | One training sample missing | 2 surviving |
+| +1 ms misdeclared clock origin | 1 surviving, **wrong offset 2 ms** |
+| Sensor row order reversed | 0 surviving; reject |
 | Unknown linear-light response certificate | ABSTAIN |
 | Duplicated sample or malformed private input | Reject |
 | Independent Node inverse | PASS |
 
-The `--self-test` command was run locally and returned `strict_candidates=1`, `constant_led_candidates=315`, `dropped_sample_candidates=2`, `private_fixture_status=GRID_IDENTIFIED_CONDITIONAL_ONLY`. The independent `node e002_607_independent.cjs` run also passed. [Dedicated hosted workflow](../../.github/workflows/e002_607_optical_identification.yml) committed; **hosted result not yet checked**.
+The `--self-test` command was run locally and returned `strict_candidates=1`, `constant_led_candidates=315`, `dropped_sample_candidates=2`, `private_fixture_status=GRID_IDENTIFIED_CONDITIONAL_ONLY`. The independent `node e002_607_independent.cjs` run also passed, including the clock-origin alias and reversed-row controls. [Dedicated hosted workflow](../../.github/workflows/e002_607_optical_identification.yml) committed; **hosted result not yet checked**.
 
 ## Why this changes the next physical experiment
-An optical timing instrument must use a **time-coded** light source and multiple sensor rows; a static illumination target is incapable of identifying the shutter parameters, even with zero image noise. The tool reports the entire surviving timing set, rather than assuming a single shutter or rolling-row parameter. This is a synthetic identifiability test, not a new theorem, actual camera calibration, or human eyelid result.
+An optical timing instrument must use a **time-coded** light source and multiple sensor rows; a static illumination target is incapable of identifying the shutter parameters, even with zero image noise. The tool reports the entire surviving timing set, rather than assuming a single shutter or rolling-row parameter. **Crucial negative result:** shifting the declared clock origin by +1 ms still yields a unique fit, but at the wrong offset (2 ms instead of 3 ms). Optical coding does not authenticate its own clock origin; an external sync witness is logically indispensable. Reversing the sensor-row order leaves no feasible candidate and is correctly rejected. This is a synthetic identifiability test, not a new theorem, actual camera calibration, or human eyelid result.
 
 ### Concrete operator-run physical handoff
 1. Use an already available phone/camera with fixed manual exposure, gain, focus, white balance and frame cadence. Obtain a borrowed, independently timed LED driver and photodiode or an equivalent traceable optical timing reference. Record the optical trace and clock-sync witness, not merely requested LED pulses.
