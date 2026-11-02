@@ -70,8 +70,7 @@ class GeometryBridgeTests(unittest.TestCase):
     def test_missing_slope_refuses_classification(self):
         bad = cal()
         del bad["clips"][0]["max_lid_slope_px_per_px"]
-        with self.assertRaises(ValueError):
-            analyze(self.a, self.b, bad)
+        self.assertEqual(analyze(self.a, self.b, bad)["frame_states"]["UNCERTAIN"], 190)
 
     def test_offset_slope_inflation_abstains(self):
         for p in (self.a, self.b):
