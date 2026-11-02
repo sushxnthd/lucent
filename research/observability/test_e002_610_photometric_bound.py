@@ -37,6 +37,19 @@ class TestE610(unittest.TestCase):
     def test_gamma_unknown(self):
         d=fixture();d['attestations']['raw_linear_light']=False
         self.assertEqual(evaluate(d)['status'],'ABSTAIN_ATTESTATION')
+    def test_unmodelled_gamma_false_witness(self):
+        # Under an unmodelled gamma-2 response y=a**2, a=.4 appears as y=.16.
+        # Treating gamma-encoded y as linear falsely witnesses closure.
+        true_aperture=Fraction('0.4')
+        self.assertEqual(true_aperture**2,Fraction('0.16'))
+        d=fixture()
+        d.update(signal_lower='0.16',signal_upper='0.16',
+                 background_lower='0',background_upper='0',gain_lower='1',gain_upper='1',
+                 flux_lower='1',flux_upper='1')
+        self.assertEqual(evaluate(d)['status'],'MEAN_WITNESS_CONDITIONAL')
+        self.assertGreater(true_aperture,Fraction('0.2'))
+        d['attestations']['raw_linear_light']=False
+        self.assertEqual(evaluate(d)['status'],'ABSTAIN_ATTESTATION')
     def test_two_worlds(self):
         self.assertEqual(Fraction('0.2')*Fraction('1'),Fraction('0.5')*Fraction('0.4'))
         d=fixture();d.update(signal_lower='0.2',signal_upper='0.2',background_lower='0',background_upper='0',gain_lower='1',gain_upper='1',flux_lower='0.4',flux_upper='1')
