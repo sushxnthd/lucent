@@ -147,7 +147,12 @@ canvas.addEventListener("click",e=>{
  if(!ready)return;
  const r=canvas.getBoundingClientRect(),x=Math.max(0,Math.min(639,(e.clientX-r.left)*640/r.width)),y=Math.max(0,Math.min(479,(e.clientY-r.top)*480/r.height));
  if(clicks.length===3)clicks=[];
- clicks.push({x:Math.round(x*10)/10,y:Math.round(y*10)/10});
+ const point={x:Math.round(x*10)/10,y:Math.round(y*10)/10};
+ if(clicks.length>0&&Math.abs(point.x-clicks[0].x)>1){
+  $("instruction").textContent="REFUSED: upper/lower lid must be clicked within 1 pixel of the selected measurement column. Retry at the guide line.";
+  return;
+ }
+ clicks.push(point);
  if(clicks.length===3&&clicks[2].y<=clicks[1].y){clicks=clicks.slice(0,2);$("instruction").textContent="Lower lid must be below upper lid; click lower lid again.";}
  else $("instruction").textContent=["Click upper lid y","Click lower lid y","Ready to save measured lid margins"][clicks.length-1];
  draw();
