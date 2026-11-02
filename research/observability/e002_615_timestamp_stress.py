@@ -244,7 +244,7 @@ def self_test():
     assert shifted["outside_10_percent"]>=2
     # Deterministic tie favors earlier frame.
     assert time_nearest_samples([0,1,2],[Decimal(0),Decimal(10),Decimal(20)],
-                                Decimal(3),1)=={0}
+                                Decimal(5),1)=={0}
     print(json.dumps({"experiment":"E002-615","synthetic_self_test":"PASS",
                       "test_groups":6},sort_keys=True))
 
