@@ -45,7 +45,7 @@ def run():
         false_exclusions+=int(verdict and truth)
     assert false_exclusions==0
     # Synthetic integration is not instantaneous aperture. Expose that difference.
-    center=F(1,100)
+    center=F(0)
     mean=exposure_mean(F(-1,100),F(1,100),center)
     assert mean != aperture(F(0),center)
     return dict(id="E002-630",evidence="synthetic phase-sweep only",
