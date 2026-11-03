@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """E002-632: fail-closed, exact-rational prospective trial scorer.
 Usage: python research/observability/e002_632_blind_trial_scorer.py trials.csv
-No external dependencies. Does NOT validate calibration declarations.
+No external dependencies. Does NOT validate calibration declarations. closure_hi_mm MUST be an independently certified upper threshold bound; point estimates are invalid.
 """
 import csv
 import sys
 from fractions import Fraction as F
 
 REQUIRED = ("trial_id", "calibration_hash", "gap_hi_s", "aperture0_lo_mm",
-            "aperture1_lo_mm", "closure_mm", "v_close_mm_s", "v_open_mm_s",
+            "aperture1_lo_mm", "closure_hi_mm", "v_close_mm_s", "v_open_mm_s",
             "independent_velocity_certified", "exposure_timing_certified",
             "geometry_certified", "reference_crossing_state")
 
@@ -23,8 +23,8 @@ def decide(row):
         return "ABSTAIN_UNCALIBRATED", "uncertified"
     try:
         gap = F(row["gap_hi_s"])
-        a = F(row["aperture0_lo_mm"]) - F(row["closure_mm"])
-        b = F(row["aperture1_lo_mm"]) - F(row["closure_mm"])
+        a = F(row["aperture0_lo_mm"]) - F(row["closure_hi_mm"])
+        b = F(row["aperture1_lo_mm"]) - F(row["closure_hi_mm"])
         vc = F(row["v_close_mm_s"])
         vo = F(row["v_open_mm_s"])
     except (ValueError, ZeroDivisionError):
@@ -66,6 +66,12 @@ def selftest():
     assert decide(x)[0] == "ABSTAIN_REACHABLE"
     x = dict(base, independent_velocity_certified="NO")
     assert decide(x)[0] == "ABSTAIN_UNCALIBRATED"
+    x = dict(base, closure_hi_mm="3/2", gap_hi_s="1/50")
+    assert decide(x)[0] == "ABSTAIN_REACHABLE"  # E002-635 threshold counterexample
+    x = dict(base, closure_hi_mm="0", gap_hi_s="1/50")
+    assert decide(x)[0] == "EXCLUDE"  # certified zero threshold
+    x = dict(base, closure_hi_mm="")
+    assert decide(x)[0] == "ABSTAIN_UNCALIBRATED"
     x = dict(base, aperture0_lo_mm="0")
     assert decide(x)[0] == "ABSTAIN_UNCALIBRATED"
     x = dict(base, gap_hi_s="-1")
@@ -85,7 +91,7 @@ def selftest():
     assert failures == 1 and out[0]["false_exclusion"] == "true"
     # This deliberate contradictory reference label tests the release blocker,
     # NOT the theorem; the stipulated physical bound and label cannot both hold.
-    return "11 prospective scorer assertions passed"
+    return "14 prospective scorer assertions passed"
 
 def main():
     print(selftest(), file=sys.stderr)
