@@ -36,13 +36,14 @@ def run():
     # Across 101 phases, compare strict certificate to analytically known hidden closures.
     # Conservative endpoint aperture bounds are true instantaneous values here (oracle).
     trials=0; excluded=0; closures=0; false_exclusions=0
-    for k in range(101):
-        center=F(k-25,2500)  # -10ms through +30ms
-        left=aperture(F(0),center); right=aperture(gap,center)
-        truth=hidden_closure(F(0),gap,center)
-        verdict=exclude_constant_speed(left,right,gap,speed,speed)
-        trials+=1; excluded+=int(verdict); closures+=int(truth)
-        false_exclusions+=int(verdict and truth)
+    for gap in (F(19,1000),F(20,1000),F(21,1000)):
+        for k in range(101):
+            center=F(k-25,2500)  # -10ms through +30ms
+            left=aperture(F(0),center); right=aperture(gap,center)
+            truth=hidden_closure(F(0),gap,center)
+            verdict=exclude_constant_speed(left,right,gap,speed,speed)
+            trials+=1; excluded+=int(verdict); closures+=int(truth)
+            false_exclusions+=int(verdict and truth)
     assert false_exclusions==0
     # Synthetic integration is not instantaneous aperture. Expose that difference.
     center=F(0)
