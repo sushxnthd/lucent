@@ -38,6 +38,12 @@ def decide(row):
 def score(rows):
     outputs = []
     false_exclusions = 0
+    seen_ids = set()
+    for row in rows:
+        trial_id = row.get("trial_id", "").strip()
+        if not trial_id or trial_id in seen_ids:
+            raise ValueError("missing_or_duplicate_trial_id")
+        seen_ids.add(trial_id)
     for row in rows:
         verdict, reason = decide(row)
         label = row.get("reference_crossing_state", "").strip().upper()
@@ -70,19 +76,36 @@ def selftest():
     assert decide(x)[0] == "ABSTAIN_UNCALIBRATED"
     x = dict(base, aperture0_lo_mm="n/a")
     assert decide(x)[0] == "ABSTAIN_UNCALIBRATED"
+    try:
+        score([base, base])
+        raise AssertionError("duplicate trial ID accepted")
+    except ValueError as exc:
+        assert str(exc) == "missing_or_duplicate_trial_id"
     out, failures = score([base])
     assert failures == 1 and out[0]["false_exclusion"] == "true"
     # This deliberate contradictory reference label tests the release blocker,
     # NOT the theorem; the stipulated physical bound and label cannot both hold.
-    return "10 prospective scorer assertions passed"
+    return "11 prospective scorer assertions passed"
 
 def main():
     print(selftest(), file=sys.stderr)
     if len(sys.argv) == 1:
         return
     with open(sys.argv[1], newline="", encoding="utf-8") as f:
-        rows = list(csv.DictReader(f))
-    outputs, failures = score(rows)
+        reader = csv.DictReader(f)
+        headers = reader.fieldnames or []
+        if len(headers) != len(set(headers)) or any(not h for h in headers):
+            raise ValueError("duplicate_or_empty_csv_header")
+        if not set(REQUIRED).issubset(headers):
+            raise ValueError("missing_required_csv_header")
+        rows = list(reader)
+        if any(None in row for row in rows):
+            raise ValueError("extra_csv_columns")
+    try:
+        outputs, failures = score(rows)
+    except ValueError as exc:
+        print(f"RELEASE_BLOCKED=True INPUT_ERROR={exc}", file=sys.stderr)
+        sys.exit(3)
     writer = csv.DictWriter(sys.stdout, fieldnames=("trial_id", "verdict",
         "reason", "reference_crossing_state", "false_exclusion"))
     writer.writeheader()
