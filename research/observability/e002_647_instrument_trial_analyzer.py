@@ -3,7 +3,7 @@
 
 Input CSV follows E002-644; no generated/synthetic rows count as physical evidence.
 This instrument deliberately never infers guaranteed optical detection from exposure overlap.
-E002-648 correction: a generic visibility flag cannot establish source-specific
+E002-650 correction: an unenumerated second exposure invalidates a single-interval\nmiss certificate; require an explicit complete-single-exposure declaration.\nE002-648 correction: a generic visibility flag cannot establish source-specific
 causation, so apparent signals during certified misses abstain rather than falsify.
 """
 import argparse
@@ -18,7 +18,8 @@ REQUIRED = (
     "exposure_interval_lo_us", "exposure_interval_hi_us", "row_index",
     "pulse_start_lo_us", "pulse_start_hi_us", "pulse_end_lo_us",
     "pulse_end_hi_us", "measured_visibility", "visibility_floor",
-    "sync_status", "exclusion_verdict", "adjudication_notes"
+    "sync_status", "exclusion_verdict", "adjudication_notes",
+    "exposure_coverage_status"
 )
 
 def number(value):
@@ -31,6 +32,11 @@ def number(value):
 def analyze(row):
     if any(not row.get(k, "").strip() for k in REQUIRED if k != "adjudication_notes"):
         return "ABSTAIN", "missing_required_field"
+    # A single row interval cannot establish a miss if additional exposures,
+    # rolling-shutter rows, or retained sensor integrations are unaccounted for.
+    # This is a declaration only, NOT independent authentication.
+    if row["exposure_coverage_status"].strip().lower() != "complete_single_exposure":
+        return "ABSTAIN", "exposure_coverage_unverified"
     if row["sync_status"].strip().lower() not in ("ok", "calibrated"):
         return "ABSTAIN", "uncalibrated_clock"
     for k in ("raw_video_sha256", "reference_sha256"):
@@ -86,14 +92,17 @@ def selftest():
                 pulse_start_lo_us="1", pulse_start_hi_us="2",
                 pulse_end_lo_us="3", pulse_end_hi_us="4",
                 measured_visibility="no", visibility_floor="1",
-                sync_status="ok", exclusion_verdict="EXCLUDE")
+                sync_status="ok", exclusion_verdict="EXCLUDE",
+                exposure_coverage_status="complete_single_exposure")
     assert analyze(base)[0] == "CONSISTENT"
     assert analyze({**base, "measured_visibility": "yes"}) == ("ABSTAIN", "unattributed_signal_despite_certified_miss")
     assert analyze({**base, "pulse_end_hi_us": "11"})[0] == "ABSTAIN"
     assert analyze({**base, "sync_status": "failed"})[0] == "ABSTAIN"
     assert analyze({**base, "raw_video_sha256": ""})[0] == "ABSTAIN"
     assert analyze({**base, "exposure_interval_hi_us": "9"})[0] == "ABSTAIN"
-    print("6 fail-closed self-tests passed (synthetic; NOT physical validation)")
+    assert analyze({**base, "exposure_coverage_status": ""}) == ("ABSTAIN", "missing_required_field")
+    assert analyze({**base, "exposure_coverage_status": "multiple_exposures"}) == ("ABSTAIN", "exposure_coverage_unverified")
+    print("8 fail-closed self-tests passed (synthetic; NOT physical validation)")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
