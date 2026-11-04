@@ -63,7 +63,7 @@ def analyze(row):
         # observationally confounded with timing-model leakage in this CSV.
         return "ABSTAIN", "unattributed_signal_despite_certified_miss"
     if seen in ("false", "0", "invisible", "no"):
-        return "CONSISTENT", "certified_miss_not_seen"
+        return "NON_FALSIFYING", "miss_not_seen_does_not_validate_timing"
     return "ABSTAIN", "unadjudicated_visibility"
 
 def run(path):
@@ -94,7 +94,7 @@ def selftest():
                 measured_visibility="no", visibility_floor="1",
                 sync_status="ok", exclusion_verdict="EXCLUDE",
                 exposure_coverage_status="complete_single_exposure")
-    assert analyze(base)[0] == "CONSISTENT"
+    assert analyze(base)[0] == "NON_FALSIFYING"
     assert analyze({**base, "measured_visibility": "yes"}) == ("ABSTAIN", "unattributed_signal_despite_certified_miss")
     assert analyze({**base, "pulse_end_hi_us": "11"})[0] == "ABSTAIN"
     assert analyze({**base, "sync_status": "failed"})[0] == "ABSTAIN"
@@ -102,7 +102,8 @@ def selftest():
     assert analyze({**base, "exposure_interval_hi_us": "9"})[0] == "ABSTAIN"
     assert analyze({**base, "exposure_coverage_status": ""}) == ("ABSTAIN", "missing_required_field")
     assert analyze({**base, "exposure_coverage_status": "multiple_exposures"}) == ("ABSTAIN", "exposure_coverage_unverified")
-    print("8 fail-closed self-tests passed (synthetic; NOT physical validation)")
+    assert analyze({**base, "exposure_interval_lo_us": "1000", "exposure_interval_hi_us": "2000"})[0] == "NON_FALSIFYING"
+    print("9 fail-closed self-tests passed (synthetic; NOT physical validation)")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
