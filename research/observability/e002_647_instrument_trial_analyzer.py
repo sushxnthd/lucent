@@ -3,6 +3,8 @@
 
 Input CSV follows E002-644; no generated/synthetic rows count as physical evidence.
 This instrument deliberately never infers guaranteed optical detection from exposure overlap.
+E002-648 correction: a generic visibility flag cannot establish source-specific
+causation, so apparent signals during certified misses abstain rather than falsify.
 """
 import argparse
 import csv
@@ -50,7 +52,10 @@ def analyze(row):
         return "ABSTAIN", "overlap_or_uncertain"
     seen = row["measured_visibility"].strip().lower()
     if seen in ("true", "1", "visible", "yes"):
-        return "FALSIFIED", "visible_despite_certified_miss"
+        # E002-648: a generic visibility flag cannot attribute the signal to
+        # the randomized LED source. Ambient light and sensor persistence are
+        # observationally confounded with timing-model leakage in this CSV.
+        return "ABSTAIN", "unattributed_signal_despite_certified_miss"
     if seen in ("false", "0", "invisible", "no"):
         return "CONSISTENT", "certified_miss_not_seen"
     return "ABSTAIN", "unadjudicated_visibility"
@@ -83,7 +88,7 @@ def selftest():
                 measured_visibility="no", visibility_floor="1",
                 sync_status="ok", exclusion_verdict="EXCLUDE")
     assert analyze(base)[0] == "CONSISTENT"
-    assert analyze({**base, "measured_visibility": "yes"})[0] == "FALSIFIED"
+    assert analyze({**base, "measured_visibility": "yes"}) == ("ABSTAIN", "unattributed_signal_despite_certified_miss")
     assert analyze({**base, "pulse_end_hi_us": "11"})[0] == "ABSTAIN"
     assert analyze({**base, "sync_status": "failed"})[0] == "ABSTAIN"
     assert analyze({**base, "raw_video_sha256": ""})[0] == "ABSTAIN"
