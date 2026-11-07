@@ -1,0 +1,47 @@
+{
+  "experiment": "E002-445",
+  "holdout_S21_S22_inspected": false,
+  "interpretation": "spatial optical activity proxy, NOT eyelid aperture",
+  "null_interpretation": "descriptive circular shifts, NOT exchangeable p-value",
+  "pilot_only": true,
+  "source": "MD5-verified published S19 human AVI; first 12000 frames",
+  "summary": {
+    "adjusted_ratios": {
+      "border": 3.3403667076423083,
+      "border_medium_median": 0.010114096105098724,
+      "border_short_median": 0.0030278400518000126,
+      "central": 7.277166938604013,
+      "central_medium_median": 0.012783224694430828,
+      "central_short_median": 0.0017566210590302944,
+      "log_relative": 0.7786610360131704,
+      "relative": 2.178553307322468
+    },
+    "anatomical_aperture_measured": false,
+    "descriptive_shift_rank_fraction": 0.003898635477582846,
+    "e002_371_physical_validation": "NOT_ESTABLISHED",
+    "event_frame_alignment_authenticated": false,
+    "gap_counts": {
+      "long": 6,
+      "medium": 21,
+      "short": 11972
+    },
+    "null_count": 512,
+    "null_log_contrast_p95": 0.31292398388651615,
+    "observed_log_contrast": 0.7786610360131704,
+    "pairs": 11999,
+    "physical_release_authorized": false,
+    "physical_shutter_timing_authenticated": false,
+    "product_claim": "ABSTAIN_UNCALIBRATED",
+    "raw_ratios": {
+      "border": 15.615442222721487,
+      "border_medium_median": 0.0473204883805374,
+      "border_short_median": 0.0030303649237472764,
+      "central": 33.917916948988484,
+      "central_medium_median": 0.05964154411764706,
+      "central_short_median": 0.0017584082244008715,
+      "log_relative": 0.7756830876227522,
+      "relative": 2.172075338323477
+    },
+    "spatial_screen": "SPATIALLY_LOCALIZED_OPTICAL_ASSOCIATION_UNVERIFIED"
+  }
+}

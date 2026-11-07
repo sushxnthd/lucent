@@ -1,0 +1,28 @@
+# E002-485: 150-fps human-data handoff and held-out falsification protocol
+
+**Frozen 2026-10-27, before access to any subject video/annotation.** This is a *pre-human-data* analysis freeze, not a claim of preregistration before software prototyping. Primary kernel E002-371. This experiment is designed to **falsify** velocity-proxy-based closure exclusions, not certify an anatomical product.
+
+## A genuine, publicly accessible human-data lead
+
+Guttmann-Flury, Sheng and Zhu, *Scientific Data* 12:587 (published 2025-04-08), DOI https://doi.org/10.1038/s41597-025-04861-9, collected synchronized Phantom Miro M310 left-eye video, EEG and Tobii eye tracking from 31 participants across 63 sessions. Original source: https://doi.org/10.7303/syn64005218. A March 12, 2026 CC0 re-host has per-subject ZIPs with `*_phantom.avi`, `*_phantom.xml`, `*_sync.csv`: https://zenodo.org/records/18970793. S24.zip is 345.6 MB; checksum md5:3e8eb615d4a3415115f61dad5265ef12. The original paper specifies **150 fps** for the Phantom recordings (binary triggers every ~6.6 ms); the re-host's generic "~500 fps" descriptor is NOT a reliable acquisition rate. Verify timestamps and actual AVI frame rate before analysis. This is a 150-to-30-fps reference/downsample study, not a 500-fps result. A separate 2025 study by Lee et al. used 240-fps videos in 80 participants but does not establish downloadable raw trajectories: https://doi.org/10.1007/s13534-025-00522-3.
+
+## Before unblinding
+
+1. Download one participant ZIP via its Zenodo record; verify checksum, archive path safety and the video and XML provenance. Do not put human videos, images or face crops in the public repository. Inspect actual timestamps/AVI metadata and reject unknown rate, frame duplication, nonmonotonic clock or unverified sync. No data were downloaded during protocol freeze.
+2. Independently annotate eyelid aperture from high-speed frames, with two blinded raters on a stratified subset. Normalize by independently measured per-subject open-eye aperture, preserving an interval of uncertainty. Use a documented anatomical closure threshold of 0.10 of open aperture only as a **research operationalization**, not a clinical definition. Disagreements and uncalibrated scale are `ABSTAIN`.
+3. Subject-disjoint split: S01–S20 calibration; S21–S31 held-out. Never train on test participants, including repeated sessions. Freeze annotation, exclusion and normalization rules before viewing held-out results.
+4. The instrument's 150-fps *frame samples* are not instantaneous anatomical ground truth and do not authenticate exposure kernel, shutter gaps or between-frame nonclosure. Label `REFERENCE_OBSERVED_CLOSURE` only when a held-out high-rate sample's upper aperture uncertainty is <=0.10. A sequence without such a sample is **reference unresolved**, never ground-truth nonclosure.
+5. For each clean, contiguous six-frame window (five ~6.667-ms intervals, simulated ~30 fps), use first and last frame as ordinary-camera **instantaneous-sample surrogates**. This is NOT a simulated 30-fps integrated exposure. Reject dropped/duplicate frames, blur, glasses/occlusion, gaze change, brightness drift, uncalibrated geometry, unknown quality or timestamp anomalies. For actual phone claims, independently measured exposure kernels are mandatory.
+6. From calibration subjects compute `v_proxy = max((|a[i+1]-a[i]|+u[i]+u[i+1])/(dt-2*clock_error))` over clean consecutive reference samples. This is a **finite-sample secant proxy**, NOT a physical instantaneous speed cap. Test held-out proxy exceedances. Never promote it to a universal speed bound.
+7. Let c=0.10, lower endpoint apertures l0,l1, actual elapsed gap <= Delta+2*clock_error, and proxy V. If l0>c and l1>c, calculate dimensionless `Z=((l0-c)+(l1-c))/(V*(Delta+2*clock_error))`. `Z>1` conditionally excludes an intermediate threshold crossing **only under the assumed hard-Lipschitz model**, which is not independently validated. A reference-observed closure with Z>1 falsifies the joint proxy-speed/measurement assumptions. `Z<=1` permits a closure but does not prove one. No reference-observed closure is not proof of absence.
+8. Report all eligible windows, abstentions by nuisance/missingness, proxy exceedances, conditional exclusions, reference-observed closures, and contradictions. Primary kill criterion: **any held-out observed closure within a conditionally excluded clean window**. Secondary kill criterion: proxy exceedances on held-out subjects. No post-hoc threshold tuning.
+
+## Evidence boundary
+
+Synthetic fixtures exercise the parser and kill criteria only. A future human result can falsify the model but **cannot** establish exact physical shutter gaps, hard velocity bounds, or nonclosure truth without independently calibrated hardware and sufficiently sampled anatomical reference. The current tool must always output `ABSTAIN_UNCALIBRATED` and `BLOCKED` for product release. No new human observations or physical shutter measurements were acquired in this run.
+
+## Acquisition commands (when data can be downloaded)
+
+Download https://zenodo.org/records/18970793/files/S24.zip?download=1 to a local restricted workspace, verify the published MD5, extract only known-safe paths, and run `ffprobe` on the `*_phantom.avi`. Use `*_phantom.xml` and `*_sync.csv` to validate frame timestamps. Prepare the annotation CSV with columns `participant,session,frame_idx,t_ms,aperture_fraction,uncertainty_fraction,quality_flags`. Run `python research/observability/e002_485_heldout_gap.py --annotations annotations.csv` only after all 31 participants are annotated; until then, `--synthetic-fixture` is explicitly synthetic.
+
+**Publication-quality physical evidence gate remains CLOSED.**

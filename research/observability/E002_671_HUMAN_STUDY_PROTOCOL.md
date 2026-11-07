@@ -1,0 +1,25 @@
+# E002-671 | Prospective human shutter-gap validation protocol (2026-11-06 UTC)
+
+## Evidence tier and decision
+**Protocol artifact only. No recruitment, human annotations, physical measurements, or empirical validation claimed.** E002-670's 2/5000 synthetic certification coverage motivates prioritizing real-world utility and failure rates over further theorem variants. This protocol is frozen before new human measurements. Existing authentic LPW development footage (E002-579/580) is **not** a held-out eyelid-closure validation set: pupil coordinates and image-motion proxies are not anatomical eyelid labels.
+
+## Primary falsifiable question
+For calibrated ordinary-camera exposures and blind gaps, do predeclared sharp E002-371/E002-669 certificates avoid excluding any closure that an independently acquired, sufficiently resolved reference can positively establish? Evaluate separately: (A) **within-exposure** exclusion using exposure-integrated aperture and E002-669; (B) **between-exposure gap** exclusion using E002-371. Never pool the two. Failure of a certificate against independently verified closure is a falsification of the complete calibration/measurement pipeline, not necessarily of the conditional mathematical theorem.
+
+## Acquisition and independent calibration
+Recruit consenting adult participants under local ethics/privacy approval. Collect paired synchronized ordinary-camera streams at 24/30/60 fps and a high-speed reference camera at the highest practically available verified acquisition rate; log raw frame timestamps, exposure start/end, dropped frames, rolling-shutter readout and clock synchronization error, rather than relying on nominal FPS. Use an independently timed LED/photodiode fixture to estimate shutter kernel, exposure gain and timing uncertainty before/after each session. Capture a calibrated mechanical eyelid-like occluder with known motion as a positive/negative instrument control. Record geometry, scale, distance, gaze direction, lighting, eyewear, motion blur, occlusion, and image quality. Store raw acquisition-rate provenance and license/consent metadata.
+
+## Reference labels and adjudication
+Two independent blinded anatomical raters mark reference-video eyelid aperture and threshold crossings, unaware of ordinary-camera certificates. Use prespecified normalized iris-scale geometry and uncertainty intervals; adjudicate disagreements by a third rater. Classify a closure as **confirmed** only when both temporal coverage and uncertainty support it; otherwise label **reference indeterminate** and abstain. A high nominal FPS alone does not guarantee capture of arbitrarily brief threshold crossings; never treat absence in the reference as proof of continuous-time absence.
+
+## Velocity ceiling discipline
+Do not use maximum measured finite-difference speed as a deterministic Lipschitz ceiling. Separate any independently justified hard physical/kinematic ceiling from empirical distributional calibration. If no defensible deterministic ceiling exists, prohibit deterministic human absence certificates; report only conditional counterfactual certificates parameterized by V and exploratory empirical risk with a fixed prediction horizon. A reference-video finite difference is not an upper bound on instantaneous speed.
+
+## Frozen split and test
+Partition by participant before calibration; no participant or recording may cross training/development and final test. Predeclare thresholds, velocity assumptions, timing/error budgets, image processing, abstention rules and all exclusion decisions before viewing final-test reference labels. For each high-speed recording, synthesize ordinary-camera exposures using *measured* shutter kernels and timestamps, then compare to a simultaneously acquired ordinary-camera stream; synthetic downsampling is a separate evidence tier. Test blind gaps of varying normalized duration V Delta/(2(1-tau)), explicitly straddling the sharp boundary, and report each modality independently.
+
+## Primary outcomes and kill criteria
+Primary: count of **false exclusion certificates** among independently confirmed closures, denominator of all certificates, and abstention/coverage rate with participant-cluster uncertainty. Any confirmed false exclusion triggers investigation and blocks the corresponding product claim; do not silently retune after observing held-out outcomes. Report confusion/abstention by FPS, shutter width, timing uncertainty, gaze, glasses, brightness, geometry, blur, rolling shutter, missingness and clock drift. Predeclare minimum usable sample counts before interpreting subgroup performance; zero observed errors is not zero risk. Report reference-indeterminate separately.
+
+## Operational decision
+Until genuine paired acquisition, independent velocity justification, and blinded reference adjudication exist, **ABSTAIN_UNCALIBRATED** and production **BLOCKED**. No sleepiness/fatigue, medical, or all-gap blink-absence claims. An instrument-only success can support camera-model calibration, not human eyelid physiology. No data collection or external review is represented by this document.

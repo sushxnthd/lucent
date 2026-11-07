@@ -1,0 +1,69 @@
+name: E002-496 authentic S01 blinded human packet integrity
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_496_packet_integrity.yml'
+      - 'research/observability/e002_496_packet_integrity.py'
+      - 'research/observability/test_e002_496_packet_integrity.py'
+      - 'research/observability/e002_492_anatomical_review.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_496_packet_integrity.yml'
+      - 'research/observability/e002_496_packet_integrity.py'
+      - 'research/observability/test_e002_496_packet_integrity.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-496-private-human-packet
+  cancel-in-progress: false
+jobs:
+  authentic-blinded-packet:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Ten synthetic privacy and integrity adversaries
+        run: python -m unittest discover -s research/observability -p 'test_e002_496_packet_integrity.py' -v
+      - name: Provision FFmpeg for native private-frame extraction
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+          command -v ffmpeg
+      - name: Build and verify real S01 packet without publishing human images
+        shell: bash
+        run: |
+          set -euo pipefail
+          WORK="$RUNNER_TEMP/lucent496"
+          mkdir -p "$WORK"
+          chmod 700 "$WORK"
+          REPORT="$WORK/E002_496_AGGREGATE_ONLY.json"
+          printf '{"experiment":"E002-496","status":"FAILED_OR_ABSTAINED","human_anatomical_labels":0,"human_reference_validated":false,"product":"ABSTAIN_UNCALIBRATED","release":"BLOCKED"}\n' > "$REPORT"
+          trap 'rm -rf "$WORK/private" "$WORK/S01.zip"' EXIT
+          curl --fail --location --silent --show-error --retry 2 --retry-delay 8 \
+            --connect-timeout 30 --max-time 900 --max-filesize 600000000 \
+            --output "$WORK/S01.zip" \
+            'https://zenodo.org/records/18970793/files/S01.zip?download=1'
+          python research/observability/e002_492_anatomical_review.py packet \
+            --outdir "$WORK/private" --archive "$WORK/S01.zip"
+          python research/observability/e002_496_packet_integrity.py \
+            --packet "$WORK/private" --output "$REPORT"
+      - name: Upload only technical aggregate, never packet or images
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-496-human-packet-integrity-aggregate-only
+          path: ${{ runner.temp }}/lucent496/E002_496_AGGREGATE_ONLY.json
+          if-no-files-found: warn
+          retention-days: 7

@@ -1,0 +1,42 @@
+name: E002-528 randomized-phase reference sensitivity
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_528_*'
+      - 'research/observability/test_e002_528_phase_sensitivity.py'
+      - '.github/workflows/e002_528_phase_sensitivity.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_528_*'
+      - 'research/observability/test_e002_528_phase_sensitivity.py'
+      - '.github/workflows/e002_528_phase_sensitivity.yml'
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python exact-rational adversarial controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_528_phase_sensitivity.py' -v
+      - name: Independent Node BigInt and lattice replay
+        run: node research/observability/e002_528_independent_replay.cjs
+      - name: Synthetic CLI smoke test, no physical release
+        run: |
+          python research/observability/e002_528_phase_sensitivity.py --output /tmp/e002_528.json
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/e002_528.json'))
+          assert p['release']=='BLOCKED'
+          assert p['product']=='ABSTAIN_UNCALIBRATED'
+          assert p['human_raters']==0
+          assert p['physical_camera_calibrations']==0
+          assert p['cases'][1]['strict_full_probability']['exact']=='84/125'
+          print('E002-528 synthetic CLI abstention: PASS')
+          PY

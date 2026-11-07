@@ -1,0 +1,16 @@
+{
+  "candidate_frames_per_participant": 40,
+  "evidence_tier": "synthetic_countermodel_only",
+  "exact_zero_error_probability": 0.21463876394293727,
+  "mean_failed_participants": 1.5059,
+  "minimum_independent_zero_error_participants_for_upper_below_1pct": 299,
+  "observed_zero_error_frequency": 0.21505,
+  "participants_per_trial": 30,
+  "physical_release_authorized": false,
+  "seed": 440,
+  "trials": 20000,
+  "true_participant_any_error_risk": 0.05,
+  "zero_error_cp_upper_participant": 0.09503385285530414,
+  "zero_error_naive_frame_upper_INVALID": 0.0024933300375186707,
+  "zero_error_studies": 4301
+}

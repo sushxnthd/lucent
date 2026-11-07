@@ -1,0 +1,36 @@
+name: E002-421 sharp two-boxcar gap
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_421_*'
+      - 'research/observability/e002_421_sharp_boxcar_gap.py'
+      - 'research/observability/test_e002_421_sharp_boxcar_gap.py'
+      - '.github/workflows/e002_421_sharp_boxcar_gap.yml'
+  pull_request:
+    paths:
+      - 'research/observability/E002_421_*'
+      - 'research/observability/e002_421_sharp_boxcar_gap.py'
+      - 'research/observability/test_e002_421_sharp_boxcar_gap.py'
+      - '.github/workflows/e002_421_sharp_boxcar_gap.yml'
+  workflow_dispatch:
+jobs:
+  independent-lp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=1.24,<3' 'scipy>=1.11,<2'
+      - name: Independent exact-integral LP, quadrature and fail-closed tests
+        run: python -m unittest -v test_e002_421_sharp_boxcar_gap
+        working-directory: research/observability
+      - name: Emit frozen witness
+        run: python e002_421_sharp_boxcar_gap.py --bins 20000 > e002_421_result.json
+        working-directory: research/observability
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-421-conditional-sharp-gap
+          path: research/observability/e002_421_result.json

@@ -1,0 +1,18 @@
+{
+  "human_ratings": 0,
+  "naive_independent_null_exact_any_hit": 0.9999649473337512,
+  "naive_null_any_hit_count": 2000,
+  "naive_null_any_hit_rate": 1.0,
+  "null_sessions_per_replication": 39,
+  "physical_captures": 0,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "rank_null_candidate_count": 101,
+  "rank_null_candidate_rate": 0.0505,
+  "rank_shift_1_25_candidate_count": 903,
+  "rank_shift_1_25_candidate_rate": 0.4515,
+  "release": "BLOCKED",
+  "replications": 2000,
+  "schema": "E002-544-SYNTHETIC-v1",
+  "seed": 5442026,
+  "windows_per_session": 200
+}

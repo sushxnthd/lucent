@@ -1,0 +1,166 @@
+{
+  "blinks": {
+    "calibration": 1657,
+    "holdout": 649
+  },
+  "center_only_noncenter_falsified_in_sample": false,
+  "center_only_training_caps": {
+    "closing_mm_s": 567.1039281430776,
+    "opening_mm_s": 243.31602871780612
+  },
+  "evidence_tier": "PUBLISHED_HUMAN_PER_BLINK_GAZE_SHIFT_NOT_PHYSICAL_APERTURE",
+  "experiment": "E002-459",
+  "gaze_matched_training_caps": {
+    "bottom": {
+      "closing_mm_s": 546.5524385750548,
+      "opening_mm_s": 241.2050131425638
+    },
+    "center": {
+      "closing_mm_s": 567.1039281430776,
+      "opening_mm_s": 243.31602871780612
+    },
+    "top": {
+      "closing_mm_s": 521.1072466536267,
+      "opening_mm_s": 274.61633650153254
+    }
+  },
+  "heldout_gaze_transfer": {
+    "bottom": {
+      "calibration_blinks_in_gaze": 539,
+      "center_only_transfer": {
+        "blinks": 208,
+        "exceed_closing_blinks": 0,
+        "exceed_either_blinks": 0,
+        "exceed_either_participants": 0,
+        "exceed_opening_blinks": 0,
+        "participants": 5
+      },
+      "gaze_matched_transfer": {
+        "blinks": 208,
+        "exceed_closing_blinks": 0,
+        "exceed_either_blinks": 0,
+        "exceed_either_participants": 0,
+        "exceed_opening_blinks": 0,
+        "participants": 5
+      },
+      "heldout_blinks_in_gaze": 208,
+      "heldout_participants_in_gaze": 5,
+      "pooled_transfer": {
+        "blinks": 208,
+        "exceed_closing_blinks": 0,
+        "exceed_either_blinks": 0,
+        "exceed_either_participants": 0,
+        "exceed_opening_blinks": 0,
+        "participants": 5
+      }
+    },
+    "center": {
+      "calibration_blinks_in_gaze": 558,
+      "center_only_transfer": {
+        "blinks": 222,
+        "exceed_closing_blinks": 0,
+        "exceed_either_blinks": 0,
+        "exceed_either_participants": 0,
+        "exceed_opening_blinks": 0,
+        "participants": 5
+      },
+      "gaze_matched_transfer": {
+        "blinks": 222,
+        "exceed_closing_blinks": 0,
+        "exceed_either_blinks": 0,
+        "exceed_either_participants": 0,
+        "exceed_opening_blinks": 0,
+        "participants": 5
+      },
+      "heldout_blinks_in_gaze": 222,
+      "heldout_participants_in_gaze": 5,
+      "pooled_transfer": {
+        "blinks": 222,
+        "exceed_closing_blinks": 0,
+        "exceed_either_blinks": 0,
+        "exceed_either_participants": 0,
+        "exceed_opening_blinks": 0,
+        "participants": 5
+      }
+    },
+    "top": {
+      "calibration_blinks_in_gaze": 560,
+      "center_only_transfer": {
+        "blinks": 219,
+        "exceed_closing_blinks": 0,
+        "exceed_either_blinks": 0,
+        "exceed_either_participants": 0,
+        "exceed_opening_blinks": 0,
+        "participants": 5
+      },
+      "gaze_matched_transfer": {
+        "blinks": 219,
+        "exceed_closing_blinks": 0,
+        "exceed_either_blinks": 0,
+        "exceed_either_participants": 0,
+        "exceed_opening_blinks": 0,
+        "participants": 5
+      },
+      "heldout_blinks_in_gaze": 219,
+      "heldout_participants_in_gaze": 5,
+      "pooled_transfer": {
+        "blinks": 219,
+        "exceed_closing_blinks": 0,
+        "exceed_either_blinks": 0,
+        "exceed_either_participants": 0,
+        "exceed_opening_blinks": 0,
+        "participants": 5
+      }
+    }
+  },
+  "human_anatomical_trajectory_validation": "NOT_ESTABLISHED",
+  "hypothetical_1mm_ideal_camera": {
+    "center_only": {
+      "240fps_conditional_exclusion_ideal_only": true,
+      "critical_gap_ms_for_hypothetical_1mm_endpoints": 5.873226533075816
+    },
+    "gaze_matched": {
+      "bottom": {
+        "240fps_conditional_exclusion_ideal_only": true,
+        "critical_gap_ms_for_hypothetical_1mm_endpoints": 5.975501418854051
+      },
+      "center": {
+        "240fps_conditional_exclusion_ideal_only": true,
+        "critical_gap_ms_for_hypothetical_1mm_endpoints": 5.873226533075816
+      },
+      "top": {
+        "240fps_conditional_exclusion_ideal_only": true,
+        "critical_gap_ms_for_hypothetical_1mm_endpoints": 5.560434737170658
+      }
+    },
+    "pooled": {
+      "240fps_conditional_exclusion_ideal_only": true,
+      "critical_gap_ms_for_hypothetical_1mm_endpoints": 5.404789178822827
+    }
+  },
+  "participants": {
+    "calibration": 12,
+    "holdout": 5
+  },
+  "physical_release_authorized": false,
+  "pooled_training_caps": {
+    "closing_mm_s": 567.1039281430776,
+    "opening_mm_s": 274.61633650153254
+  },
+  "primary_noncenter_center_trained": {
+    "blinks": 427,
+    "exceed_closing_blinks": 0,
+    "exceed_either_blinks": 0,
+    "exceed_either_participants": 0,
+    "exceed_opening_blinks": 0,
+    "participants": 5
+  },
+  "product_claim": "ABSTAIN_UNCALIBRATED",
+  "source_sha256": "6248c00b3c2849115f913eb184821d05efe069dd081587a84472c054494bbc43",
+  "statistical_warning": "Five held-out people, not independent blinks; sample maxima are not physiological hard caps.",
+  "training_gaze_counts": {
+    "bottom": 539,
+    "center": 558,
+    "top": 560
+  }
+}

@@ -1,0 +1,38 @@
+name: E002-423 pulse-shutter synthetic instrument validation
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_423_*'
+      - 'research/observability/e002_423_*'
+      - 'research/observability/test_e002_423_*'
+      - '.github/workflows/e002_423_pulse_metrology.yml'
+  workflow_dispatch:
+jobs:
+  frozen-synthetic-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent numerical oracle and adversarial regressions
+        run: python -m unittest -v research/observability/test_e002_423_pulse_metrology.py
+      - name: Execute frozen predictions and fail on scientific rejection
+        run: |
+          python research/observability/e002_423_pulse_metrology.py > e002_423_synthetic_result.json
+          python - <<'PY'
+          import json
+          x=json.load(open("e002_423_synthetic_result.json"))
+          assert all(x["frozen_tests"].values()), x["frozen_tests"]
+          assert not x["policy"]["physical_calibration_authorized"]
+          assert x["policy"]["product"]=="ABSTAIN_UNCALIBRATED"
+          print(json.dumps(x, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-423-synthetic-only
+          path: e002_423_synthetic_result.json
+          retention-days: 7

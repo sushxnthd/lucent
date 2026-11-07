@@ -1,0 +1,38 @@
+name: E002-498 participant-level speed-envelope evidence gate
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_498_FROZEN.md'
+      - 'research/observability/e002_498_velocity_evidence_gate.py'
+      - 'research/observability/test_e002_498_velocity_evidence_gate.py'
+      - '.github/workflows/e002_498_velocity_evidence_gate.yml'
+  pull_request:
+    paths:
+      - 'research/observability/E002_498_FROZEN.md'
+      - 'research/observability/e002_498_velocity_evidence_gate.py'
+      - 'research/observability/test_e002_498_velocity_evidence_gate.py'
+      - '.github/workflows/e002_498_velocity_evidence_gate.yml'
+permissions:
+  contents: read
+
+jobs:
+  participant-envelope-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependency-free adversarial tests
+        run: |
+          cd research/observability
+          python3 -m unittest -v test_e002_498_velocity_evidence_gate.py
+      - name: Independent Node.js order-statistic boundary check
+        run: |
+          node - <<'JS'
+          function nmin(p, conf) { return Math.ceil(Math.log(1-conf)/Math.log(p)); }
+          if (nmin(.95,.95)!==59 || nmin(.99,.95)!==299) process.exit(1);
+          if (!(1-Math.pow(.95,58)<.95 && 1-Math.pow(.95,59)>=.95)) process.exit(1);
+          if (!(1-Math.pow(.99,298)<.95 && 1-Math.pow(.99,299)>=.95)) process.exit(1);
+          console.log('INDEPENDENT_ORDER_STATISTIC_BOUNDARIES_PASS');
+          JS

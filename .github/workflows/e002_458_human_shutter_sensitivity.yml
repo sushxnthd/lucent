@@ -1,0 +1,20 @@
+name: E002-458 human-parameterized shutter sensitivity
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_457_HUMAN_AGGREGATE.json'
+      - 'research/observability/e002_458_human_shutter_sensitivity.js'
+      - '.github/workflows/e002_458_human_shutter_sensitivity.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-nuisance-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify committed human aggregate and falsify 240-fps conditional claim under shutter/clock error
+        run: node research/observability/e002_458_human_shutter_sensitivity.js

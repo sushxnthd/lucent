@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="520" viewBox="0 0 980 520" role="img" aria-labelledby="title desc">
+<title id="title">E002-480 robust optical pulse coverage under clock uncertainty</title>
+<desc id="desc">A six-microsecond optical pulse with four-microsecond timing uncertainty has no interval guaranteed illuminated for every timing realization. Reducing timing uncertainty to one microsecond produces a four-microsecond guaranteed illuminated core. Geometric coverage does not certify detectable camera response.</desc>
+<rect width="980" height="520" fill="#faf9f6"/>
+<text x="54" y="58" fill="#263238" font-family="Arial,Helvetica,sans-serif" font-size="27" font-weight="700">A phase scan is only as sharp as its clock</text>
+<text x="54" y="84" fill="#63716e" font-family="Arial,Helvetica,sans-serif" font-size="15">Constructed instrument geometry · 6 µs optical pulse · independent bounded timing error</text>
+<rect x="45" y="115" width="890" height="157" rx="12" fill="#ffffff" stroke="#dddcd6"/>
+<text x="65" y="144" fill="#263238" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">A · ±4 µs timing uncertainty</text>
+<text x="65" y="165" fill="#8d553b" font-family="Arial,Helvetica,sans-serif" font-size="14">No guaranteed illuminated phase</text>
+<line x1="185" y1="240" x2="725" y2="240" stroke="#b7c2be" stroke-width="1.5"/>
+<g fill="#63716e" font-family="Arial,Helvetica,sans-serif" font-size="12" text-anchor="middle">
+<text x="185" y="259">−5</text><text x="335" y="259">0</text><text x="485" y="259">+5</text><text x="635" y="259">+10 µs</text>
+</g>
+<g stroke="#e5e8e3" stroke-width="1"><line x1="185" y1="188" x2="185" y2="241"/><line x1="335" y1="188" x2="335" y2="241"/><line x1="485" y1="188" x2="485" y2="241"/><line x1="635" y1="188" x2="635" y2="241"/></g>
+<rect x="215" y="185" width="180" height="19" rx="3" fill="#427d79" opacity=".85"/>
+<rect x="455" y="211" width="180" height="19" rx="3" fill="#ca845e" opacity=".85"/>
+<g font-family="Arial,Helvetica,sans-serif" font-size="13" fill="#34433f">
+<text x="740" y="199">earliest pulse</text><text x="740" y="226">latest pulse</text>
+</g>
+<rect x="45" y="287" width="890" height="158" rx="12" fill="#ffffff" stroke="#dddcd6"/>
+<text x="65" y="316" fill="#263238" font-family="Arial,Helvetica,sans-serif" font-size="17" font-weight="700">B · ±1 µs timing uncertainty</text>
+<text x="65" y="337" fill="#24716a" font-family="Arial,Helvetica,sans-serif" font-size="14">4 µs guaranteed illuminated core</text>
+<line x1="185" y1="412" x2="725" y2="412" stroke="#b7c2be" stroke-width="1.5"/>
+<g fill="#63716e" font-family="Arial,Helvetica,sans-serif" font-size="12" text-anchor="middle">
+<text x="185" y="430">−5</text><text x="335" y="430">0</text><text x="485" y="430">+5</text><text x="635" y="430">+10 µs</text>
+</g>
+<g stroke="#e5e8e3" stroke-width="1"><line x1="185" y1="360" x2="185" y2="413"/><line x1="335" y1="360" x2="335" y2="413"/><line x1="485" y1="360" x2="485" y2="413"/><line x1="635" y1="360" x2="635" y2="413"/></g>
+<rect x="305" y="358" width="180" height="19" rx="3" fill="#427d79" opacity=".85"/>
+<rect x="365" y="385" width="180" height="19" rx="3" fill="#ca845e" opacity=".85"/>
+<rect x="365" y="358" width="120" height="46" rx="2" fill="#3f9884" opacity=".24" stroke="#3f9884" stroke-dasharray="4 3"/>
+<g font-family="Arial,Helvetica,sans-serif" font-size="13" fill="#34433f">
+<text x="740" y="372">earliest pulse</text><text x="740" y="399">latest pulse</text>
+</g>
+<text x="54" y="483" fill="#34433f" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700">Robust core width = max(0, pulse width − 2 × timing uncertainty)</text>
+<text x="54" y="506" fill="#63716e" font-family="Arial,Helvetica,sans-serif" font-size="13">Geometric illumination does not imply detection above a calibrated noise threshold. No physical shutter was measured.</text>
+</svg>

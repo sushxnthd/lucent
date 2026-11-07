@@ -1,0 +1,36 @@
+name: E002-497 offline S01 anatomical rater handoff
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_497_offline_rater.yml'
+      - 'research/observability/e002_497_offline_rater.html'
+      - 'research/observability/test_e002_497_offline_rater.py'
+      - 'research/observability/e002_492_anatomical_review.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_497_offline_rater.yml'
+      - 'research/observability/e002_497_offline_rater.html'
+      - 'research/observability/test_e002_497_offline_rater.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-497-offline-rater-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  synthetic-interface-integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Offline viewer and existing E002-492 adjudicator integration
+        run: python -m unittest discover -s research/observability -p 'test_e002_497_offline_rater.py' -v

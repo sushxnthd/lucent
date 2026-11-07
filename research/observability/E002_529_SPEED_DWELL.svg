@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="550" viewBox="0 0 1100 550" role="img" aria-labelledby="title desc">
+<title id="title">E002-529: long eyelid excursion, arbitrarily short closure dwell</title>
+<desc id="desc">Hypothetical exact scalar aperture trajectory with speed ceiling 60 per second and open endpoints. A 26.767 millisecond excursion contains only 0.1 millisecond below the 0.2 closure threshold. An inset enlarges the short closure interval. No human or camera measurement.</desc>
+<rect width="1100" height="550" fill="#ffffff"/>
+<text x="72" y="39" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="700" fill="#18212d">Whole excursion time is not closure dwell</text>
+<text x="72" y="63" font-family="Arial,Helvetica,sans-serif" font-size="13" fill="#566478">E002-529 · exact hypothetical V-Lipschitz scalar construction · not a measured blink</text>
+<rect x="70" y="85" width="955" height="235" rx="8" fill="#f7f9fc" stroke="#e1e7ee"/>
+<text x="89" y="110" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" fill="#273b55">Full 33.333-ms blind gap</text>
+<line x1="125" y1="142" x2="125" y2="285" stroke="#607287" stroke-width="1.5"/>
+<line x1="125" y1="285" x2="975" y2="285" stroke="#607287" stroke-width="1.5"/>
+<text x="96" y="150" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#566478">1.0</text>
+<text x="96" y="264" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#566478">0.2</text>
+<line x1="125" y1="259" x2="975" y2="259" stroke="#bc5c5c" stroke-width="1.5" stroke-dasharray="7 5"/>
+<text x="782" y="249" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#a44444">closure threshold c = 0.2</text>
+<polyline points="125,143 209,143 550,259.2 551.3,259.2 892,143 975,143" fill="none" stroke="#286e9b" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="550.7" cy="259.2" r="5.5" fill="#b84949" stroke="#ffffff" stroke-width="2"/>
+<line x1="551" y1="265" x2="551" y2="313" stroke="#b84949" stroke-dasharray="3 3"/>
+<text x="132" y="304" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#566478">0 ms</text>
+<text x="918" y="304" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#566478">33.333 ms</text>
+<text x="295" y="174" font-family="Arial,Helvetica,sans-serif" font-size="13" font-weight="700" fill="#286e9b">26.767-ms down/up excursion</text>
+<text x="570" y="282" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#a44444">0.1-ms closure (magnified below)</text>
+<rect x="70" y="341" width="955" height="166" rx="8" fill="#f7f9fc" stroke="#e1e7ee"/>
+<text x="89" y="367" font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="700" fill="#273b55">Magnified threshold neighborhood</text>
+<rect x="411" y="385" width="218" height="89" fill="#fce7e7" opacity="0.7"/>
+<line x1="327" y1="428" x2="878" y2="428" stroke="#bc5c5c" stroke-width="1.5" stroke-dasharray="7 5"/>
+<polyline points="327,390 480,459 559,459 715,390" fill="none" stroke="#286e9b" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="411" y1="408" x2="411" y2="480" stroke="#b84949" stroke-dasharray="4 3"/>
+<line x1="629" y1="408" x2="629" y2="480" stroke="#b84949" stroke-dasharray="4 3"/>
+<text x="420" y="401" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#a44444">strict below-threshold interval: 0.1 ms</text>
+<text x="333" y="493" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#566478">threshold crossing</text>
+<text x="648" y="493" font-family="Arial,Helvetica,sans-serif" font-size="11" fill="#566478">threshold crossing</text>
+<text x="87" y="398" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#566478">V = 60 s⁻¹</text>
+<text x="87" y="419" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#566478">b = 1, c = 0.2</text>
+<text x="87" y="440" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#566478">e = 1 ms, P = 4.167 ms</text>
+<text x="87" y="462" font-family="Arial,Helvetica,sans-serif" font-size="12" font-weight="700" fill="#a44444">Full-exposure opportunity: 0%</text>
+<text x="72" y="535" font-family="Arial,Helvetica,sans-serif" font-size="12" fill="#566478">Illustrative geometry, not to scale in the magnified inset. Actual anatomical, shutter, and speed calibration remain unavailable.</text>
+</svg>

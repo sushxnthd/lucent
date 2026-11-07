@@ -1,0 +1,32 @@
+name: E002-427 high-rate human-kinematics adapter safety
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_427_*'
+      - 'research/observability/e002_427_*'
+      - 'research/observability/test_e002_427_*'
+      - '.github/workflows/e002_427_human_kinematics.yml'
+  workflow_dispatch:
+jobs:
+  synthetic-only-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Falsify wrong velocity hypothesis and test conservative reference abstention
+        run: python -m unittest -v research/observability/test_e002_427_human_kinematics.py
+      - name: Assert no physical certificate exists
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'research/observability')
+          import e002_427_human_kinematics as h
+          assert 'aperture_mm' in h.load_trace.__code__.co_consts
+          assert 'brightness' in h.NUISANCES
+          print('SYNTHETIC TESTS ONLY. No controlled human data, real shutter, or product certification.')
+          PY

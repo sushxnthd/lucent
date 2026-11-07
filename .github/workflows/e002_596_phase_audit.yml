@@ -1,0 +1,47 @@
+name: E002-596 exact continuous phase audit
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_596_phase_audit.py
+      - research/observability/e002_596_independent_replay.cjs
+      - research/observability/E002_596_FROZEN.md
+      - .github/workflows/e002_596_phase_audit.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - research/observability/e002_596_phase_audit.py
+      - research/observability/e002_596_independent_replay.cjs
+      - research/observability/E002_596_FROZEN.md
+      - .github/workflows/e002_596_phase_audit.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  independent-exact-phase-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Independently replay and compare full exact-rational phase maps
+        run: |
+          python3 research/observability/e002_596_phase_audit.py > /tmp/e002_596_python.json
+          node research/observability/e002_596_independent_replay.cjs > /tmp/e002_596_node.json
+          python3 - <<'PY'
+          import json
+          a=json.load(open('/tmp/e002_596_python.json'))
+          b=json.load(open('/tmp/e002_596_node.json'))
+          assert a==b, 'INDEPENDENT_ORACLE_MISMATCH'
+          assert a['distinct_continuous_signatures']==19
+          assert a['three_phase_unseen']==[9]
+          assert a['four_phase_unseen']==[]
+          assert a['integer_phases']['3']==[3,6,9,13,16]
+          assert a['signature_sample_count_range']==[5,6]
+          print('E002-596 INDEPENDENT EXACT ORACLE PASS; INDEX-ONLY, NO HUMAN OR SHUTTER CLAIM')
+          PY

@@ -1,0 +1,27 @@
+name: E002-610 radiometric nuisance falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_610_photometric_bound.py'
+      - 'research/observability/test_e002_610_photometric_bound.py'
+      - 'research/observability/e002_610_independent.cjs'
+      - '.github/workflows/e002_610_photometric_bound.yml'
+  workflow_dispatch:
+jobs:
+  synthetic-radiometric-bound:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact interval and adversarial tests
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_610_photometric_bound.py
+          python e002_610_photometric_bound.py --sweep
+      - name: Independent Node.js exact rational replay
+        run: node research/observability/e002_610_independent.cjs

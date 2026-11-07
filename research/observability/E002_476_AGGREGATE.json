@@ -1,0 +1,64 @@
+{
+  "cases": {
+    "declared_external": {
+      "joint_falsification": false,
+      "physical_claim": "ABSTAIN_UNCALIBRATED",
+      "physical_release_authorized": false,
+      "reason": "PHYSICAL_METROLOGY_AND_HARD_SPEED_CAP_NOT_VERIFIED",
+      "reference": "NO_WITNESSED_CROSSING",
+      "research_decision": "EXCLUDED_CONDITIONALLY",
+      "research_label": "CONDITIONAL_MODEL_EXCLUSION_ONLY"
+    },
+    "empirical_sample_max": {
+      "joint_falsification": false,
+      "physical_claim": "ABSTAIN_UNCALIBRATED",
+      "physical_release_authorized": false,
+      "reason": "INPUT_OR_CALIBRATION_NOT_ACCEPTED",
+      "reference": "NOT_EVALUATED",
+      "research_decision": "ABSTAIN",
+      "research_label": "RESEARCH_ABSTAIN"
+    },
+    "illustrative": {
+      "joint_falsification": false,
+      "physical_claim": "ABSTAIN_UNCALIBRATED",
+      "physical_release_authorized": false,
+      "reason": "PHYSICAL_METROLOGY_AND_HARD_SPEED_CAP_NOT_VERIFIED",
+      "reference": "NO_WITNESSED_CROSSING",
+      "research_decision": "EXCLUDED_CONDITIONALLY",
+      "research_label": "CONDITIONAL_MODEL_EXCLUSION_ONLY"
+    },
+    "no_reference": {
+      "joint_falsification": false,
+      "physical_claim": "ABSTAIN_UNCALIBRATED",
+      "physical_release_authorized": false,
+      "reason": "PHYSICAL_METROLOGY_AND_HARD_SPEED_CAP_NOT_VERIFIED",
+      "reference": "REFERENCE_INCOMPLETE",
+      "research_decision": "EXCLUDED_CONDITIONALLY",
+      "research_label": "CONDITIONAL_MODEL_EXCLUSION_ONLY"
+    },
+    "uncalibrated_clock": {
+      "joint_falsification": false,
+      "physical_claim": "ABSTAIN_UNCALIBRATED",
+      "physical_release_authorized": false,
+      "reason": "INPUT_OR_CALIBRATION_NOT_ACCEPTED",
+      "reference": "NOT_EVALUATED",
+      "research_decision": "ABSTAIN",
+      "research_label": "RESEARCH_ABSTAIN"
+    },
+    "witnessed_counterexample": {
+      "joint_falsification": true,
+      "physical_claim": "ABSTAIN_UNCALIBRATED",
+      "physical_release_authorized": false,
+      "reason": "PHYSICAL_METROLOGY_AND_HARD_SPEED_CAP_NOT_VERIFIED",
+      "reference": "WITNESSED_CROSSING",
+      "research_decision": "EXCLUDED_CONDITIONALLY",
+      "research_label": "JOINT_MODEL_ASSUMPTIONS_FALSIFIED"
+    }
+  },
+  "evidence_tier": "SYNTHETIC_SOFTWARE_INTERFACE_FALSIFICATION_ONLY",
+  "experiment": "E002-476",
+  "new_human_anatomical_measurements": 0,
+  "physical_acquisitions": 0,
+  "physical_release_authorized": false,
+  "product_claim": "ABSTAIN_UNCALIBRATED"
+}

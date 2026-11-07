@@ -1,0 +1,33 @@
+name: E002-575 source-bound LPW packet synthetic falsification
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'research/observability/e002_575_lpw_packet.py'
+      - 'research/observability/test_e002_575_lpw_packet.py'
+      - '.github/workflows/e002-575-lpw-packet.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-packet-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Provision FFmpeg and FFprobe explicitly
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Check local decoder tools
+        run: |
+          ffmpeg -version | head -n 1
+          ffprobe -version | head -n 1
+      - name: Test generated nonhuman video only
+        run: python3 -m unittest discover -s research/observability -p 'test_e002_575_lpw_packet.py' -v
+      - name: Explicit evidence-tier warning
+        run: |
+          echo 'Synthetic source-bound packet regression only.'
+          echo 'No LPW archive, real human annotations, camera calibration or physiological validation.'

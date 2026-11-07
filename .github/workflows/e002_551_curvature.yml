@@ -1,0 +1,30 @@
+name: E002-551 curvature-limited closure exclusion
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_551_*'
+      - 'research/observability/test_e002_551_*'
+      - '.github/workflows/e002_551_curvature.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Adversarial tests and seeded experiment
+        working-directory: research/observability
+        run: |
+          python -m unittest -v test_e002_551_curvature_exclusion.py
+          python e002_551_curvature_exclusion.py
+      - name: Independent exact-rational witness
+        working-directory: research/observability
+        run: node e002_551_independent.cjs

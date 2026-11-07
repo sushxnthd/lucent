@@ -1,0 +1,43 @@
+name: E002-442 frozen human S19 sync-clock test
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_442_sync_timebase.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  s19-timebase:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate adversarial synthetic timebase fixtures
+        run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_442_sync_timebase.py' -v
+      - name: Reacquire hash-verified S19 and test preregistered sync hypotheses
+        id: human
+        continue-on-error: true
+        run: python research/observability/e002_442_sync_timebase.py --output /tmp/e002_442_s19.json
+      - name: Record evidence tier without private timestamps or images
+        if: always()
+        run: |
+          if [ -f /tmp/e002_442_s19.json ]; then
+            cat /tmp/e002_442_s19.json
+            echo 'S19 timing hypotheses evaluated; not an authenticated physical shutter clock.' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo '{"status":"S19_TIMEBASE_ACQUISITION_FAILED","e002_371_physical_validation":"FAIL","physical_release_authorized":false}' > /tmp/e002_442_s19.json
+            echo 'No S19 sync-row analysis completed.' >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e002-442-s19-timebase-aggregate
+          path: /tmp/e002_442_s19.json
+          retention-days: 14
+      - name: Fail CI when human-data analysis did not complete
+        if: steps.human.outcome != 'success'
+        run: exit 1

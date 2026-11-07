@@ -1,0 +1,88 @@
+{
+  "acquisition_fps_authenticated": false,
+  "anatomical_closure_labels": 0,
+  "baseline_reproduced": true,
+  "conditions": {
+    "alternating_jitter_1px": {
+      "analyzed_pairs": 240,
+      "candidate_clip_candidates": 0,
+      "candidate_clip_positive": false,
+      "control_clip_candidates": 0,
+      "duplicate_pairs": 0,
+      "eligible_fraction": 0.883333,
+      "eligible_pairs": 212,
+      "nuisance_abstentions": 28,
+      "proxy_candidates": 0,
+      "verdict": "FAIL"
+    },
+    "baseline": {
+      "analyzed_pairs": 240,
+      "candidate_clip_candidates": 1,
+      "candidate_clip_positive": true,
+      "control_clip_candidates": 0,
+      "duplicate_pairs": 0,
+      "eligible_fraction": 0.883333,
+      "eligible_pairs": 212,
+      "nuisance_abstentions": 28,
+      "proxy_candidates": 1,
+      "verdict": "REPRODUCED"
+    },
+    "blur_3x3": {
+      "analyzed_pairs": 240,
+      "candidate_clip_candidates": 1,
+      "candidate_clip_positive": true,
+      "control_clip_candidates": 0,
+      "duplicate_pairs": 0,
+      "eligible_fraction": 0.883333,
+      "eligible_pairs": 212,
+      "nuisance_abstentions": 28,
+      "proxy_candidates": 1,
+      "verdict": "SURVIVES_THIS_FIXTURE_ONLY"
+    },
+    "brightness_plus8": {
+      "analyzed_pairs": 240,
+      "candidate_clip_candidates": 1,
+      "candidate_clip_positive": true,
+      "control_clip_candidates": 0,
+      "duplicate_pairs": 0,
+      "eligible_fraction": 0.883333,
+      "eligible_pairs": 212,
+      "nuisance_abstentions": 28,
+      "proxy_candidates": 1,
+      "verdict": "SURVIVES_THIS_FIXTURE_ONLY"
+    },
+    "contrast_90pct": {
+      "analyzed_pairs": 240,
+      "candidate_clip_candidates": 1,
+      "candidate_clip_positive": true,
+      "control_clip_candidates": 0,
+      "duplicate_pairs": 0,
+      "eligible_fraction": 0.9,
+      "eligible_pairs": 216,
+      "nuisance_abstentions": 24,
+      "proxy_candidates": 1,
+      "verdict": "SURVIVES_THIS_FIXTURE_ONLY"
+    },
+    "stride2": {
+      "analyzed_pairs": 120,
+      "candidate_clip_candidates": 0,
+      "candidate_clip_positive": false,
+      "control_clip_candidates": 0,
+      "duplicate_pairs": 0,
+      "eligible_fraction": 0.658333,
+      "eligible_pairs": 79,
+      "nuisance_abstentions": 41,
+      "proxy_candidates": 0,
+      "verdict": "FAIL"
+    }
+  },
+  "evidence_tier": "AUTHENTIC_HUMAN_IMAGE_PROXY_NUISANCE_TEST_ONLY",
+  "experiment": "E002-493",
+  "frozen_review_clips": 20,
+  "human_reference_validated": false,
+  "native_frame_positions": 260,
+  "physical_hidden_closure_certified": false,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "release": "BLOCKED",
+  "subject": "S01_CALIBRATION_ONLY"
+}

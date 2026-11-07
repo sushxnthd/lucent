@@ -1,0 +1,9 @@
+# E002-627 | Physical-acquisition eligibility gate (2026-11-03)
+
+Evidence tier: **executed local instrument QA, not physical or human validation**. This run operationalizes E002-618's preregistration as a fail-closed record-level eligibility gate. It prevents nominal camera frame rate, finite-difference eyelid speed, exposure averages, or unblinded labels from silently becoming an E002-371 certificate.
+
+Run `python research/observability/e002_627_capture_gate.py --self-test`: 9 assertions passed locally. For JSON input `{"trials":[...]}`, run `python research/observability/e002_627_capture_gate.py < capture_manifest.json`. Output is per-trial `ELIGIBLE_FOR_BLINDED_ANALYSIS` or `ABSTAIN_UNCALIBRATED` with explicit reasons; release is always `BLOCKED`. Eligibility is **not** evidence of correctness, no-hidden-closure, or readiness.
+
+The gate requires measured reference and ordinary exposure timing, finite sync/rolling-row uncertainty, independently certified continuous-time velocity envelope, calibrated aperture boundary intervals, preregistered threshold, two blinded raters, participant-disjoint splits, and recorded gaze, illumination, glasses, blur, and missingness. A participant in both calibration and held-out sets is rejected. It does not prove the declared booleans are true: external calibration records, original video, timestamp traces, rater audits, and independent review are still mandatory. A valid manifest alone cannot produce a certificate.
+
+**Decision-changing consequence:** All existing virtual-sampling datasets lacking verified physical exposure windows or continuous-time velocity ceilings are mechanically ineligible for a product no-hidden-closure claim. This does not add physical measurements. The next substantive step is collecting independently timed physical recordings; avoid more synthetic refinements unless a new falsification target arises.

@@ -1,0 +1,36 @@
+name: E002-484 closure alias verification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_484_*'
+      - 'research/observability/test_e002_484_*'
+      - 'research/observability/E002_484_*'
+      - '.github/workflows/e002-484-closure-alias.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_484_*'
+      - 'research/observability/test_e002_484_*'
+      - 'research/observability/E002_484_*'
+      - '.github/workflows/e002-484-closure-alias.yml'
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Node adversarial tests
+        run: node --test research/observability/test_e002_484_closure_alias.cjs
+      - name: Independent exact-rational replay
+        run: python research/observability/e002_484_independent_replay.py
+      - name: Deterministic aggregate
+        run: node research/observability/e002_484_closure_alias.cjs > /tmp/e002_484_aggregate.json

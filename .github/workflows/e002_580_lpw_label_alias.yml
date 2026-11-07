@@ -1,0 +1,36 @@
+name: E002-580 LPW investigator-label aliasing control
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_580_lpw_label_alias.py
+      - research/observability/E002_580_FROZEN.md
+      - .github/workflows/e002_580_lpw_label_alias.yml
+      - research/observability/e002_581_lpw_label_information.py
+      - research/observability/E002_581_FROZEN.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  original-investigator-pupil-label-control:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout existing research branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install NumPy
+        run: sudo apt-get update -qq && sudo apt-get install -y python3-numpy
+      - name: Run frozen synthetic falsifiers before accessing LPW
+        run: python3 research/observability/e002_580_lpw_label_alias.py --self-test
+      - name: Test investigator pupil-center annotations on development participant only
+        run: python3 research/observability/e002_580_lpw_label_alias.py
+      - name: E002-581 synthetic falsifiers before genuine source
+        run: python3 research/observability/e002_581_lpw_label_information.py --self-test
+      - name: E002-581 real LPW moving-linear label-order information control
+        run: python3 research/observability/e002_581_lpw_label_information.py

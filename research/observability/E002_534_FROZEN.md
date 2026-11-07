@@ -1,0 +1,24 @@
+# E002-534 FROZEN | Native human-video return-excursion test (not anatomical closure)
+
+Date: 2026-10-30. Primary E002-371 kernel, established research branch and draft PR #26. This protocol is frozen **before** executing the new observable on the real videos. The sources (Eye-BCI S01 and S19) were previously examined in E002-395 through E002-407; they are **not untouched participant holdouts**. The only claim under test is an *image-space* transient invisible to two similar ordinary-rate endpoint images. No new physiological or camera calibration is inferred.
+
+## Source and selection
+Use the existing, checksum-verified, openly licensed S01 and S19 archives and their existing e002_397_human_motion.load_archive native-frame parser. S01 MD5 fef02cb7ebf62e4f3efb6303284fd6cb; S19 MD5 8a16cf12526f7558b4e49926c4bc5e8e. Process only native video frames 0..12005 of the pre-existing first selected session for each participant, regardless of EEG blink markers. The source AVI nominal FPS is **not** accepted as physical shutter timing. Use accompanying synchronization times only to reject invalid frame gaps, not as authenticated exposure/clock evidence. Evaluate six-frame intervals [k,k+5] at k=0,5,10,... and separately at k=2,7,12,... . Require consecutive source frame IDs, every adjacent synchronization delta in [0.002,0.020] seconds and total span in [0.020,0.050] seconds. Count and report all rejected intervals.
+
+## Fixed image observable
+Convert native decoded 288x320 frames to grayscale. Eye ROI rows 118:190, columns 100:230, background control ROI rows 20:100, columns 30:290 (coordinates from E002-397, not fitted here). Per frame, subtract the background ROI median and add the first frame's background median, clipping to [0,255]; this removes only a global additive brightness offset, not arbitrary illumination or geometry.
+
+For a six-frame stack J_0..J_5 and ROI R, define endpoint discrepancy D_R=mean(|J_5-J_0|) and interior excursion E_R=max_{j=1..4} mean(|J_j - [(1-j/5)J_0+(j/5)J_5]|), in 8-bit intensity units. An **eye-return candidate** has D_eye<=8 and E_eye>=18. An **eye-specific candidate** additionally has E_background<=8. Count background-return candidates by applying the same D<=8, E>=18 test to background. These thresholds are frozen, not tuned after observing counts. This is a pixel-space return excursion, not an eyelid aperture, closure witness, blink event, or speed measurement.
+
+## Adversarial controls and predictions
+- H1 (existence): >=1 eye-specific candidate across both subjects at phase 0. If zero, reject this image-return phenomenon at the frozen threshold and do not retune.
+- H2 (blur robustness): >=80% of the *same baseline candidate windows* remain eye-specific under Gaussian blur sigma 2 applied to every frame. Failure kills the candidate as a nuisance-robust measurement.
+- H3 (gain robustness): >=80% of baseline candidates remain eye-specific under gain x1.2 clipped to 8-bit. Failure kills portability.
+- H4 (phase): report phase-2 results separately; any phase dependence is a limitation, never a validation.
+- H5 (global-flash veto): synthetic six-frame whole-image pulse with similar endpoints must be rejected by background control. A localized synthetic eye-region pulse must be accepted; linear interpolation must not produce a false return. Tests must include a timestamp gap and missing frame ID.
+- Report candidate counts, denominator, nuisance survival and negative controls, with zero-count cases explicitly reported. Do not choose favorable subject, phase, ROI, or nuisance after viewing outcomes.
+
+## Scientific and privacy limitations
+The analysis can establish that two similar native human-video endpoint images may bracket an image transient. It **cannot** establish an actual hidden anatomical closure: an image transient can arise from gaze, illumination, shadows, motion, codec artifacts, or other nuisances; the high-speed source frames have no independently authenticated shutter/exposure kernel or eyelid landmarks. The 5-frame gap is a point-sampling *surrogate*, not an ordinary-camera exposure simulation. The two participants were previously explored, so this is a within-dataset exploratory test, not a participant-disjoint prediction.
+
+Do not publish images, frame indices, EEG markers, clip linkage, per-window scores or identifying video. Print only aggregate per-subject counts and status; never upload human imagery as workflow artifacts. Maintain ABSTAIN_UNCALIBRATED and production BLOCKED regardless of outcome. If the test yields a positive result, the only supported claim is a measured **image-space** return-excursion frequency under this narrow, predeclared pipeline. If it fails, preserve failure. Next decisive validation remains physical photodiode-timed shutter measurement and two independent blinded anatomical raters; do not substitute this for either.

@@ -1,0 +1,41 @@
+name: E002-499 fixed-column human-review geometry falsifier
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_499_column_falsifier.yml'
+      - 'research/observability/e002_499_column_falsifier.py'
+      - 'research/observability/test_e002_499_column_falsifier.py'
+      - 'research/observability/e002_497_offline_rater.html'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_499_column_falsifier.yml'
+      - 'research/observability/e002_499_column_falsifier.py'
+      - 'research/observability/test_e002_499_column_falsifier.py'
+      - 'research/observability/e002_497_offline_rater.html'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-499-column
+  cancel-in-progress: false
+jobs:
+  frozen-geometry-falsifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: New geometry falsification and old interface integration
+        run: |
+          python -m unittest discover -s research/observability -p 'test_e002_499_column_falsifier.py' -v
+          python -m unittest discover -s research/observability -p 'test_e002_497_offline_rater.py' -v
+      - name: Print synthetic aggregate only
+        run: python research/observability/e002_499_column_falsifier.py

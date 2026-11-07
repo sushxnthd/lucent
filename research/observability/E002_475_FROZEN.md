@@ -1,0 +1,17 @@
+# E002-475 FROZEN — participant-tail calibration ceiling, not a physical speed bound
+
+Date: 2026-10-27. Scientific kernel: E002-371. **Freeze before writing the executable analysis.** This is a new decision-level statistical falsification of using a published participant-calibration maximum as a physiological hard cap; it is not new eyelid anatomy, camera timing, or a novel statistical theorem.
+
+## Immutable inputs and scope
+- E002-459 has **12 calibration participants**, 5 sealed/held-out participants and 1,657 calibration blinks. The existing 567.103928-mm/s closing and 274.616337-mm/s opening sample maxima are *recorded per-blink peak proxies*, not independently validated continuous anatomical velocities. Do not reopen raw human rows or held-out participants.
+- Use **participant maxima**, not 1,657 blinks, as the exchangeable unit. Let n be the number of independent calibration participants and m the number of future independent participants. Assume continuous iid participant-level maximum-speed proxy distributions for the *optimistic* baseline only.
+- The camera design, nuisance, and physical release assumptions from E002-474 remain unchanged. No speed multiplier, parametric tail model or extrapolated hard cap may be introduced.
+
+## Frozen calculations, independently falsifiable
+1. Exact rank/order-statistic law: P(all m future participant proxy maxima <= maximum of n calibration participants) = n/(n+m) under the iid continuous baseline. With n=12: m=1 => 12/13; m=8 => 12/20. Exhaustively enumerate rank permutations for n=3,m=2 => 3/5 as an independent finite check. No statement is conditional on the realized sample maximum.
+2. One-sided nonparametric maximum tolerance limit: confidence that the random calibration maximum covers at least population proportion p is 1-p^n, under iid continuous sampling. For n=12, p=0.95, compute 1-0.95^12. Find minimum integer n for 95%-content/95%-confidence => 59, and check n=58 fails. Separately find n for >=95% probability that **all eight** future participant proxy maxima are under the calibration maximum => 152; n=151 fails.
+3. Independent seeded synthetic Uniform(0,1) Monte Carlo with n=12,m=8 should agree with 0.6 within a predeclared tolerance of 0.02 for >=20,000 trials. A constructed nonexchangeable calibration Uniform(0,1) / future Uniform(2,3) control must give 0 joint coverage, demonstrating that even the rank guarantee dies under condition shift.
+4. Reject all attempts to substitute blinks for participants, equate 95/95 tolerance with deterministic safety, equate proxy maxima with instantaneous anatomical speed, or release physical claims. Machine-readable output must explicitly set physical_release_authorized=false, product_claim=ABSTAIN_UNCALIBRATED.
+
+## Kill/decision rules
+Any mismatch between exact rational arithmetic, permutation enumeration, simulation or the integer sample thresholds invalidates this run. This is established classical order-statistic science, not novelty; priority audit: Wilks (1941), DOI 10.1214/aoms/1177731788, and NIST tolerance-limit guidance. Even 59 independent participants only supports a **distributional proxy** tolerance statement under exchangeability; no finite sample maximum establishes a universal physiological hard speed cap. Do not extend dataset archaeology or imply physical acquisition. Continue E002-472 physical instrument handoff as the decisive external dependency.

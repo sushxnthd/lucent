@@ -1,0 +1,43 @@
+name: E002-457 directional human observability challenge
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_457_directional_boundary.py'
+      - 'research/observability/test_e002_457_directional_boundary.py'
+      - 'research/observability/e002_457_independent_check.js'
+      - '.github/workflows/e002_457_directional_boundary.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  asymmetric-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independently replay 140000 synthetic witnesses in Node
+        run: node research/observability/e002_457_independent_check.js
+      - name: Run independent adversarial and analytic witness tests
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_457_directional_boundary.py
+      - name: Hash-verify original OSF human data and print only deidentified aggregate
+        run: |
+          cd research/observability
+          python - <<'PY'
+          import hashlib, json, tempfile, urllib.request
+          from pathlib import Path
+          from e002_457_directional_boundary import SOURCE_URL, EXPECTED_SHA256, parse_csv, audit_rows
+          req = urllib.request.Request(SOURCE_URL, headers={"User-Agent": "Lucent-E002-457-research/1.0"})
+          with urllib.request.urlopen(req, timeout=60) as response:
+              raw = response.read()
+          if hashlib.sha256(raw).hexdigest() != EXPECTED_SHA256:
+              raise SystemExit("SOURCE_SHA256_MISMATCH: abort without inference")
+          aggregate = audit_rows(*parse_csv(raw))
+          del raw
+          print(json.dumps(aggregate, indent=2, sort_keys=True, allow_nan=False))
+          PY

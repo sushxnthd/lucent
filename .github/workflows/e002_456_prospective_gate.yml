@@ -1,0 +1,37 @@
+name: E002-456 prospective anatomical falsification gate
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_456_*'
+      - 'research/observability/e002_456_prospective_gate.py'
+      - 'research/observability/e002_456_sealed_holdout.py'
+      - 'research/observability/test_e002_456_prospective_gate.py'
+      - 'research/observability/test_e002_456_sealed_holdout.py'
+      - '.github/workflows/e002_456_prospective_gate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  prospective-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile and run adversarial synthetic tests
+        run: |
+          python -m py_compile research/observability/e002_456_prospective_gate.py research/observability/e002_456_sealed_holdout.py
+          python -m unittest discover -s research/observability -p 'test_e002_456_prospective_gate.py' -v
+          python -m unittest discover -s research/observability -p 'test_e002_456_sealed_holdout.py' -v
+      - name: Verify that no human data or physical authorization is required
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, "research/observability")
+          from e002_456_prospective_gate import ABSTAIN
+          assert ABSTAIN == "ABSTAIN_UNCALIBRATED"
+          print("Synthetic-only verification. No physical authorization.")
+          PY

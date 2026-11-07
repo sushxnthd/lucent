@@ -1,0 +1,32 @@
+name: E002-579 authentic LPW motion proxy falsification
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_579_real_motion_proxy.py
+      - research/observability/E002_579_FROZEN.md
+      - .github/workflows/e002_579_real_motion_proxy.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authentic-human-video-proxy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout research branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install native video decoder and numpy
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg python3-numpy
+      - name: Verify frozen motion proxy and nuisance controls
+        run: python3 research/observability/e002_579_real_motion_proxy.py --self-test
+      - name: Execute non-anatomical motion proxy on authentic development video
+        run: python3 research/observability/e002_579_real_motion_proxy.py

@@ -1,0 +1,33 @@
+name: E002-531 native-marker missingness identifiability
+on:
+  push:
+    paths:
+      - 'research/observability/e002_531_*'
+      - 'research/observability/test_e002_531_native_missingness.py'
+      - 'research/observability/E002_531_*'
+      - '.github/workflows/e002_531_native_missingness.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_531_*'
+      - 'research/observability/test_e002_531_native_missingness.py'
+      - 'research/observability/E002_531_*'
+      - '.github/workflows/e002_531_native_missingness.yml'
+jobs:
+  independent-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Frozen Python adversarial controls
+        run: python -m unittest -v test_e002_531_native_missingness.py
+        working-directory: research/observability
+      - name: Independent Node replay
+        run: node research/observability/e002_531_independent_replay.cjs
+      - name: Research-only exact JSON output
+        run: python research/observability/e002_531_native_missingness.py

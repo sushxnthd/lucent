@@ -1,0 +1,22 @@
+{
+  "evidence_tier": "EXACT_SYNTHETIC_INSTRUMENT_ONLY",
+  "simulation": {
+    "accepted": 5221,
+    "discarded_out_of_range": 4779,
+    "envelope_violations": 0,
+    "excluded": 3398,
+    "false_exclusions": 0,
+    "generated": 10000,
+    "seed": 552,
+    "sharp_equalities": 0,
+    "true_closures": 397
+  },
+  "witness": {
+    "corrected_exclusion": false,
+    "corrected_lower": "0",
+    "measured_mean": "109/300",
+    "naive_false_exclusion": true,
+    "naive_instantaneous_lower": "17/150",
+    "true_min": "0"
+  }
+}

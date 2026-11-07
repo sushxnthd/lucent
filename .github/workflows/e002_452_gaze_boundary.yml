@@ -1,0 +1,25 @@
+name: E002-452 gaze-confound release boundary
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_452_gaze_boundary.py'
+      - 'research/observability/test_e002_452_gaze_boundary.py'
+      - '.github/workflows/e002_452_gaze_boundary.yml'
+  workflow_dispatch:
+jobs:
+  frozen-gaze-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run frozen conditional and refusal tests
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_452_gaze_boundary.py
+          python e002_452_gaze_boundary.py --conditional-fixture

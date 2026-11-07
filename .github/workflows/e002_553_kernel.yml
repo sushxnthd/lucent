@@ -1,0 +1,33 @@
+name: E002-553 shutter-kernel falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_553_*'
+      - 'research/observability/test_e002_553_*'
+      - '.github/workflows/e002_553_kernel.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_553_*'
+      - 'research/observability/test_e002_553_*'
+      - '.github/workflows/e002_553_kernel.yml'
+  workflow_dispatch:
+jobs:
+  exact-kernel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Frozen exact Python tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_553_kernel_curvature.py' -v
+      - name: Independent BigInt pulse-integral oracle
+        run: node research/observability/e002_553_independent.cjs
+      - name: Exact synthetic demonstration
+        run: python research/observability/e002_553_kernel_curvature.py

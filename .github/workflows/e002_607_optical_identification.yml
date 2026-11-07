@@ -1,0 +1,21 @@
+name: E002-607 coded LED shutter identifiability
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_607_optical_identification.py'
+      - 'research/observability/e002_607_independent.cjs'
+      - '.github/workflows/e002_607_optical_identification.yml'
+  workflow_dispatch:
+jobs:
+  independent-calibration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact synthetic inverse and fail-closed regression
+        run: python research/observability/e002_607_optical_identification.py --self-test
+      - name: Independent Node finite-grid verification
+        run: node research/observability/e002_607_independent.cjs

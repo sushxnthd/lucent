@@ -1,0 +1,39 @@
+name: E002-472 instrument feasibility and product abstention
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - .github/workflows/e002_472_design_feasibility.yml
+      - research/observability/e002_472_design_feasibility.py
+      - research/observability/test_e002_472_design_feasibility.py
+      - research/observability/e002_456_prospective_gate.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e002-472-feasibility-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prospective-instrument-design:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Frozen design test and actual E002-456 evaluator cross-check
+        run: python -m unittest discover -s research/observability -p 'test_e002_472_design_feasibility.py' -v
+      - name: Generate synthetic grid and verify abstention
+        run: |
+          python research/observability/e002_472_design_feasibility.py --output /tmp/e002_472_grid.json
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/e002_472_grid.json'))
+          assert p['n_rows']==44
+          assert p['counts']=={'EXCLUSION_FEASIBLE_CONDITIONALLY':13,'EXCLUSION_NOT_SUPPORTED':23,'ABSTAIN_DESIGN':8}
+          assert p['product_claim']=='ABSTAIN_UNCALIBRATED'
+          assert all(not row['physical_release_authorized'] for row in p['rows'])
+          print(p['counts'])
+          PY

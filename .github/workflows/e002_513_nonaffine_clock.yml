@@ -1,0 +1,49 @@
+name: E002-513 non-affine optical-anchor falsification
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_513_*'
+      - 'research/observability/e002_513_*'
+      - 'research/observability/test_e002_513_*'
+      - '.github/workflows/e002_513_nonaffine_clock.yml'
+  pull_request:
+    paths:
+      - 'research/observability/E002_513_*'
+      - 'research/observability/e002_513_*'
+      - 'research/observability/test_e002_513_*'
+      - '.github/workflows/e002_513_nonaffine_clock.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  nonaffine-clock:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Frozen Python adversarial tests
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_513_nonaffine_clock.py
+          python e002_513_nonaffine_clock.py > /tmp/e002_513_synthetic_result.json
+          python -c "import json; x=json.load(open('/tmp/e002_513_synthetic_result.json')); assert x['product']=='ABSTAIN_UNCALIBRATED' and x['release']=='BLOCKED'"
+      - name: Independent JavaScript two-world arithmetic
+        run: |
+          node <<'NODE'
+          const n=300, target=150, base=1/30, delta=.002;
+          const a=Array(n).fill(base);
+          const b=Array(n).fill(base-delta/(n-1));
+          b[target]=base+delta;
+          const sum=x=>x.reduce((s,y)=>s+y,0);
+          const d=Math.sqrt(2*60*.010*.002);
+          const risk=x=>d+60*(x-.010)/2;
+          if(Math.abs(sum(a)-10)>1e-10 || Math.abs(sum(b)-10)>1e-10) throw Error('anchor mismatch');
+          if(!(risk(a[target])<.8 && risk(b[target])>.8)) throw Error('frozen reversal failed');
+          if(!(Math.min(...b)>.010)) throw Error('exposure overlap');
+          console.log(JSON.stringify({anchors_identical:true,affine_risk:risk(a[target]),nonaffine_risk:risk(b[target]),physical_certification:false}));
+          NODE

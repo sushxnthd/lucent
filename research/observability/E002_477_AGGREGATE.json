@@ -1,0 +1,41 @@
+{
+  "evidence_tier": "SYNTHETIC_INTAKE_QA_ONLY",
+  "fixture": {
+    "nominal_fps": 240,
+    "phase_step_ms": 0.05,
+    "repeats_per_phase": 20,
+    "row_strata": [
+      "top",
+      "bottom"
+    ],
+    "scan_periods": 2,
+    "true_simulated_row_shutter_starts_ms": {
+      "bottom": 0.35,
+      "top": 0.2
+    }
+  },
+  "frozen_protocol": "E002_477_FROZEN.md",
+  "result": {
+    "hardware_independence_authenticated": false,
+    "observations": 6720,
+    "phase_count": 168,
+    "physical_release_authorized": false,
+    "physical_shutter_support_authenticated": false,
+    "product_claim": "ABSTAIN_UNCALIBRATED",
+    "qa_status": "PASS_INTAKE_ONLY",
+    "row_summaries": {
+      "bottom": {
+        "descriptive_contrast_phase_centroid_ms": 0.8,
+        "max_contrast": 0.1,
+        "min_contrast": 0.0,
+        "observations": 3360
+      },
+      "top": {
+        "descriptive_contrast_phase_centroid_ms": 0.65,
+        "max_contrast": 0.1,
+        "min_contrast": 0.0,
+        "observations": 3360
+      }
+    }
+  }
+}

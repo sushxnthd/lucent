@@ -1,0 +1,51 @@
+name: E002-605 independent high-rate human blink label assay
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_605_*'
+      - 'research/observability/e002_605_*'
+      - 'research/observability/test_e002_605_*'
+      - '.github/workflows/e002_605_human_blink_alias.yml'
+  pull_request:
+    paths:
+      - 'research/observability/E002_605_*'
+      - 'research/observability/e002_605_*'
+      - 'research/observability/test_e002_605_*'
+      - '.github/workflows/e002_605_human_blink_alias.yml'
+  workflow_dispatch:
+jobs:
+  label-assay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install workbook reader only
+        run: python -m pip install --disable-pip-version-check xlrd==2.0.1
+      - name: Frozen adversarial unit tests
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_605_human_blink_alias.py
+          node e002_605_independent.js
+      - name: One bounded public Mendeley annotation acquisition and strict parsing attempt
+        run: |
+          cd research/observability
+          python e002_605_human_blink_alias.py --probe-mendeley | tee e002_605_aggregate.json
+          python - <<'PY'
+          import json
+          d=json.load(open('e002_605_aggregate.json'))
+          assert d['product']=='ABSTAIN_UNCALIBRATED' and d['release']=='BLOCKED'
+          print('source_access:',d['source_access'])
+          print('recognized_events:',d['recognized_events'])
+          if d['source_access']=='ABSTAIN':print('failure_reason:',d['reason'])
+          PY
+      - name: Upload aggregate only, never images or per-event labels
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-605-aggregate-only
+          path: research/observability/e002_605_aggregate.json
+          if-no-files-found: error
+          retention-days: 7

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="570" viewBox="0 0 980 570">
+<rect width="980" height="570" fill="#fff"/>
+<text x="50" y="45" font-family="Arial" font-size="23" font-weight="bold">E002-436 | Reference evidence is not binary</text>
+<text x="50" y="70" font-family="Arial" font-size="13" fill="#555">Synthetic 200-Hz reference, 1200 stipulated Lipschitz traces. No human evidence.</text>
+<text x="65" y="112" font-family="Arial" font-size="17">A. Hidden closure between open reference frames</text>
+<line x1="120" y1="350" x2="650" y2="350" stroke="#333"/>
+<line x1="120" y1="140" x2="120" y2="350" stroke="#333"/>
+<line x1="120" y1="255.00" x2="650" y2="255.00" stroke="#bf3d44" stroke-dasharray="6 4"/>
+<text x="658" y="260.00" font-family="Arial" font-size="12" fill="#bf3d44">2.0 mm threshold</text>
+<polyline points="120,230.00 170,242.50 220,255.00 270,267.50 320,280.00 370,292.50 420,280.00 470,267.50 520,255.00 570,242.50 620,230.00" fill="none" stroke="#176d75" stroke-width="3"/>
+<circle cx="120" cy="230.00" r="6" fill="#6a7fa8"/>
+<circle cx="620" cy="230.00" r="6" fill="#6a7fa8"/>
+<text x="245" y="375" font-family="Arial" font-size="13">Time (0 to 5 ms)</text>
+<text x="73" y="135" font-family="Arial" font-size="12">Aperture (mm)</text>
+<text x="140" y="410" font-family="Arial" font-size="13" fill="#444">Open sampled points cannot certify no intersample crossing.</text>
+<text x="65" y="460" font-family="Arial" font-size="17">B. Dual-rater conditional reference labels</text>
+<rect x="65.00" y="478" width="414.38" height="35" fill="#176d75"/>
+<rect x="479.38" y="478" width="171.42" height="35" fill="#d29b35"/>
+<rect x="650.79" y="478" width="264.21" height="35" fill="#6a7fa8"/>
+<rect x="65" y="530" width="12" height="12" fill="#176d75"/>
+<text x="83" y="541" font-family="Arial" font-size="12">NEGATIVE_CONDITIONAL: 585</text>
+<rect x="347" y="530" width="12" height="12" fill="#d29b35"/>
+<text x="365" y="541" font-family="Arial" font-size="12">UNRESOLVED: 242</text>
+<rect x="629" y="530" width="12" height="12" fill="#6a7fa8"/>
+<text x="647" y="541" font-family="Arial" font-size="12">WITNESSED_CROSSING: 373</text>
+</svg>
