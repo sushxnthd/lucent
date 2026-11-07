@@ -1,5 +1,16 @@
 # Research Activity
 
+Updated: 2026-11-07 (UTC)
+
+- Active research branch: `research/observability-human-boundary`
+- Active draft PR: #26
+- Latest durable research commit: `c28c31c98bdd90565ade5d6048b99bb262e94717`
+- Evidence: E002-690 freezes a prospective physical-instrument and participant-disjoint human validation protocol, explicit timing/calibration data contract, false-exclusion gate, nuisance strata, and abstention rules. No new physical or human measurements; not empirical validation.
+- Product: `ABSTAIN_UNCALIBRATED`; production `BLOCKED`.
+- Experimental artifacts remain on the research branch; this ledger is not validation or release approval.
+
+## Prior checkpoint
+
 Updated: 2026-11-06 (UTC)
 
 - Active research branch: `research/observability-human-boundary`
