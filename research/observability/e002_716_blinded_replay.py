@@ -1,5 +1,6 @@
 """E002-716: conservative blinded replay gate. No physiological validation implied."""
-import csv, json, math, argparse
+import csv, json, argparse
+from decimal import Decimal, InvalidOperation
 FLAGS=('geometry_valid','photometry_valid','clock_valid','exposure_valid','missingness_valid','blur_valid','gaze_valid','glasses_valid','velocity_independent')
 NUM=('aperture0_lower','aperture1_lower','velocity_upper','delta_upper')
 REQ=('trial_id','participant_id','split','reference_closure','reference_valid')+NUM+FLAGS
@@ -11,8 +12,11 @@ def evaluate(rows):
         if not tid or not pid or tid in ids or split not in ('calibration','heldout'): raise ValueError('bad id or split')
         ids.add(tid); people.setdefault(pid,set()).add(split)
         if any(r[k].strip() not in ('0','1') for k in FLAGS+('reference_valid','reference_closure')): raise ValueError('nonbinary flag')
-        vals=[float(r[k]) for k in NUM]
-        if not all(math.isfinite(v) and v>=0 for v in vals): raise ValueError('invalid bound')
+        try:
+            vals=[Decimal(r[k].strip()) for k in NUM]
+        except (InvalidOperation, ValueError):
+            raise ValueError('invalid bound') from None
+        if not all(v.is_finite() and v>=0 for v in vals): raise ValueError('invalid bound')
         a0,a1,v,dt=vals
         cert=all(r[k].strip()=='1' for k in FLAGS) and v*dt<a0+a1
         out.append((split,cert,r['reference_valid'].strip()=='1',int(r['reference_closure']),tid))
@@ -34,7 +38,10 @@ def selftest():
         try: evaluate(bad)
         except ValueError: pass
         else: raise AssertionError('invalid trial accepted')
-    print('PASS: six replay self-tests')
+    # Decimal arithmetic: exact decimal equality must not become a false exclusion.
+    assert evaluate([dict(b,aperture0_lower='0.1',aperture1_lower='0.2',velocity_upper='0.3',delta_upper='1')])['heldout_exclusions']==0
+    assert evaluate([dict(b,aperture0_lower='0.1',aperture1_lower='0.2',velocity_upper='0.299',delta_upper='1')])['heldout_exclusions']==1
+    print('PASS: eight replay self-tests')
 if __name__=='__main__':
     p=argparse.ArgumentParser(); p.add_argument('csv',nargs='?'); p.add_argument('--selftest',action='store_true'); a=p.parse_args()
     if a.selftest: selftest()
