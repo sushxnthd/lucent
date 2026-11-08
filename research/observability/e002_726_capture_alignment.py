@@ -21,10 +21,10 @@ def analyze(frames,reference):
     if any(b[0]<=a[0] for a,b in zip(r,r[1:])):return {"status":"ABSTAIN_NONMONOTONIC_REFERENCE"}
     if any(x[1] not in ("0","1") for x in r):return {"status":"ABSTAIN_BAD_REFERENCE_LABEL"}
     gaps=[b-a for a,b in zip(f,f[1:])]
-    edges=[str(t) for (t,v),(u,w) in zip(r,r[1:]) if v!=w]
+    edges=[{"after_s":str(t),"at_or_before_s":str(u),"from":v,"to":w}\n           for (t,v),(u,w) in zip(r,r[1:]) if v!=w]
     return {"status":"TIMELINE_PARSED_NOT_SYNCHRONIZED","camera_frames":len(f),
             "reference_samples":len(r),"camera_gap_min_s":str(min(gaps)),
-            "camera_gap_max_s":str(max(gaps)),"reference_transitions_at_sample_s":edges,
+            "camera_gap_max_s":str(max(gaps)),"reference_transition_intervals_s":edges,
             "limitations":["ffprobe timestamps are not exposure start/end",
             "independent clocks are not aligned by this script",
             "reference transitions are interval-censored between samples",
