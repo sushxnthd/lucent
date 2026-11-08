@@ -21,9 +21,9 @@ def evaluate(rows):
     ex=[x for x in scored if x[1]]; failures=[x[4] for x in ex if x[3]]
     return dict(heldout_total=len(held),heldout_scored=len(scored),heldout_exclusions=len(ex),
         false_exclusions=len(failures),false_exclusion_trial_ids=failures,
-        heldout_abstentions=sum(not x[1] for x in held),reference_indeterminate=len(held)-len(scored),
-        status='FALSIFIED' if failures else 'NO_OBSERVED_FALSIFICATION',
-        warning='No physiological validation follows from zero observed failures.')
+        heldout_abstentions=sum(not (x[1] and x[2]) for x in held),reference_indeterminate=len(held)-len(scored),
+        status=('FALSIFIED' if failures else 'INSUFFICIENT_EVIDENCE' if not ex else 'NO_OBSERVED_FALSIFICATION'),
+        warning='No physiological validation follows from zero observed failures; nonzero exclusions are not a calibrated sample-size guarantee.')
 def selftest():
     b=dict.fromkeys(REQ,'1'); b.update(trial_id='a',participant_id='p',split='heldout',aperture0_lower='1',aperture1_lower='1',velocity_upper='1',delta_upper='1')
     assert evaluate([b])['status']=='FALSIFIED'
