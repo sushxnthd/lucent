@@ -1,5 +1,16 @@
 # Research Activity
 
+Updated: 2026-11-09 (UTC)
+
+- Active research branch: `research/observability-human-boundary`
+- Active draft PR: #26
+- Latest durable research commit: `8d36cacaf5af7acc5726a59c1c157ad4c2e3d29a`
+- Evidence: E002-730 adds an exact-rational synthetic counterexample showing that a 75% exposure-averaged aperture can coexist with complete hidden closure. It falsifies substituting an exposure average for a pointwise lower aperture bound; it does not validate the shutter-gap theorem or add human/physical evidence.
+- Product: `ABSTAIN_UNCALIBRATED`; production `BLOCKED`.
+- This checkpoint is activity only, not validation or release approval.
+
+## Prior checkpoint
+
 Updated: 2026-11-08 (UTC)
 
 - Active research branch: `research/observability-human-boundary`
