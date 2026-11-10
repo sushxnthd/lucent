@@ -1,5 +1,16 @@
 # Research Activity
 
+Updated: 2026-11-10 (UTC)
+
+- Active research branch: `research/observability-human-boundary`
+- Active draft PR: #26
+- Latest durable research commit: `32c596d936d2e585a8bd92de9b4ca61160f8371d`
+- Evidence: E002-731 adds an exact-rational synthetic falsification of naive hidden-closure exclusion under independent endpoint timestamp errors. The correct worst-case point-sample exclusion uses nominal gap plus twice the clock-error bound. Includes an explicit hidden-zero witness and a 1,100-case executable boundary sweep; human/physical validation remains absent. This applies only to point samples, not exposure averages.
+- Product: `ABSTAIN_UNCALIBRATED`; production `BLOCKED`.
+- This checkpoint is activity only, not validation or release approval.
+
+## Prior checkpoint
+
 Updated: 2026-11-09 (UTC)
 
 - Active research branch: `research/observability-human-boundary`
