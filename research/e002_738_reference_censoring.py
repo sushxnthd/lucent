@@ -30,7 +30,7 @@ def test():
     dt=F(1,200); a=b=F(1,5); L=F(100) # normalized aperture/s; synthetic only
     p=v_path(a,b,dt,L)
     assert aperture_at(p,F(0))==a and aperture_at(p,dt)==b
-    assert aperture_at(p,dt/2)==0
+    assert aperture_at(p,a/L)==0
     # A second trajectory with identical observations never closes.
     flat=[(F(0),a),(dt,a)]
     assert all(aperture_at(flat,t)==aperture_at(p,t) for t in (F(0),dt))
