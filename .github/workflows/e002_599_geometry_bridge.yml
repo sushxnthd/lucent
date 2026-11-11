@@ -1,0 +1,35 @@
+name: E002-599 geometry registration and native review bridge
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_599_native_review_bridge.py'
+      - 'research/observability/test_e002_599_native_review_bridge.py'
+      - 'research/observability/e002_599_independent_replay.cjs'
+      - 'research/observability/e002_598_offline_rater.html'
+      - 'research/observability/e002_598_offline_rater_test.cjs'
+      - '.github/workflows/e002_599_geometry_bridge.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  synthetic-geometry-kill-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run native geometry/scale adjudication adversarial tests
+        run: python research/observability/test_e002_599_native_review_bridge.py
+      - name: Independent integer-rational oracle for geometry and index witnesses
+        run: node research/observability/e002_599_independent_replay.cjs
+      - name: Replay actual offline reviewer UI with cross-column attack
+        run: node research/observability/e002_598_offline_rater_test.cjs
+      - name: No private source images or rater exports in repository
+        run: |
+          test -z "$(find research/observability -type f \( -name '*.avi' -o -name '*.png' -o -name '*RATINGS.json' \) -print -quit)"

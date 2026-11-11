@@ -1,0 +1,51 @@
+{
+  "evidence_tier": "SYNTHETIC_MISSINGNESS_ALIAS",
+  "frozen_seed": 432,
+  "trials_per_regime": 1200,
+  "model": {
+    "fps": 30,
+    "exposure_s": 0.002,
+    "threshold_mm": 2,
+    "endpoint_mean_mm": 2.1,
+    "hypothetical_velocity_cap_mm_s": 4,
+    "dropout_at_center_frame": true
+  },
+  "constructed_pair": {
+    "open_min_mm": 2.1,
+    "closed_min_mm": 1.98,
+    "peak_speed_mm_s": 3.711340206185567,
+    "surviving_exposure_means_mm": [
+      2.1,
+      2.1
+    ],
+    "retained_midpoint_exposure_mean_mm": 1.9818556701030947,
+    "compressed_lower_mm": 2.033333333333333,
+    "correct_lower_mm": 1.9666666666666668,
+    "correct_lower_with_uncertainty_mm": 1.959666666666667
+  },
+  "regimes": {
+    "MCAR": {
+      "n": 1200,
+      "true_closures": 336,
+      "dropped": 200,
+      "naive_candidates": 709,
+      "aware_candidates": 509,
+      "naive_false": 60,
+      "aware_false": 0,
+      "witnessed_when_retained": 258
+    },
+    "MNAR": {
+      "n": 1200,
+      "true_closures": 336,
+      "dropped": 341,
+      "naive_candidates": 912,
+      "aware_candidates": 571,
+      "naive_false": 297,
+      "aware_false": 0,
+      "witnessed_when_retained": 36
+    }
+  },
+  "provenance": "E002-432 GitHub Actions run 40160322976, Python 3.11, six independent unittest groups passed",
+  "physical_certificate_authorized": false,
+  "product": "ABSTAIN_UNCALIBRATED"
+}

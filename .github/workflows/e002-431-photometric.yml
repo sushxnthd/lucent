@@ -1,0 +1,30 @@
+name: E002-431 photometric observability falsification
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_431_photometric_alias.py'
+      - 'research/observability/test_e002_431_photometric_alias.py'
+      - '.github/workflows/e002-431-photometric.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_431_photometric_alias.py'
+      - 'research/observability/test_e002_431_photometric_alias.py'
+      - '.github/workflows/e002-431-photometric.yml'
+  workflow_dispatch:
+
+jobs:
+  synthetic-photometric-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run independent synthetic controls
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_431_photometric_alias.py
+          python e002_431_photometric_alias.py

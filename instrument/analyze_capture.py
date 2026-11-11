@@ -16,6 +16,8 @@ from pathlib import Path
 import cv2
 import numpy as np
 
+from verify_frame_timing import probe_video, TimingError
+
 
 def load_cascade(name: str):
     path = Path(cv2.data.haarcascades) / name
@@ -31,9 +33,13 @@ def main():
     parser.add_argument("metadata", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--stride", type=int, default=1)
+    parser.add_argument("--container-pts", action="store_true",
+                        help="use validated container presentation times, never sensor times")
     args = parser.parse_args()
 
     meta = json.loads(args.metadata.read_text(encoding="utf-8"))
+
+    container_timing = probe_video(args.video) if args.container_pts else None
 
     cap = cv2.VideoCapture(str(args.video))
     if not cap.isOpened():
@@ -55,6 +61,8 @@ def main():
             break
 
         frame_index += 1
+        if container_timing is not None and frame_index >= container_timing["frame_count"]:
+            raise RuntimeError("decoded frames exceed FFprobe timing count")
         if frame_index % max(args.stride, 1):
             continue
 
@@ -104,7 +112,11 @@ def main():
         rows.append(
             {
                 "frame": frame_index,
-                "timeS": frame_index / fps if fps > 0 else None,
+                "timeS": (container_timing["container_pts_s"][frame_index]
+                          if container_timing is not None else
+                          frame_index / fps if fps > 0 else None),
+                "timeSProvenance": ("CONTAINER_PTS_NOT_SENSOR_TIME" if container_timing is not None
+                                    else "NOMINAL_FRAME_INDEX_DIVIDED_BY_REPORTED_FPS_NOT_SENSOR_TIME"),
                 "faceDetected": bool(detected),
                 "eyeDetections": eye_count,
                 "faceAreaFraction": area_fraction,
@@ -115,6 +127,8 @@ def main():
         )
 
     cap.release()
+    if container_timing is not None and frame_index + 1 != container_timing["frame_count"]:
+        raise RuntimeError("FFprobe timing count exceeds decoded frames")
 
     qualities = np.asarray([row["quality"] for row in rows], dtype=float)
     face_rate = (
@@ -150,6 +164,10 @@ def main():
                 float(np.mean(timing_errors)) if timing_errors else None
             ),
             "browserFrameCadence": meta.get("frameCadence"),
+            "frameTimeSource": ("CONTAINER_PTS_NOT_HARDWARE_CAPTURE_TIME" if container_timing is not None
+                                else "NOMINAL_FPS_ESTIMATE_NOT_HARDWARE_CAPTURE_TIME"),
+            "containerPtsParsed": container_timing is not None,
+            "hardwareExposureTimestampsAuthenticated": False,
         },
         "quality": {
             "faceDetectionRate": face_rate,
@@ -162,6 +180,8 @@ def main():
             ),
         },
         "frames": rows,
+        "physicalCertificateAuthorized": False,
+        "product": "ABSTAIN_UNCALIBRATED",
         "interpretation": (
             "Capture-quality diagnostics only. No biological state or fatigue "
             "estimate is produced."

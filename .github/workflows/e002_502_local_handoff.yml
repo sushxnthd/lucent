@@ -1,0 +1,34 @@
+name: E002-502 private human-rater handoff synthetic controls
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_502_local_handoff.yml'
+      - 'research/observability/e002_502_local_handoff.py'
+      - 'research/observability/test_e002_502_local_handoff.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_502_local_handoff.yml'
+      - 'research/observability/e002_502_local_handoff.py'
+      - 'research/observability/test_e002_502_local_handoff.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-502-handoff-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  synthetic-privacy-and-blinding:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile private handoff instrument
+        run: python -m py_compile research/observability/e002_502_local_handoff.py
+      - name: Seven synthetic privacy and blinding adversaries
+        run: python -m unittest discover -s research/observability -p 'test_e002_502_local_handoff.py' -v

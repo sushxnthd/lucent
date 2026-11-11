@@ -1,0 +1,16 @@
+# E002-624 | Sampling-rate feasibility floor for acceleration-assisted certification
+
+## Frozen question and analytic result
+E002-623 derived a conditional continuous-time speed ceiling from adjacent aperture measurements: V_cert(h) = |Delta y|/h + 2 epsilon/h + A h/2, assuming each endpoint error is at most epsilon and |x''| <= A throughout the interval. This experiment isolates the **uncertainty surcharge** P(h)=2 epsilon/h + A h/2, in aperture units per second, as a sampling-design law. It is not an estimate of eyelid velocity.
+
+For epsilon>0 and A>0, AM-GM gives P(h) >= 2 sqrt(A epsilon), with equality exactly at h*=2 sqrt(epsilon/A). Thus **arbitrarily increasing the reference frame rate can worsen the certified velocity ceiling** if endpoint position error stays bounded away from zero. At h below h*, the error amplification 2 epsilon/h dominates; above h*, acceleration uncertainty dominates. The dimensionless normalized law is P(h)/sqrt(A epsilon) = z + 1/z where z=h/h*. For a strict admissible velocity-uncertainty budget B, no sampling interval can satisfy P(h)<B when B<=2 sqrt(A epsilon). When B exceeds the floor, intervals must lie strictly between roots of (A/2)h² - B h + 2epsilon = 0. All quantities must be independently bounded in compatible units; epsilon and A may themselves depend on sampling conditions, in which case optimization must be redone.
+
+This does **not** optimize the full certificate V_cert because |Delta y|/h changes with the actual trajectory and h. Nor does it imply that any measured frame rate, aperture error, or acceleration bound is human-validated. A population quantile is not a deterministic A.
+
+## Predeclared falsification / instrument prediction
+On a calibrated moving-aperture phantom with controlled acceleration envelope, preregister an error budget epsilon(h), bound A, timing uncertainty and reference trajectory. For constant epsilon and A, compare rates on both sides of h* and test whether the *computed certified surcharge* has its predicted U-shape and whether any actual reference velocity exceeds V_cert. If the measured epsilon(h) varies, compute the revised envelope prospectively. Inject frame dropouts, rolling-shutter timing, blur, brightness changes and biased aperture estimators; any unbounded nuisance forces abstention. The U-shape of the algebraic surcharge is guaranteed under its assumptions; physical validation instead tests whether those assumptions hold and whether the bound is useful.
+
+## Reproduction and product consequence
+Run `python3 research/observability/e002_624_sampling_design.py` (stdlib only; exact fractions). Example purely synthetic numbers epsilon=0.05 mm, A=10000 mm/s² imply h*=4.472 ms and a minimum surcharge of 44.72 mm/s; h=5 ms gives 45 mm/s. These are NOT physiological estimates. A product must not infer that a faster camera alone certifies an eyelid-speed bound; require validated epsilon(h), A and timing envelopes and strict inequality, otherwise `ABSTAIN_UNCALIBRATED`.
+
+Evidence tier: mathematical design law plus synthetic exact-arithmetic tests; no new human recordings or independent physical validation. The E002-371 physical validation and release gates remain BLOCKED.

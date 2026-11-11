@@ -1,0 +1,67 @@
+name: E002-566 authentic S01 two-rater handoff validation
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_566_authentic_handoff.yml'
+      - 'research/observability/e002_566_authentic_handoff_audit.py'
+      - 'research/observability/test_e002_566_authentic_handoff_audit.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-566-authentic-handoff
+  cancel-in-progress: false
+jobs:
+  authentic-private-handoff:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Eight independent synthetic tampering and privacy adversaries
+        run: python -m unittest discover -s research/observability -p 'test_e002_566_authentic_handoff_audit.py' -v
+      - name: Seven original handoff synthetic controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_502_local_handoff.py' -v
+      - name: Provision native decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+          command -v ffmpeg
+      - name: Privately build and audit two authentic human-source rater packets
+        shell: bash
+        run: |
+          set -euo pipefail
+          WORK="$RUNNER_TEMP/lucent566"
+          mkdir -p "$WORK"
+          chmod 700 "$WORK"
+          REPORT="$WORK/E002_566_AGGREGATE_ONLY.json"
+          printf '{"experiment":"E002-566","status":"FAILED_OR_ABSTAINED","independent_human_raters":0,"physical_clock_authenticated":false,"shutter_calibrated":false,"continuous_time_speed_certified":false,"heldout_physical_predictions":0,"product":"ABSTAIN_UNCALIBRATED","release":"BLOCKED"}\n' > "$REPORT"
+          trap 'rm -rf "$WORK/private" "$WORK/S01.zip"' EXIT
+          curl --fail --location --silent --show-error --retry 2 --retry-delay 8 \
+            --connect-timeout 30 --max-time 900 --max-filesize 600000000 \
+            --output "$WORK/S01.zip" \
+            'https://zenodo.org/records/18970793/files/S01.zip?download=1'
+          python research/observability/e002_502_local_handoff.py \
+            --archive "$WORK/S01.zip" --outdir "$WORK/private"
+          python research/observability/e002_566_authentic_handoff_audit.py \
+            --root "$WORK/private" \
+            --viewer research/observability/e002_497_offline_rater.html \
+            --output "$REPORT"
+      - name: Upload only fixed-key sanitized aggregate
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-566-authentic-handoff-aggregate-only
+          path: ${{ runner.temp }}/lucent566/E002_566_AGGREGATE_ONLY.json
+          if-no-files-found: warn
+          retention-days: 7

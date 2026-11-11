@@ -1,0 +1,20 @@
+name: E002-574 private LPW rater-plan controls
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/e002_574_lpw_plan.py"
+      - "research/observability/test_e002_574_lpw_plan.py"
+      - ".github/workflows/e002_574_lpw_plan.yml"
+  workflow_dispatch:
+jobs:
+  blinded-window-selection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Frozen synthetic selection and adversarial blinding controls
+        run: python -m unittest discover -s research/observability -p "test_e002_574_lpw_plan.py" -v

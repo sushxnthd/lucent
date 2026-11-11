@@ -1,0 +1,40 @@
+name: E002-524 exact reference witness sampling boundary
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_524_reference_sampling.yml'
+      - 'research/observability/e002_524_reference_sampling.py'
+      - 'research/observability/e002_524_independent_replay.cjs'
+      - 'research/observability/test_e002_524_reference_sampling.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_524_reference_sampling.yml'
+      - 'research/observability/e002_524_reference_sampling.py'
+      - 'research/observability/e002_524_independent_replay.cjs'
+      - 'research/observability/test_e002_524_reference_sampling.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-524-reference-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  exact-reference-sampling:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact adversarial phase and provenance tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_524_reference_sampling.py' -v
+      - name: Independent Node.js BigInt phase replay
+        run: node research/observability/e002_524_independent_replay.cjs
+      - name: Reproduce hypothetical instrument design without private data
+        run: |
+          python research/observability/e002_524_reference_sampling.py --output "$RUNNER_TEMP/e002_524.json"
+          python -c 'import json,os; x=json.load(open(os.environ["RUNNER_TEMP"]+"/e002_524.json")); assert x["release"]=="BLOCKED" and x["product"]=="ABSTAIN_UNCALIBRATED" and len(x["cases"])==4'

@@ -1,0 +1,39 @@
+name: E002-438 human-aggregate speed-cap falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_438_*'
+      - 'research/observability/E002_438_*'
+      - 'research/observability/test_e002_438_*'
+      - '.github/workflows/e002_438_human_velocity_witness.yml'
+  workflow_dispatch:
+jobs:
+  falsification-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent adversarial unit tests
+        run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_438_human_velocity_witness.py
+      - name: Reproduce published-aggregate and dimensionless scenarios
+        run: |
+          python research/observability/e002_438_human_velocity_witness.py --output /tmp/e002_438.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('/tmp/e002_438.json').read_text())
+          assert d['experiment']=='E002-438'
+          assert d['physical_certificate_authorized'] is False
+          assert d['product']=='ABSTAIN_UNCALIBRATED'
+          assert d['published_human_aggregate_audit'][0]['decision']=='INCOMPATIBLE_WITH_PUBLISHED_PEAK_MEAN'
+          assert d['published_human_aggregate_audit'][2]['decision']=='NOT_FALSIFIED_BY_THIS_AGGREGATE'
+          assert abs(d['equal_endpoint_scenarios'][1]['conditional_lower_mm']-1.95)<1e-12
+          assert abs(d['equal_endpoint_scenarios'][2]['conditional_lower_mm']-3.975)<1e-12
+          assert all(x['physical_certificate_authorized'] is False for x in d['equal_endpoint_scenarios'])
+          print('PUBLISHED AGGREGATE FALSIFICATION ONLY; NO HUMAN PHYSICAL CERTIFICATE')
+          PY

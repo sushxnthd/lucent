@@ -1,0 +1,50 @@
+name: E002-512 rolling-shutter scanline falsification
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_512_rolling_scanline.py'
+      - 'research/observability/test_e002_512_rolling_scanline.py'
+      - 'research/observability/E002_512_*.md'
+      - '.github/workflows/e002_512_rolling_scanline.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_512_rolling_scanline.py'
+      - 'research/observability/test_e002_512_rolling_scanline.py'
+      - 'research/observability/E002_512_*.md'
+      - '.github/workflows/e002_512_rolling_scanline.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-scanline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen 14 Python adversaries
+        run: python -m unittest -v research/observability/test_e002_512_rolling_scanline.py
+        env:
+          PYTHONPATH: research/observability
+      - name: Independent JavaScript arithmetic (no Python imports)
+        run: |
+          node <<'JS'
+          const P=1/30,w=.010,V=60,eta=1-.999+.001,ell=.0001;
+          const d=Math.sqrt(2*V*w*eta);
+          const expected=[.7489897948556635,.7789897948556636,.8089897948556636];
+          for(const [i,rows] of [0,10,20].entries()){
+            const risk=d+V*(P-w+ell*rows)/2;
+            if(Math.abs(risk-expected[i])>1e-12) throw Error('Independent mismatch '+rows);
+            console.log(rows,risk);
+          }
+          const criticalRows=(2*(.8-d)/V-(P-w))/ell;
+          if(!(criticalRows>17 && criticalRows<18)) throw Error('Critical rows mismatch');
+          console.log('critical_rows',criticalRows);
+          JS
+      - name: Research-only aggregate; no camera/human claims
+        run: python research/observability/e002_512_rolling_scanline.py

@@ -1,0 +1,49 @@
+name: E002-470 integrated aperture surrogate
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - .github/workflows/e002_470_bench.yml
+      - research/observability/e002_470_bench.py
+      - research/observability/test_e002_470_bench.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e002-470-bench-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  frozen-blind-surrogate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Execute actual E002-456 gate with independent aperture oracle
+        run: python -m unittest discover -s research/observability -p 'test_e002_470_bench.py' -v
+      - name: Produce deterministic deidentified synthetic aggregate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/observability/e002_470_bench.py > "$RUNNER_TEMP/E002_470_AGGREGATE.json"
+          python - "$RUNNER_TEMP/E002_470_AGGREGATE.json" <<'PY'
+          import json,sys
+          x=json.load(open(sys.argv[1]))
+          assert x['clean']['total']['false_exclusions']==0
+          assert x['clean']['total']['unexpected_abstentions']==0
+          assert sum(v.get('EXCLUDED_CONDITIONALLY',0)+v.get('NOT_EXCLUDED',0)+v.get('ABSTAIN',0) for v in x['clean']['by_stratum'].values())==12000
+          assert x['nuisance']['abstentions_if_fail_declared']==9
+          assert x['physical_release_authorized'] is False
+          assert x['product_claim']=='ABSTAIN_UNCALIBRATED'
+          print('E002-470: synthetic soundness and nuisance gates verified; physical evidence absent')
+          PY
+      - name: Preserve sanitized aggregate
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-470-synthetic-aggregate
+          path: ${{ runner.temp }}/E002_470_AGGREGATE.json
+          retention-days: 14

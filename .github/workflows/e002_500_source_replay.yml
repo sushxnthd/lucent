@@ -1,0 +1,68 @@
+name: E002-500 S01 human packet source-bound replay
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_500_source_replay.yml'
+      - 'research/observability/e002_500_source_replay.py'
+      - 'research/observability/test_e002_500_source_replay.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_500_source_replay.yml'
+      - 'research/observability/e002_500_source_replay.py'
+      - 'research/observability/test_e002_500_source_replay.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-500-source-replay
+  cancel-in-progress: false
+jobs:
+  provenance-falsification:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Nine synthetic forged-packet and source-binding adversaries
+        run: python -m unittest discover -s research/observability -p 'test_e002_500_source_replay.py' -v
+      - name: Provision native decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+          command -v ffmpeg
+      - name: Authenticate S01 archive and compare all 260 privately re-extracted frames
+        shell: bash
+        run: |
+          set -euo pipefail
+          WORK="$RUNNER_TEMP/lucent500"
+          mkdir -p "$WORK"
+          chmod 700 "$WORK"
+          trap 'rm -rf "$WORK/private" "$WORK/S01.zip"' EXIT
+          printf '{"experiment":"E002-500","status":"FAILED_OR_ABSTAINED","source_replay_verified":false,"product":"ABSTAIN_UNCALIBRATED","release":"BLOCKED"}\n' > "$WORK/E002_500_AGGREGATE.json"
+          curl --fail --location --silent --show-error --retry 2 --retry-delay 8 \
+            --connect-timeout 30 --max-time 900 --max-filesize 600000000 \
+            --output "$WORK/S01.zip" \
+            'https://zenodo.org/records/18970793/files/S01.zip?download=1'
+          python research/observability/e002_492_anatomical_review.py packet \
+            --outdir "$WORK/private" --archive "$WORK/S01.zip"
+          python research/observability/e002_500_source_replay.py \
+            --packet "$WORK/private" --archive "$WORK/S01.zip" \
+            --output "$WORK/E002_500_AGGREGATE.json"
+      - name: Upload only aggregate, never images, hashes or individual ratings
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-500-source-replay-aggregate-only
+          path: ${{ runner.temp }}/lucent500/E002_500_AGGREGATE.json
+          if-no-files-found: warn
+          retention-days: 7

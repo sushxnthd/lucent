@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" role="img" aria-label="E002-439 virtual optical ticks remain fixed while FFmpeg container timestamps double">
+<rect width="900" height="560" fill="#ffffff"/>
+<text x="55" y="50" fill="#0f172a" font-family="Arial,sans-serif" font-size="25" font-weight="700">E002-439 · The optical clock survives retiming</text>
+<text x="55" y="78" fill="#475569" font-family="Arial,sans-serif" font-size="14">12 byte-identical decoded frames · FFV1 / Matroska · synthetic in-frame timecode</text>
+<rect x="284" y="94" width="58" height="352" fill="#fef3c7" opacity=".7"/>
+<line x1="110" x2="748" y1="435" y2="435" stroke="#e2e8f0" stroke-width="1"/><text x="94" y="440" text-anchor="end" fill="#64748b" font-size="13">0</text>
+<line x1="110" x2="748" y1="350" y2="350" stroke="#e2e8f0" stroke-width="1"/><text x="94" y="355" text-anchor="end" fill="#64748b" font-size="13">250</text>
+<line x1="110" x2="748" y1="265" y2="265" stroke="#e2e8f0" stroke-width="1"/><text x="94" y="270" text-anchor="end" fill="#64748b" font-size="13">500</text>
+<line x1="110" x2="748" y1="179.99999999999997" y2="179.99999999999997" stroke="#e2e8f0" stroke-width="1"/><text x="94" y="184.99999999999997" text-anchor="end" fill="#64748b" font-size="13">750</text>
+<line x1="110" x2="748" y1="95" y2="95" stroke="#e2e8f0" stroke-width="1"/><text x="94" y="100" text-anchor="end" fill="#64748b" font-size="13">1000</text>
+<line x1="110" y1="95" x2="110" y2="435" stroke="#64748b" stroke-width="1.4"/>
+<line x1="110" y1="435" x2="748" y2="435" stroke="#64748b" stroke-width="1.4"/>
+<path d="M 110.0 435.0 L 168.0 423.8 L 226.0 412.2 L 284.0 401.0 L 342.0 367.0 L 400.0 355.8 L 458.0 344.2 L 516.0 333.0 L 574.0 299.0 L 632.0 287.8 L 690.0 276.2 L 748.0 265.0" fill="none" stroke="#0f766e" stroke-width="3" stroke-linecap="round"/>
+<path d="M 110.0 435.0 L 168.0 412.6 L 226.0 389.4 L 284.0 367.0 L 342.0 299.0 L 400.0 276.6 L 458.0 253.4 L 516.0 231.0 L 574.0 163.0 L 632.0 140.6 L 690.0 117.4 L 748.0 95.0" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round"/>
+<circle cx="110" cy="435" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="168" cy="423.78" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="226" cy="412.22" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="284" cy="401" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="342" cy="367" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="400" cy="355.78" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="458" cy="344.22" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="516" cy="333" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="574" cy="299" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="632" cy="287.78" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="690" cy="276.22" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<circle cx="748" cy="265" r="4" fill="#0f766e" stroke="white" stroke-width="1.5"/>
+<rect x="106" y="431" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="164" y="408.56" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="222" y="385.44" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="280" y="363" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="338" y="295" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="396" y="272.56" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="454" y="249.44" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="512" y="226.99999999999997" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="570" y="159" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="628" y="136.56" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="686" y="113.44" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<rect x="744" y="91" width="8" height="8" fill="#b45309" stroke="white" stroke-width="1"/>
+<text x="110" y="462" text-anchor="middle" fill="#475569" font-size="12">0</text>
+<text x="168" y="462" text-anchor="middle" fill="#475569" font-size="12">1</text>
+<text x="226" y="462" text-anchor="middle" fill="#475569" font-size="12">2</text>
+<text x="284" y="462" text-anchor="middle" fill="#475569" font-size="12">3</text>
+<text x="342" y="462" text-anchor="middle" fill="#475569" font-size="12">4</text>
+<text x="400" y="462" text-anchor="middle" fill="#475569" font-size="12">5</text>
+<text x="458" y="462" text-anchor="middle" fill="#475569" font-size="12">6</text>
+<text x="516" y="462" text-anchor="middle" fill="#475569" font-size="12">7</text>
+<text x="574" y="462" text-anchor="middle" fill="#475569" font-size="12">8</text>
+<text x="632" y="462" text-anchor="middle" fill="#475569" font-size="12">9</text>
+<text x="690" y="462" text-anchor="middle" fill="#475569" font-size="12">10</text>
+<text x="748" y="462" text-anchor="middle" fill="#475569" font-size="12">11</text>
+<text x="425" y="495" text-anchor="middle" fill="#334155" font-family="Arial,sans-serif" font-size="15">Decoded frame index</text>
+<text x="26" y="270" text-anchor="middle" transform="rotate(-90 26 270)" fill="#334155" font-family="Arial,sans-serif" font-size="15">Time since start (ms)</text>
+<line x1="575" y1="113" x2="604" y2="113" stroke="#0f766e" stroke-width="3"/>
+<text x="613" y="118" font-family="Arial,sans-serif" fill="#0f766e" font-size="13">In-frame optical ticks</text>
+<line x1="575" y1="139" x2="604" y2="139" stroke="#b45309" stroke-width="3"/>
+<text x="613" y="144" font-family="Arial,sans-serif" fill="#92400e" font-size="13">Retimed container PTS ×2</text>
+<text x="313" y="180" text-anchor="middle" font-family="Arial,sans-serif" fill="#92400e" font-size="12">100 ms</text>
+<text x="313" y="195" text-anchor="middle" font-family="Arial,sans-serif" fill="#92400e" font-size="12">gap</text>
+<text x="55" y="533" font-family="Arial,sans-serif" fill="#64748b" font-size="13">Instrument emulation only. No physical clock, shutter measurement or human eyelid certification.</text>
+</svg>

@@ -1,0 +1,29 @@
+name: E002-447 finite-exposure identifiability verification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_447_exposure.yml'
+      - 'research/observability/e002_447_exposure.py'
+      - 'research/observability/test_e002_447_exposure.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  shutter-bound:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install independent numerical oracle
+        run: python -m pip install --disable-pip-version-check numpy==2.2.6 scipy==1.15.3
+      - name: Run 16 adversarial tests including independent LP
+        run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_447_exposure.py' -v
+      - name: Print nonidentifying synthetic aggregate
+        run: python research/observability/e002_447_exposure.py
+      - name: Maintain physical release blocker
+        run: |
+          echo 'E002-447 synthetic shutter-model falsification only. E002-371 human validation NOT ESTABLISHED. ABSTAIN_UNCALIBRATED.' >> "$GITHUB_STEP_SUMMARY"

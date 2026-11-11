@@ -1,0 +1,43 @@
+name: E002-463 independent encoder witness gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_463_encoder_reference.py'
+      - 'research/observability/test_e002_463_encoder_reference.py'
+      - 'research/observability/e002_456_prospective_gate.py'
+      - 'research/observability/e002_462_finite_dwell.py'
+      - '.github/workflows/e002_463_encoder_reference.yml'
+
+jobs:
+  encoder-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run 18 fail-closed adversarial cases
+        run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_463_encoder_reference.py
+      - name: Independently reproduce E002-462 dark-gap witness and E002-463 decision
+        run: node research/observability/e002_463_independent_replay.cjs
+      - name: Generate frozen synthetic-only aggregate
+        run: python research/observability/e002_463_encoder_reference.py > /tmp/e002463.json
+      - name: Verify frozen outcomes and release blocker
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/e002463.json'))
+          assert r['shutter_camera_positive_negative_identical'] is True
+          assert r['closed_world']['joint_falsification'] is True
+          assert r['open_world']['reference']=='REFERENCE_UNRESOLVED'
+          assert r['real_human_measurements']==0
+          assert r['real_physical_encoder_measurements']==0
+          assert r['physical_release_authorized'] is False
+          assert r['closed_world']['product_claim']=='ABSTAIN_UNCALIBRATED'
+          print('Synthetic encoder-positive reference witness verified; physical release BLOCKED.')
+          PY

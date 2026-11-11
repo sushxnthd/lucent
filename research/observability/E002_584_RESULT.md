@@ -1,0 +1,32 @@
+# E002-584 | Verified human-label timing-uncertainty falsification and product consequence
+
+**Executed:** 2026-11-01 UTC. **Kernel:** E002-371. **Frozen before source replay:** [E002_584_FROZEN.md](E002_584_FROZEN.md). **Hosted run:** [Actions #41288546635](https://github.com/sushxnthd/lucent/actions/runs/41288546635), job 124794767596, completed **success**. **Branch:** `research/observability-human-boundary`; PR #26. **Source:** original Silesian5 investigator full-closure labels, nominal 100 fps, five sequences, 58,884 rows, ZIP SHA-256 `a73bf84981b84f626a3cc7b3b3d1962360354740bc6cf3de5d9c92d6d380c223`. No raw human annotations or imagery committed.
+
+## Primary prospective test and results
+
+For each eligible contiguous human-label full-closure event [a,b] and each of ten predeclared nominal 100:30 sampling phases, a **nominal omission** means no retained native-frame index intersects [a,b]. A **robust omission** under hypothetical per-sample index displacement radius j means no nominal retained index intersects [a-j,b+j]. This is an adversarial uncertainty-set statement about point samples, not a measurement of physical-camera jitter, rolling shutters or actual exposure.
+
+| Endpoint | Eligible runs | j=0 robust omitted event-phases | j=1 | j=2 | Nominal witnesses losing j=1 guarantee |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Both eyes investigator-labeled fully closed | 279 | **105** | **4** | **0** | **101/105 = 96.19%** |
+| Either eye investigator-labeled fully closed | 288 | **97** | **3** | **0** | **94/97 = 96.91%** |
+
+**All frozen numerical predictions were confirmed**. The j=1 robust binocular omissions by phase 0..9 were [0,2,0,1,1,0,0,0,0,0]; either-eye [0,1,1,1,0,0,0,0,0,0]. All j=2 robust omission counts were zero. The j=0 phase vectors exactly reproduced E002-583: binocular [16,9,10,10,12,8,12,12,7,9], either-eye [13,9,11,7,8,10,13,8,7,11]. Per-sequence binocular j=1 counts were [1,1,1,1,0], in anonymized source-sequence order.
+
+The independent Node.js implementation, using modular-index arithmetic and its own archive parser, reproduced the same aggregate counts and 58,884 source rows: binocular robust [105,4,0], either-eye [97,3,0]. Ten prospective synthetic adversarial fixture groups passed. The Python executable and Node.js replay are [e002_584_timing_robustness.py](e002_584_timing_robustness.py) and [e002_584_independent_replay.cjs](e002_584_independent_replay.cjs). Full machine-readable results, including phase vectors and permissive upper bounds, are in [E002_584_AGGREGATE.json](E002_584_AGGREGATE.json).
+
+## Interpretation: exact index geometry, not physical detection
+
+The repeating nominal intersample gaps are 3,3,4 high-rate frame indices. With j=1, only a single native index at the center of a four-index gap can lie outside all sample uncertainty neighborhoods; therefore only one-frame positive runs at those positions can be **guaranteed omitted**. With j=2 every native index is within at least one nominal sample's uncertainty neighborhood, so no positive run is guaranteed omitted. The observed 4/3 j=1 robust witnesses exactly match the previously frozen one-frame-event predictions.
+
+The *possible omission* totals (binocular j=1: 508, j=2: 1363; either-eye j=1: 508, j=2: 1371) are loose permissive independent-sample uncertainty bounds, **not physically realizable synchronized-camera schedules**, and must never be interpreted as predicted misses. The large gap between possible and guaranteed omissions is an identifiability interval, not a statistical confidence interval. Ten phases are deterministic shifts of the same five sequences; they are not independent subjects, randomized trials, or an estimate of population risk.
+
+**Scientific falsification:** A headline such as "105 binocular closures are guaranteed invisible at 30 fps" is false once a hypothetical ±1 native-frame sampling uncertainty is allowed: only four event-phase witnesses remain guaranteed under that model. This does not erase the 105 nominal point-index omissions, and it does not mean a physical camera would see the other 101 events. Actual timestamp error was **not measured**. No continuous-time anatomical velocity ceiling, physical shutter/exposure transfer function, independent anatomical rater pair, or held-out physical closure prediction has been verified.
+
+## Product decision and preregistered physical validation handoff
+
+**Release consequence:** reject any product rule that converts a nominal point-index alias into a certified physical blink miss without a separately measured sampling-time uncertainty set and shutter model. Require an explicit acquisition-calibration state; when it is absent, return `ABSTAIN_UNCALIBRATED`. Do not present these event-phase fractions as blink-detection sensitivity, sleepiness, fatigue, or health-performance measurements. Production remains `BLOCKED`.
+
+**Next decisive human study (design, not executed):** use synchronized high-speed eyelid imaging and an ordinary-rate camera viewing the same consenting participants, plus an independently timed optical LED or photodiode calibration channel for start/end exposure and row timing. Record actual timestamp uncertainties, dropped frames, rolling shutter, brightness/exposure, gaze, geometry, glasses and blur. Have at least two blinded raters independently label native-rate eyelid aperture/closure with disagreement adjudication; freeze participant-level train/calibration/held-out splits and an independently derived upper bound on aperture velocity (including uncertainty). For each held-out ordinary-rate shutter gap, prospectively output `CERTIFIED_NO_HIDDEN_CLOSURE`, `POSSIBLE_HIDDEN_CLOSURE`, or `ABSTAIN` from the E002-371 inequality **before revealing** the high-rate labels. Report false certifications, coverage, calibration error, subject-stratified nuisance breakdowns and exact timestamp/shutter uncertainties. A single false `CERTIFIED_NO_HIDDEN_CLOSURE` against adjudicated high-rate closure under certified premises falsifies the deployed bound or its measurement premises; missing velocity/timing certificates mandate abstention. Ethics/consent and privacy review precede capture.
+
+**Evidence tier:** `HUMAN_INVESTIGATOR_FC_INDEX_TIMING_SENSITIVITY_ONLY`. **Physical-camera claim:** none. **Independent anatomical rater pairs:** zero. **Physically calibrated shutter trials:** zero. **Certified continuous-time velocity ceilings:** zero. **Held-out physical predictions:** zero.

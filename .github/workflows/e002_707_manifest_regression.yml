@@ -1,0 +1,21 @@
+name: E002-707 strict manifest regression
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_707_strict_manifest.py'
+      - 'research/observability/test_e002_707_strict_manifest.py'
+      - '.github/workflows/e002_707_manifest_regression.yml'
+  workflow_dispatch:
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run fail-closed manifest regression
+        working-directory: research/observability
+        run: python -m unittest -v test_e002_707_strict_manifest.py

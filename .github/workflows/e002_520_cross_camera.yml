@@ -1,0 +1,20 @@
+name: E002-520 cross-camera predicate transport falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_520_cross_camera.py'
+      - 'research/observability/test_e002_520_cross_camera.py'
+      - '.github/workflows/e002_520_cross_camera.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Adversarial witness-transport controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_520_cross_camera.py' -v

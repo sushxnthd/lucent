@@ -1,0 +1,28 @@
+name: E002-616 bilateral human FC virtual alias
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_616_bilateral_alias.py
+      - research/observability/e002_616_independent.cjs
+      - research/observability/E002_616_FROZEN.md
+      - .github/workflows/e002-616-bilateral-alias.yml
+jobs:
+  bilateral-source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen synthetic adversarial controls
+        run: python research/observability/e002_616_bilateral_alias.py
+      - name: Independent JavaScript phase and nuisance oracle
+        run: node research/observability/e002_616_independent.cjs
+      - name: Published human source bilateral FC aggregate
+        run: python research/observability/e002_616_bilateral_alias.py --source

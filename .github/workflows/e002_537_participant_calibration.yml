@@ -1,0 +1,26 @@
+name: E002-537 participant-level calibration falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_537_*'
+      - 'research/observability/test_e002_537_*'
+      - '.github/workflows/e002_537_participant_calibration.yml'
+  workflow_dispatch:
+jobs:
+  participant-calibration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Pin synthetic numerical environment
+        run: python -m pip install numpy==2.3.5
+      - name: Adversarial tests
+        working-directory: research/observability
+        run: python -m unittest -v test_e002_537_participant_calibration.py
+      - name: Frozen simulation with assertions
+        working-directory: research/observability
+        run: python e002_537_participant_calibration.py

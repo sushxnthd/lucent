@@ -1,0 +1,27 @@
+name: E002-546 reference-camera aliasing falsifier
+
+on:
+  pull_request:
+    paths:
+      - 'research/observability/e002_546_reference_alias.py'
+      - 'research/observability/e002_546_independent.cjs'
+      - 'research/observability/E002_546_*.md'
+      - '.github/workflows/e002-546-reference-alias.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  independent-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact Python model and adversarial phases
+        run: python research/observability/e002_546_reference_alias.py --self-test
+      - name: Independent Node.js oracle
+        run: node research/observability/e002_546_independent.cjs

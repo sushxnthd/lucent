@@ -1,0 +1,27 @@
+name: E002-592 sensor-transfer falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_592_*'
+      - 'research/observability/e002_592_*'
+      - '.github/workflows/e002_592_sensor_transfer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-sensor-transfer-independent-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exact-rational Python transfer and nuisance controls
+        run: python research/observability/e002_592_sensor_transfer.py
+      - name: Independent Node BigInt replay
+        run: node research/observability/e002_592_independent_replay.cjs

@@ -1,0 +1,47 @@
+name: E002-529 speed-vs-dwell falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_529_*'
+      - 'research/observability/test_e002_529_*'
+      - '.github/workflows/e002_529_speed_dwell.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_529_*'
+      - 'research/observability/test_e002_529_*'
+      - '.github/workflows/e002_529_speed_dwell.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python adversarial construction and held-out controls
+        run: python -m unittest -v research/observability/test_e002_529_dwell_counterexample.py
+      - name: Independent Node BigInt replay
+        run: node research/observability/e002_529_independent_replay.cjs
+      - name: Research-only JSON CLI
+        run: |
+          python research/observability/e002_529_dwell_counterexample.py > /tmp/e002_529.json
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/e002_529.json'))
+          assert p['trajectory_valid'] is True
+          assert p['240hz_full']['exact']=='0'
+          assert p['240hz_overlap']['exact']=='33/125'
+          assert p['invalid_240hz_excursion_substitution_full']['exact']=='1'
+          assert p['human_anatomical_raters']==0
+          assert p['product']=='ABSTAIN_UNCALIBRATED'
+          assert p['release']=='BLOCKED'
+          print('E002-529 fail-closed CLI verified')
+          PY

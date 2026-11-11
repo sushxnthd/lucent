@@ -1,0 +1,38 @@
+name: E002-503 iris-reference common-mode falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_503_iris_scale.yml'
+      - 'research/observability/e002_503_iris_scale_falsifier.py'
+      - 'research/observability/test_e002_503_iris_scale_falsifier.py'
+      - 'research/observability/e002_492_anatomical_review.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_503_iris_scale.yml'
+      - 'research/observability/e002_503_iris_scale_falsifier.py'
+      - 'research/observability/test_e002_503_iris_scale_falsifier.py'
+      - 'research/observability/e002_492_anatomical_review.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-503-iris-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  frozen-synthetic-measurement-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile experiment and adversarial tests
+        run: python -m py_compile research/observability/e002_503_iris_scale_falsifier.py research/observability/test_e002_503_iris_scale_falsifier.py
+      - name: Eight independent adversarial test groups
+        run: python -m unittest discover -s research/observability -p 'test_e002_503_iris_scale_falsifier.py' -v
+      - name: Execute frozen synthetic experiment against actual adjudicator
+        run: python research/observability/e002_503_iris_scale_falsifier.py

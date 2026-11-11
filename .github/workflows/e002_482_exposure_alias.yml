@@ -1,0 +1,23 @@
+name: E002-482 exposure alias synthetic witness
+on:
+  push:
+    paths:
+      - 'research/observability/e002_482_exposure_alias.cjs'
+      - 'research/observability/test_e002_482_exposure_alias.cjs'
+      - 'research/observability/E002_482_AGGREGATE.json'
+      - '.github/workflows/e002_482_exposure_alias.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Adversarial tests
+        run: node --test research/observability/test_e002_482_exposure_alias.cjs
+      - name: Reproduce deterministic aggregate
+        run: |
+          node research/observability/e002_482_exposure_alias.cjs > /tmp/e002_482.json
+          diff -u research/observability/E002_482_AGGREGATE.json /tmp/e002_482.json
