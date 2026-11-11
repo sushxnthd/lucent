@@ -6,7 +6,7 @@
 
 E002-744 and E002-747 correctly define a zero-error one-sided upper bound `1 - 0.05**(1/n)` **only under independent Bernoulli validation units**. Consecutive intervals from one participant, camera session, or shutter program are not automatically independent. Reusing interval count `n` as though it were the number of independent participants can severely understate uncertainty.
 
-Construct 100 intervals in one session with perfectly shared failure indicator `Z ~ Bernoulli(p)`. Every interval's error indicator equals Z. If all 100 intervals show no error, their joint probability is `1-p`, not `(1-p)^100`. Thus the exact 95% upper confidence limit for p is 0.95, whereas the invalid interval-iid calculation reports `1-0.05^(1/100) = 0.029513...`. The latter has only 2.9513% coverage at p=0.95 under this data-generating process, not 95%.
+Construct 100 intervals in one session with perfectly shared failure indicator `Z ~ Bernoulli(p)`. Every interval's error indicator equals Z. If all 100 intervals show no error, their joint probability is `1-p`, not `(1-p)^100`. Thus the exact 95% upper confidence limit for p is 0.95, whereas the invalid interval-iid calculation reports `1-0.05^(1/100) = 0.029513...`. For example, at p=0.50 the zero-error dataset occurs with probability 0.50 and reports an upper limit below the true p. Therefore any interval-iid procedure that reports that limit on zero errors has at most 50% coverage at p=0.50 under this model, not 95%.
 
 ## Frozen correction to prospective validation
 
