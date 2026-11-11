@@ -1,5 +1,16 @@
 # Research Activity
 
+Updated: 2026-11-11 (UTC)
+
+- Active research branch: `research/observability-human-boundary`
+- Active draft PR: #26
+- Latest durable research commit: `48dd33ed99161701cdb85485021aec326d0478ff`
+- Evidence: E002-742 executed three frozen-seed synthetic shutter-gap stress tests (30,000 simulated paths). Naive nominal-timestamp/uncertified-velocity exclusion made 6,522 false exclusions; conservative synthetic hard-bound exclusion made zero under its imposed assumptions and abstained on 23,409 paths. No physical/human validation or certified physiological ceiling.
+- Product: `ABSTAIN_UNCALIBRATED`; production `BLOCKED`.
+- This checkpoint is activity only, not validation or release approval.
+
+## Prior checkpoint
+
 Updated: 2026-11-10 (UTC)
 
 - Active research branch: `research/observability-human-boundary`
