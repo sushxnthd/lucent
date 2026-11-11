@@ -8,9 +8,9 @@ Can 10,000 repeated short-closure injections establish reference-detector sensit
 
 ## Frozen exact experiment
 
-Use an ideal point detector sampling every 100 integer ticks. Inject a complete closure lasting 25 ticks, with its onset phase determined by an integer offset. A sample landing inside the closure detects it; all other samples miss it. Repeat 10,000 events. Compare event-to-event phase increments 100 (locked), 37 (coprime phase walk), and 25 (four-phase orbit). Exhaustively enumerate all 100 initial phases, with exact integer arithmetic and assertions in `e002_754_phase_lock.py`.
+Use an ideal point detector sampling every 100 integer ticks. Inject a complete closure lasting 25 ticks, with its onset phase determined by an integer offset. A sample landing inside the closure detects it; all other samples miss it. Repeat 10,000 events. Compare event-to-event phase increments 100 (locked), 37 (coprime phase walk), and 50 (two-phase orbit). Exhaustively enumerate all 100 initial phases, with exact integer arithmetic and assertions in `e002_754_phase_lock.py`.
 
-**Predictions:** locked phase: 75/100 initial phases yield zero detections over 10,000 injections, while 25/100 yield 10,000 detections. Coprime phase walk: all 100 initial phases yield exactly 2,500 detections. Four-phase orbit: the pulse can be entirely missed or entirely detected depending on initial phase (boundary convention as coded).
+**Predictions:** locked phase: 75/100 initial phases yield zero detections over 10,000 injections, while 25/100 yield 10,000 detections. Coprime phase walk: all 100 initial phases yield exactly 2,500 detections. Two-phase orbit: the pulse can be entirely missed or detected in 5,000 of 10,000 trials depending on initial phase (boundary convention as coded).
 
 This is a discrete mathematical instrument model. It does not imply the same numbers for a real photodiode, finite exposure, noise, jitter, or human eyelids.
 
