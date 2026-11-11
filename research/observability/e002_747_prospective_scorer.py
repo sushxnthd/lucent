@@ -24,7 +24,7 @@ def score(rows):
         l0,l1,v,d=vals
         # A physical timing interval of zero needs a separate point-observation model.
         exclude = d>0 and v>0 and l0+l1>v*d
-        for name in ("ALL",row["condition"]):
+        for name in ("ALL",) if row["condition"]=="ALL" else ("ALL",row["condition"]):
             g=groups[name];g["total"]+=1
             if truth=="UNCERTAIN": g["uncertain"]+=1
             if exclude:
@@ -40,7 +40,9 @@ def score(rows):
 
 def evaluate(rows):
     buckets=defaultdict(list)
-    for r in rows: buckets["ALL"].append(r);buckets[r["condition"]].append(r)
+    for r in rows:
+        buckets["ALL"].append(r)
+        if r["condition"] != "ALL": buckets[r["condition"]].append(r)
     result={}
     for name,subset in buckets.items():
         g=score(subset)["ALL"]
