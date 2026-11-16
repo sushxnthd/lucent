@@ -4,6 +4,19 @@ Updated: 2026-11-16 (UTC)
 
 - Active research branch: `research/observability-human-boundary`
 - Active draft PR: #26
+- Latest durable research/product commit: `73e719b79f3a25f8e5a4f0cd537e2f3dbd523c40`
+- Evidence/product consequence: documented offline alpha onboarding, Node smoke-test invocation, claim boundaries, privacy/failure behavior, device acceptance protocol and explicit release blockers. This is packaging documentation, not an executed browser test, calibrated physiological evidence, or tagged release.
+- E002-371 remains unvalidated on independently calibrated human eyelid and shutter measurements; camera-derived fatigue inference disabled.
+- Activity checkpoint only, not release approval.
+
+## Prior checkpoint
+
+# Research Activity
+
+Updated: 2026-11-16 (UTC)
+
+- Active research branch: `research/observability-human-boundary`
+- Active draft PR: #26
 - Latest durable research/product commit: `31d4ebfc57bd27cd9b5a153b67eea9bbc816df12`
 - Evidence/product consequence: added a standalone local-only five-trial response-time demonstration with median latency, early-tap retry, visibility/focus interruption invalidation, no persistent data or camera access, and explicit non-diagnostic claim boundary. Code committed; no browser/device acceptance testing or tagged release verified.
 - E002-371 physiological shutter-gap validation remains outstanding; camera-derived fatigue and hidden-closure claims remain `ABSTAIN_UNCALIBRATED`. This demo is not a shipped end-to-end fatigue product.
