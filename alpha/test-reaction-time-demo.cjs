@@ -43,3 +43,35 @@ function finish(h){h.e('start').click();for(let i=0;i<5;i++){h.advance(4100);ass
  assert.equal(h.e('export').disabled,true);
 }
 console.log('PASS: completion/export/reset, early-tap blur, visibility interruption, delayed-response invalidation');
+
+{
+ const h=harness();
+ h.e('start').click();
+ h.e('reset').click();
+ h.advance(20000);
+ assert.equal(h.e('target').disabled,true,'reset must cancel pending stimulus');
+ assert.equal(h.e('export').disabled,true,'reset must not expose incomplete data');
+ assert.match(h.e('status').textContent,/Press Start/);
+}
+{
+ const h=harness();
+ h.e('self').value='10';
+ h.e('start').click();
+ assert.match(h.e('status').textContent,/valid self-report/);
+ assert.equal(h.e('target').disabled,true,'invalid self-report must not arm timer');
+ h.e('self').value='1';
+ h.e('start').click();
+ h.advance(4100);
+ assert.equal(h.e('target').disabled,false,'valid self-report should arm');
+}
+{
+ const h=harness();
+ h.e('start').click();
+ h.advance(4100);
+ h.e('target').click();
+ h.e('reset').click();
+ h.advance(10000);
+ assert.equal(h.e('export').disabled,true,'partial-session reset must prevent export');
+ assert.match(h.e('status').textContent,/Press Start/);
+}
+console.log('PASS: reset cancels timers, self-report bounds, partial-session export abstention');
