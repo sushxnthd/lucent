@@ -5,24 +5,27 @@
 <h1>Lucent: reaction-time demo</h1>
 <p>This local-only, experimental response-time task is not a fatigue, sleepiness, or medical test. It does not use the camera or infer eyelid closure. Results are affected by device, attention, input latency, and practice.</p>
 <p id="status" role="status" aria-live="polite">Press Start to begin five trials. Wait until the panel turns green, then tap it as quickly as possible.</p>
+<label for="self">Current self-reported sleepiness (1 = very alert, 9 = very sleepy)</label>
+<select id="self" aria-label="Self-reported sleepiness"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select>
+<p><small>This is a personal self-report, not an independently validated fatigue measurement. Do not use this demo for safety-critical decisions.</small></p>
 <button id="start">Start five trials</button><button id="reset">Clear results</button>
 <button id="target" disabled>Waiting to start</button>
 <p id="result"></p><small>No recordings, accounts, network requests, or persistent storage. Closing this page discards results. Keyboard: Space or Enter on the panel.</small>
 <script>
 (()=>{'use strict';
-const start=document.querySelector('#start'),reset=document.querySelector('#reset'),target=document.querySelector('#target'),status=document.querySelector('#status'),result=document.querySelector('#result');
-let state='idle',timer=null,readyAt=0,trial=0,values=[];
+const start=document.querySelector('#start'),reset=document.querySelector('#reset'),target=document.querySelector('#target'),status=document.querySelector('#status'),result=document.querySelector('#result'),self=document.querySelector('#self');
+let state='idle',timer=null,readyAt=0,trial=0,values=[],reported=null;
 function clear(){if(timer!==null)clearTimeout(timer);timer=null}
 function panel(text,cls,enabled){target.textContent=text;target.className=cls;target.disabled=!enabled}
-function idle(){clear();state='idle';trial=0;values=[];start.disabled=false;panel('Waiting to start','',false);status.textContent='Press Start to begin five trials.';result.textContent=''}
+function idle(){clear();state='idle';trial=0;values=[];reported=null;self.disabled=false;start.disabled=false;panel('Waiting to start','',false);status.textContent='Press Start to begin five trials.';result.textContent=''}
 function arm(){clear();state='waiting';status.textContent='Trial '+(trial+1)+' of 5: wait for green.';panel('Wait…','wait',true);timer=setTimeout(()=>{timer=null;readyAt=performance.now();state='ready';panel('TAP NOW','ready',true)},1500+Math.random()*2500)}
 function respond(){if(state==='waiting'){clear();status.textContent='Early tap. This trial will restart.';state='early';panel('Too early','',false);timer=setTimeout(arm,900);return}
 if(state!=='ready')return;
 const elapsed=Math.round(performance.now()-readyAt);values.push(elapsed);trial++;state='done';panel('Recorded: '+elapsed+' ms','',false);
-if(trial===5){const sorted=[...values].sort((a,b)=>a-b);status.textContent='Five trials complete.';result.textContent='Median input response: '+sorted[2]+' ms. Trials: '+values.join(', ')+' ms. This is an uncalibrated device-specific task, not a clinical score.';start.disabled=false;return}
+if(trial===5){const sorted=[...values].sort((a,b)=>a-b);status.textContent='Five trials complete.';result.textContent='Self-reported sleepiness: '+reported+'/9. Median input response: '+sorted[2]+' ms. Trials: '+values.join(', ')+' ms. No fatigue classification is produced. If you feel sleepy, consider resting and avoid safety-critical activity. This uncalibrated task is not a clinical score.';start.disabled=false;return}
 status.textContent='Recorded '+elapsed+' ms. Next trial starting.';timer=setTimeout(arm,850)}
-start.addEventListener('click',()=>{idle();start.disabled=true;arm()});reset.addEventListener('click',idle);target.addEventListener('click',respond);
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&state!=='idle'&&state!=='done'){clear();state='paused';start.disabled=false;panel('Interrupted','',false);status.textContent='Session interrupted by page visibility change. Restart to avoid invalid timing.'}});
+start.addEventListener('click',()=>{const selected=Number(self.value);if(!Number.isInteger(selected)||selected<1||selected>9){status.textContent='Choose a valid self-report value from 1 to 9.';return}idle();reported=selected;self.disabled=true;start.disabled=true;arm()});reset.addEventListener('click',idle);target.addEventListener('click',respond);
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&state!=='idle'&&state!=='done'){clear();state='paused';start.disabled=false;self.disabled=false;panel('Interrupted','',false);status.textContent='Session interrupted by page visibility change. Restart to avoid invalid timing.'}});
 window.addEventListener('blur',()=>{if(state==='ready'||state==='waiting'){clear();state='paused';start.disabled=false;panel('Interrupted','',false);status.textContent='Focus lost. Restart the task.'}});
 })();
 </script></html>
