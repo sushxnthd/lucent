@@ -1,5 +1,18 @@
 # Research Activity
 
+Updated: 2026-11-16 (UTC)
+
+- Active research branch: `research/observability-human-boundary`
+- Active draft PR: #26
+- Latest durable research/product commit: `31d4ebfc57bd27cd9b5a153b67eea9bbc816df12`
+- Evidence/product consequence: added a standalone local-only five-trial response-time demonstration with median latency, early-tap retry, visibility/focus interruption invalidation, no persistent data or camera access, and explicit non-diagnostic claim boundary. Code committed; no browser/device acceptance testing or tagged release verified.
+- E002-371 physiological shutter-gap validation remains outstanding; camera-derived fatigue and hidden-closure claims remain `ABSTAIN_UNCALIBRATED`. This demo is not a shipped end-to-end fatigue product.
+- Activity checkpoint only, not scientific validation or release approval.
+
+## Prior checkpoint
+
+# Research Activity
+
 Updated: 2026-11-11 (UTC)
 
 - Active research branch: `research/observability-human-boundary`
