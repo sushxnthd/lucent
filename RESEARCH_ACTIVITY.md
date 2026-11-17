@@ -1,5 +1,18 @@
 # Research Activity
 
+Updated: 2026-11-17 (UTC)
+
+- Active research branch: `research/observability-human-boundary`
+- Active draft PR: #26
+- Latest durable product-testing commit: `87a1c78efb4249867a3b131a712f1f92745d2c27`
+- Evidence/product consequence: added a GitHub Actions workflow to run the existing dependency-free reaction-time behavioral regression on research-branch pushes and relevant pull requests using Node.js 22. Workflow configuration is pushed; successful execution has not yet been verified. This is test infrastructure, not browser/device validation.
+- E002-371 independently calibrated human eyelid-velocity and shutter-timing validation remains outstanding. Camera-derived fatigue claims remain disabled; alpha not tagged or released.
+- Activity checkpoint only, not scientific validation or release approval.
+
+## Prior checkpoint
+
+# Research Activity
+
 Updated: 2026-11-16 (UTC)
 
 - Active research branch: `research/observability-human-boundary`
