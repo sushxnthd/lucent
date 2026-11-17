@@ -45,11 +45,14 @@ def run():
         threshold=0.
         gap=steps/100.
         speed=1.0 # per-step max 0.01 mm
-        # Most pairs cannot close; deliberately include feasible near threshold
+        # Many endpoint pairs violate the velocity bound and return None; the\n        # lattice solver returns False for both infeasible endpoint pairs and\n        # valid endpoint pairs that cannot reach closure. Compare predicates.
         a=analytical(left,right,threshold,gap,speed)
         b=grid_reachable(left,right,threshold,gap,speed,steps,100)
-        assert a==b,(left,right,a,b)
+        assert (a is True)==b,(left,right,a,b)
         n+=1
+    # Endpoint inconsistency is a distinct three-valued analytical outcome.
+    assert analytical(1.0,1.7,0,.4,1) is None
+    assert grid_reachable(1.0,1.7,0,.4,1,40,100) is False
     # Construct a sharp equality case and a one-step-below case.
     assert analytical(.2,.2,0,.4,1) is True
     assert grid_reachable(.2,.2,0,.4,1,40,100) is True
@@ -61,6 +64,6 @@ def run():
         return l_lo+r_lo-2*threshold > speed_hi*gap_hi
     assert conservative_no_closure(2.8,2.8,1/30+.001,100)
     assert not conservative_no_closure(2.8,2.8,1/30+.001,200)
-    print("PASS: 200 seeded lattice comparisons, 2 sharp-edge tests, 2 uncertainty abstention tests")
+    print("PASS: 200 seeded lattice feasibility comparisons, endpoint-inconsistency check, 2 sharp-edge tests, 2 uncertainty abstention tests")
     print("EVIDENCE: discrete synthetic verification only; no human/physical validation")
 if __name__=="__main__": run()
