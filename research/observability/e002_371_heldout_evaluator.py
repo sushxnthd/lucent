@@ -12,6 +12,7 @@ Reference labels must be from high-frame-rate adjudication, not interpolation.
 import argparse
 import csv
 import json
+import math
 from collections import Counter
 
 FIELDS = ("left_low_mm left_high_mm right_low_mm right_high_mm "
@@ -23,6 +24,8 @@ def classify(r):
         a,b,c,d,e,f,t0,t1,v0,v1 = (float(r[k]) for k in FIELDS)
     except (KeyError,ValueError) as exc:
         return "INVALID",str(exc)
+    if not all(math.isfinite(x) for x in (a,b,c,d,e,f,t0,t1,v0,v1)):
+        return "INVALID","nonfinite measurement or uncertainty bound"
     if not (0<=a<=b and 0<=c<=d and 0<=e<=f and
             0<t0<=t1 and 0<v0<=v1):
         return "INVALID","invalid intervals or nonpositive gap/speed"
@@ -39,6 +42,7 @@ def classify(r):
 def evaluate(rows):
     counts=Counter()
     false_exclusions=[]
+    unadjudicated_exclusions=[]
     subjects={}
     for n,r in enumerate(rows,2):
         key=(r.get("subject_id"),r.get("split"))
@@ -53,6 +57,8 @@ def evaluate(rows):
         if verdict=="INVALID": raise ValueError(f"line {n}: {reason}")
         if r.get("reference_quality_ok")!="1":
             counts["UNADJUDICATED"]+=1
+            if verdict=="EXCLUDE":
+                unadjudicated_exclusions.append({"line":n,"sequence_id":r.get("sequence_id")})
             continue
         label=r.get("reference_hidden_closure")
         if label not in ("0","1"): raise ValueError(f"line {n}: invalid reference label")
@@ -60,7 +66,8 @@ def evaluate(rows):
             false_exclusions.append({"line":n,"sequence_id":r.get("sequence_id")})
     return {"tier":"held-out evaluation; validity depends on independently verified inputs",
             "heldout_decisions":dict(counts),"false_exclusions":false_exclusions,
-            "release_gate":"FAIL" if false_exclusions else "NOT_VALIDATED_BY_ZERO_ERRORS",
+            "unadjudicated_exclusions":unadjudicated_exclusions,
+            "release_gate":"FAIL" if false_exclusions else ("BLOCKED_UNADJUDICATED" if unadjudicated_exclusions else "NOT_VALIDATED_BY_ZERO_ERRORS"),
             "limitations":"Zero observed failures is not a certified physiological speed bound; adjudication and calibration provenance require external audit."}
 
 def selftest():
@@ -71,15 +78,21 @@ def selftest():
     base["gap_high_s"]="0.01"
     base["left_low_mm"]="-1"
     assert classify(base)[0]=="INVALID"
+    for bad in ("nan","inf","-inf"):
+        base["left_low_mm"]=bad
+        assert classify(base)[0]=="INVALID"
     row=dict(zip(FIELDS,["2","2","2","2","0","0","0.01","0.01","100","100"]))
     row.update(subject_id="A",split="heldout",sequence_id="s1",
                reference_hidden_closure="1",reference_quality_ok="1")
     assert len(evaluate([row])["false_exclusions"])==1
+    missing=dict(row,reference_quality_ok="0")
+    assert evaluate([missing])["release_gate"]=="BLOCKED_UNADJUDICATED"
+    assert len(evaluate([missing])["unadjudicated_exclusions"])==1
     assert evaluate([dict(row,reference_hidden_closure="0")])["release_gate"]=="NOT_VALIDATED_BY_ZERO_ERRORS"
     try: evaluate([row,dict(row,split="calibration")])
     except ValueError: pass
     else: raise AssertionError("subject leakage undetected")
-    print("PASS: 6 protocol checks (synthetic fixtures, not human validation)")
+    print("PASS: protocol checks including nonfinite and unadjudicated exclusion (synthetic fixtures, not human validation)")
 
 if __name__=="__main__":
     p=argparse.ArgumentParser()
