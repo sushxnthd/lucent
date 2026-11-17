@@ -44,6 +44,8 @@ def evaluate(rows):
     false_exclusions=[]
     unadjudicated_exclusions=[]
     subjects={}
+    seen=set()
+    split_counts=Counter()
     for n,r in enumerate(rows,2):
         key=(r.get("subject_id"),r.get("split"))
         if not all(key) or r.get("split") not in ("calibration","heldout"):
@@ -51,6 +53,14 @@ def evaluate(rows):
         if key[0] in subjects and subjects[key[0]]!=key[1]:
             raise ValueError(f"line {n}: subject leakage across splits")
         subjects[key[0]]=key[1]
+        sequence_id=r.get("sequence_id")
+        if not sequence_id or not sequence_id.strip() or not key[0].strip():
+            raise ValueError(f"line {n}: blank subject or sequence identity")
+        identity=(key[0],sequence_id)
+        if identity in seen:
+            raise ValueError(f"line {n}: duplicate subject/sequence observation")
+        seen.add(identity)
+        split_counts[key[1]]+=1
         if r.get("split")!="heldout": continue
         verdict,reason=classify(r)
         counts[verdict]+=1
@@ -64,6 +74,8 @@ def evaluate(rows):
         if label not in ("0","1"): raise ValueError(f"line {n}: invalid reference label")
         if verdict=="EXCLUDE" and label=="1":
             false_exclusions.append({"line":n,"sequence_id":r.get("sequence_id")})
+    if not split_counts["calibration"] or not split_counts["heldout"]:
+        raise ValueError("both calibration and heldout records are required")
     return {"tier":"held-out evaluation; validity depends on independently verified inputs",
             "heldout_decisions":dict(counts),"false_exclusions":false_exclusions,
             "unadjudicated_exclusions":unadjudicated_exclusions,
@@ -84,11 +96,16 @@ def selftest():
     row=dict(zip(FIELDS,["2","2","2","2","0","0","0.01","0.01","100","100"]))
     row.update(subject_id="A",split="heldout",sequence_id="s1",
                reference_hidden_closure="1",reference_quality_ok="1")
-    assert len(evaluate([row])["false_exclusions"])==1
+    cal=dict(row,subject_id="B",split="calibration",sequence_id="cal1")
+    assert len(evaluate([cal,row])["false_exclusions"])==1
     missing=dict(row,reference_quality_ok="0")
-    assert evaluate([missing])["release_gate"]=="BLOCKED_UNADJUDICATED"
-    assert len(evaluate([missing])["unadjudicated_exclusions"])==1
-    assert evaluate([dict(row,reference_hidden_closure="0")])["release_gate"]=="NOT_VALIDATED_BY_ZERO_ERRORS"
+    assert evaluate([cal,missing])["release_gate"]=="BLOCKED_UNADJUDICATED"
+    assert len(evaluate([cal,missing])["unadjudicated_exclusions"])==1
+    assert evaluate([cal,dict(row,reference_hidden_closure="0")])["release_gate"]=="NOT_VALIDATED_BY_ZERO_ERRORS"
+    for invalid_rows in ([row],[cal],[cal,row,dict(row)],[cal,dict(row,sequence_id=" ")],[cal,dict(row,subject_id=" ")]):
+        try: evaluate(invalid_rows)
+        except ValueError: pass
+        else: raise AssertionError("invalid study partition or identity accepted")
     try: evaluate([row,dict(row,split="calibration")])
     except ValueError: pass
     else: raise AssertionError("subject leakage undetected")
