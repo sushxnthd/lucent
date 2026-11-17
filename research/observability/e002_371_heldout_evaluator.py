@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """E002-371 preregistered held-out CSV evaluator. Not evidence without real input.
 
-CSV columns: subject_id,split,sequence_id,left_low_mm,left_high_mm,
+CSV columns: subject_id,split,sequence_id,gap_id,left_low_mm,left_high_mm,
 right_low_mm,right_high_mm,closure_threshold_low_mm,closure_threshold_high_mm,
 gap_low_s,gap_high_s,velocity_ceiling_low_mm_s,velocity_ceiling_high_mm_s,
 reference_hidden_closure,reference_quality_ok
-One row per independently synchronized ordinary-camera gap. velocity ceilings
+One row per independently synchronized ordinary-camera gap. gap_id is unique within a subject/sequence; multiple gaps in the same sequence are permitted. velocity ceilings
 must be independently certified (not maxima from the held-out sequence).
 Reference labels must be from high-frame-rate adjudication, not interpolation.
 """
@@ -54,11 +54,12 @@ def evaluate(rows):
             raise ValueError(f"line {n}: subject leakage across splits")
         subjects[key[0]]=key[1]
         sequence_id=r.get("sequence_id")
-        if not sequence_id or not sequence_id.strip() or not key[0].strip():
-            raise ValueError(f"line {n}: blank subject or sequence identity")
-        identity=(key[0],sequence_id)
+        gap_id=r.get("gap_id")
+        if not sequence_id or not sequence_id.strip() or not gap_id or not gap_id.strip() or not key[0].strip():
+            raise ValueError(f"line {n}: blank subject, sequence or gap identity")
+        identity=(key[0],sequence_id,gap_id)
         if identity in seen:
-            raise ValueError(f"line {n}: duplicate subject/sequence observation")
+            raise ValueError(f"line {n}: duplicate subject/sequence/gap observation")
         seen.add(identity)
         split_counts[key[1]]+=1
         # Calibration rows are also measurements: reject malformed intervals
@@ -96,10 +97,13 @@ def selftest():
         base["left_low_mm"]=bad
         assert classify(base)[0]=="INVALID"
     row=dict(zip(FIELDS,["2","2","2","2","0","0","0.01","0.01","100","100"]))
-    row.update(subject_id="A",split="heldout",sequence_id="s1",
+    row.update(subject_id="A",split="heldout",sequence_id="s1",gap_id="g1",
                reference_hidden_closure="1",reference_quality_ok="1")
     cal=dict(row,subject_id="B",split="calibration",sequence_id="cal1")
     assert len(evaluate([cal,row])["false_exclusions"])==1
+    # Two distinct gaps from one continuous video are legitimate observations.
+    second_gap=dict(row,gap_id="g2",reference_hidden_closure="0")
+    assert evaluate([cal,row,second_gap])["heldout_decisions"]["EXCLUDE"]==2
     # Previously an invalid calibration interval was never inspected.
     for bad in ("nan", "-1", "inf"):
         invalid_cal=dict(cal,left_low_mm=bad)
@@ -110,14 +114,14 @@ def selftest():
     assert evaluate([cal,missing])["release_gate"]=="BLOCKED_UNADJUDICATED"
     assert len(evaluate([cal,missing])["unadjudicated_exclusions"])==1
     assert evaluate([cal,dict(row,reference_hidden_closure="0")])["release_gate"]=="NOT_VALIDATED_BY_ZERO_ERRORS"
-    for invalid_rows in ([row],[cal],[cal,row,dict(row)],[cal,dict(row,sequence_id=" ")],[cal,dict(row,subject_id=" ")]):
+    for invalid_rows in ([row],[cal],[cal,row,dict(row)],[cal,dict(row,sequence_id=" ")],[cal,dict(row,gap_id=" ")],[cal,dict(row,subject_id=" ")]):
         try: evaluate(invalid_rows)
         except ValueError: pass
         else: raise AssertionError("invalid study partition or identity accepted")
     try: evaluate([row,dict(row,split="calibration")])
     except ValueError: pass
     else: raise AssertionError("subject leakage undetected")
-    print("PASS: protocol checks including nonfinite and unadjudicated exclusion (synthetic fixtures, not human validation)")
+    print("PASS: protocol checks including multi-gap sequences, duplicate gap rejection, nonfinite and unadjudicated exclusion (synthetic fixtures, not human validation)")
 
 if __name__=="__main__":
     p=argparse.ArgumentParser()
