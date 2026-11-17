@@ -14,6 +14,8 @@ def number(x):
     return d
 
 def evaluate(r):
+    if not isinstance(r, dict):
+        return {"verdict":"ABSTAIN","reason":"INVALID_RECORD_TYPE"}
     for field, expected, reason in (
         ("aperture_observation","instantaneous","EXPOSURE_OR_OBSERVATION_UNVERIFIED"),
         ("velocity_bound_provenance","independent_certified_upper","VELOCITY_UNCERTIFIED"),
@@ -28,11 +30,14 @@ def evaluate(r):
         c=number(r["closure_threshold_mm"])
         v=number(r["velocity_upper_mm_s"])
         t=number(r["gap_upper_s"])
-    except (KeyError, ValueError):
+    except (KeyError, ValueError, TypeError, OverflowError):
         return {"verdict":"ABSTAIN","reason":"INVALID_OR_MISSING_INTERVAL"}
     if a <= c or b <= c:
         return {"verdict":"NOT_EXCLUDED","reason":"ENDPOINT_CAN_BE_CLOSED"}
-    q=v*t/(a+b-2*c)
+    try:
+        q=v*t/(a+b-2*c)
+    except (ArithmeticError, OverflowError):
+        return {"verdict":"ABSTAIN","reason":"ARITHMETIC_UNRESOLVED"}
     # Provenance strings are caller-controlled. No authenticated certificate verifier exists.
     # A mathematical exclusion is NOT an authorized product exclusion.
     if q < 1:
@@ -64,7 +69,9 @@ def self_test():
     for changes, verdict in cases:
         assert evaluate({**r,**changes})["verdict"] == verdict
     assert evaluate(r)["reason"] == "CERTIFICATE_NOT_AUTHENTICATED"
-    print("PASS: 12 fail-closed claim-gate assertions")
+    for payload in (None, [], [r], "bad", 1, True):
+        assert evaluate(payload) == {"verdict":"ABSTAIN","reason":"INVALID_RECORD_TYPE"}
+    print("PASS: 12 claim-gate scenarios and 6 hostile top-level payloads")
 
 if __name__ == "__main__":
     if sys.argv[1:] == ["--self-test"]:
