@@ -61,10 +61,12 @@ def evaluate(rows):
             raise ValueError(f"line {n}: duplicate subject/sequence observation")
         seen.add(identity)
         split_counts[key[1]]+=1
-        if r.get("split")!="heldout": continue
+        # Calibration rows are also measurements: reject malformed intervals
+        # instead of silently accepting an invalid calibration partition.
         verdict,reason=classify(r)
-        counts[verdict]+=1
         if verdict=="INVALID": raise ValueError(f"line {n}: {reason}")
+        if r.get("split")!="heldout": continue
+        counts[verdict]+=1
         if r.get("reference_quality_ok")!="1":
             counts["UNADJUDICATED"]+=1
             if verdict=="EXCLUDE":
@@ -98,6 +100,12 @@ def selftest():
                reference_hidden_closure="1",reference_quality_ok="1")
     cal=dict(row,subject_id="B",split="calibration",sequence_id="cal1")
     assert len(evaluate([cal,row])["false_exclusions"])==1
+    # Previously an invalid calibration interval was never inspected.
+    for bad in ("nan", "-1", "inf"):
+        invalid_cal=dict(cal,left_low_mm=bad)
+        try: evaluate([invalid_cal,row])
+        except ValueError: pass
+        else: raise AssertionError("invalid calibration measurements accepted")
     missing=dict(row,reference_quality_ok="0")
     assert evaluate([cal,missing])["release_gate"]=="BLOCKED_UNADJUDICATED"
     assert len(evaluate([cal,missing])["unadjudicated_exclusions"])==1
