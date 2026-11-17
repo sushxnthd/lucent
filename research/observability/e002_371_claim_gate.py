@@ -33,8 +33,12 @@ def evaluate(r):
     if a <= c or b <= c:
         return {"verdict":"NOT_EXCLUDED","reason":"ENDPOINT_CAN_BE_CLOSED"}
     q=v*t/(a+b-2*c)
-    return {"verdict":"CONDITIONALLY_EXCLUDED" if q<1 else "NOT_EXCLUDED",
-            "reason":"SHARP_INSTANTANEOUS_BOUND" if q<1 else "HIDDEN_CLOSURE_FEASIBLE",
+    # Provenance strings are caller-controlled. No authenticated certificate verifier exists.
+    # A mathematical exclusion is NOT an authorized product exclusion.
+    if q < 1:
+        return {"verdict":"ABSTAIN","reason":"CERTIFICATE_NOT_AUTHENTICATED",
+                "q_upper":str(q),"mathematical_condition":"q_upper_lt_1"}
+    return {"verdict":"NOT_EXCLUDED","reason":"HIDDEN_CLOSURE_FEASIBLE",
             "q_upper":str(q)}
 
 def self_test():
@@ -45,7 +49,7 @@ def self_test():
         endpoint0_lower_mm="2",endpoint1_lower_mm="2",
         closure_threshold_mm="0",velocity_upper_mm_s="100",gap_upper_s="0.039")
     cases=[
-        ({}, "CONDITIONALLY_EXCLUDED"),
+        ({}, "ABSTAIN"),
         ({"gap_upper_s":"0.040"}, "NOT_EXCLUDED"),
         ({"gap_upper_s":"0.041"}, "NOT_EXCLUDED"),
         ({"aperture_observation":"exposure_integrated"}, "ABSTAIN"),
@@ -59,7 +63,8 @@ def self_test():
         ({"velocity_upper_mm_s":True}, "ABSTAIN")]
     for changes, verdict in cases:
         assert evaluate({**r,**changes})["verdict"] == verdict
-    print("PASS: 12 claim-gate assertions")
+    assert evaluate(r)["reason"] == "CERTIFICATE_NOT_AUTHENTICATED"
+    print("PASS: 12 fail-closed claim-gate assertions")
 
 if __name__ == "__main__":
     if sys.argv[1:] == ["--self-test"]:
