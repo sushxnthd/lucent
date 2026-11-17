@@ -46,6 +46,8 @@ def evaluate(rows):
     subjects={}
     seen=set()
     split_counts=Counter()
+    heldout_subjects=set()
+    false_exclusion_subjects=set()
     for n,r in enumerate(rows,2):
         key=(r.get("subject_id"),r.get("split"))
         if not all(key) or r.get("split") not in ("calibration","heldout"):
@@ -68,6 +70,7 @@ def evaluate(rows):
         if verdict=="INVALID": raise ValueError(f"line {n}: {reason}")
         if r.get("split")!="heldout": continue
         counts[verdict]+=1
+        heldout_subjects.add(key[0])
         if r.get("reference_quality_ok")!="1":
             counts["UNADJUDICATED"]+=1
             if verdict=="EXCLUDE":
@@ -77,10 +80,14 @@ def evaluate(rows):
         if label not in ("0","1"): raise ValueError(f"line {n}: invalid reference label")
         if verdict=="EXCLUDE" and label=="1":
             false_exclusions.append({"line":n,"sequence_id":r.get("sequence_id")})
+            false_exclusion_subjects.add(key[0])
     if not split_counts["calibration"] or not split_counts["heldout"]:
         raise ValueError("both calibration and heldout records are required")
     return {"tier":"held-out evaluation; validity depends on independently verified inputs",
-            "heldout_decisions":dict(counts),"false_exclusions":false_exclusions,
+            "heldout_decisions":dict(counts),"heldout_subject_count":len(heldout_subjects),
+            "heldout_subjects_with_false_exclusion":len(false_exclusion_subjects),
+            "unit_warning":"Gap counts are clustered within participants; do not use gap count as independent n for confidence intervals.",
+            "false_exclusions":false_exclusions,
             "unadjudicated_exclusions":unadjudicated_exclusions,
             "release_gate":"FAIL" if false_exclusions else ("BLOCKED_UNADJUDICATED" if unadjudicated_exclusions else "NOT_VALIDATED_BY_ZERO_ERRORS"),
             "limitations":"Zero observed failures is not a certified physiological speed bound; adjudication and calibration provenance require external audit."}
@@ -104,6 +111,8 @@ def selftest():
     # Two distinct gaps from one continuous video are legitimate observations.
     second_gap=dict(row,gap_id="g2",reference_hidden_closure="0")
     assert evaluate([cal,row,second_gap])["heldout_decisions"]["EXCLUDE"]==2
+    assert evaluate([cal,row,second_gap])["heldout_subject_count"]==1
+    assert evaluate([cal,row,second_gap])["heldout_subjects_with_false_exclusion"]==1
     # Previously an invalid calibration interval was never inspected.
     for bad in ("nan", "-1", "inf"):
         invalid_cal=dict(cal,left_low_mm=bad)
