@@ -48,6 +48,14 @@ class ProspectiveEvaluatorTests(unittest.TestCase):
         self.assertEqual(result["reference_uncertain"], 1)
         self.assertEqual(result.get("reference_closures", 0), 0)
 
+    def test_unadjudicated_exclusion_remains_visible(self):
+        result = evaluate([fixture(reference_adjudicable="0")])
+        self.assertEqual(result["reference_uncertain"], 1)
+        self.assertEqual(result["mathematical_exclusions"], 1)
+        self.assertEqual(result["exclusions_without_reference"], 1)
+        self.assertTrue(result["safety_adjudication_incomplete"])
+        self.assertEqual(result.get("false_exclusions", 0), 0)
+
     def test_nonholdout_not_evaluated(self):
         result = evaluate([fixture(split="development")])
         self.assertEqual(result["non_holdout"], 1)
