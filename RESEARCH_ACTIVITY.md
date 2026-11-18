@@ -1,5 +1,16 @@
 # Research Activity
 
+Updated: 2026-11-18 (UTC)
+
+- Active research branch: `research/observability-human-boundary`
+- Active draft PR: #26
+- Latest durable research commit: `476f2d2996e6a719b248800c04a2c9ea8f378b5f`
+- Evidence: dependency-free exact-rational virtual shutter bench with three piecewise-linear trajectories and timing/exposure adversarial checks; equivalent local version executed. Synthetic-only evidence; committed version not independently executed.
+- Human and physical calibration remain outstanding; camera-derived fatigue claims disabled; no alpha release claimed.
+- Activity checkpoint only, not scientific validation or release approval.
+
+## Prior checkpoint
+
 Updated: 2026-11-17 (UTC)
 
 - Active research branch: `research/observability-human-boundary`
