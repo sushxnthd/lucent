@@ -37,9 +37,6 @@ def evaluate(rows):
             stats["non_holdout"]+=1
             continue
         participants.add(row["participant_id"])
-        if row["reference_adjudicable"] != "1":
-            stats["reference_uncertain"]+=1
-            continue
         try:
             m0=number(row,"mean0_lower_mm"); m1=number(row,"mean1_lower_mm")
             e0=number(row,"exposure0_upper_s"); e1=number(row,"exposure1_upper_s")
@@ -49,7 +46,9 @@ def evaluate(rows):
         except (ValueError,InvalidOperation,KeyError):
             stats["invalid"]+=1
             continue
-        closure=ref<=c
+        adjudicable=row["reference_adjudicable"]=="1"
+        if not adjudicable: stats["reference_uncertain"]+=1
+        closure=adjudicable and ref<=c
         if closure: stats["reference_closures"]+=1
         if any(row[k]!="1" for k in FLAGS):
             stats["abstain_provenance"]+=1
@@ -60,9 +59,11 @@ def evaluate(rows):
                  (edge0-c)+(edge1-c)>v*g)
         if exclude:
             stats["mathematical_exclusions"]+=1
-            if closure: stats["false_exclusions"]+=1
+            if not adjudicable: stats["exclusions_without_reference"]+=1
+            elif closure: stats["false_exclusions"]+=1
         else: stats["not_excluded"]+=1
     stats["holdout_participants"]=len(participants)
+    stats["safety_adjudication_incomplete"]=bool(stats["exclusions_without_reference"])
     # Not a population-level risk estimate. For zero failures in n
     # independently sampled closure opportunities, one-sided 95% bound
     # is 1 - 0.05**(1/n); clustered participants invalidate this shortcut.
