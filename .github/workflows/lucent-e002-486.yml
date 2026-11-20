@@ -1,0 +1,36 @@
+name: Lucent E002-486 reference alias verification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_486_reference_alias.py'
+      - 'research/observability/e002_486_independent_replay.cjs'
+      - 'research/observability/E002_486_AGGREGATE.json'
+      - '.github/workflows/lucent-e002-486.yml'
+  workflow_dispatch:
+
+jobs:
+  synthetic-reference-alias:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exact-rational adversarial tests
+        run: python3 research/observability/e002_486_reference_alias.py --self-test
+      - name: Independent Node.js numerical replay
+        run: node research/observability/e002_486_independent_replay.cjs
+      - name: Compare generated aggregate with committed evidence
+        run: |
+          python3 research/observability/e002_486_reference_alias.py --aggregate > /tmp/e002_486_actual.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          actual = json.loads(Path('/tmp/e002_486_actual.json').read_text())
+          frozen = json.loads(Path('research/observability/E002_486_AGGREGATE.json').read_text())
+          assert actual == frozen, 'Committed aggregate differs from executable model'
+          assert frozen['physical_claims'] == 'ABSTAIN_UNCALIBRATED'
+          assert frozen['product_release'] == 'BLOCKED'
+          assert frozen['physical_human_sequences'] == 0
+          print('Aggregate and release blockers verified')
+          PY

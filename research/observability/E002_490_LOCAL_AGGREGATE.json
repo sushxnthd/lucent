@@ -1,0 +1,15 @@
+{
+  "authored_frame_count": 12,
+  "decoded_frames_identical_after_retime": true,
+  "decoded_optical_ticks_match_authored": true,
+  "evidence_tier": "INDEPENDENT_REAL_CODEC_SYNTHETIC_FRAMES",
+  "experiment": "E002-490",
+  "human_sequences": 0,
+  "image_sha256_first": "9ab757a3ed9ba85899fb070533a5fd53e557360c60bafe34a5b45078a1d8e5fa",
+  "max_container_pts_shift_ms": 500,
+  "original_final_container_pts_ms": 500,
+  "physical_exposure_authenticated": false,
+  "physical_shutter_calibrations": 0,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "retimed_final_container_pts_ms": 1000
+}

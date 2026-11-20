@@ -1,0 +1,48 @@
+name: E002-606 rational-rate 30fps alias falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_606_*'
+      - 'research/observability/e002_606_*'
+      - 'research/observability/test_e002_606_*'
+      - '.github/workflows/e002_606_rate_alias.yml'
+  pull_request:
+    paths:
+      - 'research/observability/E002_606_*'
+      - 'research/observability/e002_606_*'
+      - 'research/observability/test_e002_606_*'
+      - '.github/workflows/e002_606_rate_alias.yml'
+  workflow_dispatch:
+jobs:
+  rational-phase:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen adversarial tests and independent Node replay
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_606_rate_alias.py
+          node e002_606_independent.js
+      - name: Verify aggregate-only synthetic output and fail-closed status
+        run: |
+          cd research/observability
+          python e002_606_rate_alias.py > e002_606_aggregate.json
+          python - <<'PY'
+          import json
+          d=json.load(open('e002_606_aggregate.json'))
+          assert d['precommitted_predictions_passed'] and d['independent_enumeration_passed']
+          assert d['human_closure_events_measured']==0
+          assert d['product']=='ABSTAIN_UNCALIBRATED' and d['release']=='BLOCKED'
+          for r in d['rows']:
+              print(r['native_hz'],r['closed_native_bins'],r['ideal_30fps_miss'],r['three_phase_index_miss'])
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-606-synthetic-aggregate
+          path: research/observability/e002_606_aggregate.json
+          retention-days: 7

@@ -1,0 +1,21 @@
+# E002-666 | Timing-error erosion and dependence gate for phase-dither detection (2026-11-06 UTC)
+
+## New quantitative falsification of E002-665's idealized 97.18% figure
+For the E002-665 periodic triangular aperture a(u)=2|u-1/2|, closure threshold c=0.30, the closed phase interval is [0.35,0.65], of width c. Suppose a commanded phase u is realized at u+delta, where |delta|<=epsilon in period-normalized units. To **guarantee** that a phase probe lands inside closure regardless of the timing error, commanded u must lie in the eroded interval [0.35+epsilon,0.65-epsilon]. Its exact measure is q=max(c-2epsilon,0). This is a phase-coverage guarantee for the stipulated periodic fixture, not an eyelid-velocity or blink-absence certificate.
+
+At epsilon=0.05 period, q=0.20. Ten independent uniform commanded phases then have guaranteed-closure detection probability at least 1-(0.8)^10 = 0.8926258176 (versus 0.9717524751 when timing is exact). If epsilon>=0.15 period, the guaranteed-closure core is empty and this particular lower bound becomes zero. The latter does **not** prove detection impossible: it means no commanded phase is guaranteed to hit for every permitted timing error.
+
+Independence is not interchangeable with uniform marginal phases. If all ten probes share the same uniformly random commanded phase, guaranteed detection is only q=0.20. More generally, if for each probe k, **conditional on all previous probes missing**, the chance that the new probe falls in the robust closure core is at least q, the miss probability is at most (1-q)^n by multiplication of conditional miss probabilities. This is sharp for independent Bernoulli hits. Marginal uniformity alone does not establish that conditional premise; perfect correlation is a counterexample.
+
+## Reproduction
+Run `python3 research/observability/e002_666_timing_dependence.py`. Exact rational assertions check interval erosion, independent probability, perfect-correlation counterexample and zero guaranteed core. The code is an analytical synthetic fixture; execution on hosted CI and independent replay are not claimed.
+
+## Instrument falsification and frozen prediction
+Before viewing held-out results, log commanded and photodiode-measured optical-shutter phases, exposure kernel and eye-row timestamps. Estimate an externally justified upper bound epsilon on *actual* phase error including clock drift, row delay and exposure integration; do not infer it from nominal FPS. Randomize commands with recorded seeds and test conditional coverage using independently recorded phase histories. At c=0.30 and epsilon<=0.05, the synthetic fixture predicts at least 0.8926258176 detection over ten truly independent uniform phase probes. Deliberately shared-phase controls predict 0.20 guaranteed coverage. Sweep phase errors past 0.15 to test loss of guaranteed core. Independently verify true shutter state with photodiode, not camera output.
+
+For human validation, use high-rate reference eyelid video with independently established acquisition timing and two blinded anatomical raters. Freeze participant-held-out 24/30/60/120 Hz downsampling phases, geometry, illumination, gaze, glasses, blur, missingness, and timestamp uncertainty before analysis. Report false certificates, abstention and participant-clustered intervals. The periodic fixture's q is **not transferable to natural blink prevalence or detection** without new assumptions and calibration.
+
+## Product consequence and kill criteria
+Any UI displaying the idealized 97.18% phase-dither figure without a calibrated timing-error bound and dependence audit is unsupported. A measured timing bound >=15% of period makes this robust-core guarantee vacuous in the c=0.30 fixture. Correlated phases invalidate the IID improvement even with perfect marginal uniformity. Phase dithering is at most an experimentally calibrated detection aid, never proof of absence. Preserve `ABSTAIN_UNCALIBRATED` and production `BLOCKED`.
+
+Evidence tier: exact analytical synthetic result, no new physical or human measurements.

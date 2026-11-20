@@ -1,0 +1,22 @@
+# E002-501 | Frozen authentic-human temporal image-alias falsifier
+
+Freeze: 2026-10-28, before executing this analysis on S01. This is a **new image-content experiment** on authentic human video, not an anatomical closure experiment. It does not change the E002-371 theorem, the E002-492 blinded human review, or the rejected E002-491 event selector.
+
+## Question and testable predictions
+
+Can a nominal 150-to-30-fps *instantaneous-frame-sampling surrogate* conceal a reversible image-content excursion between apparently similar endpoint frames? On the checksum-pinned S01 Phantom video, analyze the first 12,000 native 64x64 area-downscaled frames in overlapping six-frame windows starting at native indices 0,5,10,...,11990 (five native frame intervals between surrogate observations). Do not interpret native frame indices as authenticated milliseconds. Published 150 fps is a reported nominal acquisition rate, not an independently calibrated clock.
+
+Freeze these mutually exclusive outcomes for each six-frame window: (a) ABSTAIN if any adjacent frame is identical, if any frame has mean brightness offset >15 levels relative to the first, global standard-deviation ratio outside [0.8,1.2], minimum standard deviation <10, or photometrically corrected border residual >0.020; (b) ENDPOINT_DIFFERENT if endpoint center residual >0.015; (c) IMAGE_ALIAS_CANDIDATE if endpoint center residual <=0.015 and at least one of the four interior frames has corrected center residual >=0.035 and center/(border+0.01) >=1.7; otherwise (d) NO_IMAGE_ALIAS_EVIDENCE. Center is x,y in [16,48), border is the outer eight-pixel ring. Residuals are mean absolute grayscale differences after **border-estimated** mean-offset correction, divided by 255 (global frame-mean offset is used only for the >15-level nuisance veto). Thresholds are frozen research sensitivity choices, not trained detectors or anatomical thresholds.
+
+Run the same 2,399-window analysis without retuning on (i) original images, (ii) +8 grayscale brightness (clipped), (iii) 3x3 replicated-edge spatial blur, and (iv) alternating +/-1-pixel horizontal registration jitter. Compare candidate *window sets*, counting baseline candidates lost and new candidates gained under each nuisance. Only candidates surviving all four conditions are called `image_proxy_nuisance_survivors`, never blinks. If the original candidates disappear or new candidates appear under jitter/blur, the optical proxy is nuisance-fragile; retain the negative result. Zero baseline candidates means this source does not provide positive evidence, not that ordinary cameras cannot miss events.
+
+## Explicit falsifiers, controls and limitations
+
+- Synthetic reversible center-only pulse with matching endpoints must be detected; monotone change with different endpoints must not; border-only and photometric changes must abstain or not trigger; exact duplicates must abstain; registration perturbation may change results but must be reported, not tuned away.
+- Verify the S01 ZIP's pinned MD5 `fb56109542a13aa7879778833fe4cbaa`, ZIP path safety, native decode length, and 64x64 frame geometry before publishing **only aggregate counts**. Never upload eye images, per-frame traces, per-window candidate indices, or source image hashes.
+- These are *instantaneous frame surrogates*. No actual 30-fps integrated exposures, anatomical closure labels, calibrated geometry, eye tracking, authenticated physical clock, shutter, between-sample velocity upper bound, or independent participant validation are provided. Image excursions can be gaze, illumination, registration, or other nuisances. They do not certify hidden eyelid closures.
+- The primary E002-371 product decision remains `ABSTAIN_UNCALIBRATED`; release `BLOCKED` for every outcome. If the experiment yields no robust optical aliases, stop optimizing proxies and prioritize the two blinded anatomical raters and physical timing instrument. Keep S21-S31 held out.
+
+## Pre-authentic-data amendment A (synthetic control failure)
+
+The first local synthetic reversible-pulse control failed because subtracting the **global** frame mean treated the central synthetic signal as a spurious border shift. Before any authentic S01 execution or GitHub commit, the frozen protocol was corrected to estimate the photometric offset from the border region, while preserving the global mean offset only as a nuisance veto. This is a documented synthetic-control-driven correction, not a post-human-data threshold change.

@@ -1,0 +1,11 @@
+# E002-632 | Executable blinded physical-trial scoring gate (2026-11-03)
+
+**Evidence tier:** Prospective instrument software, not empirical acquisition. This accompanies the frozen E002-631 protocol and does not replace it.
+
+The standalone Python standard-library scorer accepts a CSV of trial IDs, independently calibrated continuous-time speed ceilings, maximum possible exposure-free gaps, lower endpoint aperture bounds, and blinded reference labels. It uses exact rational arithmetic (fractions such as `1/240`) and requires a strict inequality for exclusion. Missing or nonpositive calibration inputs, uncertified geometry/exposure timing/velocity, and equality force abstention. The reference label is never read to compute the prediction; it is only used afterwards to count false exclusions. A reference-confirmed crossing on any EXCLUDE row sets RELEASE_BLOCKED and exits with status 2.
+
+**Reproduce:** `python research/observability/e002_632_blind_trial_scorer.py` runs the ten embedded synthetic assertions. Pass a CSV path to score prospectively frozen trials. Output is a per-trial CSV to stdout and summary to stderr. Valid labels: YES, NO, UNKNOWN. Preserve UNKNOWN cases and original rows; do not treat them as verified negatives.
+
+**New operational falsification consequence:** A contradictory reference crossing cannot be hidden by a favorable aggregate score. The scorer makes the single-case release blocker executable. It is intentionally conservative: an EXCLUDE/YES conflict may indicate an invalid speed calibration, erroneous reference adjudication, timing error, or a true failure of the assumed model. Every conflict blocks the claim until independently resolved; it is not automatically evidence that the theorem is false.
+
+**Limitations:** The scorer only checks calibration declarations and mathematical consistency; it cannot authenticate encoder traces, prove continuous-time velocity ceilings, infer actual exposure boundaries, or adjudicate eyelid closure. CSV rows are not human measurements. No physical or held-out human recordings were acquired. The instrument must be run on independently collected, hashed, blinded physical trials before any empirical claims. The existing product verdict remains ABSTAIN_UNCALIBRATED and release BLOCKED.

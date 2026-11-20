@@ -1,0 +1,39 @@
+name: E002-419 unresolved reference partial identification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_419_*"
+      - "research/observability/e002_419_*"
+      - "research/observability/test_e002_419_*"
+      - ".github/workflows/e002_419_reference_partial_id.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-sharpness-and-fail-closed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Compile and independently enumerate all unresolved assignments
+        run: |
+          python -m py_compile research/observability/e002_419_reference_partial_id.py
+          python research/observability/test_e002_419_reference_partial_id.py
+      - name: Verify no product claim can be issued from operator-supplied reference labels
+        run: |
+          python - <<'PY'
+          import sys
+          sys.path.insert(0, 'research/observability')
+          from e002_419_reference_partial_id import evaluate
+          x=evaluate([{'window_id':'synthetic','product_decision':'CERTIFY_NO_HIDDEN_CLOSURE',
+                       'reference_state':'PHYSICALLY_EXCLUDED_CLOSURE'}])
+          assert x['conditional_finite_set_false_certificate_upper'] == 0
+          assert not x['conditional_reference_states_authenticated']
+          assert not x['product_claim_authorized']
+          assert x['product'] == 'ABSTAIN_UNCALIBRATED'
+          print('PASS: conditional research arithmetic cannot unlock product')
+          PY

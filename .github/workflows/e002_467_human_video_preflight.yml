@@ -1,0 +1,34 @@
+name: E002-467 independent human-video preflight
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_467_FROZEN.md'
+      - 'research/observability/E002_467_RESULT.md'
+      - 'research/observability/e002_467_human_video_preflight.py'
+      - 'research/observability/test_e002_467_human_video_preflight.py'
+      - '.github/workflows/e002_467_human_video_preflight.yml'
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Adversarial image-only tests
+        run: python3 research/observability/test_e002_467_human_video_preflight.py -v
+      - name: Fail-closed public result contract
+        run: |
+          python3 - <<'PY'
+          import importlib.util
+          p='research/observability/e002_467_human_video_preflight.py'
+          s=importlib.util.spec_from_file_location('preflight',p)
+          m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+          r=m.analyze([],2.0)
+          assert r['physical_release_authorized'] is False
+          assert r['physical_hidden_closure_exclusion']=='ABSTAIN_UNCALIBRATED'
+          assert r['anatomical_negative_labels']==0
+          print('E002-467 abstention contract PASS')
+          PY

@@ -1,0 +1,39 @@
+name: E002-617 published-human FC boundary sensitivity
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_617_boundary_stress.py
+      - research/observability/e002_617_independent.cjs
+      - research/observability/E002_617_FROZEN.md
+      - .github/workflows/e002-617-boundary-stress.yml
+jobs:
+  human-boundary:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen synthetic and nuisance fixtures
+        run: python research/observability/e002_617_boundary_stress.py
+      - name: Independent cross-language exact phase oracle
+        run: node research/observability/e002_617_independent.cjs
+      - name: Source-pinned published human annotation stress and aggregate audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/observability/e002_617_boundary_stress.py --source | tee /tmp/e002_617_stdout.log
+          tail -n 1 /tmp/e002_617_stdout.log > /tmp/e002_617_aggregate.json
+          node research/observability/e002_617_independent.cjs /tmp/e002_617_aggregate.json
+      - name: Preserve aggregate-only artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-617-aggregate-only
+          path: /tmp/e002_617_aggregate.json
+          retention-days: 30

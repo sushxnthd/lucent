@@ -1,0 +1,41 @@
+name: E002-541 coded-light shutter identifiability bench
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_541_*'
+      - 'research/observability/e002_541_*'
+      - 'research/observability/test_e002_541_*'
+      - '.github/workflows/e002_541_coded_light.yml'
+  workflow_dispatch:
+
+jobs:
+  synthetic-instrument-identifiability:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Frozen synthetic experiment and 40 unseen coded seeds
+        run: python research/observability/e002_541_coded_light.py --output /tmp/e002_541_result.json
+      - name: 18 adversarial controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_541_coded_light.py' -v
+      - name: Independent Node timing estimator and periodic alias
+        run: node research/observability/e002_541_independent_replay.cjs
+      - name: Verify evidence tier and product abstention
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/e002_541_result.json'))
+          assert r['sweep']['correct_identified']==40
+          assert r['periodic']['decision']=='ABSTAIN'
+          assert r['physical_validation'] is False
+          assert r['human_anatomical_ratings']==0
+          assert r['product']=='ABSTAIN_UNCALIBRATED'
+          PY

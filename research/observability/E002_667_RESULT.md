@@ -1,0 +1,20 @@
+# E002-667 | Stratified phase grid beats independent random probes on a periodic fixture (2026-11-06 UTC)
+
+## Frozen model and falsifiable prediction
+Extend E002-666's **synthetic periodic fixture only**: closed phase is a contiguous arc of width c=0.30 on the unit circle, with an unknown fixed phase offset. Each commanded phase incurs an independently adversarial (not stochastic) actual timing displacement of magnitude at most epsilon=0.05 cycles. The **robust** commanded-phase closure arc has width q=max(c-2epsilon,0)=0.20. Issue n equally spaced phase commands k/n, k=0,...,n-1. A grid intersects every open arc of width q **if q>1/n**, regardless of its unknown offset. This is sharp for open arcs: when q<=1/n an adversary can align the arc in a grid gap (including boundary equality). Thus n=6 yields guaranteed at least one probe fully inside the stipulated closed arc, while n=5 does not give a strict-interior guarantee. Six independent uniform random probes have only 1-(0.8)^6=0.737856 lower-bound detection probability under the same fixture.
+
+This is a deterministic covering law for a **repeated, phase-stationary periodic event**, not for natural human blinks. A moving/irregular closure, unknown period, skipped commands, rolling-shutter uncertainty exceeding epsilon, or noncontiguous closure set invalidates the grid guarantee. Exposure integration and actual detector sensitivity must be independently calibrated. No blink-absence claim follows.
+
+## Proof
+The n commanded grid points partition the circle into n gaps, each of length 1/n. An open arc longer than a gap cannot avoid all points. Conversely an open arc of length <=1/n can fit in a gap (at equality its endpoints coincide with adjacent grid points, which are excluded). Shrinking each endpoint of the true closure arc by epsilon gives the robust core q, so a command in that core remains within the actual closed arc for any allowed timing error. The sufficient bound is n>1/q; with q=1/5 the smallest integer is 6. The proof assumes an exact periodic phase map.
+
+## Reproduction and adversarial checks
+Run `python3 research/observability/e002_667_phase_grid.py` (stdlib only). Exact fractions check the n=5/6 boundary, the random comparator, 600 unknown offsets, an adversarial sub-gap arc and loss of coverage under excessive timing error. The 600-offset sweep is a regression test, **not** a proof of universal offsets; the gap argument is the proof. No hosted CI or independent replay claimed.
+
+## Physical falsification protocol
+Use a pulsed LED or mechanical optical shutter driven by an independent clock. Independently measure its true period, closed duty cycle, command-to-light latency, exposure temporal kernel and phase error with a photodiode/oscilloscope; preregister c, epsilon, n and a strict full-exposure detection criterion before viewing camera output. Randomize the *order* of the six grid phases, not their locations. Sweep unknown fixture offset and separately inject period drift, missing probes, rolling-shutter row delays, blur, illumination changes and saturation. Require no missed guaranteed-core hit in any calibrated stationary-fixture trial; otherwise reject the model/calibration. Compare six independent uniform phases under the same optical budget, reporting paired trials and uncertainty.
+
+## Human-validation boundary and product
+Natural blink episodes are not phase-stationary repeated fixtures. Do **not** transfer the 100% grid result to human blink detection. For participant-held-out anatomical validation, use high-frame-rate independently timestamped eyelid video, dual blinded labels, calibrated ordinary-camera exposure, independently justified velocity limits, and predeclared 24/30/60/120 Hz decimation with nuisance sweeps. Report false absence certificates and abstentions; do not replace physiological evidence with this synthetic fixture. Lucent may use grid-phase coverage only as an **instrument calibration check** for a controlled periodic target. Production remains BLOCKED; ABSTAIN_UNCALIBRATED.
+
+Evidence tier: exact synthetic mathematical result and executable regression checks; no physical/human measurement.

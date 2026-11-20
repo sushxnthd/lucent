@@ -1,0 +1,33 @@
+name: E002-584 authentic human-label timing-uncertainty falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_584_FROZEN.md"
+      - "research/observability/e002_584_timing_robustness.py"
+      - "research/observability/e002_584_independent_replay.cjs"
+      - ".github/workflows/e002_584_timing_robustness.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  frozen-human-index-robustness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Test prospective synthetic adversarial fixtures
+        run: python research/observability/e002_584_timing_robustness.py
+      - name: Replay SHA-pinned authentic human full-closure annotations
+        run: python research/observability/e002_584_timing_robustness.py --source
+      - name: Independently replay authentic source with Node.js
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp)"
+          trap 'rm -f "$tmp"' EXIT
+          curl -fsSL --retry 2 --max-time 60 -o "$tmp" 'https://www.blinkingmatters.com/files/upload/research/Silesian5%28Basler5%29Annotations.zip'
+          node research/observability/e002_584_independent_replay.cjs "$tmp"

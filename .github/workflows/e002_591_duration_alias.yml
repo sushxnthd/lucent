@@ -1,0 +1,31 @@
+name: E002-591 sustained-closure alias boundary
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_591_*'
+      - 'research/observability/e002_591_*'
+      - '.github/workflows/e002_591_duration_alias.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  duration-alias-independent-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exact rational theorem and one-sided dwell instrument
+        run: python research/observability/e002_591_duration_alias.py
+      - name: Independent Node BigInt reconstruction
+        run: node research/observability/e002_591_independent_replay.cjs
+      - name: Independent discretized LP cross-check
+        run: |
+          python -m pip install --disable-pip-version-check 'scipy==1.17.0'
+          python research/observability/e002_591_lp_crosscheck.py

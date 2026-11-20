@@ -1,0 +1,40 @@
+name: E002-509 participant-level risk falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_509_*'
+      - 'research/observability/e002_509_*'
+      - 'research/observability/test_e002_509_*'
+      - '.github/workflows/e002_509_participant_power.yml'
+  pull_request:
+    paths:
+      - 'research/observability/E002_509_*'
+      - 'research/observability/e002_509_*'
+      - 'research/observability/test_e002_509_*'
+      - '.github/workflows/e002_509_participant_power.yml'
+  workflow_dispatch:
+
+jobs:
+  frozen-zero-event-gate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python standard-library adversarial controls
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_509_participant_power
+          python e002_509_participant_power.py
+      - name: Independent Node arithmetic (not imported from Python)
+        run: |
+          node - <<'JS'
+          const upper = n => 1 - Math.pow(0.05, 1 / n);
+          const close = (a,b) => Math.abs(a-b) < 1e-12;
+          if (!close(upper(8), 0.31234397806636793)) throw Error('8-person bound mismatch');
+          if (!close(upper(299), 0.009969146792899286)) throw Error('299-person bound mismatch');
+          if (!(upper(298) > 0.01 && upper(299) <= 0.01)) throw Error('minimum sample boundary wrong');
+          console.log('Independent 8/298/299 participant exact-binomial checks passed');
+          JS

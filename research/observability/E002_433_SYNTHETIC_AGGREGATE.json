@@ -1,0 +1,73 @@
+{
+  "experiment": "E002-433",
+  "date": "2026-10-25",
+  "protocol": "E002_433_FROZEN.md",
+  "evidence_tier": "SYNTHETIC_COMPOSITIONAL_NUISANCE_FALSIFICATION",
+  "camera": {
+    "frame_rate_hz": 30,
+    "exposure_s": 0.002,
+    "centers_s": [
+      0,
+      0.03333333333333333
+    ]
+  },
+  "stipulated": {
+    "threshold_mm": 2,
+    "speed_cap_mm_s": 1.5,
+    "gain_interval": [
+      0.97,
+      1.03
+    ],
+    "projection_angle_deg": [
+      15,
+      20
+    ],
+    "observed_optical_means": [
+      2,
+      2
+    ]
+  },
+  "worlds": {
+    "always_open": {
+      "minimum_aperture_mm": 2.128355544951824,
+      "gain": 1,
+      "angle_deg": 20
+    },
+    "hidden_closure": {
+      "shutter_aperture_mm": 2.012,
+      "minimum_aperture_mm": 1.991,
+      "peak_speed_mm_s": 1.3404255319148939,
+      "gain": 1.029101570984178,
+      "angle_deg": 15
+    }
+  },
+  "conditional_lower_mm": {
+    "naive": 2.103355544951824,
+    "geometry_only": 2.045552360820166,
+    "gain_only": 2.041364606749344,
+    "joint": 1.985245010505016
+  },
+  "decision": {
+    "naive": true,
+    "geometry_only": true,
+    "gain_only": true,
+    "joint": false
+  },
+  "holdout": {
+    "n": 2000,
+    "seed": 433,
+    "candidates": 493,
+    "true_closures": 718,
+    "false_certificates": 0,
+    "min_truth_minus_bound_mm": 0.04612392662537346
+  },
+  "physical_certificate_authorized": false,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "limitations": [
+    "Synthetic scalar optical forward model",
+    "No human eyelid sequences or blinded rater labels",
+    "No real camera shutter/clock/geometry/gain calibration",
+    "Velocity bound hypothetical, not physiological",
+    "Zero synthetic false certificates is not a real-world reliability estimate"
+  ]
+}

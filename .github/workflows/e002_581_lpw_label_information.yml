@@ -1,0 +1,30 @@
+name: E002-581 LPW annotation temporal-information falsification
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_581_lpw_label_information.py
+      - research/observability/E002_581_FROZEN.md
+      - .github/workflows/e002_581_lpw_label_information.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-bound-label-order-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout frozen research branch
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install NumPy
+        run: sudo apt-get update -qq && sudo apt-get install -y python3-numpy
+      - name: Run pre-source adversarial falsifiers
+        run: python3 research/observability/e002_581_lpw_label_information.py --self-test
+      - name: Run genuine LPW development annotation information audit
+        run: python3 research/observability/e002_581_lpw_label_information.py

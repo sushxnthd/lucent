@@ -1,0 +1,40 @@
+name: E002-440 participant-cluster falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_440_*'
+      - 'research/observability/e002_440_cluster_risk.py'
+      - 'research/observability/test_e002_440_cluster_risk.py'
+      - '.github/workflows/e002_440_cluster_risk.yml'
+  pull_request:
+    paths:
+      - 'research/observability/E002_440_*'
+      - 'research/observability/e002_440_cluster_risk.py'
+      - 'research/observability/test_e002_440_cluster_risk.py'
+      - '.github/workflows/e002_440_cluster_risk.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent adversarial and numerical checks
+        run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_440_cluster_risk.py' -v
+      - name: Reproduce frozen seeded countermodel and machine-readable result
+        run: |
+          python research/observability/e002_440_cluster_risk.py --seed 440 --trials 20000 --output /tmp/e002_440.json
+          python - <<'PY'
+          import json
+          actual=json.load(open('/tmp/e002_440.json'))
+          expected=json.load(open('research/observability/E002_440_RESULTS.json'))
+          assert actual == expected, (actual, expected)
+          assert actual['zero_error_studies'] == 4301
+          assert actual['physical_release_authorized'] is False
+          PY

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Lucent E002-497 | Private S01 anatomical rater</title>
+<style>
+body{font:15px system-ui,sans-serif;max-width:1020px;margin:25px auto;padding:0 16px;background:#111923;color:#eef4fa}
+h1{font-size:23px}p{line-height:1.5;color:#b8c8d8}button,input{font:inherit;margin:4px;padding:7px}button{cursor:pointer;background:#29435a;color:#fff;border:1px solid #8ea6bc;border-radius:5px}
+button:disabled{opacity:.4}canvas{width:640px;height:576px;max-width:100%;background:#03080d;border:1px solid #8ea6bc;cursor:crosshair;image-rendering:pixelated}
+section{display:flex;flex-wrap:wrap;gap:24px}aside{flex:1;min-width:280px}label{display:block;margin:7px 0}fieldset{border:1px solid #718498;margin:12px 0}
+#status{white-space:pre-wrap;color:#d7b982;font-family:ui-monospace,monospace}small{color:#b8c8d8}
+</style></head><body>
+<h1>Lucent E002-497: blinded anatomical review</h1>
+<p>Offline local-only S01 calibration review. Do not load the owner-only mapping. Two independent people must use separate sessions and separate A/B templates. No images or annotations are uploaded. This tool cannot certify physical blink timing or fatigue.</p>
+<label>Blank E002-492 rater template JSON <input id="template" type="file" accept=".json"></label>
+<label>Private native PNG images (choose the PRIVATE_FRAMES_DO_NOT_UPLOAD directory) <input id="images" type="file" accept=".png" webkitdirectory multiple></label>
+<label>Or choose all 260 PNGs directly <input id="fallback" type="file" accept=".png" multiple></label>
+<button id="load">Verify and load 260 images</button>
+<div id="status" role="status">Not loaded</div>
+<section><div><canvas id="view" width="320" height="288"></canvas>
+<div><button id="prev">Previous</button><button id="next">Save & next</button><button id="save">Save frame</button><button id="undo">Undo point</button></div></div>
+<aside><div id="position">No frame loaded</div>
+<p>E002-499 pre-label amendment: measure only at the visible fixed native image column x=160 (vertical guide), with click precision within half a native pixel. If reliable iris/lid anatomy is absent there, select POOR_GEOMETRY, GAZE or MISSING_ANATOMY and abstain. Never move to another column. Do not infer obscured anatomy. Enter iris diameter from a separately visible clean open reference and uncertainty in pixels per landmark.</p>
+<label>Iris diameter, native pixels <input id="diameter" type="number" min="0.01" max="288" step="0.1"></label>
+<label>Landmark uncertainty, pixels <input id="uncertainty" type="number" min="0" max="30" step="0.1"></label>
+<div id="points">No landmarks</div>
+<fieldset><legend>Abstain on any nuisance</legend>
+<label><input type="checkbox" value="GAZE">Gaze</label><label><input type="checkbox" value="GLASSES">Glasses</label>
+<label><input type="checkbox" value="BLUR">Blur</label><label><input type="checkbox" value="LIGHTING">Lighting</label>
+<label><input type="checkbox" value="OCCLUSION">Occlusion</label>
+<label><input type="checkbox" value="MISSING_ANATOMY">Missing anatomy</label>
+<label><input type="checkbox" value="POOR_GEOMETRY">Poor geometry</label>
+</fieldset>
+<button id="export">Export completed private JSON</button>
+<p><small>Export requires all 260 frames to be either measured or explicitly flagged. This is a measurement workflow, not a diagnostic application. Keep ratings and human images private.</small></p>
+</aside></section>
+<script>
+"use strict";
+(function(){
+const $=id=>document.getElementById(id), canvas=$("view"),ctx=canvas.getContext("2d");
+const keys=["upper_y","lower_y","iris_diameter","uncertainty_px"],fieldSet=["frame",...keys,"flags"];
+const allowed=["GAZE","GLASSES","BLUR","LIGHTING","OCCLUSION","MISSING_ANATOMY","POOR_GEOMETRY"];
+let packet=null, files=new Map(), positions=[],idx=0,pts=[],url=null,im=null;
+function fail(s){$("status").textContent="BLOCKED: "+s}
+function frameKey(c,j){return c+"_frame_"+String(j).padStart(2,"0")+".png"}
+function validateTemplate(t){
+ if(!t||t.experiment!=="E002-492"||!["A","B"].includes(t.rater)||!t.clips||Object.keys(t).sort().join(",")!=="clips,experiment,rater")throw Error("Wrong E002-492 template");
+ const clips=Object.keys(t.clips).sort();if(clips.length!==20)throw Error("Wrong clip count");
+ for(let i=0;i<20;i++){
+  if(clips[i]!=="clip_"+String(i).padStart(2,"0"))throw Error("Unexpected clip ID");
+  const frames=t.clips[clips[i]];if(!Array.isArray(frames)||frames.length!==13)throw Error("Wrong frame count");
+  for(let j=0;j<13;j++){const f=frames[j];if(!f||Object.keys(f).sort().join(",")!==fieldSet.slice().sort().join(",")||f.frame!==j||!Array.isArray(f.flags)||f.flags.length!==1||f.flags[0]!=="UNREVIEWED"||keys.some(k=>f[k]!==null))throw Error("Template must be blank and blinded")}
+ }
+ return clips.flatMap(c=>Array.from({length:13},(_,j)=>({clip:c,frame:j,name:frameKey(c,j)})));
+}
+async function verifyPNG(file){
+ if(file.size<100)throw Error("Empty image");
+ const b=new Uint8Array(await file.slice(0,24).arrayBuffer());
+ const sig=[137,80,78,71,13,10,26,10];if(sig.some((v,i)=>b[i]!==v)||String.fromCharCode(...b.slice(12,16))!=="IHDR")throw Error("Bad PNG header");
+ const dv=new DataView(b.buffer);if(dv.getUint32(16)!==320||dv.getUint32(20)!==288)throw Error("Wrong native image geometry");
+}
+function nativeColumn(x){return Number.isFinite(x)&&Math.abs(x-160)<=0.5}
+function current(){const p=positions[idx];return packet.clips[p.clip][p.frame]}
+function checked(){return [...document.querySelectorAll("fieldset input:checked")].map(x=>x.value)}
+function draw(){
+ ctx.clearRect(0,0,320,288);if(im)ctx.drawImage(im,0,0);
+ ctx.beginPath();ctx.moveTo(160,0);ctx.lineTo(160,288);ctx.strokeStyle="rgba(255,255,255,.5)";ctx.lineWidth=0.5;ctx.stroke();
+ ctx.font="12px system-ui";pts.forEach((p,i)=>{ctx.fillStyle=i===0?"#fbbf24":"#38bdf8";ctx.beginPath();ctx.arc(p[0],p[1],3,0,Math.PI*2);ctx.fill();ctx.fillText(i===0?"U":"L",p[0]+5,p[1]-5)});
+ $("points").textContent=pts.map((p,i)=>(i===0?"Upper":"Lower")+": ("+p[0].toFixed(1)+","+p[1].toFixed(1)+")").join(" | ")||"No landmarks";
+}
+function progress(){let n=0;for(const p of positions){if(!packet.clips[p.clip][p.frame].flags.includes("UNREVIEWED"))n++}return n}
+async function show(){
+ if(url){URL.revokeObjectURL(url);url=null}im=null;pts=[];
+ const p=positions[idx],f=current();
+ $("position").textContent="Rater "+packet.rater+" | "+p.clip+" frame "+p.frame+" | "+(idx+1)+"/260 | completed "+progress()+"/260";
+ $("diameter").value=f.iris_diameter===null?"":String(f.iris_diameter);
+ $("uncertainty").value=f.uncertainty_px===null?"":String(f.uncertainty_px);
+ document.querySelectorAll("fieldset input").forEach(x=>x.checked=f.flags.includes(x.value));
+ if(f.upper_y!==null&&f.lower_y!==null)pts=[[160,f.upper_y],[160,f.lower_y]];
+ const source=files.get(p.name);url=URL.createObjectURL(source);const image=new Image();
+ await new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject;image.src=url});
+ if(image.naturalWidth!==320||image.naturalHeight!==288)throw Error("PNG decoder dimensions mismatch");
+ im=image;draw();$("status").textContent="Private local frame loaded. No network requests.";
+}
+function save(){
+ if(!packet)return false;
+ const f=current(),flags=checked();
+ if(flags.length){f.upper_y=null;f.lower_y=null;f.iris_diameter=null;f.uncertainty_px=null;f.flags=flags;return true}
+ const d=Number($("diameter").value),e=Number($("uncertainty").value);
+ if(pts.length!==2||pts.some(p=>p[0]!==160)||pts[1][1]<pts[0][1]||!Number.isFinite(d)||d<=0||d>288||!Number.isFinite(e)||e<0||e>30||$("diameter").value===""||$("uncertainty").value===""){fail("Two ordered same-column lid points at x=160, positive iris diameter and bounded uncertainty required. Or flag POOR_GEOMETRY or another nuisance.");return false}
+ f.upper_y=pts[0][1];f.lower_y=pts[1][1];f.iris_diameter=d;f.uncertainty_px=e;f.flags=[];return true;
+}
+canvas.addEventListener("click",ev=>{if(!packet||!im||pts.length===2||checked().length)return;const r=canvas.getBoundingClientRect();const x=(ev.clientX-r.left)*320/r.width,y=(ev.clientY-r.top)*288/r.height;if(x<0||x>=320||y<0||y>=288)return;if(!nativeColumn(x)){fail("Off-column click rejected. Use x=160 guide or flag POOR_GEOMETRY.");return}pts.push([160,Math.round(y*10)/10]);draw()});
+$("undo").onclick=()=>{pts.pop();draw()};
+$("save").onclick=()=>{if(save())$("status").textContent="Saved private annotation "+progress()+"/260"};
+$("prev").onclick=async()=>{if(!packet||idx===0)return;if(!save())return;idx--;try{await show()}catch(e){fail(e.message)}};
+$("next").onclick=async()=>{if(!packet||!save())return;if(idx<positions.length-1){idx++;try{await show()}catch(e){fail(e.message)}}else $("status").textContent="Last frame saved. Export when all 260 complete."};
+$("load").onclick=async()=>{
+ try{
+  if(!$("template").files.length)throw Error("Missing template");
+  const t=JSON.parse(await $("template").files[0].text());const p=validateTemplate(t);
+  const all=[...$("images").files,...$("fallback").files].filter(f=>/^clip_\d\d_frame_\d\d\.png$/.test(f.name));
+  if(all.length!==260)throw Error("Exactly 260 private PNGs required");
+  const m=new Map();for(const f of all){if(m.has(f.name))throw Error("Duplicate filename");m.set(f.name,f)}
+  for(const row of p){const f=m.get(row.name);if(!f)throw Error("Missing expected frame");await verifyPNG(f)}
+  packet=t;files=m;positions=p;idx=0;await show();
+ }catch(e){packet=null;files=new Map();positions=[];fail(e.message)}
+};
+$("export").onclick=()=>{
+ if(!packet)return;
+ if(!save())return;
+ if(progress()!==260){fail("Incomplete: "+progress()+"/260 reviewed; mark unmeasurable frames with an explicit nuisance flag.");return}
+ const blob=new Blob([JSON.stringify(packet,null,2)+"\n"],{type:"application/json"}),link=document.createElement("a");
+ const u=URL.createObjectURL(blob);link.href=u;link.download="E002_492_RATER_"+packet.rater+"_PRIVATE.json";document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);
+ $("status").textContent="Exported locally. Freeze the file and do not share with the other rater before both finish.";
+};
+})();
+</script></body></html>

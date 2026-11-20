@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="560" viewBox="0 0 1080 560" role="img" aria-label="E002-433 synthetic identical optical shutter means, distinct physical apertures, and joint-nuisance abstention">
+<style>
+text{font-family:Arial,Helvetica,sans-serif;fill:#18222c}
+.title{font-size:22px;font-weight:700}.sub{font-size:12px;fill:#56616c}
+.panel{font-size:16px;font-weight:700}.tick{font-size:11px;fill:#596673}
+.label{font-size:13px}.value{font-size:13px;font-weight:700}
+.grid{stroke:#dfe5ea;stroke-width:1}.axis{stroke:#84919e;stroke-width:1.4}
+.threshold{stroke:#be3d3d;stroke-width:1.8;stroke-dasharray:7 5}
+</style>
+<rect width="1080" height="560" fill="#ffffff"/>
+<text x="44" y="43" class="title">E002-433  |  Independent nuisance checks do not compose</text>
+<text x="44" y="65" class="sub">Preregistered synthetic instrument counterexample · 30 Hz · 2 ms exposure · hypothetical V = 1.5 mm/s</text>
+<rect x="35" y="92" width="496" height="395" rx="8" fill="#fafbfd" stroke="#d7e0e8"/>
+<rect x="548" y="92" width="497" height="395" rx="8" fill="#fafbfd" stroke="#d7e0e8"/>
+<text x="58" y="120" class="panel">A. Identical exposure means, different physical truth</text>
+<text x="58" y="140" class="sub">Both optical shutter averages: 2.000, 2.000 arbitrary units</text>
+<line x1="108" y1="166" x2="108" y2="421" class="axis"/>
+<line x1="108" y1="421" x2="493" y2="421" class="axis"/>
+<line x1="108" y1="166" x2="493" y2="166" class="grid"/>
+<line x1="108" y1="293.5" x2="493" y2="293.5" class="grid"/>
+<line x1="108" y1="357.25" x2="493" y2="357.25" class="threshold"/>
+<text x="58" y="170" class="tick">2.15</text><text x="58" y="298" class="tick">2.05</text>
+<text x="58" y="361" class="tick">2.00</text><text x="58" y="423" class="tick">1.95</text>
+<text x="115" y="347" class="tick" fill="#be3d3d">closure threshold</text>
+<rect x="113" y="166" width="23" height="255" fill="#cce3f7" opacity=".55"/>
+<rect x="463" y="166" width="23" height="255" fill="#cce3f7" opacity=".55"/>
+<text x="111" y="445" class="tick">0</text><text x="275" y="445" class="tick">16.7</text><text x="451" y="445" class="tick">33.3 ms</text>
+<path d="M125 193.6 L475 193.6" fill="none" stroke="#2779b5" stroke-width="3"/>
+<path d="M125 342.0 L136 342.0 L300 368.8 L463 342.0 L475 342.0" fill="none" stroke="#d57c20" stroke-width="3"/>
+<circle cx="300" cy="368.8" r="4" fill="#d57c20"/>
+<text x="311" y="384" class="value" fill="#a65c11">World B: 1.991 mm (closure)</text>
+<text x="185" y="185" class="label" fill="#2779b5">World A: 2.128 mm (open)</text>
+<text x="122" y="468" class="sub">Blue bands: observed shutter windows (not full-time observations)</text>
+<text x="571" y="120" class="panel">B. Conditional lower aperture (mm)</text>
+<text x="571" y="140" class="sub">No-closure candidate only if lower bound exceeds 2.000 mm</text>
+<line x1="630" y1="166" x2="630" y2="421" class="axis"/>
+<line x1="630" y1="421" x2="1017" y2="421" class="axis"/>
+<line x1="630" y1="357.25" x2="1017" y2="357.25" class="threshold"/>
+<text x="577" y="361" class="tick">2.00</text>
+<text x="578" y="169" class="tick">2.15</text>
+<text x="577" y="422" class="tick">1.95</text>
+<rect x="672" y="225.5" width="62" height="195.5" rx="3" fill="#5b8fb9"/>
+<rect x="763" y="299.5" width="62" height="121.5" rx="3" fill="#5b8fb9"/>
+<rect x="854" y="305.0" width="62" height="116.0" rx="3" fill="#5b8fb9"/>
+<rect x="945" y="376.1" width="62" height="44.9" rx="3" fill="#cb7842"/>
+<text x="671" y="216" class="value">2.103</text>
+<text x="762" y="290" class="value">2.046</text>
+<text x="853" y="296" class="value">2.041</text>
+<text x="944" y="367" class="value">1.985</text>
+<text x="671" y="440" class="tick">Naive</text>
+<text x="748" y="440" class="tick">Geometry</text>
+<text x="855" y="440" class="tick">Gain</text>
+<text x="949" y="440" class="tick">Joint</text>
+<text x="664" y="459" class="tick">candidate</text>
+<text x="760" y="459" class="tick">candidate</text>
+<text x="852" y="459" class="tick">candidate</text>
+<text x="948" y="459" class="tick">abstain</text>
+<text x="44" y="514" class="label">Result: separately passing conditional checks can miss a closure; propagating both nuisance ranges prevents certification.</text>
+<text x="44" y="536" class="sub">Synthetic scalar-optical model only. Neither the velocity cap nor the physical calibration is authenticated. Product remains ABSTAIN_UNCALIBRATED.</text>
+</svg>

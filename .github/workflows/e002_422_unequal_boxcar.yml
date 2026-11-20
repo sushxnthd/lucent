@@ -1,0 +1,36 @@
+name: E002-422 unequal-boxcar full-horizon observability
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_422_*'
+      - 'research/observability/e002_422_unequal_boxcar.py'
+      - 'research/observability/test_e002_422_unequal_boxcar.py'
+      - '.github/workflows/e002_422_unequal_boxcar.yml'
+  pull_request:
+    paths:
+      - 'research/observability/E002_422_*'
+      - 'research/observability/e002_422_unequal_boxcar.py'
+      - 'research/observability/test_e002_422_unequal_boxcar.py'
+      - '.github/workflows/e002_422_unequal_boxcar.yml'
+  workflow_dispatch:
+jobs:
+  independent-unequal-mean-lp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install 'numpy>=1.24,<3' 'scipy>=1.11,<2'
+      - name: Forty independent LP optimizations, frozen counterexample and fail-closed controls
+        run: python -m unittest -v test_e002_422_unequal_boxcar
+        working-directory: research/observability
+      - name: Record conditional witness and product abstention
+        run: python e002_422_unequal_boxcar.py > e002_422_result.json
+        working-directory: research/observability
+      - uses: actions/upload-artifact@v4
+        with:
+          name: e002-422-conditional-unequal-mean-result
+          path: research/observability/e002_422_result.json

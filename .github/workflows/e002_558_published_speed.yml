@@ -1,0 +1,30 @@
+name: E002-558 published-human speed challenge
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_558_published_speed.yml'
+      - 'research/observability/e002_558_published_speed_challenge.py'
+      - 'research/observability/test_e002_558_published_speed_challenge.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-558-speed
+  cancel-in-progress: false
+jobs:
+  published-human-aggregate:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Exact aggregate constraint and abstention tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_558_published_speed_challenge.py' -v
+      - name: Reproduce noncertifying point-estimate challenge
+        run: python research/observability/e002_558_published_speed_challenge.py

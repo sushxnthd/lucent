@@ -1,0 +1,66 @@
+name: E002-501 authentic S01 temporal image-alias falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_501_temporal_alias.yml'
+      - 'research/observability/e002_501_temporal_alias.py'
+      - 'research/observability/test_e002_501_temporal_alias.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_501_temporal_alias.yml'
+      - 'research/observability/e002_501_temporal_alias.py'
+      - 'research/observability/test_e002_501_temporal_alias.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-501-authentic-alias
+  cancel-in-progress: false
+jobs:
+  authentic-human-optical-alias:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install numerical dependency and native decoder
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --disable-pip-version-check 'numpy==1.26.4'
+          if ! command -v ffmpeg >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+          command -v ffmpeg
+      - name: Frozen synthetic adversarial controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_501_temporal_alias.py' -v
+      - name: Checksum-pinned authentic S01 optical alias test (aggregate only)
+        shell: bash
+        run: |
+          set -euo pipefail
+          WORK="$RUNNER_TEMP/lucent501"
+          mkdir -p "$WORK"
+          chmod 700 "$WORK"
+          trap 'rm -f "$WORK/S01.zip"' EXIT
+          printf '{"experiment":"E002-501","status":"FAILED_OR_ABSTAINED","product":"ABSTAIN_UNCALIBRATED","release":"BLOCKED"}\n' > "$WORK/E002_501_AGGREGATE.json"
+          curl --fail --location --silent --show-error --retry 2 --retry-delay 8 \
+            --connect-timeout 30 --max-time 900 --max-filesize 600000000 \
+            --output "$WORK/S01.zip" \
+            'https://zenodo.org/records/18970793/files/S01.zip?download=1'
+          python research/observability/e002_501_temporal_alias.py \
+            --archive "$WORK/S01.zip" --output "$WORK/E002_501_AGGREGATE.json"
+      - name: Upload aggregate counts only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-501-authentic-optical-alias-aggregate-only
+          path: ${{ runner.temp }}/lucent501/E002_501_AGGREGATE.json
+          if-no-files-found: warn
+          retention-days: 7

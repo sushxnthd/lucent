@@ -1,0 +1,43 @@
+name: E002-435 stream-copy media clock falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'instrument/verify_frame_timing.py'
+      - 'research/observability/e002_435_*'
+      - 'research/observability/E002_435_*'
+      - 'research/observability/test_e002_435_*'
+      - '.github/workflows/e002_435_media_clock.yml'
+  workflow_dispatch:
+jobs:
+  packet-identity-clock-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Ensure free FFmpeg/FFprobe
+        run: |
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then
+            sudo apt-get update && sudo apt-get install -y ffmpeg
+          fi
+          ffmpeg -version | head -n 1
+      - name: Eight independent adversarial test groups
+        run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_435_media_clock.py
+      - name: Reproduce frozen real stream-copy experiment
+        run: |
+          python research/observability/e002_435_media_clock.py --output /tmp/e002_435.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/e002_435.json'))
+          assert d['frozen_predictions_passed']
+          assert d['variants']['scaled']['max_abs_pts_difference_from_base_s'] > .40
+          assert d['variants']['offset']['max_abs_pts_difference_from_base_s'] > .79
+          assert all(v['packet_payload_sha256_sequence_identical'] and v['decoded_frame_sha256_sequence_identical'] for v in d['variants'].values())
+          assert d['human_sequences'] == 0 and not d['physical_certificate_authorized']
+          assert d['product'] == 'ABSTAIN_UNCALIBRATED'
+          print('ENCODED MEDIA CLOCK COUNTEREXAMPLE ONLY; PHYSICAL VALIDATION OUTSTANDING')
+          PY

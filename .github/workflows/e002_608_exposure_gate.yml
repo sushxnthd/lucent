@@ -1,0 +1,40 @@
+name: E002-608 shutter-averaged gap gate
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_608_exposure_gate.py'
+      - 'research/observability/test_e002_608_exposure_gate.py'
+      - 'research/observability/e002_608_independent.cjs'
+      - 'research/observability/E002_608_*'
+      - '.github/workflows/e002_608_exposure_gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shutter-transfer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python adversarial tests
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_608_exposure_gate.py
+          python e002_608_exposure_gate.py --example
+      - name: Independent Node rational replay
+        run: node research/observability/e002_608_independent.cjs
+      - name: No private human source artifacts added
+        run: |
+          if git ls-files | grep -Ei '(^|/)(private|raw_eye|human_video|subject_video)/'; then
+            echo 'Unexpected private human source artifact tracked'
+            exit 1
+          fi

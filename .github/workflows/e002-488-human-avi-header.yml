@@ -1,0 +1,51 @@
+name: E002-488 dependency-free authentic human AVI header intake
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - .github/workflows/e002-488-human-avi-header.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lucent-e002-488-single-subject-intake
+  cancel-in-progress: false
+
+jobs:
+  s24-avi-header:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run dependency-free AVI and archive adversarial controls
+        run: python research/observability/test_e002_488_avi_header.py
+      - name: Download one authentic S24 archive and audit only AVI headers
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/lucent488"
+          REPORT="$RUNNER_TEMP/lucent488/E002_488_REAL_HEADER.json"
+          URL="https://zenodo.org/records/18970793/files/S24.zip?download=1"
+          if ! curl --fail --location --silent --show-error \
+              --retry 2 --retry-delay 8 --connect-timeout 30 \
+              --max-time 900 --max-filesize 600000000 \
+              --output "$RUNNER_TEMP/lucent488/S24.zip" "$URL"; then
+            printf '{"protocol":"E002-488","pilot_acquisition_status":"FAILED_DOWNLOAD","evidence_tier":"NO_AUTHENTICATED_HUMAN_VIDEO","physical_claims":"ABSTAIN_UNCALIBRATED","product_release":"BLOCKED"}\n' > "$REPORT"
+            exit 1
+          fi
+          python research/observability/e002_488_avi_header.py \
+            --archive "$RUNNER_TEMP/lucent488/S24.zip" --output "$REPORT"
+          rm -f "$RUNNER_TEMP/lucent488/S24.zip"
+      - name: Publish aggregate header JSON only, never raw human images/video
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-488-s24-header-only
+          path: ${{ runner.temp }}/lucent488/E002_488_REAL_HEADER.json
+          if-no-files-found: warn
+          retention-days: 7

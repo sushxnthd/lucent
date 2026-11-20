@@ -1,0 +1,52 @@
+name: E002-604 Shutter integration alias independent replay
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_604_shutter_alias.py'
+      - 'research/observability/e002_604_shutter_alias_independent.js'
+      - 'research/observability/E002_604_FROZEN.md'
+      - 'research/observability/E002_604_RESULT.md'
+      - '.github/workflows/e002_604_shutter_alias.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_604_shutter_alias.py'
+      - 'research/observability/e002_604_shutter_alias_independent.js'
+      - '.github/workflows/e002_604_shutter_alias.yml'
+  workflow_dispatch:
+jobs:
+  independent-shutter-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run independent implementations and compare machine-readable results
+        env:
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          cd research/observability
+          python e002_604_shutter_alias.py > /tmp/e002_604_python.json
+          node e002_604_shutter_alias_independent.js > /tmp/e002_604_js.json
+          python - <<'PY'
+          import json
+          a=json.load(open('/tmp/e002_604_python.json'))
+          b=json.load(open('/tmp/e002_604_js.json'))
+          assert a['phase_count']==b['phase_count']==10000
+          for x,y in zip(a['minima'],b['minima']):
+              assert x['exposure_ms']==y['exposure_ms']
+              assert abs(x['integrated_min_aperture']-y['integrated_min_aperture'])<1e-9
+              assert abs(x['predicted_min_aperture']-y['predicted_min_aperture'])<1e-9
+          for x,y in zip(a['cases'],b['cases']):
+              assert x['fps']==y['fps'] and x['exposure_ms']==y['exposure_ms']
+              assert abs(x['average_missed_fraction']-y['average_missed_fraction'])<=1e-4
+              assert abs(x['point_missed_fraction']-y['point_missed_fraction'])<=1e-4
+          print('E002-604 INDEPENDENT_REPLAY_PASS',a['cases'])
+          PY
+      - name: Refuse accidental research-image artifacts
+        run: |
+          test -z "$(find research/observability -type f \( -name '*.png' -o -name '*.avi' -o -name '*.mp4' \) -print -quit)"

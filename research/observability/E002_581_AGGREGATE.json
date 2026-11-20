@@ -1,0 +1,52 @@
+{
+  "experiment": "E002-581",
+  "execution_date": "2026-11-01",
+  "execution": "https://github.com/sushxnthd/lucent/actions/runs/41269895334",
+  "execution_status": "success",
+  "source": "LPW/1/1.txt",
+  "source_sha256": "12f60068317a341809babb7c2cbce90b8ba299ad877d75186687b0d521f6d5d2",
+  "evidence_tier": "AUTHENTIC_INVESTIGATOR_PUPIL_CENTER_LABEL_ORDER_ONLY",
+  "participant_partition": "DEVELOPMENT_ONLY",
+  "annotation_rows": 2000,
+  "increments": 1999,
+  "junctions": 1998,
+  "all_exact_linear_junctions_including_stationary": 1561,
+  "all_near_linear_junctions_including_stationary": 1561,
+  "moving_exact_linear": {
+    "junctions": 1528,
+    "runs_ge_3": 354,
+    "longest_junction_run": 14
+  },
+  "null": {
+    "seed": 581,
+    "replicates": 499,
+    "increment_block": 50,
+    "moving_junction_count": {
+      "median": 191,
+      "p95": 213,
+      "max": 234,
+      "add_one_upper_tail": 0.002
+    },
+    "longest_moving_junction_run": {
+      "median": 3,
+      "p95": 5,
+      "max": 7,
+      "add_one_upper_tail": 0.002
+    }
+  },
+  "thresholds_px": {
+    "exact_acceleration": 0.000001,
+    "minimum_adjacent_displacement": 0.1,
+    "near_acceleration": 0.001
+  },
+  "interpretations_excluded": [
+    "annotation-generation mechanism identification",
+    "anatomical eyelid closure",
+    "continuous-time eyelid velocity",
+    "certified shutter exposure",
+    "held-out physiological predictions",
+    "blink/PERCLOS/fatigue"
+  ],
+  "product": "ABSTAIN_UNCALIBRATED",
+  "release": "BLOCKED"
+}

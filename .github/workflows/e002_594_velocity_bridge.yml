@@ -1,0 +1,21 @@
+name: E002-594 reference-frame velocity envelope
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_594_velocity_bridge.py'
+      - 'research/observability/e002_594_independent_replay.cjs'
+      - 'research/observability/E002_594_FROZEN.md'
+      - 'research/observability/E002_594_RESULT.md'
+      - '.github/workflows/e002_594_velocity_bridge.yml'
+  workflow_dispatch:
+jobs:
+  exact-synthetic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python exact rational tests
+        run: python3 research/observability/e002_594_velocity_bridge.py
+      - name: Independent Node BigInt replay
+        run: node research/observability/e002_594_independent_replay.cjs

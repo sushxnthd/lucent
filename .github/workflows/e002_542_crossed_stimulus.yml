@@ -1,0 +1,43 @@
+name: E002-542 crossed-stimulus shutter transfer falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_542_*'
+      - 'research/observability/e002_542_*'
+      - 'research/observability/test_e002_542_*'
+      - '.github/workflows/e002_542_crossed_stimulus.yml'
+  workflow_dispatch:
+
+jobs:
+  synthetic-transfer-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Frozen experiment
+        run: python research/observability/e002_542_crossed_stimulus.py --output /tmp/e002_542_result.json
+      - name: Fourteen adversarial tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_542_crossed_stimulus.py' -v
+      - name: Independent Node replay
+        run: node research/observability/e002_542_independent_replay.cjs
+      - name: Verify result is a noncertifying model falsification
+        run: |
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/e002_542_result.json'))
+          assert all(r['frozen_predictions'].values())
+          assert r['gamma']['training']['decision']=='SYNTHETIC_IDENTIFIED'
+          assert r['temporal_blur']['training']['decision']=='SYNTHETIC_IDENTIFIED'
+          assert r['physical_capture_count']==0
+          assert r['human_anatomical_rating_count']==0
+          assert r['product']=='ABSTAIN_UNCALIBRATED'
+          assert r['release']=='BLOCKED'
+          PY

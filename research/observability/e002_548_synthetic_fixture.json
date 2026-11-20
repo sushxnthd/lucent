@@ -1,0 +1,39 @@
+{
+  "schema": "lucent-e002-548-v1",
+  "origin": "synthetic",
+  "predictions": [
+    {
+      "gap_id": "g1",
+      "participant_id": "P01",
+      "session_id": "S1",
+      "roi_id": "left-eye",
+      "eye": "left",
+      "blind_start_ms": "100",
+      "blind_end_ms": "110",
+      "closure_threshold": "0.2",
+      "prediction": "EXCLUDE",
+      "lock_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ],
+  "reference_frames": [
+    {
+      "gap_id": "g1",
+      "frame_id": "f1",
+      "participant_id": "P01",
+      "session_id": "S1",
+      "roi_id": "left-eye",
+      "eye": "left",
+      "quality": "valid",
+      "timing_evidence": "independent_calibration",
+      "transfer_evidence": "independent_calibration",
+      "timing_certificate_id": "t1",
+      "transfer_certificate_id": "x1",
+      "rater_1": "closed",
+      "rater_2": "closed",
+      "frame_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "support_earliest_ms": "102",
+      "support_latest_ms": "105",
+      "mean_aperture_upper": "0.15"
+    }
+  ]
+}

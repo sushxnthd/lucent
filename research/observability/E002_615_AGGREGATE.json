@@ -1,0 +1,334 @@
+{
+  "experiment": "E002-615",
+  "evidence": "PUBLISHED_HUMAN_ANNOTATIONS_AND_UNCALIBRATED_SOURCE_TIMESTAMPS_VIRTUAL_POINT_SAMPLING",
+  "source": "https://www.blinkingmatters.com/research",
+  "archive_sha256": "a73bf84981b84f626a3cc7b3b3d1962360354740bc6cf3de5d9c92d6d380c223",
+  "frozen_protocol_commit": "d0b0a0c6f659a7a8a02416d0907902676bbfa02f",
+  "corrected_code_commit": "2f240ddc603a69c5128ee1f3c8971564f97ce88d",
+  "hosted_success_run": 41526585851,
+  "source_sequences": 5,
+  "annotated_frames": 58884,
+  "consecutive_source_intervals": 58879,
+  "eligible_per_eye_fc_runs": 567,
+  "source_dt_outside_strict_10pct": 0,
+  "source_dt_outside_strict_25pct": 0,
+  "virtual_event_phase_pairs": 5670,
+  "omissions": {
+    "actual_timestamp_nearest": 202,
+    "uniform_timestamp_nearest": 202,
+    "original_floor_index": 202
+  },
+  "paired_disagreements": {
+    "actual_vs_original_floor_index": 82,
+    "actual_vs_uniform_nearest": 156
+  },
+  "per_phase_omissions": {
+    "actual_timestamp_nearest": [
+      25,
+      16,
+      21,
+      22,
+      16,
+      17,
+      24,
+      24,
+      14,
+      23
+    ],
+    "original_floor_index": [
+      29,
+      18,
+      21,
+      17,
+      20,
+      18,
+      25,
+      20,
+      14,
+      20
+    ],
+    "uniform_timestamp_nearest": [
+      20,
+      14,
+      20,
+      29,
+      18,
+      21,
+      17,
+      20,
+      18,
+      25
+    ]
+  },
+  "per_sequence": [
+    {
+      "anonymous_sequence_number": 1,
+      "annotated_frames": 11498,
+      "eligible_per_eye_fc_runs": 196,
+      "strict_outside_10pct": 0,
+      "strict_outside_25pct": 0,
+      "source_dt_over_median_quantiles": {
+        "0": 0.9,
+        "1": 1.1,
+        "0.01": 1,
+        "0.5": 1,
+        "0.99": 1
+      },
+      "omissions_actual": [
+        2,
+        0,
+        3,
+        5,
+        0,
+        2,
+        5,
+        2,
+        0,
+        3
+      ],
+      "omissions_original_index": [
+        2,
+        0,
+        3,
+        3,
+        2,
+        0,
+        5,
+        2,
+        0,
+        5
+      ],
+      "omissions_uniform": [
+        2,
+        0,
+        5,
+        2,
+        0,
+        3,
+        3,
+        2,
+        0,
+        5
+      ],
+      "changed_actual_vs_index": 12,
+      "changed_actual_vs_uniform": 10
+    },
+    {
+      "anonymous_sequence_number": 2,
+      "annotated_frames": 16011,
+      "eligible_per_eye_fc_runs": 59,
+      "strict_outside_10pct": 0,
+      "strict_outside_25pct": 0,
+      "source_dt_over_median_quantiles": {
+        "0": 0.9,
+        "1": 1.1,
+        "0.01": 1,
+        "0.5": 1,
+        "0.99": 1
+      },
+      "omissions_actual": [
+        4,
+        2,
+        3,
+        2,
+        2,
+        3,
+        4,
+        5,
+        3,
+        3
+      ],
+      "omissions_original_index": [
+        4,
+        3,
+        5,
+        2,
+        2,
+        3,
+        5,
+        2,
+        2,
+        3
+      ],
+      "omissions_uniform": [
+        2,
+        2,
+        3,
+        4,
+        3,
+        5,
+        2,
+        2,
+        3,
+        5
+      ],
+      "changed_actual_vs_index": 22,
+      "changed_actual_vs_uniform": 28
+    },
+    {
+      "anonymous_sequence_number": 3,
+      "annotated_frames": 10088,
+      "eligible_per_eye_fc_runs": 99,
+      "strict_outside_10pct": 0,
+      "strict_outside_25pct": 0,
+      "source_dt_over_median_quantiles": {
+        "0": 0.9,
+        "1": 1.1,
+        "0.01": 1,
+        "0.5": 1,
+        "0.99": 1
+      },
+      "omissions_actual": [
+        7,
+        7,
+        5,
+        6,
+        6,
+        3,
+        7,
+        6,
+        7,
+        6
+      ],
+      "omissions_original_index": [
+        10,
+        7,
+        3,
+        6,
+        6,
+        5,
+        9,
+        6,
+        5,
+        3
+      ],
+      "omissions_uniform": [
+        6,
+        5,
+        3,
+        10,
+        7,
+        3,
+        6,
+        6,
+        5,
+        9
+      ],
+      "changed_actual_vs_index": 14,
+      "changed_actual_vs_uniform": 50
+    },
+    {
+      "anonymous_sequence_number": 4,
+      "annotated_frames": 13178,
+      "eligible_per_eye_fc_runs": 149,
+      "strict_outside_10pct": 0,
+      "strict_outside_25pct": 0,
+      "source_dt_over_median_quantiles": {
+        "0": 0.9,
+        "1": 1.1,
+        "0.01": 1,
+        "0.5": 1,
+        "0.99": 1
+      },
+      "omissions_actual": [
+        11,
+        6,
+        9,
+        8,
+        7,
+        8,
+        7,
+        9,
+        3,
+        10
+      ],
+      "omissions_original_index": [
+        11,
+        7,
+        9,
+        5,
+        8,
+        9,
+        6,
+        8,
+        6,
+        9
+      ],
+      "omissions_uniform": [
+        8,
+        6,
+        9,
+        11,
+        7,
+        9,
+        5,
+        8,
+        9,
+        6
+      ],
+      "changed_actual_vs_index": 30,
+      "changed_actual_vs_uniform": 64
+    },
+    {
+      "anonymous_sequence_number": 5,
+      "annotated_frames": 8109,
+      "eligible_per_eye_fc_runs": 64,
+      "strict_outside_10pct": 0,
+      "strict_outside_25pct": 0,
+      "source_dt_over_median_quantiles": {
+        "0": 0.9,
+        "1": 1.1,
+        "0.01": 0.9,
+        "0.5": 1,
+        "0.99": 1.1
+      },
+      "omissions_actual": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        2,
+        1,
+        1
+      ],
+      "omissions_original_index": [
+        2,
+        1,
+        1,
+        1,
+        2,
+        1,
+        0,
+        2,
+        1,
+        0
+      ],
+      "omissions_uniform": [
+        2,
+        1,
+        0,
+        2,
+        1,
+        1,
+        1,
+        2,
+        1,
+        0
+      ],
+      "changed_actual_vs_index": 4,
+      "changed_actual_vs_uniform": 4
+    }
+  ],
+  "limitations": [
+    "source timestamps not independently calibrated physical exposure or clock",
+    "virtual point sampling is not a physical 30fps shutter",
+    "human full-closure labels are discrete categories not continuous anatomical aperture",
+    "no independently certified continuous-time eyelid velocity bound",
+    "no held-out physical shutter/clock validation"
+  ],
+  "product": "ABSTAIN_UNCALIBRATED",
+  "release": "BLOCKED"
+}

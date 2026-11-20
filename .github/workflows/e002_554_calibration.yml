@@ -1,0 +1,41 @@
+name: E002-554 shutter calibration identifiability
+on:
+  push:
+    paths:
+      - 'research/observability/e002_554_*'
+      - 'research/observability/test_e002_554_*'
+      - '.github/workflows/e002_554_calibration.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_554_*'
+      - 'research/observability/test_e002_554_*'
+      - '.github/workflows/e002_554_calibration.yml'
+  workflow_dispatch:
+
+jobs:
+  exact-independent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Frozen exact-rational Python adversarial controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_554_calibration_identifiability.py' -v
+      - name: Independent Node BigInt oracle
+        run: node research/observability/e002_554_independent.cjs
+      - name: Explicitly synthetic evidence only
+        run: |
+          python research/observability/e002_554_calibration_identifiability.py > /tmp/e002_554.json
+          python - <<'PY'
+          import json
+          with open('/tmp/e002_554.json') as f: a=json.load(f)
+          assert a['evidence_tier']=='EXACT_SYNTHETIC_ONLY'
+          assert a['physical_capture_count']==a['human_rater_count']==0
+          assert a['wrong_kernel_lower_bound']=='1/250'
+          assert a['correct_kernel_lower_bound']=='0'
+          assert a['product']=='ABSTAIN_UNCALIBRATED'
+          PY

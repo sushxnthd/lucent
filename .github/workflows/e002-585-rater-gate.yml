@@ -1,0 +1,24 @@
+name: E002-585 blinded anatomical rater gate
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - research/observability/E002_585_FROZEN.md
+      - research/observability/e002_585_human_rater_gate.py
+      - .github/workflows/e002-585-rater-gate.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  synthetic-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile instrument
+        run: python -m py_compile research/observability/e002_585_human_rater_gate.py
+      - name: Frozen adversarial fixtures, no human data
+        run: python research/observability/e002_585_human_rater_gate.py --self-test

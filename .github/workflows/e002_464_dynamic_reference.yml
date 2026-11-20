@@ -1,0 +1,42 @@
+name: E002-464 dynamic reference falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_464_*'
+      - 'research/observability/test_e002_464_*'
+      - 'research/observability/E002_464_*'
+      - '.github/workflows/e002_464_dynamic_reference.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dynamic-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run 18 delayed/signed response adversarial tests and 40,401-case sweep
+        run: python -m unittest -v research/observability/test_e002_464_dynamic_reference.py
+      - name: Independently reproduce lag, signed-response, and grid arithmetic
+        run: node research/observability/e002_464_independent_replay.cjs
+      - name: Verify fixed synthetic-only aggregate and release abstention
+        run: |
+          python research/observability/e002_464_dynamic_reference.py > /tmp/e002_464.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/e002_464.json'))
+          assert r['legacy_delayed_false_dark_gap_witness']=='WITNESSED_CROSSING'
+          assert r['corrected_delayed_reference']=='REFERENCE_UNRESOLVED'
+          assert r['calibrated_positive_reference']=='WITNESSED_CROSSING'
+          assert r['signed_kernel_reference']=='REFERENCE_UNRESOLVED'
+          assert r['real_human_measurements']==0
+          assert r['real_physical_encoder_measurements']==0
+          assert r['physical_release_authorized'] is False
+          assert r['product_claim']=='ABSTAIN_UNCALIBRATED'
+          PY

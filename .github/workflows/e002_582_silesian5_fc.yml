@@ -1,0 +1,34 @@
+name: E002-582 Silesian5 human full-closure index alias
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/E002_582_FROZEN.md"
+      - "research/observability/e002_582_source_probe.py"
+      - "research/observability/e002_582_silesian5_fc.py"
+      - "research/observability/e002_582_independent_replay.cjs"
+      - ".github/workflows/e002_582_silesian5_fc.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  human-annotation-index-alias:
+    runs-on: ubuntu-latest
+    timeout-minutes: 9
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test exact phase law and source parser against adversarial fixtures
+        run: python research/observability/e002_582_silesian5_fc.py
+      - name: Analyze original public Silesian5 FC labels without publishing rows
+        run: python research/observability/e002_582_silesian5_fc.py --source
+      - name: Independently replay source FC events with Node.js residue sampler
+        shell: bash
+        run: |
+          set -euo pipefail
+          tmp="$(mktemp)"
+          trap 'rm -f "$tmp"' EXIT
+          curl -fsSL --retry 2 --max-time 60 -o "$tmp" 'https://www.blinkingmatters.com/files/upload/research/Silesian5%28Basler5%29Annotations.zip'
+          node research/observability/e002_582_independent_replay.cjs "$tmp"

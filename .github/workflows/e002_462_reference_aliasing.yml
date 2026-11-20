@@ -1,0 +1,46 @@
+name: E002-462 reference-camera aliasing (synthetic)
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/*462*'
+      - '.github/workflows/e002_462_reference_aliasing.yml'
+jobs:
+  independent-synthetic-verification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python adversarial and finite-dwell tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_462*.py' -v
+      - name: Independent JavaScript frozen-case checks
+        run: |
+          node research/observability/e002_462_independent_replay.cjs
+          node research/observability/e002_462_finite_dwell_independent.cjs
+      - name: Reproduce machine-readable aggregates
+        run: |
+          python - <<'PY'
+          import json,sys
+          sys.path.insert(0,'research/observability')
+          from e002_462_reference_aliasing import run
+          from e002_462_finite_dwell import run as finite
+          p='research/observability/'
+          expected=json.load(open(p+'E002_462_SYNTHETIC_AGGREGATE.json'))
+          actual=run()
+          assert expected['primary']==actual['primary']
+          assert expected['cells']==actual['cells']
+          exp_f=json.load(open(p+'E002_462_FINITE_DWELL_AGGREGATE.json'))
+          act_f=finite()
+          for e,a in zip(exp_f,act_f):
+              assert e['identical_to_constant_open']==a['identical_to_constant_open']
+              assert abs(e['subthreshold_duration_ms']-a['subthreshold_duration_ms'])<1e-12
+              assert all(abs(x-y)<1e-12 for x,y in zip(e['excursion_support_ms'],a['excursion_support_ms']))
+          print('E002-462 committed aggregates reproduced; synthetic only')
+          PY

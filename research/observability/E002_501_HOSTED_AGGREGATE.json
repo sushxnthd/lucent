@@ -1,0 +1,63 @@
+{
+  "anatomical_closure_labels": 0,
+  "camera_clock_authenticated": false,
+  "condition_counts": {
+    "alternating_jitter_1px": {
+      "ABSTAIN_BORDER": 701,
+      "ABSTAIN_DUPLICATE": 0,
+      "ABSTAIN_PHOTOMETRIC": 1698,
+      "ENDPOINT_DIFFERENT": 0,
+      "IMAGE_ALIAS_CANDIDATE": 0,
+      "NO_IMAGE_ALIAS_EVIDENCE": 0
+    },
+    "baseline": {
+      "ABSTAIN_BORDER": 545,
+      "ABSTAIN_DUPLICATE": 0,
+      "ABSTAIN_PHOTOMETRIC": 1676,
+      "ENDPOINT_DIFFERENT": 64,
+      "IMAGE_ALIAS_CANDIDATE": 0,
+      "NO_IMAGE_ALIAS_EVIDENCE": 114
+    },
+    "blur_3x3": {
+      "ABSTAIN_BORDER": 506,
+      "ABSTAIN_DUPLICATE": 0,
+      "ABSTAIN_PHOTOMETRIC": 1676,
+      "ENDPOINT_DIFFERENT": 89,
+      "IMAGE_ALIAS_CANDIDATE": 0,
+      "NO_IMAGE_ALIAS_EVIDENCE": 128
+    },
+    "brightness_plus8": {
+      "ABSTAIN_BORDER": 545,
+      "ABSTAIN_DUPLICATE": 0,
+      "ABSTAIN_PHOTOMETRIC": 1676,
+      "ENDPOINT_DIFFERENT": 64,
+      "IMAGE_ALIAS_CANDIDATE": 0,
+      "NO_IMAGE_ALIAS_EVIDENCE": 114
+    }
+  },
+  "evidence_tier": "AUTHENTIC_HUMAN_IMAGE_SAMPLING_SURROGATE_ONLY",
+  "experiment": "E002-501",
+  "image_proxy_nuisance_survivors": 0,
+  "native_frames": 12000,
+  "native_window_step_intervals": 5,
+  "nuisance_candidate_differences": {
+    "alternating_jitter_1px": {
+      "baseline_candidates_lost": 0,
+      "new_candidates_gained": 0
+    },
+    "blur_3x3": {
+      "baseline_candidates_lost": 0,
+      "new_candidates_gained": 0
+    },
+    "brightness_plus8": {
+      "baseline_candidates_lost": 0,
+      "new_candidates_gained": 0
+    }
+  },
+  "physical_hidden_closure_certified": false,
+  "physical_shutter_calibrated": false,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "release": "BLOCKED",
+  "subject": "S01_CALIBRATION_ONLY",
+  "surrogate_windows": 2399
+}

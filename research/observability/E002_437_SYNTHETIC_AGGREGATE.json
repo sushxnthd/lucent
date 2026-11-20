@@ -1,0 +1,28 @@
+{
+  "adversarial_misspecification": {
+    "false_zero_acceleration_bound_mm_s": 25.5,
+    "false_zero_localization_error_bound_mm_s": 26,
+    "observed_secant_mm_s": 21.5,
+    "true_initial_speed_mm_s": 30,
+    "valid_conditional_bound_mm_s": 30
+  },
+  "evidence": "SYNTHETIC_SMOOTH_TRACE_ONLY",
+  "experiment": "E002-437",
+  "human_participants": 0,
+  "maximum_truth_minus_bound_mm_s": -0.4655071657,
+  "optimal_spacing": {
+    "minimum_penalty_mm_s": 8.48528137423857,
+    "optimal_reference_rate_hz": 424.26406871192853,
+    "optimal_spacing_s": 0.0023570226039551583
+  },
+  "physical_certificate_authorized": false,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "sampling_penalty_mm_s": {
+    "200": 11,
+    "400": 8.5,
+    "1000": 11.8
+  },
+  "seed": 437,
+  "traces": 500,
+  "violations_under_true_premises": 0
+}

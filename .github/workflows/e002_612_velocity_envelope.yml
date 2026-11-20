@@ -1,0 +1,42 @@
+name: E002-612 velocity envelope independent replay
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_612_velocity_envelope.py'
+      - 'research/observability/test_e002_612_velocity_envelope.py'
+      - 'research/observability/e002_612_independent.cjs'
+      - 'research/observability/E002_612_*.md'
+      - '.github/workflows/e002_612_velocity_envelope.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_612_velocity_envelope.py'
+      - 'research/observability/test_e002_612_velocity_envelope.py'
+      - 'research/observability/e002_612_independent.cjs'
+      - 'research/observability/E002_612_*.md'
+      - '.github/workflows/e002_612_velocity_envelope.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-velocity-envelope:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Frozen Python adversarial controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_612_velocity_envelope.py' -v
+      - name: Independent Node BigInt verifier
+        run: node research/observability/e002_612_independent.cjs
+      - name: Reproducible synthetic grid (aggregate only)
+        run: |
+          python research/observability/e002_612_velocity_envelope.py --grid > /tmp/e002_612_grid.csv
+          python -c "import csv; r=list(csv.DictReader(open('/tmp/e002_612_grid.csv'))); assert len(r)==12; assert all(x['product']=='ABSTAIN_UNCALIBRATED' and x['release']=='BLOCKED' for x in r)"

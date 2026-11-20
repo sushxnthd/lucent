@@ -1,0 +1,19 @@
+{
+  "blinded_clip_count": 20,
+  "camera_clock_authenticated": false,
+  "evidence_tier": "AUTHENTIC_HUMAN_PACKET_TECHNICAL_INTEGRITY_ONLY",
+  "experiment": "E002-496",
+  "frames_per_clip": 13,
+  "frozen_mapping_sha256": "1ad969e986c8d5f32235ba519e55889237e0cb6571edf7b321f8b0103845cdeb",
+  "human_anatomical_labels": 0,
+  "human_reference_validated": false,
+  "native_height": 288,
+  "native_width": 320,
+  "physical_shutter_calibrated": false,
+  "private_native_png_frames": 260,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "rater_templates": 2,
+  "release": "BLOCKED",
+  "source": "S01_CALIBRATION_ONLY",
+  "status": "TECHNICAL_PACKET_INTEGRITY_PASS"
+}

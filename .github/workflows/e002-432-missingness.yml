@@ -1,0 +1,30 @@
+name: E002-432 missing-frame observability falsification
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_432_missingness.py'
+      - 'research/observability/test_e002_432_missingness.py'
+      - '.github/workflows/e002-432-missingness.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_432_missingness.py'
+      - 'research/observability/test_e002_432_missingness.py'
+      - '.github/workflows/e002-432-missingness.yml'
+  workflow_dispatch:
+
+jobs:
+  dropout-alias-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent synthetic controls and holdout
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_432_missingness.py
+          python e002_432_missingness.py

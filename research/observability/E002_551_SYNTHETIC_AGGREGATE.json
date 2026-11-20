@@ -1,0 +1,24 @@
+{
+  "evidence_tier": "SYNTHETIC_CONDITIONAL_ONLY",
+  "seed": 551,
+  "attempted": 10000,
+  "valid_physical_range": 9954,
+  "discarded_out_of_range": 46,
+  "true_hidden_closures": 79,
+  "curvature_exclusions": 9203,
+  "speed_only_exclusions": 5951,
+  "false_exclusions_under_correct_assumptions": 0,
+  "exact_examples": {
+    "A_per_s2": 8000,
+    "theta": 0.2,
+    "observed_endpoints": [
+      0.25,
+      0.25
+    ],
+    "lower_5ms": 0.225,
+    "lower_10ms": 0.15,
+    "underdeclared_A_1000_lower_10ms": 0.2375,
+    "true_10ms_min": 0.15
+  },
+  "limitations": "All simulated trajectories are piecewise-quadratic bounded-curvature examples with stipulated hard acceleration and instantaneous samples; no human or physical sensor evidence."
+}

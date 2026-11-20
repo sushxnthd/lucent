@@ -1,0 +1,144 @@
+{
+  "evidence_tier": "exact mathematical and idealized synthetic operator; no human/physical validation",
+  "frozen_commit": "7b8c8e92076e7b42f39ef3339ef085a9d83195c0",
+  "model": "a(0)=a(1)=c; a in [0,1]; a reaches 0; |a'|<=L; Y=integral_0^1 a(u)du",
+  "sharp_threshold": "4*c for c<=1/2; 1/(1-c) for c>=1/2",
+  "critical_grid_cases": 19,
+  "subthreshold_rejections": 19,
+  "example_cases": [
+    {
+      "c": "1/5",
+      "Lcrit": "4/5",
+      "Vcrit_at_30fps": "24"
+    },
+    {
+      "c": "1/2",
+      "Lcrit": "2",
+      "Vcrit_at_30fps": "60"
+    },
+    {
+      "c": "4/5",
+      "Lcrit": "5",
+      "Vcrit_at_30fps": "150"
+    }
+  ],
+  "grid": [
+    {
+      "c": "1/20",
+      "Lcrit": "1/5",
+      "subthreshold_speed": "99/500",
+      "subthreshold_max_mean": "99/2000"
+    },
+    {
+      "c": "1/10",
+      "Lcrit": "2/5",
+      "subthreshold_speed": "99/250",
+      "subthreshold_max_mean": "99/1000"
+    },
+    {
+      "c": "3/20",
+      "Lcrit": "3/5",
+      "subthreshold_speed": "297/500",
+      "subthreshold_max_mean": "297/2000"
+    },
+    {
+      "c": "1/5",
+      "Lcrit": "4/5",
+      "subthreshold_speed": "99/125",
+      "subthreshold_max_mean": "99/500"
+    },
+    {
+      "c": "1/4",
+      "Lcrit": "1",
+      "subthreshold_speed": "99/100",
+      "subthreshold_max_mean": "99/400"
+    },
+    {
+      "c": "3/10",
+      "Lcrit": "6/5",
+      "subthreshold_speed": "297/250",
+      "subthreshold_max_mean": "297/1000"
+    },
+    {
+      "c": "7/20",
+      "Lcrit": "7/5",
+      "subthreshold_speed": "693/500",
+      "subthreshold_max_mean": "693/2000"
+    },
+    {
+      "c": "2/5",
+      "Lcrit": "8/5",
+      "subthreshold_speed": "198/125",
+      "subthreshold_max_mean": "99/250"
+    },
+    {
+      "c": "9/20",
+      "Lcrit": "9/5",
+      "subthreshold_speed": "891/500",
+      "subthreshold_max_mean": "891/2000"
+    },
+    {
+      "c": "1/2",
+      "Lcrit": "2",
+      "subthreshold_speed": "99/50",
+      "subthreshold_max_mean": "99/200"
+    },
+    {
+      "c": "11/20",
+      "Lcrit": "20/9",
+      "subthreshold_speed": "11/5",
+      "subthreshold_max_mean": "6/11"
+    },
+    {
+      "c": "3/5",
+      "Lcrit": "5/2",
+      "subthreshold_speed": "99/40",
+      "subthreshold_max_mean": "59/99"
+    },
+    {
+      "c": "13/20",
+      "Lcrit": "20/7",
+      "subthreshold_speed": "99/35",
+      "subthreshold_max_mean": "64/99"
+    },
+    {
+      "c": "7/10",
+      "Lcrit": "10/3",
+      "subthreshold_speed": "33/10",
+      "subthreshold_max_mean": "23/33"
+    },
+    {
+      "c": "3/4",
+      "Lcrit": "4",
+      "subthreshold_speed": "99/25",
+      "subthreshold_max_mean": "74/99"
+    },
+    {
+      "c": "4/5",
+      "Lcrit": "5",
+      "subthreshold_speed": "99/20",
+      "subthreshold_max_mean": "79/99"
+    },
+    {
+      "c": "17/20",
+      "Lcrit": "20/3",
+      "subthreshold_speed": "33/5",
+      "subthreshold_max_mean": "28/33"
+    },
+    {
+      "c": "9/10",
+      "Lcrit": "10",
+      "subthreshold_speed": "99/10",
+      "subthreshold_max_mean": "89/99"
+    },
+    {
+      "c": "19/20",
+      "Lcrit": "20",
+      "subthreshold_speed": "99/5",
+      "subthreshold_max_mean": "94/99"
+    }
+  ],
+  "independent_local_replay": "PASS",
+  "hosted_replay": "PENDING",
+  "product": "ABSTAIN_UNCALIBRATED; release BLOCKED"
+}

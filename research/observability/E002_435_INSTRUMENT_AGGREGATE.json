@@ -1,0 +1,99 @@
+{
+  "experiment": "E002-435",
+  "date": "2026-10-25",
+  "evidence_tier": "REAL_FFMPEG_STREAM_COPY_SYNTHETIC_VIDEO_NO_SENSOR_VALIDATION",
+  "ffmpeg_version": "7.1.5-0+deb13u1",
+  "ffprobe_version": "7.1.5-0+deb13u1",
+  "frames": 13,
+  "baseline_reported_avg_fps_hz": 25,
+  "baseline_pts_s": [
+    0,
+    0.04,
+    0.08,
+    0.12,
+    0.16,
+    0.2,
+    0.24,
+    0.28,
+    0.32,
+    0.36,
+    0.4,
+    0.44,
+    0.48
+  ],
+  "variants": {
+    "identity": {
+      "pts_s": [
+        0,
+        0.04,
+        0.08,
+        0.12,
+        0.16,
+        0.2,
+        0.24,
+        0.28,
+        0.32,
+        0.36,
+        0.4,
+        0.44,
+        0.48
+      ],
+      "max_abs_pts_difference_s": 0,
+      "max_gap_s": 0.04,
+      "reported_avg_fps_hz": 25,
+      "packet_payload_sha256_sequence_identical": true,
+      "decoded_frame_sha256_sequence_identical": true
+    },
+    "scaled": {
+      "pts_s": [
+        0,
+        0.08,
+        0.16,
+        0.24,
+        0.32,
+        0.4,
+        0.48,
+        0.56,
+        0.64,
+        0.72,
+        0.8,
+        0.88,
+        0.96
+      ],
+      "max_abs_pts_difference_s": 0.48,
+      "max_gap_s": 0.08,
+      "reported_avg_fps_hz": 25,
+      "packet_payload_sha256_sequence_identical": true,
+      "decoded_frame_sha256_sequence_identical": true
+    },
+    "offset": {
+      "pts_s": [
+        0.8,
+        0.84,
+        0.88,
+        0.92,
+        0.96,
+        1,
+        1.04,
+        1.08,
+        1.12,
+        1.16,
+        1.2,
+        1.24,
+        1.28
+      ],
+      "max_abs_pts_difference_s": 0.8,
+      "max_gap_s": 0.04,
+      "reported_avg_fps_hz": 25,
+      "packet_payload_sha256_sequence_identical": true,
+      "decoded_frame_sha256_sequence_identical": true
+    }
+  },
+  "frozen_predictions_passed": true,
+  "local_adversarial_test_groups_passed": 8,
+  "note": "Compact observed aggregate. Run e002_435_media_clock.py to regenerate full ordered packet/pixel SHA256 sequences, exact FFmpeg commands, and unrounded floating-point metrics.",
+  "human_sequences": 0,
+  "authenticated_hardware_exposure_timing": false,
+  "physical_certificate_authorized": false,
+  "product": "ABSTAIN_UNCALIBRATED"
+}

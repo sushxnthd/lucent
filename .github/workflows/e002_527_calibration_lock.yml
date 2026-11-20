@@ -1,0 +1,29 @@
+name: E002-527 preregistered calibration selection
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_527_calibration_lock.py'
+      - 'research/observability/test_e002_527_calibration_lock.py'
+      - 'research/observability/e002_526_locked_transport.py'
+      - 'research/observability/e002_520_cross_camera.py'
+      - '.github/workflows/e002_527_calibration_lock.yml'
+  workflow_dispatch:
+jobs:
+  calibration-selection:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen adversarial regression
+        run: python -m unittest discover -s research/observability -p 'test_e002_527_calibration_lock.py' -v
+      - name: Independent arithmetic reversal
+        run: |
+          node -e "const U=0.19,theta=0.20; const conservative=1.2*U, selected=1.0*U; if(!(conservative>theta&&selected<=theta))process.exit(1); console.log('INDEPENDENT_CALIBRATION_SELECTION_REVERSAL',conservative,selected)"
+      - name: Syntax and historical regression
+        run: |
+          python -m py_compile research/observability/e002_527_calibration_lock.py research/observability/test_e002_527_calibration_lock.py
+          python -m unittest discover -s research/observability -p 'test_e002_526_locked_transport.py' -q

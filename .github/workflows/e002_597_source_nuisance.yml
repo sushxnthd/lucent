@@ -1,0 +1,46 @@
+name: E002-597 authentic LPW image-proxy nuisance falsification
+
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_597_source_nuisance.py
+      - research/observability/E002_597_FROZEN.md
+      - .github/workflows/e002_597_source_nuisance.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - research/observability/e002_597_source_nuisance.py
+      - research/observability/E002_597_FROZEN.md
+      - .github/workflows/e002_597_source_nuisance.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authentic-human-development-nuisance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact branch revision without persistent credentials
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install decoder and pinned scientific dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+          python3 -m venv /tmp/lucent-e002-597-venv
+          /tmp/lucent-e002-597-venv/bin/python -m pip install numpy==2.2.6 Pillow==11.3.0
+      - name: Test independent image-proxy oracle and synthetic adversarial controls
+        run: /tmp/lucent-e002-597-venv/bin/python research/observability/e002_597_source_nuisance.py --self-test
+      - name: Run source-bound 190-frame nuisance attack and print aggregates only
+        run: /tmp/lucent-e002-597-venv/bin/python research/observability/e002_597_source_nuisance.py
+      - name: Assert no human imagery or owner mappings persisted in workspace
+        run: |
+          test ! -d private_review_packets
+          test ! -f source.avi
+          test ! -f OWNER_ONLY_SOURCE_AUDIT.json

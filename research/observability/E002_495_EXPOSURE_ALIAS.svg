@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="480" viewBox="0 0 920 480" role="img" aria-labelledby="title desc">
+<title id="title">E002-495: exposure-mean alias of a hidden eyelid closure</title>
+<desc id="desc">The same exposure means of 0.7 mm arise from a stationary 0.7 mm aperture and a Lipschitz closing tent that reaches 0.1 mm inside the shutter gap. Exposures occupy negative 5 to 0 and 10 to 15 milliseconds.</desc>
+<rect width="920" height="480" fill="#ffffff"/>
+<text x="74" y="35" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#172638">Equal exposure means do not certify an open eyelid</text>
+<text x="74" y="59" font-family="Arial, sans-serif" font-size="13" fill="#526273">E002-495 · exact scalar model · illustrative parameters, not physical data</text>
+<rect x="110" y="86" width="180" height="224" fill="#e9f0f8"/>
+<rect x="650" y="86" width="180" height="224" fill="#e9f0f8"/>
+<rect x="290" y="86" width="360" height="224" fill="#f7f9fb"/>
+<text x="200" y="104" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#375d86">Exposure 1</text>
+<text x="470" y="104" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#5b6774">Unobserved gap</text>
+<text x="740" y="104" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#375d86">Exposure 2</text>
+<line x1="110" y1="310" x2="830" y2="310" stroke="#6e7b87" stroke-width="1.5"/>
+<line x1="110" y1="86" x2="110" y2="310" stroke="#6e7b87" stroke-width="1.5"/>
+<line x1="110" y1="284" x2="830" y2="284" stroke="#bb6e57" stroke-dasharray="5 5" stroke-width="1.5"/>
+<text x="836" y="288" font-family="Arial, sans-serif" font-size="11" fill="#a85c48">c=0.1</text>
+<line x1="110" y1="128" x2="830" y2="128" stroke="#166b72" stroke-width="3.5"/>
+<polyline points="110,76 470,284 830,76" fill="none" stroke="#bb5b3e" stroke-width="3.5" stroke-linejoin="round"/>
+<circle cx="470" cy="284" r="5" fill="#bb5b3e"/>
+<text x="485" y="269" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#a34e35">Hidden threshold crossing</text>
+<text x="476" y="286" font-family="Arial, sans-serif" font-size="11" fill="#a34e35">t=5 ms</text>
+<line x1="110" y1="128" x2="830" y2="128" stroke="#166b72" stroke-width="3.5"/>
+<g font-family="Arial, sans-serif" font-size="12" fill="#415061" text-anchor="middle">
+<text x="110" y="350">−5</text><text x="290" y="350">0</text><text x="470" y="350">5</text><text x="650" y="350">10</text><text x="830" y="350">15</text>
+</g>
+<g stroke="#87929d" stroke-width="1"><line x1="290" y1="306" x2="290" y2="314"/><line x1="470" y1="306" x2="470" y2="314"/><line x1="650" y1="306" x2="650" y2="314"/></g>
+<text x="470" y="374" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#415061">Time (ms)</text>
+<text x="32" y="220" text-anchor="middle" transform="rotate(-90 32 220)" font-family="Arial, sans-serif" font-size="13" fill="#415061">Aperture (mm)</text>
+<g font-family="Arial, sans-serif" font-size="11" fill="#566778" text-anchor="end">
+<text x="99" y="314">0</text><text x="99" y="287">0.1</text><text x="99" y="132">0.7</text><text x="99" y="80">0.9</text>
+</g>
+<line x1="120" y1="404" x2="157" y2="404" stroke="#166b72" stroke-width="4"/>
+<text x="167" y="408" font-family="Arial, sans-serif" font-size="12" fill="#233a45">Nonclosing: a(t)=0.7 mm</text>
+<line x1="415" y1="404" x2="452" y2="404" stroke="#bb5b3e" stroke-width="4"/>
+<text x="462" y="408" font-family="Arial, sans-serif" font-size="12" fill="#233a45">Closing: slope 0.08 mm/ms</text>
+<text x="110" y="444" font-family="Arial, sans-serif" font-size="13" font-weight="700" fill="#172638">Both exposure means: 0.7 mm</text>
+<text x="414" y="444" font-family="Arial, sans-serif" font-size="13" fill="#465666">R(endpoint)=5/6  ·  R(mean)=5/4</text>
+<text x="110" y="464" font-family="Arial, sans-serif" font-size="11" fill="#647485">Illustrates scalar exposure integration only; real spatial images may distinguish these trajectories.</text>
+</svg>

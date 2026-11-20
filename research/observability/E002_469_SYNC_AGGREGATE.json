@@ -1,0 +1,53 @@
+{
+  "anatomical_reference_authenticated": false,
+  "hardware_exposure_timing_authenticated": false,
+  "note": "A candidate frame clock requires independent unit/clock identity verification.",
+  "physical_hidden_closure_exclusion": "ABSTAIN_UNCALIBRATED",
+  "product_release_authorized": false,
+  "protocol": "E002-469-frozen-v1",
+  "source_archive_sha256": "da4281a4d77f95683f541452a0f5b6e56ad8d54139e3be9d7b64374d77a41c25",
+  "sync_csv": {
+    "clock_test": {
+      "frame_fields": 0,
+      "status": "NO_EXPLICIT_FRAME_CLOCK",
+      "unit_bearing_time_fields": 0
+    },
+    "columns": 8,
+    "rows": 423600,
+    "sampled_rows": 200000,
+    "time_related_headers": [
+      "Time",
+      "PhanFrame",
+      "PhanTime",
+      "RelTime",
+      "RecordingTimestamp",
+      "LocalTimeStamp"
+    ]
+  },
+  "xml": {
+    "elements": 156353,
+    "nominal_rate_is_not_hardware_clock": true,
+    "nominal_rate_values": [
+      167
+    ],
+    "time_related_keys": {
+      "CalibRate": 1,
+      "EnableResample": 1,
+      "FRPRate": 1,
+      "FilterTime": 1,
+      "FrameDelayNs": 1,
+      "FrameRateDouble": 1,
+      "PostTrigger": 1,
+      "RecordingTimeZone": 1,
+      "ResampleHeight": 1,
+      "ResampleWidth": 1,
+      "SamplesPerImage": 1,
+      "TIMEBLOCK": 1,
+      "Time": 52050,
+      "TrigFrame": 1,
+      "TriggerTime": 1,
+      "bStampTime": 1,
+      "frame": 156147
+    }
+  }
+}

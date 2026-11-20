@@ -1,0 +1,26 @@
+name: E002-526 predicate-locked transport
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_526_locked_transport.py'
+      - 'research/observability/test_e002_526_locked_transport.py'
+      - 'research/observability/e002_520_cross_camera.py'
+      - '.github/workflows/e002_526_locked_transport.yml'
+  workflow_dispatch:
+jobs:
+  predicate-locked-transport:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python adversarial tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_526_locked_transport.py' -v
+      - name: Independent arithmetic cross-check
+        run: |
+          node -e "const a=0.19*1.2; if(!(a>0.20 && a<0.23))process.exit(1); console.log('independent threshold reversal',a)"
+      - name: Python syntax
+        run: python -m py_compile research/observability/e002_526_locked_transport.py research/observability/test_e002_526_locked_transport.py

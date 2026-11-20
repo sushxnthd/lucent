@@ -1,0 +1,30 @@
+name: E002-429 geometry nuisance falsification
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_429_geometry_alias.py'
+      - 'research/observability/test_e002_429_geometry_alias.py'
+      - '.github/workflows/e002-429-geometry.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_429_geometry_alias.py'
+      - 'research/observability/test_e002_429_geometry_alias.py'
+      - '.github/workflows/e002-429-geometry.yml'
+  workflow_dispatch:
+
+jobs:
+  synthetic-geometry-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verify independently sampled synthetic alias
+        run: |
+          cd research/observability
+          python -m unittest -v test_e002_429_geometry_alias.py
+          python e002_429_geometry_alias.py

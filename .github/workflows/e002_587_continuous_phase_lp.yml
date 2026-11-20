@@ -1,0 +1,31 @@
+name: E002-587 continuous shutter-support inversion and independent replay
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_587_continuous_phase_lp.py
+      - research/observability/e002_587_independent_dual_replay.cjs
+      - .github/workflows/e002_587_continuous_phase_lp.yml
+  workflow_dispatch:
+jobs:
+  synthetic-continuous-inversion:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install bounded LP solver
+        run: python -m pip install 'scipy>=1.11,<2'
+      - name: Compile continuous-parameter instrument
+        run: python -m py_compile research/observability/e002_587_continuous_phase_lp.py
+      - name: Frozen synthetic falsification and nuisance controls
+        run: python research/observability/e002_587_continuous_phase_lp.py --self-test
+      - name: Independent Node primal-dual certificate replay
+        run: python research/observability/e002_587_continuous_phase_lp.py --certificates | node research/observability/e002_587_independent_dual_replay.cjs

@@ -1,0 +1,41 @@
+name: E002-436 dual-rater physical-reference substitute
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_436_*'
+      - 'research/observability/E002_436_*'
+      - 'research/observability/test_e002_436_*'
+      - '.github/workflows/e002_436_dual_rater.yml'
+  workflow_dispatch:
+jobs:
+  dual-rater-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Twelve adversarial and independent oracle tests
+        run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_436_dual_rater.py
+      - name: Reproduce 1200 synthetic reference trials
+        run: |
+          PYTHONPATH=research/observability python research/observability/e002_436_benchmark.py --trials 1200 --seed 436 --output /tmp/e002_436.json --figure /tmp/e002_436.svg
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('/tmp/e002_436.json').read_text())
+          expected=json.loads(Path('research/observability/E002_436_SYNTHETIC_AGGREGATE.json').read_text())
+          assert d == expected
+          assert d['counts']['NEGATIVE_CONDITIONAL'] == 585
+          assert d['counts']['UNRESOLVED'] == 242
+          assert d['counts']['WITNESSED_CROSSING'] == 373
+          assert d['counts']['actual_crossing_unresolved'] == 59
+          assert d['false_conditional_negative_against_synthetic_truth'] == 0
+          assert d['human_sequences'] == 0 and not d['product_claim_authorized']
+          assert d['product'] == 'ABSTAIN_UNCALIBRATED'
+          assert Path('/tmp/e002_436.svg').read_bytes() == Path('research/observability/E002_436_REFERENCE.svg').read_bytes()
+          print('SYNTHETIC REFERENCE ADJUDICATION ONLY; HUMAN VALIDATION OUTSTANDING')
+          PY

@@ -1,0 +1,153 @@
+{
+  "anatomical_labels": 0,
+  "any_necessary_stability_failure": true,
+  "baseline_median_temporal_range": {
+    "dark_fraction": 0.01190104,
+    "vertical_edge_energy": 0.00193933
+  },
+  "development_windows": 10,
+  "evidence_tier": "REAL_HUMAN_DEVELOPMENT_IMAGES_NONANATOMICAL_PROXY_ONLY",
+  "experiment": "E002-597",
+  "held_out_physical_predictions": 0,
+  "human_rater_pairs": 0,
+  "nuisance_results": {
+    "black_occlusion": {
+      "dark_fraction": {
+        "maximum_absolute_change": 0.25,
+        "median_absolute_change": 0.22119792,
+        "nuisance_dominance_frames": 190,
+        "stability_gate": "FAIL"
+      },
+      "vertical_edge_energy": {
+        "maximum_absolute_change": 0.00285267,
+        "median_absolute_change": 0.00214538,
+        "nuisance_dominance_frames": 76,
+        "stability_gate": "FAIL"
+      }
+    },
+    "brightness_minus30": {
+      "dark_fraction": {
+        "maximum_absolute_change": 0.37917969,
+        "median_absolute_change": 0.24863932,
+        "nuisance_dominance_frames": 175,
+        "stability_gate": "FAIL"
+      },
+      "vertical_edge_energy": {
+        "maximum_absolute_change": 0.00088671,
+        "median_absolute_change": 0.00042159,
+        "nuisance_dominance_frames": 0,
+        "stability_gate": "PASS_NECESSARY_ONLY"
+      }
+    },
+    "brightness_plus30": {
+      "dark_fraction": {
+        "maximum_absolute_change": 0.22141927,
+        "median_absolute_change": 0.06207031,
+        "nuisance_dominance_frames": 181,
+        "stability_gate": "FAIL"
+      },
+      "vertical_edge_energy": {
+        "maximum_absolute_change": 0.00030335,
+        "median_absolute_change": 0.00016793,
+        "nuisance_dominance_frames": 0,
+        "stability_gate": "PASS_NECESSARY_ONLY"
+      }
+    },
+    "gamma_07": {
+      "dark_fraction": {
+        "maximum_absolute_change": 0.22615885,
+        "median_absolute_change": 0.06299479,
+        "nuisance_dominance_frames": 182,
+        "stability_gate": "FAIL"
+      },
+      "vertical_edge_energy": {
+        "maximum_absolute_change": 0.0009364,
+        "median_absolute_change": 0.00067156,
+        "nuisance_dominance_frames": 19,
+        "stability_gate": "PASS_NECESSARY_ONLY"
+      }
+    },
+    "gamma_14": {
+      "dark_fraction": {
+        "maximum_absolute_change": 0.39744792,
+        "median_absolute_change": 0.2630599,
+        "nuisance_dominance_frames": 175,
+        "stability_gate": "FAIL"
+      },
+      "vertical_edge_energy": {
+        "maximum_absolute_change": 0.00103269,
+        "median_absolute_change": 0.00047727,
+        "nuisance_dominance_frames": 0,
+        "stability_gate": "PASS_NECESSARY_ONLY"
+      }
+    },
+    "gaussian_blur2": {
+      "dark_fraction": {
+        "maximum_absolute_change": 0.01541667,
+        "median_absolute_change": 0.00597005,
+        "nuisance_dominance_frames": 51,
+        "stability_gate": "FAIL"
+      },
+      "vertical_edge_energy": {
+        "maximum_absolute_change": 0.01297128,
+        "median_absolute_change": 0.00897223,
+        "nuisance_dominance_frames": 184,
+        "stability_gate": "FAIL"
+      }
+    },
+    "roi_down24": {
+      "dark_fraction": {
+        "maximum_absolute_change": 0.09673177,
+        "median_absolute_change": 0.01867188,
+        "nuisance_dominance_frames": 136,
+        "stability_gate": "FAIL"
+      },
+      "vertical_edge_energy": {
+        "maximum_absolute_change": 0.00369288,
+        "median_absolute_change": 0.00196186,
+        "nuisance_dominance_frames": 80,
+        "stability_gate": "FAIL"
+      }
+    },
+    "roi_right24": {
+      "dark_fraction": {
+        "maximum_absolute_change": 0.0334375,
+        "median_absolute_change": 0.01388021,
+        "nuisance_dominance_frames": 137,
+        "stability_gate": "FAIL"
+      },
+      "vertical_edge_energy": {
+        "maximum_absolute_change": 0.00387424,
+        "median_absolute_change": 0.00235502,
+        "nuisance_dominance_frames": 85,
+        "stability_gate": "FAIL"
+      }
+    },
+    "white_occlusion": {
+      "dark_fraction": {
+        "maximum_absolute_change": 0.07898437,
+        "median_absolute_change": 0.02880208,
+        "nuisance_dominance_frames": 139,
+        "stability_gate": "FAIL"
+      },
+      "vertical_edge_energy": {
+        "maximum_absolute_change": 0.00266203,
+        "median_absolute_change": 0.00142239,
+        "nuisance_dominance_frames": 55,
+        "stability_gate": "FAIL"
+      }
+    }
+  },
+  "physical_shutter_calibrations": 0,
+  "private_source_retained": false,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "release": "BLOCKED",
+  "source_frames": 190,
+  "source_sha256": "158d8654ff9e19162ec7f1316eee3d3046024ad81b355b2b3e5f9e566f5abe86",
+  "status": "AUTHENTIC_SOURCE_NUISANCE_AUDIT_COMPLETE",
+  "verified_workflow_run": 41353572997,
+  "verified_workflow_job": 124988756591,
+  "verified_head_sha": "6820dd55bc772e3f6b64306f7953410b889305f3",
+  "frozen_protocol": "E002_597_FROZEN.md",
+  "interpretation": "Development-only real human images, post-decoding nuisance perturbations; no anatomical labels or shutter certification."
+}

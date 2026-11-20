@@ -1,0 +1,18 @@
+# E002-581 | Frozen temporal-information audit of authentic LPW pupil-center annotations (2026-11-01)
+
+**Kernel:** E002-371. **Tier:** investigator pupil-center label measurement audit, **not** eyelid aperture or human blink validation. **Branch:** `research/observability-human-boundary`. E002-580 found a median 4-frame interpolation residual rounded to zero; this experiment asks whether the annotations contain unusually long exactly linear *moving* segments, as opposed to merely constant labels. Do not claim that the labeling process used interpolation, nor that the underlying human eye moved linearly.
+
+## Frozen data and source binding
+Use **only** the previously authenticated development LPW member `LPW/1/1.txt` from the original investigator ZIP via E002-580's bounded range/CRC reader. Require **exactly 2,000** finite in-frame x/y pairs, and exact raw member SHA-256 `12f60068317a341809babb7c2cbce90b8ba299ad877d75186687b0d521f6d5d2`. The source video has reported 95 fps but unverified shutter and clock. Do not access held-out participants, export individual labels, indices, imagery or source video, or alter E002-573 human-rater selection.
+
+## Primary prespecified statistics
+Let `d[t]=p[t+1]-p[t]` for t=0..1998, Euclidean pixels, and `a[t]=d[t+1]-d[t]` for t=0..1997. Define a **moving linear junction** if `||a[t]||_2 <= 1e-6 px` AND `min(||d[t]||_2,||d[t+1]||_2) >= 0.1 px/frame`. Also report **all exact-linear junctions** (including stationary) and near-linear junctions `||a||<=1e-3 px`. For each maximal run of consecutive moving-linear junctions report **aggregate only**: number of runs of length >=3 junctions, longest length in junctions, and total number of moving-linear junctions. No post-hoc threshold changes.
+
+## Negative control and inference
+Fix seed 581 and B=499. For each replicate, shuffle the 1,999 original two-dimensional displacement vectors **within nonoverlapping 50-increment blocks**, preserving each block's increment multiset but destroying local ordering. Recompute moving-linear junction count and longest run. Report median, p95, maximum of the B null counts, and add-one one-sided permutation tail `(1 + #null >= observed)/(B+1)` for count and longest run. This is a **descriptive local-order randomization control**, not a physiological sampling distribution or causal identification of interpolation. Repeated identical increments, quantization, smoothing, eye tracking and gaze could generate structure. Reject any inference about anatomical closure, physiological speed or shutter timing.
+
+## Falsifiers
+Before source access, require tests for stationary labels (must never count as *moving*), exact moving linear trajectories (must count), abrupt kink (must break run), coordinate translation invariance, rotation invariance, zero and tiny movement thresholds, deterministic seed, permutation preservation of block multisets, and malformed/nonfinite input rejection. Fail closed if source hash differs or ZIP access fails. Use no-cost hosted execution and log aggregate JSON only.
+
+## Product consequence
+Any observed excess moving-linear junctions under the specified null is evidence that high frame rate and high label count alone cannot certify *independent temporal measurement information*. It does not establish interpolation or falsify E002-371. E002-371 remains **conditionally mathematical and unvalidated physiologically**. No blink/PERCLOS/fatigue/velocity/shutter inference. Product `ABSTAIN_UNCALIBRATED`; release `BLOCKED`. Next decisive work remains two independent blinded anatomical raters and synchronized photodiode/physical-camera shutter measurement.

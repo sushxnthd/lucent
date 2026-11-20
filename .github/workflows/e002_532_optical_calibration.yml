@@ -1,0 +1,35 @@
+name: E002-532 optical shutter calibration falsification
+on:
+  push:
+    paths:
+      - 'research/observability/e002_532_*'
+      - 'research/observability/test_e002_532_optical_calibration.py'
+      - 'research/observability/E002_532_*'
+      - '.github/workflows/e002_532_optical_calibration.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_532_*'
+      - 'research/observability/test_e002_532_optical_calibration.py'
+      - 'research/observability/E002_532_*'
+      - '.github/workflows/e002_532_optical_calibration.yml'
+jobs:
+  independent-instrument-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Frozen Python adversarial controls
+        run: python -m unittest -v test_e002_532_optical_calibration.py
+        working-directory: research/observability
+      - name: Independent BigInt replay
+        run: node research/observability/e002_532_independent_replay.cjs
+      - name: Synthetic research-only CLI output
+        run: |
+          python research/observability/e002_532_optical_calibration.py --synthetic > /tmp/e002_532.json
+          python -c "import json; d=json.load(open('/tmp/e002_532.json')); assert d['feasible_train_count']==1 and d['heldout_max_abs_error']=='0' and d['decision']=='UNVERIFIED_PHYSICAL_INPUT' and d['release']=='BLOCKED'"

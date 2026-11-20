@@ -1,0 +1,24 @@
+name: E002-590 sharp full-duty alias boundary
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_590_*'
+      - 'research/observability/e002_590_*'
+      - '.github/workflows/e002_590_sharp_integration.yml'
+  workflow_dispatch:
+jobs:
+  exact-rational-independent-replay:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python exact rational verification
+        run: python research/observability/e002_590_sharp_integration.py
+      - name: Independent Node BigInt verification
+        run: node research/observability/e002_590_independent_replay.cjs

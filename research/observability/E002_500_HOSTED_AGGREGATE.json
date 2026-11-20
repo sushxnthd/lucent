@@ -1,0 +1,14 @@
+{
+  "acquisition_fps_authenticated": false,
+  "evidence_tier": "SOURCE_BOUND_PACKET_ONLY",
+  "experiment": "E002-500",
+  "human_anatomical_labels": 0,
+  "human_reference_validated": false,
+  "physical_hidden_closure_certified": false,
+  "physical_shutter_calibrated": false,
+  "private_source_frame_matches": 260,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "release": "BLOCKED",
+  "source_archive_checksum_pinned": true,
+  "status": "SOURCE_REPLAY_MATCH"
+}

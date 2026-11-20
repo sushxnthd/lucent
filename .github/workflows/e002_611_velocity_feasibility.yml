@@ -1,0 +1,29 @@
+name: E002-611 literature velocity feasibility
+on:
+  pull_request:
+    paths:
+      - 'research/observability/e002_611_*'
+      - 'research/observability/test_e002_611_*'
+      - 'research/observability/E002_611_*'
+      - '.github/workflows/e002_611_velocity_feasibility.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Exact-rational tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_611_velocity_feasibility.py' -v
+      - name: Independent integer verifier
+        run: node research/observability/e002_611_independent.cjs
+      - name: Generate 72-row machine-readable CSV
+        run: |
+          python research/observability/e002_611_velocity_feasibility.py --csv > /tmp/e002_611_grid.csv
+          test "$(wc -l < /tmp/e002_611_grid.csv)" -eq 73
+          python research/observability/e002_611_velocity_feasibility.py

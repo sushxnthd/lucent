@@ -1,0 +1,23 @@
+# E002-480 FROZEN — adversarial timing jitter defeats nominal phase-dither coverage
+
+Date: 2026-10-27. Primary kernel E002-371. Evidence tier: **constructed optical instrument counterexample only**. This is an instrument-design falsification of a proposed *nominal* coverage shortcut, not physical acquisition or a new human-blink result. The earlier E002-479 counterexample used a single 0.05-ms grid; this experiment tests whether adding nominal offset phases actually removes the problem when pulse timing remains uncertain.
+
+## Question and model
+
+Take a stationary frame-periodic sensitivity S(t), period T=1000/240 ms, with a base exposure on [0.4,1.4] ms. World B adds an isolated positive island of width **0.0005 ms** centered at **2.01525 ms** modulo T, amplitude **0.20**; world A has no island. Each nominal optical probe has pulse width w=**0.006 ms**, independently uncertain actual start by ±u=**0.004 ms**, and a measured start that is only guaranteed to be within u of actual start. The actual camera reading is the integral of S over the true pulse divided by w. Construct complete nominal phase grids at spacings 0.05/N ms, N in {1,2,4,8}, across two periods, with repeated rows/repeats conceptually identical. The adversary may choose each pulse's allowed timing error independently; this is worst-case bounded uncertainty, **not** a claim that physical clocks behave adversarially.
+
+## Predictions fixed before experiment implementation
+
+1. For every nominal probe in all four grid densities, one of the two admissible start errors {−u,+u} avoids the 0.0005-ms island entirely in **both periods**. Consequently, for each grid there exists a valid independent-jitter schedule giving **identical optical responses** in worlds A and B. The earlier E002-479 single-grid island is different; this new narrow island specifically probes the inability of dense nominal dithering to guarantee detection under timing uncertainty.
+2. A probe at reported start m with true start in [m−u,m+u] has a **guaranteed illuminated core** [m+u,m+w−u] when w>2u, and an empty guaranteed core otherwise. At w=0.006 ms, u=0.004 ms, no individual nominal probe has a guaranteed illuminated phase. Adding finitely many independently uncertain probes cannot by itself establish worst-case phase coverage from their nominal starts.
+3. Under a *separately improved, hypothetical* timing uncertainty u=0.001 ms, the robust core is 0.004 ms wide. Equally spaced reported starts at T/n, with n=ceil(T/0.004)=**1042** per period, cover the complete phase circle by guaranteed cores. n−1 evenly spaced starts do not cover it. These are synthetic design calculations, not authenticated timing tolerances.
+4. Even perfect alignment cannot force detection of the narrow island at threshold θ=0.04 and worst-case additive noise ε=0.002: its maximum contrast is A*l/w = **0.016666...**, below θ+ε. Thus **coverage and detectable response are separate requirements**. A minimum island width/amplitude or calibrated response regularity is necessary before nondetection can bound optical sensitivity.
+5. Product consequence: a physical shutter dark-gap certificate must use independently authenticated *actual pulse times and uncertainties*, report guaranteed covered phase sets and detection limits, and abstain on uncovered/undetectable support. E002-477 PASS_INTAKE_ONLY must never authorize E002-371 hidden-closure exclusion, blink duration, PERCLOS, fatigue, or medical claims.
+
+## Verification and falsification criteria
+
+Implement a standalone standard-library simulator and tests, independently recompute the critical core width and n in another language, and preserve any counterexample to the predictions. Check period wrap explicitly, both endpoints of the allowed timing interval, no-island controls, u=0 and u>=w/2 boundaries, nonfinite/negative inputs, and output claim gating. Do **not** describe synthetic adversarial timing choices as measured physical jitter. If any tested nominal phase cannot avoid the island using allowed timing choices, reject prediction 1 and report the failure without silently changing the island.
+
+## Limits
+
+No camera hardware, authenticated photodiode, actual sensor response, physical human aperture trajectories, participant-disjoint anatomical holdout, or physiological hard velocity cap is supplied. The 0.0005-ms island is an adversarial mathematical example, not a claimed realistic commercial shutter artifact.

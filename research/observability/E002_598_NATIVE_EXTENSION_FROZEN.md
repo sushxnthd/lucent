@@ -1,0 +1,7 @@
+# E002-598 native-reference extension | Additional protocol frozen before implementation
+
+Date: 2026-11-02. E002-598's initial frozen scope covered E002-595 nominal-30-fps ARM packets. That is insufficient to collect **high-rate anatomical reference labels**, because the verified native E002-578 packet uses E002-574 templates with 19 frames per clip and no `arm` field. This extension is additive and does not alter E002-598's original freeze or retrospectively relabel any outcome.
+
+Before implementation, freeze a second accepted reviewer template: `experiment=E002-574`, rater A/B, ten blind clips, **19 sequential frames per clip**, no arm, all rows blank. The same offline UI must accept 190 native PNGs under the assigned `RATER_A` or `RATER_B` directory and export the original E002-574 shape, without fabricating an `arm` field. The existing E002-595 three nominal 30-fps arms and 60-image mapping must remain unchanged. Reject mixed native/ARM templates, wrong frame counts, unexpected PNGs, prefilled labels, missing/duplicate images and unapproved source metadata. Include a synthetic native reference test and preserve all previously passing ARM tests.
+
+A native high-rate packet is still temporally integrated video and is not continuous-time ground truth. This extension only removes an annotation workflow blocker. No human ratings, physical calibration, hard motion ceilings or unseen physical predictions are implied.

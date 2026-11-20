@@ -1,0 +1,22 @@
+name: E002-572 optical-edge calibration falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - "research/observability/e002_572_optical_edge_calibration.py"
+      - "research/observability/test_e002_572_optical_edge_calibration.py"
+      - ".github/workflows/e002_572_optical_edge_calibration.yml"
+  workflow_dispatch:
+jobs:
+  optical-calibration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Frozen adversarial tests
+        run: python -m unittest discover -s research/observability -p "test_e002_572_optical_edge_calibration.py" -v
+      - name: Synthetic heldout instrument challenge
+        run: python research/observability/e002_572_optical_edge_calibration.py

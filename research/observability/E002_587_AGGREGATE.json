@@ -1,0 +1,99 @@
+{
+  "experiment": "E002-587",
+  "freeze_commit": "c8cd677107511faf9bc18e85cda5a16e8818ad40",
+  "evidence_tier": "CONTINUOUS_LP_SYNTHETIC_MODEL",
+  "observations": 75,
+  "rows": [
+    0,
+    20,
+    40
+  ],
+  "continuous_parameter_bounds_ms": {
+    "start": [
+      0,
+      4
+    ],
+    "exposure": [
+      2,
+      6
+    ],
+    "row_delay_ms_per_row": [
+      0,
+      0.2
+    ]
+  },
+  "exact_support_ms": {
+    "0": [
+      2,
+      6
+    ],
+    "20": [
+      4,
+      8
+    ],
+    "40": [
+      6,
+      10
+    ]
+  },
+  "relaxed_phase_unc_ms": 0.5,
+  "relaxed_intensity_unc": 0.1,
+  "relaxed_finite_grid_support_ms": {
+    "0": [
+      1,
+      7
+    ],
+    "20": [
+      3,
+      9
+    ],
+    "40": [
+      5,
+      11
+    ]
+  },
+  "relaxed_continuous_support_ms": {
+    "0": [
+      0.9,
+      7.1
+    ],
+    "20": [
+      2.9,
+      9.1
+    ],
+    "40": [
+      4.9,
+      11.1
+    ]
+  },
+  "off_grid_start_ms": 2.17,
+  "off_grid_finite_grid_candidates": 0,
+  "off_grid_continuous_feasible": true,
+  "off_grid_continuous_support_ms": {
+    "0": [
+      2.17,
+      6.17
+    ],
+    "20": [
+      4.17,
+      8.17
+    ],
+    "40": [
+      6.17,
+      10.17
+    ]
+  },
+  "hypothetical_period_ms": 33.333333333333336,
+  "finite_grid_uncovered_gap_ms": 23.333333333333336,
+  "continuous_uncovered_gap_ms": 23.133333333333336,
+  "synthetic_controls_passed_local": 17,
+  "independent_primal_dual_certificates_verified_local": 18,
+  "hosted_e002_587_verified": false,
+  "physical_shutter_captures": 0,
+  "independent_anatomical_rater_pairs": 0,
+  "certified_human_eyelid_velocity_ceilings": 0,
+  "heldout_physical_predictions": 0,
+  "physical_certificate": false,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "release": "BLOCKED"
+}

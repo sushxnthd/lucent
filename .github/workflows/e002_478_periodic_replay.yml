@@ -1,0 +1,23 @@
+name: E002-478 stationary shutter periodicity falsification
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_478_periodic_replay.py'
+      - 'research/observability/test_e002_478_periodic_replay.py'
+      - 'research/observability/e002_477_optical_intake.py'
+      - 'research/observability/test_e002_477_optical_intake.py'
+      - '.github/workflows/e002_478_periodic_replay.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Replay periodicity falsification against actual E002-477 intake
+        run: python -m unittest discover -s research/observability -p 'test_e002_478_periodic_replay.py' -v

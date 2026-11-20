@@ -1,0 +1,33 @@
+{
+  "broad_abstains": true,
+  "broad_gain_lower_mm": 1.9605825242718447,
+  "evidence_tier": "SYNTHETIC_PHOTOMETRIC_ALIAS",
+  "hidden_aperture_min_mm": 1.9899999999999998,
+  "hidden_gain_max": 1.0251256281407037,
+  "hidden_gain_min": 1.0149253731343284,
+  "hidden_velocity_peak_mm_s": 1.2,
+  "hidden_world_violates_narrow_gain": true,
+  "max_shutter_average_discrepancy": 0,
+  "naive_false_certificate": true,
+  "naive_fixed_gain_lower_mm": 2.02,
+  "narrow_conditional_candidate": true,
+  "narrow_gain_lower_mm": 2.009850746268657,
+  "open_aperture_min_mm": 2.04,
+  "photometric_observation_constant": 2.04,
+  "physical_certificate_authorized": false,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "random_stress": {
+    "candidates": 898,
+    "false_certificates": 0,
+    "min_true_minus_bound_mm": 0.025556762796727472,
+    "n": 2000,
+    "observed_gain_range": [
+      0.9700055404868916,
+      1.0299957750917217
+    ],
+    "seed": 431,
+    "witnessed_closures": 786
+  },
+  "real_physical_gain_authenticated": false,
+  "real_physical_speed_cap_authenticated": false
+}

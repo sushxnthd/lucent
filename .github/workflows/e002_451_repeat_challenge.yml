@@ -1,0 +1,29 @@
+name: E002-451 blinded-repeat adversarial challenge
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/e002_451_repeat_challenge.py'
+      - 'research/observability/test_e002_451_repeat_challenge.py'
+      - '.github/workflows/e002_451_repeat_challenge.yml'
+  workflow_dispatch:
+jobs:
+  mirror-repeat-falsification:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install existing annotation dependency
+        run: python -m pip install --disable-pip-version-check numpy==2.2.6
+      - name: Run actual-repository adversarial tests
+        run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_451_repeat_challenge.py' -v
+      - name: State evidence restrictions
+        run: |
+          echo 'E002-451 synthetic private-pack challenge only. No human annotations or physical calibration.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'No raw images or master keys may be uploaded. E002-371 remains NOT_ESTABLISHED.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Product: ABSTAIN_UNCALIBRATED; do not merge or release.' >> "$GITHUB_STEP_SUMMARY"

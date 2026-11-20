@@ -1,0 +1,100 @@
+// Dependency-free deterministic behavioral regression for alpha/reaction-time-demo.html.
+// Run: node alpha/test-reaction-time-demo.cjs
+const fs = require('node:fs');
+const vm = require('node:vm');
+const assert = require('node:assert/strict');
+const html = fs.readFileSync(require('node:path').join(__dirname, 'reaction-time-demo.html'), 'utf8');
+const script = html.match(/<script>([\s\S]*?)<\/script>/)?.[1];
+assert.ok(script, 'inline application script must exist');
+function harness() {
+  const elements = new Map();
+  const listeners = {};
+  for (const id of ['start','reset','target','status','result','self','export']) {
+    elements.set('#'+id, {id, value:'4', disabled:id==='target'||id==='export', textContent:'', className:'', listeners:{}, addEventListener(event,fn){this.listeners[event]=fn}, click(){if(!this.disabled)this.listeners.click?.()}});
+  }
+  let now=0, seq=0, tasks=new Map(), hidden=false, downloads=0;
+  const document={querySelector: id=>elements.get(id), get hidden(){return hidden}, addEventListener:(event,fn)=>listeners[event]=fn, createElement:()=>({click(){downloads++}})};
+  const window={addEventListener:(event,fn)=>listeners[event]=fn};
+  const URL={createObjectURL:()=> 'blob:test', revokeObjectURL:()=>{}};
+  const context={document,window,URL,Blob,Math,JSON,Number,performance:{now:()=>now},setTimeout:(fn,delay)=>{const id=++seq;tasks.set(id,{at:now+delay,fn});return id},clearTimeout:id=>tasks.delete(id)};
+  vm.runInNewContext(script,context,{timeout:1000});
+  function advance(ms){const until=now+ms;let limit=0;while(true){const pending=[...tasks].sort((a,b)=>a[1].at-b[1].at)[0];if(!pending||pending[1].at>until)break;assert.ok(++limit<100,'timer loop');now=pending[1].at;tasks.delete(pending[0]);pending[1].fn()}now=until}
+  function lateStimulus(ms){const pending=[...tasks].sort((a,b)=>a[1].at-b[1].at)[0];assert.ok(pending,'expected pending timer');now=pending[1].at+ms;tasks.delete(pending[0]);pending[1].fn()}
+  return {e:id=>elements.get('#'+id),advance,lateStimulus,blur:()=>listeners.blur?.(),hide:()=>{hidden=true;listeners.visibilitychange?.()},get downloads(){return downloads}};
+}
+function finish(h){h.e('start').click();for(let i=0;i<5;i++){h.advance(4100);assert.equal(h.e('target').disabled,false);h.e('target').click();if(i<4)h.advance(900)}}
+{
+ const h=harness();finish(h);
+ assert.match(h.e('status').textContent,/complete/);
+ assert.match(h.e('result').textContent,/No fatigue classification/);
+ assert.equal(h.e('export').disabled,false);
+ h.e('export').click();assert.equal(h.downloads,1);
+ h.e('reset').click();assert.equal(h.e('export').disabled,true);
+}
+{
+ const h=harness();h.e('start').click();h.e('target').click();assert.match(h.e('status').textContent,/Early tap/);
+ h.blur();h.advance(10000);assert.match(h.e('status').textContent,/Focus lost/);assert.equal(h.e('export').disabled,true);
+}
+{
+ const h=harness();h.e('start').click();h.hide();h.advance(10000);assert.match(h.e('status').textContent,/interrupted/);assert.equal(h.e('export').disabled,true);
+}
+{
+ const h=harness();h.e('start').click();h.advance(4100);h.advance(11000);h.e('target').click();
+ assert.match(h.e('status').textContent,/Invalid or excessively delayed/);
+ assert.equal(h.e('export').disabled,true);
+}
+console.log('PASS: completion/export/reset, early-tap blur, visibility interruption, delayed-response invalidation');
+
+{
+ const h=harness();
+ h.e('start').click();
+ h.e('reset').click();
+ h.advance(20000);
+ assert.equal(h.e('target').disabled,true,'reset must cancel pending stimulus');
+ assert.equal(h.e('export').disabled,true,'reset must not expose incomplete data');
+ assert.match(h.e('status').textContent,/Press Start/);
+}
+{
+ const h=harness();
+ h.e('self').value='10';
+ h.e('start').click();
+ assert.match(h.e('status').textContent,/valid self-report/);
+ assert.equal(h.e('target').disabled,true,'invalid self-report must not arm timer');
+ h.e('self').value='1';
+ h.e('start').click();
+ h.advance(4100);
+ assert.equal(h.e('target').disabled,false,'valid self-report should arm');
+}
+{
+ const h=harness();
+ h.e('start').click();
+ h.advance(4100);
+ h.e('target').click();
+ h.e('reset').click();
+ h.advance(10000);
+ assert.equal(h.e('export').disabled,true,'partial-session reset must prevent export');
+ assert.match(h.e('status').textContent,/Press Start/);
+}
+console.log('PASS: reset cancels timers, self-report bounds, partial-session export abstention');
+
+{
+ const h=harness();h.e('start').click();h.lateStimulus(101);
+ assert.match(h.e('status').textContent,/timer delayed; session invalidated/);
+ assert.equal(h.e('target').disabled,true);
+ assert.equal(h.e('export').disabled,true);
+ h.e('export').click();assert.equal(h.downloads,0);
+ h.advance(10000);assert.equal(h.e('export').disabled,true);
+}
+{
+ const h=harness();h.e('start').click();h.lateStimulus(100);
+ assert.equal(h.e('target').disabled,false,'at tolerance boundary stimulus remains usable');
+ h.e('target').click();assert.match(h.e('status').textContent,/Recorded/);
+}
+{
+ const h=harness();h.e('start').click();h.advance(4100);h.e('target').click();h.advance(850);
+ h.lateStimulus(500);
+ assert.match(h.e('status').textContent,/session invalidated/);
+ assert.equal(h.e('export').disabled,true,'partial results must not export after timer throttling');
+ h.e('start').click();assert.match(h.e('status').textContent,/Trial 1 of 5/);
+}
+console.log('PASS: delayed callback abstention, tolerance boundary, partial-session invalidation and restart');

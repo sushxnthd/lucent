@@ -1,0 +1,25 @@
+{
+  "assumptions": [
+    "iid continuous participant-level proxy maxima",
+    "no gaze/lighting/device/behavior distribution shift"
+  ],
+  "calibration_blinks_not_independent": 1657,
+  "calibration_participants": 12,
+  "eight_future_joint_rank_coverage": 0.6,
+  "evidence_tier": "CLASSICAL_ORDER_STATISTICS_PLUS_SYNTHETIC_CHECK_NOT_PHYSICAL_VALIDATION",
+  "experiment": "E002-475",
+  "iid_uniform_25000_trials_joint_coverage": 0.60204,
+  "minimum_independent_participants_95_content_95_confidence": 59,
+  "minimum_independent_participants_95_joint_eight_future": 152,
+  "ninetyfive_content_confidence_n12": 0.459639912337363,
+  "one_future_marginal_rank_coverage": 0.9230769230769231,
+  "physical_release_authorized": false,
+  "physical_validation": "NOT_ESTABLISHED",
+  "product_claim": "ABSTAIN_UNCALIBRATED",
+  "recorded_peak_proxy_is_not_instantaneous_anatomical_speed": true,
+  "sample_max_is_not_hard_cap": true,
+  "sealed_heldout_participants_not_reopened": 5,
+  "shifted_future_25000_trials_joint_coverage": 0.0,
+  "three_train_two_future_exhaustive_rank": 0.6,
+  "unit": "independent_participant_maximum_of_published_peak_speed_proxy"
+}

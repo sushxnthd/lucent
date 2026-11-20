@@ -1,0 +1,28 @@
+name: E002-615 human source timestamp stress
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_615_timestamp_stress.py
+      - research/observability/e002_615_independent.cjs
+      - research/observability/E002_615_FROZEN.md
+      - .github/workflows/e002-615-timestamp-stress.yml
+jobs:
+  source-timestamp-stress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen synthetic adversarial controls
+        run: python research/observability/e002_615_timestamp_stress.py
+      - name: Independent BigInt point-sampling oracle
+        run: node research/observability/e002_615_independent.cjs
+      - name: Original public human source, aggregate only
+        run: python research/observability/e002_615_timestamp_stress.py --source

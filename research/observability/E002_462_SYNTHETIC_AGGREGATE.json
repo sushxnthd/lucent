@@ -1,0 +1,159 @@
+{
+  "experiment": "E002-462",
+  "tier": "SYNTHETIC_INSTRUMENT_ONLY",
+  "seed": 462,
+  "closing_mm_s": 567.103928,
+  "opening_mm_s": 274.616337,
+  "threshold_mm": 2,
+  "primary": [
+    {
+      "fps": 400,
+      "baseline_mm": 2.3,
+      "tau_ms": 1,
+      "indistinguishable_exact": true,
+      "max_deviation_mm": 0,
+      "threshold_only_missed": true
+    },
+    {
+      "fps": 1000,
+      "baseline_mm": 2.1,
+      "tau_ms": 0.4,
+      "indistinguishable_exact": true,
+      "max_deviation_mm": 0,
+      "threshold_only_missed": true
+    }
+  ],
+  "cells": [
+    {
+      "fps": 400,
+      "baseline_mm": 2.3,
+      "width_ms": 0.3,
+      "n": 1000,
+      "indistinguishable": 208,
+      "threshold_only_missed": 1000,
+      "critical_gap_ms": 1.6214367517973913,
+      "dark_gap_ms": 2.2,
+      "physical_certification": false
+    },
+    {
+      "fps": 400,
+      "baseline_mm": 2.3,
+      "width_ms": 0.8,
+      "n": 1000,
+      "indistinguishable": 36,
+      "threshold_only_missed": 1000,
+      "critical_gap_ms": 1.6214367517973913,
+      "dark_gap_ms": 1.7,
+      "physical_certification": false
+    },
+    {
+      "fps": 400,
+      "baseline_mm": 2.1,
+      "width_ms": 0.3,
+      "n": 1000,
+      "indistinguishable": 664,
+      "threshold_only_missed": 1000,
+      "critical_gap_ms": 0.5404789172657979,
+      "dark_gap_ms": 2.2,
+      "physical_certification": false
+    },
+    {
+      "fps": 400,
+      "baseline_mm": 2.1,
+      "width_ms": 0.8,
+      "n": 1000,
+      "indistinguishable": 456,
+      "threshold_only_missed": 1000,
+      "critical_gap_ms": 0.5404789172657979,
+      "dark_gap_ms": 1.7,
+      "physical_certification": false
+    },
+    {
+      "fps": 1000,
+      "baseline_mm": 2.3,
+      "width_ms": 0.3,
+      "n": 1000,
+      "indistinguishable": 0,
+      "threshold_only_missed": 1000,
+      "critical_gap_ms": 1.6214367517973913,
+      "dark_gap_ms": 0.7,
+      "physical_certification": false
+    },
+    {
+      "fps": 1000,
+      "baseline_mm": 2.3,
+      "width_ms": 0.8,
+      "n": 1000,
+      "indistinguishable": 0,
+      "threshold_only_missed": 1000,
+      "critical_gap_ms": 1.6214367517973913,
+      "dark_gap_ms": 0.19999999999999996,
+      "physical_certification": false
+    },
+    {
+      "fps": 1000,
+      "baseline_mm": 2.1,
+      "width_ms": 0.3,
+      "n": 1000,
+      "indistinguishable": 164,
+      "threshold_only_missed": 1000,
+      "critical_gap_ms": 0.5404789172657979,
+      "dark_gap_ms": 0.7,
+      "physical_certification": false
+    },
+    {
+      "fps": 1000,
+      "baseline_mm": 2.1,
+      "width_ms": 0.8,
+      "n": 1000,
+      "indistinguishable": 0,
+      "threshold_only_missed": 1000,
+      "critical_gap_ms": 0.5404789172657979,
+      "dark_gap_ms": 0.19999999999999996,
+      "physical_certification": false
+    },
+    {
+      "fps": 2000,
+      "baseline_mm": 2.3,
+      "width_ms": 0.3,
+      "n": 1000,
+      "indistinguishable": 0,
+      "threshold_only_missed": 1000,
+      "critical_gap_ms": 1.6214367517973913,
+      "dark_gap_ms": 0.2,
+      "physical_certification": false
+    },
+    {
+      "fps": 2000,
+      "baseline_mm": 2.3,
+      "width_ms": 0.8,
+      "decision": "ABSTAIN_UNCALIBRATED",
+      "reason": "OVERLAPPING_REFERENCE_SHUTTERS"
+    },
+    {
+      "fps": 2000,
+      "baseline_mm": 2.1,
+      "width_ms": 0.3,
+      "n": 1000,
+      "indistinguishable": 0,
+      "threshold_only_missed": 1000,
+      "critical_gap_ms": 0.5404789172657979,
+      "dark_gap_ms": 0.2,
+      "physical_certification": false
+    },
+    {
+      "fps": 2000,
+      "baseline_mm": 2.1,
+      "width_ms": 0.8,
+      "decision": "ABSTAIN_UNCALIBRATED",
+      "reason": "OVERLAPPING_REFERENCE_SHUTTERS"
+    }
+  ],
+  "limitations": [
+    "point threshold contact, not sustained closure",
+    "no physical camera or anatomical ground truth",
+    "velocity maxima hypothetical, not hard physiological caps",
+    "no sensor noise, blur, timing error or anatomical nuisance"
+  ],
+  "product": "ABSTAIN_UNCALIBRATED"
+}

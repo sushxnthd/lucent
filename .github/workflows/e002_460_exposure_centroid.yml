@@ -1,0 +1,33 @@
+name: E002-460 exact shutter-centroid dark-gap falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_460_exposure_centroid.yml'
+      - 'research/observability/E002_460_FROZEN.md'
+      - 'research/observability/e002_460_exposure_centroid.py'
+      - 'research/observability/test_e002_460_exposure_centroid.py'
+      - 'research/observability/e002_460_independent_replay.cjs'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  exact-dark-gap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python adversarial and constructive synthetic tests
+        run: PYTHONPATH=research/observability python -m unittest -v research/observability/test_e002_460_exposure_centroid.py
+      - name: Independent 20k-case JavaScript replay
+        run: node research/observability/e002_460_independent_replay.cjs
+      - name: Preserve explicit research-only example outcomes
+        run: python research/observability/e002_460_exposure_centroid.py --examples
+      - name: Claim release remains blocked
+        if: always()
+        run: |
+          echo 'E002-460 is a conditional exposure-centroid law for linear anatomical aperture means, not real camera validation.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'E002-371 NOT_ESTABLISHED; ABSTAIN_UNCALIBRATED; S21/S22 sealed.' >> "$GITHUB_STEP_SUMMARY"

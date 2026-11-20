@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lucent E002-555 | Blinded anatomical video annotation</title>
+<style>
+:root{font-family:system-ui,sans-serif;color:#192330;background:#f6f7f9}body{max-width:960px;margin:2rem auto;padding:0 1rem}h1{font-size:1.5rem}p{line-height:1.5}.warning{border-left:4px solid #8c5414;padding:.6rem 1rem;background:#fff4df}.layout{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.panel{padding:1rem;background:white;border:1px solid #d7dce2;border-radius:.6rem}label{display:block;margin:.6rem 0}input,select,button{font:inherit}input[type=text]{width:100%;box-sizing:border-box;padding:.45rem}button{padding:.5rem .8rem;margin:.25rem .25rem .25rem 0;cursor:pointer}button:disabled{cursor:not-allowed;opacity:.5}video{max-width:100%;width:100%;background:#111}canvas{width:100%;height:auto;cursor:crosshair;background:#111;display:block}small{color:#495461}#status{white-space:pre-wrap}fieldset{border:1px solid #d7dce2}fieldset label{display:inline-block;margin:.4rem .8rem .4rem 0}code{overflow-wrap:anywhere}@media(max-width:680px){.layout{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<h1>Lucent E002-555 | Offline blinded eyelid annotations</h1>
+<p class="warning"><strong>Research annotation only.</strong> Browser video time is a presentation timestamp, not a hardware exposure timestamp. Two pixel landmarks cannot establish calibrated anatomical aperture, continuous-time closure or an excluded-gap contradiction. Do not enter participant names or view another rater's labels. All processing is local; nothing is uploaded.</p>
+<div class="layout">
+<section class="panel">
+<label>Opaque packet ID <input id="packet" type="text" maxlength="128" placeholder="sealed-study-01"></label>
+<label>Anonymous rater ID <input id="rater" type="text" maxlength="128" placeholder="rater-A"></label>
+<label>Local eye video (200 MiB maximum) <input id="file" type="file" accept="video/*"></label>
+<small id="digest">No source video authenticated</small>
+<video id="video" controls playsinline preload="metadata"></video>
+<label>Opaque sample ID <input id="sample" type="text" maxlength="128" placeholder="window-001-frame-04"></label>
+<button id="capture" disabled>Capture displayed frame</button>
+<small>Pause or seek the video, then capture the displayed frame. Native frame index, acquisition timestamp, shutter support and exposure remain unverified.</small>
+</section>
+<section class="panel">
+<canvas id="canvas" width="640" height="360" aria-label="Click upper and lower eyelid points"></canvas>
+<p id="points">Capture a frame, then click the upper eyelid landmark and the lower eyelid landmark.</p>
+<button id="reset" disabled>Reset landmarks</button>
+<label>Visual closure label <select id="label"><option value="uncertain">Uncertain</option><option value="closed">Closed</option><option value="open">Open</option></select></label>
+<fieldset><legend>Nuisance / quality flags (check if present or unassessable)</legend>
+<label><input type="checkbox" data-flag="geometry"> Geometry</label>
+<label><input type="checkbox" data-flag="blur"> Blur</label>
+<label><input type="checkbox" data-flag="brightness"> Brightness</label>
+<label><input type="checkbox" data-flag="gaze"> Gaze</label>
+<label><input type="checkbox" data-flag="glasses"> Glasses/reflection</label>
+<label><input type="checkbox" data-flag="occlusion"> Occlusion</label>
+<label><input type="checkbox" data-flag="missingness"> Missingness</label>
+</fieldset>
+<button id="save" disabled>Save annotation locally</button>
+<button id="export" disabled>Export JSON</button>
+<p id="status" role="status">0 annotations recorded. No certified physical evidence.</p>
+</section>
+</div>
+<script>
+'use strict';
+const $=id=>document.getElementById(id);
+const video=$('video'),canvas=$('canvas'),ctx=canvas.getContext('2d');
+let digest=null, objectURL=null, frame=null, frameTime=null, pts=[], annotations=[], sealedPacket=null, sealedRater=null;
+const LIMIT=200*1024*1024;
+const flags=['geometry','blur','brightness','gaze','glasses','occlusion','missingness'];
+const validId=s=>s.length>0&&s.length<=128&&!/[\x00-\x1f]/.test(s);
+const status=s=>{$('status').textContent=s;};
+function draw(){
+ if(!frame)return;
+ canvas.width=frame.width;canvas.height=frame.height;
+ ctx.drawImage(frame,0,0);
+ for(let i=0;i<pts.length;i++){
+  const [x,y]=pts[i];ctx.beginPath();ctx.arc(x*canvas.width,y*canvas.height,Math.max(3,canvas.width/140),0,Math.PI*2);
+  ctx.fillStyle=i===0?'#00d0ff':'#ffb300';ctx.fill();
+ }
+ $('points').textContent=pts.length===2?'Upper/lower landmarks captured. Image-space vertical separation: '+Math.abs(pts[0][1]-pts[1][1]).toFixed(5):
+   pts.length===1?'Now click the lower eyelid landmark.':'Click the upper eyelid landmark, then the lower eyelid landmark.';
+ $('save').disabled=pts.length!==2;
+}
+$('file').addEventListener('change',async()=>{
+ digest=null;frame=null;frameTime=null;pts=[];annotations=[];sealedPacket=null;sealedRater=null;
+ $('packet').disabled=false;$('rater').disabled=false;
+ $('capture').disabled=true;$('export').disabled=true;$('save').disabled=true;
+ if(objectURL)URL.revokeObjectURL(objectURL);
+ const file=$('file').files[0];if(!file)return;
+ if(file.size>LIMIT||file.size===0){status('FAIL CLOSED: empty or over-200-MiB video. Use a smaller native segment with documented provenance.');return;}
+ if(!globalThis.crypto?.subtle){status('FAIL CLOSED: Web Crypto unavailable. Serve this file locally on localhost, without uploading video.');return;}
+ try{
+  $('digest').textContent='Hashing complete source video…';
+  const hash=await crypto.subtle.digest('SHA-256',await file.arrayBuffer());
+  digest=Array.from(new Uint8Array(hash),x=>x.toString(16).padStart(2,'0')).join('');
+  objectURL=URL.createObjectURL(file);video.src=objectURL;
+  $('digest').textContent='Source SHA-256: '+digest;
+  $('capture').disabled=false;status('Source hashed locally. Presentation time is not a physical shutter certificate.');
+ }catch(e){digest=null;status('FAIL CLOSED: video hashing/loading failed: '+String(e));}
+});
+$('capture').addEventListener('click',()=>{
+ if(!digest||!video.videoWidth||!Number.isFinite(video.currentTime))return status('FAIL CLOSED: undecodable video frame.');
+ video.pause();
+ try{
+  const c=document.createElement('canvas');c.width=video.videoWidth;c.height=video.videoHeight;
+  c.getContext('2d').drawImage(video,0,0);
+  frame=c;frameTime=video.currentTime;pts=[];draw();$('reset').disabled=false;
+  status('Captured displayed video frame at presentation time '+video.currentTime.toFixed(6)+' s. Hardware time unverified.');
+ }catch(e){status('FAIL CLOSED: cannot capture decoded frame: '+String(e));}
+});
+canvas.addEventListener('click',e=>{
+ if(!frame||pts.length===2)return;
+ const rect=canvas.getBoundingClientRect();
+ const x=(e.clientX-rect.left)/rect.width,y=(e.clientY-rect.top)/rect.height;
+ if(!Number.isFinite(x)||!Number.isFinite(y)||x<0||x>1||y<0||y>1)return;
+ pts.push([x,y]);draw();
+});
+$('reset').addEventListener('click',()=>{pts=[];draw();});
+$('save').addEventListener('click',()=>{
+ const packet=$('packet').value.trim(),rater=$('rater').value.trim(),sample=$('sample').value.trim();
+ if(!digest||!validId(packet)||!validId(rater)||!validId(sample)||pts.length!==2||!frame||frameTime===null)
+  return status('FAIL CLOSED: video, packet, rater, sample and two landmarks required.');
+ if(annotations.some(x=>x.sample_id===sample))return status('FAIL CLOSED: duplicate sample ID.');
+ if(sealedPacket!==null&&(packet!==sealedPacket||rater!==sealedRater))return status('FAIL CLOSED: rater/packet changed.');
+ if(sealedPacket===null){sealedPacket=packet;sealedRater=rater;$('packet').disabled=true;$('rater').disabled=true;}
+ const f=Object.fromEntries(flags.map(k=>[k,document.querySelector('[data-flag="'+k+'"]').checked]));
+ annotations.push({sample_id:sample,presentation_time_s:frameTime,
+  upper:pts[0].slice(),lower:pts[1].slice(),vertical_separation_fraction:Math.abs(pts[0][1]-pts[1][1]),
+  label:$('label').value,flags:f});
+ $('export').disabled=false;pts=[];frame=null;frameTime=null;$('save').disabled=true;
+ status(annotations.length+' raw annotations saved locally. All physical claims remain BLOCKED.');
+});
+$('export').addEventListener('click',()=>{
+ const packet=$('packet').value.trim(),rater=$('rater').value.trim();
+ if(!digest||!annotations.length||!validId(packet)||!validId(rater))return status('FAIL CLOSED: incomplete export.');
+ const result={schema:'lucent-e002-555-v1',packet_id:packet,rater_id:rater,video_sha256:digest,
+  timing_type:'browser_presentation_only',annotations};
+ const blob=new Blob([JSON.stringify(result,null,2)],{type:'application/json'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='lucent-e002-555-'+rater.replace(/[^a-zA-Z0-9_-]/g,'_')+'.json';
+ document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ status('JSON exported locally. Independently audit two exports; do not publish participant media.');
+});
+</script>
+</body></html>

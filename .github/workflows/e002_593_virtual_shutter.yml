@@ -1,0 +1,40 @@
+name: E002-593 virtual-shutter prospective falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_593_*'
+      - 'research/observability/e002_593_*'
+      - '.github/workflows/e002_593_virtual_shutter.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  independent-integer-oracle-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run Python synthetic oracle
+        run: python research/observability/e002_593_virtual_shutter.py > /tmp/e002_593_py.json
+      - name: Independently replay in Node BigInt
+        run: node research/observability/e002_593_independent_replay.cjs > /tmp/e002_593_node.json
+      - name: Compare exact aggregates and frozen expected counts
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/e002_593_py.json'))
+          n=json.load(open('/tmp/e002_593_node.json'))
+          assert p==n, (p,n)
+          assert p['naive_false_exclusions']==873
+          assert p['robust_false_exclusions']==0
+          assert p['robust_exclusions']==1769
+          assert p['true_hidden_closure']==5927
+          print(json.dumps(p,indent=2,sort_keys=True))
+          PY

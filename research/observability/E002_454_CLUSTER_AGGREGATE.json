@@ -1,0 +1,23 @@
+{
+  "id": "E002-454",
+  "input": "E002_453_HUMAN_AGGREGATE.json",
+  "source_verified": true,
+  "participants_calibration": 12,
+  "participants_held_out": 5,
+  "heldout_blinks": 649,
+  "observed_holdout_exceedances": 0,
+  "null_no_exceedance_probability_if_exchangeable_unique_max": 0.7058823529411765,
+  "one_sided_95pct_upper_participant_session_failure_if_iid_people": 0.4507197283469412,
+  "invalid_blink_iid_95pct_upper_for_comparison_only": 0.004605283310923136,
+  "overconfidence_ratio_participant_vs_blink_iid": 97.87014129573578,
+  "preregistered_kill_triggered": true,
+  "interpretation": "DESCRIPTIVE_SAME_STUDY_TRANSFER_NOT_HARD_CAP_VALIDATION",
+  "limitations": [
+    "exchangeable continuous participant-session maxima and prespecified split assumed for null benchmark",
+    "independent comparable people assumed only for participant-level confidence bound",
+    "five participants do not establish universal maximum or unseen camera hidden-closure performance",
+    "blink-level iid comparison is invalid due to within-participant clustering"
+  ],
+  "physical_release_authorized": false,
+  "product_claim": "ABSTAIN_UNCALIBRATED"
+}

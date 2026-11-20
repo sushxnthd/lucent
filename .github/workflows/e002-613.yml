@@ -1,0 +1,32 @@
+name: E002-613 one-sided eyelid speed-cap falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_613_*'
+      - 'research/observability/test_e002_613_*'
+      - '.github/workflows/e002-613.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_613_*'
+      - 'research/observability/test_e002_613_*'
+      - '.github/workflows/e002-613.yml'
+  workflow_dispatch:
+jobs:
+  falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python adversarial checks (synthetic only)
+        run: python -m unittest discover -s research/observability -p 'test_e002_613_cap_falsifier.py' -v
+      - name: Independent BigInt verification (synthetic only)
+        run: node research/observability/e002_613_independent.cjs
+      - name: Exact-rational synthetic example
+        run: python research/observability/e002_613_cap_falsifier.py --synthetic-example

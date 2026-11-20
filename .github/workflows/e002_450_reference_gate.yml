@@ -1,0 +1,29 @@
+name: E002-450 human-reference adversarial quality gate
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_450_reference_gate.yml'
+      - 'research/observability/e002_450_reference_gate.py'
+      - 'research/observability/test_e002_450_reference_gate.py'
+      - 'research/observability/e002_448_blind_annotation.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reference-falsification:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install numeric dependency required by the unchanged E002-448 import chain
+        run: python -m pip install --disable-pip-version-check numpy==2.2.6
+      - name: Execute frozen old-versus-new adjudication counterexamples
+        run: PYTHONPATH=research/observability python -m unittest discover -s research/observability -p 'test_e002_450_reference_gate.py' -v
+      - name: Record evidence tier and product veto
+        run: |
+          echo 'Synthetic adversarial reference-adjudication test only. No new human labels, no physical shutter calibration, no S21/S22 access.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'E002-371 NOT_ESTABLISHED. Product ABSTAIN_UNCALIBRATED. Do not merge or release.' >> "$GITHUB_STEP_SUMMARY"

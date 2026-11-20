@@ -1,0 +1,9 @@
+# E002-673 | Prospective paired-reference audit gate (2026-11-06 UTC)
+
+Evidence tier: **executed synthetic software validation, not human or instrument evidence**. This artifact operationalizes the already frozen E002-671 protocol without revising its hypotheses. The accompanying Python auditor accepts participant-disjoint reference rows, distinguishes exposure and gap modalities, rejects uncalibrated certificates, and treats independently agreed positive closure witnesses as potential falsifiers. It never infers continuous-time absence from a reference-negative clip.
+
+Five local synthetic self-tests passed on 2026-11-06: confirmed false exclusion, invalid finite-difference velocity basis, indeterminate reference, abstention, and participant split leakage. No authentic human ratings or paired captures were supplied. The test script itself should be independently replayed and CI-verified before relying on software behavior.
+
+**Predeclared next experiment:** collect synchronized high-speed reference and ordinary-camera recordings with independent clock/exposure calibration; freeze participant splits and velocity assumptions before examining held-out closures; run the auditor unchanged. Report the numerator of confirmed false exclusions and the denominator of eligible certificates separately for gap and exposure, with participant-cluster intervals and abstention counts. A single confirmed false exclusion blocks the relevant measurement claim. Disagreement and inadequate reference resolution are indeterminate, never negatives.
+
+**Unresolved:** no independently justified hard human eyelid velocity ceiling; no dual-blind anatomical annotations; no synchronized physical camera/reference acquisition; no measured shutter/clock uncertainty. Consequently the product remains `ABSTAIN_UNCALIBRATED` and release `BLOCKED`. This artifact is an evaluation gate, not new measurement science or deployment readiness.

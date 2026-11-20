@@ -1,0 +1,7 @@
+# E002-738 independent execution check (2026-11-10 UTC)
+
+The previously committed `research/e002_738_reference_censoring.py` was inspected and its exact-rational parameter grid was independently reconstructed in a separate Python execution environment. Across 120, 200, 240 and 1000 fps, speed ceilings 10, 50, 100 and 200 normalized aperture units/s, and all 11×11 endpoint pairs per combination, **954 physically feasible cases** were checked. Every case satisfied the asserted attainable lower-envelope, endpoint-consistency and piecewise Lipschitz constraints. A separate 200 Hz example with endpoints 1/5 and speed 100 admits a zero-aperture interior while a flat trajectory has identical endpoint observations.
+
+**Evidence tier:** independent arithmetic reconstruction of the script's parameter grid, not direct execution of the committed Python file, not external review, and not human/instrument validation. The test does not independently establish a physiological speed ceiling. At 200 Hz the hidden-closure witness uses a deliberately synthetic speed of 100 normalized aperture units/s and must not be interpreted as typical human physiology.
+
+**Product consequence:** reference-video sampling is itself censored; do not use 200–240 fps video as perfect continuous-time ground truth. Require uncertainty/abstention for reference intervals whose lower envelope includes zero. Production remains `ABSTAIN_UNCALIBRATED` and `BLOCKED`.

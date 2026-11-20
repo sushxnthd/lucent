@@ -1,0 +1,374 @@
+{
+  "analysis": {
+    "calibration_frames": 2000,
+    "clock": "frame index only; not authenticated exposure time",
+    "e002_371_physical_validation": "NOT_ESTABLISHED",
+    "evaluation_frames": 10000,
+    "experiment": "E002-455",
+    "independent_anatomical_labels": false,
+    "observable": "center-minus-border mean grayscale contrast, not anatomical aperture",
+    "optical_decision": "SPATIAL_SPECIFICITY_NOT_ESTABLISHED",
+    "participant_holdouts_inspected": false,
+    "physical_release_authorized": false,
+    "physical_shutter_calibration": false,
+    "physiological_velocity_upper_bound_validated": false,
+    "product_claim": "ABSTAIN_UNCALIBRATED",
+    "stride_results": {
+      "8": {
+        "border_lr_control": {
+          "excursion_fraction": 0.144515612489992,
+          "hidden_excursions": 1444,
+          "intervals": 9992,
+          "near_endpoint_intervals": 7414,
+          "per_phase": [
+            {
+              "hidden_excursions": 179,
+              "intervals": 1249,
+              "near_endpoint_intervals": 921,
+              "phase": 0
+            },
+            {
+              "hidden_excursions": 181,
+              "intervals": 1249,
+              "near_endpoint_intervals": 931,
+              "phase": 1
+            },
+            {
+              "hidden_excursions": 172,
+              "intervals": 1249,
+              "near_endpoint_intervals": 917,
+              "phase": 2
+            },
+            {
+              "hidden_excursions": 175,
+              "intervals": 1249,
+              "near_endpoint_intervals": 923,
+              "phase": 3
+            },
+            {
+              "hidden_excursions": 189,
+              "intervals": 1249,
+              "near_endpoint_intervals": 929,
+              "phase": 4
+            },
+            {
+              "hidden_excursions": 182,
+              "intervals": 1249,
+              "near_endpoint_intervals": 949,
+              "phase": 5
+            },
+            {
+              "hidden_excursions": 182,
+              "intervals": 1249,
+              "near_endpoint_intervals": 918,
+              "phase": 6
+            },
+            {
+              "hidden_excursions": 184,
+              "intervals": 1249,
+              "near_endpoint_intervals": 926,
+              "phase": 7
+            }
+          ],
+          "phase_fraction_max": 0.1513210568454764,
+          "phase_fraction_median": 0.14531625300240192,
+          "phase_fraction_min": 0.1377101681345076
+        },
+        "primary": {
+          "excursion_fraction": 0.03773018414731785,
+          "hidden_excursions": 377,
+          "intervals": 9992,
+          "near_endpoint_intervals": 2134,
+          "per_phase": [
+            {
+              "hidden_excursions": 55,
+              "intervals": 1249,
+              "near_endpoint_intervals": 274,
+              "phase": 0
+            },
+            {
+              "hidden_excursions": 53,
+              "intervals": 1249,
+              "near_endpoint_intervals": 281,
+              "phase": 1
+            },
+            {
+              "hidden_excursions": 43,
+              "intervals": 1249,
+              "near_endpoint_intervals": 256,
+              "phase": 2
+            },
+            {
+              "hidden_excursions": 31,
+              "intervals": 1249,
+              "near_endpoint_intervals": 245,
+              "phase": 3
+            },
+            {
+              "hidden_excursions": 51,
+              "intervals": 1249,
+              "near_endpoint_intervals": 275,
+              "phase": 4
+            },
+            {
+              "hidden_excursions": 48,
+              "intervals": 1249,
+              "near_endpoint_intervals": 266,
+              "phase": 5
+            },
+            {
+              "hidden_excursions": 46,
+              "intervals": 1249,
+              "near_endpoint_intervals": 282,
+              "phase": 6
+            },
+            {
+              "hidden_excursions": 50,
+              "intervals": 1249,
+              "near_endpoint_intervals": 255,
+              "phase": 7
+            }
+          ],
+          "phase_fraction_max": 0.044035228182546036,
+          "phase_fraction_median": 0.039231385108086464,
+          "phase_fraction_min": 0.024819855884707767
+        },
+        "primary_greater_than_control": false
+      },
+      "17": {
+        "border_lr_control": {
+          "excursion_fraction": 0.39106481017730144,
+          "hidden_excursions": 3904,
+          "intervals": 9983,
+          "near_endpoint_intervals": 8211,
+          "per_phase": [
+            {
+              "hidden_excursions": 233,
+              "intervals": 588,
+              "near_endpoint_intervals": 471,
+              "phase": 0
+            },
+            {
+              "hidden_excursions": 234,
+              "intervals": 588,
+              "near_endpoint_intervals": 482,
+              "phase": 1
+            },
+            {
+              "hidden_excursions": 235,
+              "intervals": 588,
+              "near_endpoint_intervals": 484,
+              "phase": 2
+            },
+            {
+              "hidden_excursions": 225,
+              "intervals": 588,
+              "near_endpoint_intervals": 479,
+              "phase": 3
+            },
+            {
+              "hidden_excursions": 235,
+              "intervals": 587,
+              "near_endpoint_intervals": 499,
+              "phase": 4
+            },
+            {
+              "hidden_excursions": 234,
+              "intervals": 587,
+              "near_endpoint_intervals": 492,
+              "phase": 5
+            },
+            {
+              "hidden_excursions": 231,
+              "intervals": 587,
+              "near_endpoint_intervals": 486,
+              "phase": 6
+            },
+            {
+              "hidden_excursions": 219,
+              "intervals": 587,
+              "near_endpoint_intervals": 478,
+              "phase": 7
+            },
+            {
+              "hidden_excursions": 228,
+              "intervals": 587,
+              "near_endpoint_intervals": 486,
+              "phase": 8
+            },
+            {
+              "hidden_excursions": 218,
+              "intervals": 587,
+              "near_endpoint_intervals": 465,
+              "phase": 9
+            },
+            {
+              "hidden_excursions": 224,
+              "intervals": 587,
+              "near_endpoint_intervals": 481,
+              "phase": 10
+            },
+            {
+              "hidden_excursions": 234,
+              "intervals": 587,
+              "near_endpoint_intervals": 492,
+              "phase": 11
+            },
+            {
+              "hidden_excursions": 224,
+              "intervals": 587,
+              "near_endpoint_intervals": 478,
+              "phase": 12
+            },
+            {
+              "hidden_excursions": 237,
+              "intervals": 587,
+              "near_endpoint_intervals": 488,
+              "phase": 13
+            },
+            {
+              "hidden_excursions": 236,
+              "intervals": 587,
+              "near_endpoint_intervals": 490,
+              "phase": 14
+            },
+            {
+              "hidden_excursions": 226,
+              "intervals": 587,
+              "near_endpoint_intervals": 484,
+              "phase": 15
+            },
+            {
+              "hidden_excursions": 231,
+              "intervals": 587,
+              "near_endpoint_intervals": 476,
+              "phase": 16
+            }
+          ],
+          "phase_fraction_max": 0.403747870528109,
+          "phase_fraction_median": 0.393526405451448,
+          "phase_fraction_min": 0.37137989778534924
+        },
+        "primary": {
+          "excursion_fraction": 0.38295101672843834,
+          "hidden_excursions": 3823,
+          "intervals": 9983,
+          "near_endpoint_intervals": 5733,
+          "per_phase": [
+            {
+              "hidden_excursions": 226,
+              "intervals": 588,
+              "near_endpoint_intervals": 336,
+              "phase": 0
+            },
+            {
+              "hidden_excursions": 218,
+              "intervals": 588,
+              "near_endpoint_intervals": 333,
+              "phase": 1
+            },
+            {
+              "hidden_excursions": 211,
+              "intervals": 588,
+              "near_endpoint_intervals": 338,
+              "phase": 2
+            },
+            {
+              "hidden_excursions": 215,
+              "intervals": 588,
+              "near_endpoint_intervals": 333,
+              "phase": 3
+            },
+            {
+              "hidden_excursions": 219,
+              "intervals": 587,
+              "near_endpoint_intervals": 340,
+              "phase": 4
+            },
+            {
+              "hidden_excursions": 218,
+              "intervals": 587,
+              "near_endpoint_intervals": 337,
+              "phase": 5
+            },
+            {
+              "hidden_excursions": 233,
+              "intervals": 587,
+              "near_endpoint_intervals": 347,
+              "phase": 6
+            },
+            {
+              "hidden_excursions": 217,
+              "intervals": 587,
+              "near_endpoint_intervals": 334,
+              "phase": 7
+            },
+            {
+              "hidden_excursions": 227,
+              "intervals": 587,
+              "near_endpoint_intervals": 348,
+              "phase": 8
+            },
+            {
+              "hidden_excursions": 227,
+              "intervals": 587,
+              "near_endpoint_intervals": 338,
+              "phase": 9
+            },
+            {
+              "hidden_excursions": 229,
+              "intervals": 587,
+              "near_endpoint_intervals": 333,
+              "phase": 10
+            },
+            {
+              "hidden_excursions": 239,
+              "intervals": 587,
+              "near_endpoint_intervals": 349,
+              "phase": 11
+            },
+            {
+              "hidden_excursions": 230,
+              "intervals": 587,
+              "near_endpoint_intervals": 336,
+              "phase": 12
+            },
+            {
+              "hidden_excursions": 232,
+              "intervals": 587,
+              "near_endpoint_intervals": 340,
+              "phase": 13
+            },
+            {
+              "hidden_excursions": 226,
+              "intervals": 587,
+              "near_endpoint_intervals": 333,
+              "phase": 14
+            },
+            {
+              "hidden_excursions": 225,
+              "intervals": 587,
+              "near_endpoint_intervals": 320,
+              "phase": 15
+            },
+            {
+              "hidden_excursions": 231,
+              "intervals": 587,
+              "near_endpoint_intervals": 338,
+              "phase": 16
+            }
+          ],
+          "phase_fraction_max": 0.4071550255536627,
+          "phase_fraction_median": 0.3850085178875639,
+          "phase_fraction_min": 0.358843537414966
+        },
+        "primary_greater_than_control": false
+      }
+    },
+    "threshold_contrast_normalized": 0.01568627450980392
+  },
+  "decoded_frames": 12000,
+  "pilot_subject": "S19",
+  "raw_frames_exported": false,
+  "source": "published-MD5-verified S19 Phantom AVI"
+}

@@ -1,0 +1,60 @@
+name: E002-510 one-shot authentic S01 source-clock falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_510_source_timebase.yml'
+      - 'research/observability/e002_510_source_timebase.py'
+      - 'research/observability/test_e002_510_source_timebase.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-510-one-shot-s01-timebase
+  cancel-in-progress: false
+jobs:
+  source-clock:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen synthetic adversarial controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_510_source_timebase.py' -v
+      - name: Provision ffprobe
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v ffprobe >/dev/null 2>&1; then
+            sudo apt-get update -qq
+            sudo env DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends ffmpeg
+          fi
+      - name: Authenticated S01 archive, metadata-only falsification
+        shell: bash
+        run: |
+          set -euo pipefail
+          WORK="$RUNNER_TEMP/lucent510"
+          mkdir -p "$WORK"
+          chmod 700 "$WORK"
+          REPORT="$WORK/E002_510_AGGREGATE_ONLY.json"
+          printf '{"experiment":"E002-510","status":"FAILED_OR_ABSTAINED","product":"ABSTAIN_UNCALIBRATED","release":"BLOCKED"}\n' > "$REPORT"
+          trap 'rm -f "$WORK/S01.zip"' EXIT
+          curl --fail --location --silent --show-error --retry 2 --retry-delay 8 \
+            --connect-timeout 30 --max-time 900 --max-filesize 650000000 \
+            --output "$WORK/S01.zip" \
+            'https://zenodo.org/records/18970793/files/S01.zip?download=1'
+          python research/observability/e002_510_source_timebase.py \
+            --archive "$WORK/S01.zip" --output "$REPORT"
+      - name: Upload sanitized aggregate only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e002-510-s01-source-clock-aggregate-only
+          path: ${{ runner.temp }}/lucent510/E002_510_AGGREGATE_ONLY.json
+          if-no-files-found: warn
+          retention-days: 7

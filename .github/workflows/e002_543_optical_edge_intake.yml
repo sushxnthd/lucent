@@ -1,0 +1,48 @@
+name: E002-543 noncertifying physical optical intake
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - 'research/observability/E002_543_*'
+      - 'research/observability/e002_543_*'
+      - 'research/observability/test_e002_543_*'
+      - '.github/workflows/e002_543_optical_edge_intake.yml'
+  workflow_dispatch:
+
+jobs:
+  optical-intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Sixteen fail-closed controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_543_optical_edge_intake.py' -v
+      - name: Independent Node strict-boundary replay
+        run: node research/observability/e002_543_independent_replay.cjs
+      - name: Exercise local-only CLI on a synthetic private fixture
+        run: |
+          PYTHONPATH=research/observability python - <<'PY'
+          import json
+          from test_e002_543_optical_edge_intake import manifest
+          with open('/tmp/e002_543_synthetic_private.json','w') as f:
+              json.dump(manifest(),f)
+          PY
+          python research/observability/e002_543_optical_edge_intake.py --input /tmp/e002_543_synthetic_private.json --output /tmp/e002_543_aggregate.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/e002_543_aggregate.json'))
+          assert r['total_trials']==3
+          assert r['counts']['TRANSFER_FALSIFICATION_CANDIDATE']==1
+          assert r['counts']['NO_FALSIFICATION_CENSORED']==1
+          assert r['counts']['ABSTAIN_NOT_OUTSIDE']==1
+          assert r['release']=='BLOCKED' and r['product']=='ABSTAIN_UNCALIBRATED'
+          assert not r['physical_source_authenticated']
+          assert 'private-synthetic' not in json.dumps(r)
+          PY

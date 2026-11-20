@@ -1,0 +1,30 @@
+name: E002-589 full-duty exposure-integration aliasing
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_589_*'
+      - 'research/observability/e002_589_*'
+      - '.github/workflows/e002_589_full_duty_aliasing.yml'
+  workflow_dispatch:
+jobs:
+  exact-synthetic-independent-replay:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Compile and execute exact-rational Python model
+        run: |
+          python -m py_compile research/observability/e002_589_full_duty_aliasing.py
+          python research/observability/e002_589_full_duty_aliasing.py
+          python research/observability/e002_589_full_duty_aliasing.py --json > /tmp/e002_589.json
+          python -c "import json; x=json.load(open('/tmp/e002_589.json')); assert x['frames_tested']==24 and x['human_sequences']==0 and x['physical_captures']==0"
+      - name: Independent BigInt replay, no Python output input
+        run: node research/observability/e002_589_independent_replay.cjs

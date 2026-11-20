@@ -1,0 +1,27 @@
+{
+  "S21_S22_holdouts_inspected": false,
+  "experiment": "E002-446",
+  "measurement": "fixed image-edge span in pixels; NOT anatomical aperture",
+  "pilot_only": true,
+  "source": "MD5-verified S19 human video",
+  "summary": {
+    "anatomical_aperture_measured": false,
+    "candidate_edge_jump_ge_20_fraction": null,
+    "candidate_edge_jump_px_p95": null,
+    "candidate_span_px_median": null,
+    "candidate_span_px_p05": null,
+    "candidate_span_px_p95": null,
+    "consecutive_candidate_pairs": 0,
+    "e002_371_physical_validation": "NOT_ESTABLISHED",
+    "edge_span_candidate_fraction": 0,
+    "edge_span_candidate_frames": 0,
+    "event_frame_alignment_authenticated": false,
+    "frames": 3000,
+    "non_anatomical_stripe_counterexample": "CAN_PASS_SAME_GEOMETRIC_SCREEN",
+    "physical_release_authorized": false,
+    "physical_shutter_timing_authenticated": false,
+    "physiological_velocity_bound_established": false,
+    "product_claim": "ABSTAIN_UNCALIBRATED",
+    "triage_screen": "REJECT_UNSTABLE_OR_INSUFFICIENT_EDGE_PROXY"
+  }
+}

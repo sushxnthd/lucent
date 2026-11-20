@@ -1,0 +1,19 @@
+# E002-560 FROZEN | Nominal 240-fps video can contain only 30-fps evidence
+
+Frozen 2026-10-31 before media generation or decoding. Primary E002-371 human-validation kernel, existing branch `research/observability-human-boundary`, draft PR #26. Evidence tier: synthetic moving-aperture surrogate passed through **real FFmpeg video encoding/decoding**, not human physiology or physical shutter calibration.
+
+## Falsifiable acquisition-instrument question
+Can a file reporting 240 frames/s contain only 30 independent samples/s, causing a blink closure witnessed in an authentic 240-Hz sequence to disappear despite correct-looking frame PTS? If so, source-video nominal frame rate and PTS alone cannot authenticate reference sensitivity.
+
+## Precommitted construction and acceptance
+1. Generate 240 grayscale frames at exact 240 Hz (64x64, raw single-channel), depicting a horizontal moving-aperture surrogate. Aperture is open except at frame indices 3 and 4, which are closed. This is an **8.333-ms two-sample surrogate event**, not a claim of continuous-time closure duration or anatomical physiology. Generate eight low-rate acquisition phases p=0,...,7, sampling high-rate indices p+8k, then duplicating each selected sample eight times to create a 240-Hz output. All outputs contain 240 frames and must have uniform 1/240-s PTS, confirmed by ffprobe. Encode with lossless FFV1 (MKV) to avoid lossy frame differences.
+2. Decode every encoded file with FFmpeg into raw grayscale; independently use ffprobe to check nominal frame rate, frame count, monotone PTS and exact frame intervals. Compare **decoded** closed-frame counts against the original 240-Hz surrogate. Prediction: original has two closed frames; exactly phases 3 and 4 retain the event after 30->240 duplication, each showing eight closed frames; six phases have zero closed frames. The media files for all eight phases must nevertheless report 240 fps and 240 frames.
+3. Quantify adjacent exact duplicate runs and unique decoded frame hashes. Do not mistake legitimate stationary frames for proof of duplication, or a non-duplicated sequence for proof of sensor authenticity. A single video file cannot certify acquisition timestamps, independent sensor sampling, exposure kernel, or continuous-time closure.
+4. Deliberately check that a nominal-240fps/PTS-only reference-quality gate would accept all nine files even though six of eight derived files miss the constructed event. Record this as a falsification of the **metadata-only validation shortcut**, not as a measured human false-negative rate.
+5. Fail closed on missing FFmpeg/ffprobe, unexpected decoding, frame count or PTS mismatch, or inconsistent event predictions. Do not persist human videos. Keep the product `ABSTAIN_UNCALIBRATED`, production `BLOCKED`.
+
+## Human study consequence
+A held-out high-rate human reference requires independent acquisition provenance (sensor configuration, original frame timing, exposure/shutter characterization, and no temporal resampling/transcoding) plus two blinded anatomical raters. Re-encoded or variable-frame-rate videos must be marked reference-indeterminate unless the original acquisition map is independently reconstructed. Compare 30-Hz predictions against the **original authenticated** high-rate capture, not an apparently high-rate transcode. If no such capture is available, report instrument-only evidence and zero held-out human predictions.
+
+## Kill rules
+If authentic and phase-derived videos cannot be distinguished by metadata yet differ in witnessed closure, reject metadata-only reference validation. If FFV1 encoder normalizes frame counts unexpectedly, preserve that failure and do not manufacture the predicted counts. No claim that synthetic sampling rates, apertures, or event widths represent population blink dynamics.

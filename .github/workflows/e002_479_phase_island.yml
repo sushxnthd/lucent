@@ -1,0 +1,25 @@
+name: E002-479 sub-grid shutter island falsification
+
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_479_phase_island.py'
+      - 'research/observability/test_e002_479_phase_island.py'
+      - 'research/observability/e002_477_optical_intake.py'
+      - '.github/workflows/e002_479_phase_island.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  optical-aliasing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run E002-479 adversarial tests against actual E002-477 intake
+        run: python3 -m unittest discover -s research/observability -p 'test_e002_479_phase_island.py' -v
+      - name: Reproduce instrument-model aggregate
+        run: python3 research/observability/e002_479_phase_island.py

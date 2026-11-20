@@ -1,0 +1,20 @@
+name: E002-616 independently audit persisted human aggregate
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/E002_616_AGGREGATE.json
+      - research/observability/e002_616_aggregate_verify.cjs
+      - .github/workflows/e002-616-aggregate-verify.yml
+  workflow_dispatch:
+jobs:
+  aggregate-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Independently audit human-source aggregate and tamper rejection
+        run: node research/observability/e002_616_aggregate_verify.cjs --self-test

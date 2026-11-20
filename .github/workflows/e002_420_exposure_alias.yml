@@ -1,0 +1,25 @@
+name: E002-420 exposure-integrated reference ambiguity
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/E002_420_*'
+      - 'research/observability/e002_420_exposure_alias.py'
+      - 'research/observability/test_e002_420_exposure_alias.py'
+      - '.github/workflows/e002_420_exposure_alias.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Independent numeric falsification and product abstention
+        run: python -m unittest -v test_e002_420_exposure_alias
+        working-directory: research/observability
+      - name: Frozen witness JSON
+        run: python e002_420_exposure_alias.py
+        working-directory: research/observability

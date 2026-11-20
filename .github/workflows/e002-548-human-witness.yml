@@ -1,0 +1,29 @@
+name: E002-548 human witness audit (synthetic fixtures only)
+on:
+  push:
+    paths:
+      - 'research/observability/e002_548_*'
+      - 'research/observability/test_e002_548.py'
+      - '.github/workflows/e002-548-human-witness.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_548_*'
+      - 'research/observability/test_e002_548.py'
+      - '.github/workflows/e002-548-human-witness.yml'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Adversarial one-sided witness tests
+        run: python -m unittest discover -s research/observability -p 'test_e002_548.py' -v
+      - name: Independent constructed 150-Hz check
+        run: node research/observability/e002_548_independent.cjs
+      - name: Synthetic fixture aggregate
+        run: python research/observability/e002_548_witness.py research/observability/e002_548_synthetic_fixture.json

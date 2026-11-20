@@ -1,0 +1,68 @@
+{
+  "candidate_event_count": 56911,
+  "decoded_frame_count": 12000,
+  "experiment": "E002-444",
+  "frozen_frame_window": 12000,
+  "human_video_optical_measurement": {
+    "anatomical_aperture_measured": false,
+    "duplicate_warning": false,
+    "e002_371_physical_validation": "NOT_ESTABLISHED",
+    "event_frame_alignment_authenticated": false,
+    "event_gap_binned_optical_change": {
+      "10_to_100ms": {
+        "median": 0.05040075231481481,
+        "n": 21,
+        "p90": 0.08519139773965143
+      },
+      "gt_100ms": {
+        "median": 0.006548266441993464,
+        "n": 6,
+        "p90": 0.05841871340550109
+      },
+      "le_10ms": {
+        "median": 0.002698567708333333,
+        "n": 11972,
+        "p90": 0.043714265046296275
+      }
+    },
+    "exact_duplicate_fraction": 0,
+    "exact_duplicate_pairs": 0,
+    "fraction_pixels_change_ge_16": {
+      "median": 0.0015516493055555555,
+      "p90": 0.24296875000000084
+    },
+    "independent_frame_information_rejected": false,
+    "long_gap_evidence": "DESCRIPTIVE_ONLY",
+    "long_gap_fraction_above_short_gap_median": 1,
+    "mean_absolute_gray_change_normalized": {
+      "max": 0.18319223175381263,
+      "median": 0.0026993549155773424,
+      "p01": 0.00173724128540305,
+      "p90": 0.04411539181644882,
+      "p99": 0.09194752178649239
+    },
+    "pair_count": 11999,
+    "physical_shutter_timing_authenticated": false,
+    "product_claim": "ABSTAIN_UNCALIBRATED",
+    "shift_137_control_event_gap_binned_change": {
+      "10_to_100ms": {
+        "median": 0.0026828873910675383,
+        "n": 21,
+        "p90": 0.018679236451525052
+      },
+      "gt_100ms": {
+        "median": 0.013062363834422656,
+        "n": 6,
+        "p90": 0.08516786662581699
+      },
+      "le_10ms": {
+        "median": 0.002699227260348584,
+        "n": 11972,
+        "p90": 0.044108902675653594
+      }
+    }
+  },
+  "participant_holdouts_inspected": false,
+  "physical_release_authorized": false,
+  "source": "published hash-verified human S19 Phantom AVI"
+}

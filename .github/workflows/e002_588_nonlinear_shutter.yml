@@ -1,0 +1,34 @@
+name: E002-588 nonlinear shutter response identifiability
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - research/observability/e002_588_nonlinear_shutter.py
+      - research/observability/e002_588_independent_replay.cjs
+      - .github/workflows/e002_588_nonlinear_shutter.yml
+  pull_request:
+    paths:
+      - research/observability/e002_588_nonlinear_shutter.py
+      - research/observability/e002_588_independent_replay.cjs
+      - .github/workflows/e002_588_nonlinear_shutter.yml
+  workflow_dispatch:
+jobs:
+  exact-counterexample:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Python compile and exact synthetic controls
+        run: |
+          python -m py_compile research/observability/e002_588_nonlinear_shutter.py
+          python research/observability/e002_588_nonlinear_shutter.py
+      - name: Independent Node BigInt exact-rational replay
+        run: python research/observability/e002_588_nonlinear_shutter.py --emit-json | node research/observability/e002_588_independent_replay.cjs

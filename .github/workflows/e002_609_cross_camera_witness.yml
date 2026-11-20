@@ -1,0 +1,31 @@
+name: E002-609 prospective cross-camera witness (synthetic only)
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_609_*'
+      - '.github/workflows/e002_609_cross_camera_witness.yml'
+  pull_request:
+    paths:
+      - 'research/observability/e002_609_*'
+      - '.github/workflows/e002_609_cross_camera_witness.yml'
+  workflow_dispatch:
+jobs:
+  synthetic-witness:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Adversarial Python tests
+        run: cd research/observability && python -m unittest -v test_e002_609_cross_camera_witness.py
+      - name: Independent JavaScript rational replay
+        run: node research/observability/e002_609_independent.cjs
+      - name: Conditional synthetic witness (not a human result)
+        run: python research/observability/e002_609_cross_camera_witness.py --synthetic-example

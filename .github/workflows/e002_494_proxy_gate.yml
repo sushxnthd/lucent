@@ -1,0 +1,47 @@
+name: E002-494 authentic nuisance claim gate
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_494_proxy_gate.yml'
+      - 'research/observability/e002_494_proxy_gate.py'
+      - 'research/observability/test_e002_494_proxy_gate.py'
+      - 'research/observability/E002_493_HOSTED_AGGREGATE.json'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_494_proxy_gate.yml'
+      - 'research/observability/e002_494_proxy_gate.py'
+      - 'research/observability/test_e002_494_proxy_gate.py'
+      - 'research/observability/E002_493_HOSTED_AGGREGATE.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  evidence-gate:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test evidence integrity and fail-closed product consequence
+        run: python -m unittest discover -s research/observability -p 'test_e002_494_proxy_gate.py' -v
+      - name: Produce research-only claim decision
+        shell: bash
+        run: |
+          set -euo pipefail
+          python research/observability/e002_494_proxy_gate.py \
+            --aggregate research/observability/E002_493_HOSTED_AGGREGATE.json \
+            --output "$RUNNER_TEMP/E002_494_CLAIM_GATE.json"
+          python - "$RUNNER_TEMP/E002_494_CLAIM_GATE.json" <<'PY'
+          import json, sys
+          d = json.load(open(sys.argv[1]))
+          assert d["reason"] == "AUTHENTIC_NUISANCE_FALSIFICATION"
+          assert d["failed_conditions"] == ["alternating_jitter_1px", "stride2"]
+          assert d["release"] == "BLOCKED"
+          assert d["anatomical_closure"] == "ABSTAIN_UNCALIBRATED"
+          PY

@@ -1,0 +1,31 @@
+name: E002-471 dark-gap reference localization
+on:
+  push:
+    branches:
+      - research/observability-human-boundary
+    paths:
+      - .github/workflows/e002_471_reference_gap.yml
+      - research/observability/e002_456_prospective_gate.py
+      - research/observability/test_e002_471_reference_gap.py
+      - research/observability/test_e002_456_prospective_gate.py
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e002-471-reference-gap-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  reference-witness-safety:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Frozen E002-471 and prior E002-456 adversarial regressions
+        run: |
+          python -m unittest discover -s research/observability -p 'test_e002_471_reference_gap.py' -v
+          python -m unittest discover -s research/observability -p 'test_e002_456_prospective_gate.py' -v
+      - name: Prior E002-470 integrated oracle regression
+        run: python -m unittest discover -s research/observability -p 'test_e002_470_bench.py' -v

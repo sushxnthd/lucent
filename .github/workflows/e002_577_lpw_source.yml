@@ -1,0 +1,36 @@
+name: E002-577 authentic LPW bounded source acquisition
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - 'research/observability/e002_577_lpw_range_probe.py'
+      - '.github/workflows/e002_577_lpw_source.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  bounded-source-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test ZIP-range parser and corruption rejection
+        run: python research/observability/e002_577_lpw_range_probe.py --self-test
+      - name: Provision decoder
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Probe original investigator archive, without full-download fallback
+        id: probe
+        continue-on-error: true
+        run: python research/observability/e002_577_lpw_range_probe.py
+      - name: Preserve negative-result tier
+        if: always()
+        run: |
+          echo "Acquisition probe outcome: ${{ steps.probe.outcome }}"
+          echo "A failed probe is a transport/access negative, not a physiological falsification."
+          echo "No human footage, video artifacts, or ratings were uploaded."
+          echo "Lucent remains ABSTAIN_UNCALIBRATED and release BLOCKED."

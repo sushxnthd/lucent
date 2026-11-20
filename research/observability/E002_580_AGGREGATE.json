@@ -1,0 +1,78 @@
+{
+  "experiment": "E002-580",
+  "run_id": 41265906391,
+  "status": "PASS",
+  "evidence_tier": "REAL_HUMAN_SOURCE_PUPIL_CENTER_ANNOTATION_ONLY",
+  "source": "LPW/1/1.txt",
+  "label_sha256": "12f60068317a341809babb7c2cbce90b8ba299ad877d75186687b0d521f6d5d2",
+  "previously_verified_video_sha256": "158d8654ff9e19162ec7f1316eee3d3046024ad81b355b2b3e5f9e566f5abe86",
+  "video_rehashed_this_run": false,
+  "reported_fps": 95,
+  "three_to_one_index_fps": 31.666666666666668,
+  "thresholds": {
+    "E_min_width_fraction": 0.02,
+    "D_max_width_fraction": 0.01,
+    "independent_coordinate_perturbation_px": 1
+  },
+  "native_rows": 2000,
+  "eligible_windows": 1997,
+  "abstained_windows": 0,
+  "alias_witnesses": 0,
+  "robust_1px_witnesses": 0,
+  "phases": [
+    {
+      "phase": 0,
+      "eligible": 666,
+      "witnesses": 0,
+      "robust": 0,
+      "E_p50_p90_p99": [
+        0,
+        0.0015866,
+        0.0036125
+      ],
+      "D_p50_p90_p99": [
+        0.0054665,
+        0.0125409,
+        0.0199028
+      ]
+    },
+    {
+      "phase": 1,
+      "eligible": 666,
+      "witnesses": 0,
+      "robust": 0,
+      "E_p50_p90_p99": [
+        0,
+        0.0014731,
+        0.0035469
+      ],
+      "D_p50_p90_p99": [
+        0.0054976,
+        0.0124466,
+        0.0195232
+      ]
+    },
+    {
+      "phase": 2,
+      "eligible": 665,
+      "witnesses": 0,
+      "robust": 0,
+      "E_p50_p90_p99": [
+        0,
+        0.0015901,
+        0.0035945
+      ],
+      "D_p50_p90_p99": [
+        0.005625,
+        0.012276,
+        0.0195288
+      ]
+    }
+  ],
+  "human_eyelid_rater_pairs": 0,
+  "physical_shutter_authenticated": false,
+  "certified_continuous_eyelid_velocity": false,
+  "heldout_physical_predictions": 0,
+  "product": "ABSTAIN_UNCALIBRATED",
+  "release": "BLOCKED"
+}

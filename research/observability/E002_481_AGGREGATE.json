@@ -1,0 +1,83 @@
+{
+  "cases": {
+    "detectable_class": {
+      "at_2815": {
+        "detectable_strict": false,
+        "guaranteed_overlap_ms": "266/211125",
+        "physical_claim": "ABSTAIN_UNCALIBRATED",
+        "worst_case_contrast": "101333/2533500"
+      },
+      "at_2816": {
+        "detectable_strict": true,
+        "guaranteed_overlap_ms": "5323/4224000",
+        "physical_claim": "ABSTAIN_UNCALIBRATED",
+        "worst_case_contrast": "126739/3168000"
+      },
+      "at_668": {
+        "detectable_strict": false,
+        "guaranteed_overlap_ms": "0",
+        "physical_claim": "ABSTAIN_UNCALIBRATED",
+        "worst_case_contrast": "-1/500"
+      },
+      "infinite_grid_overlap_ms": "1/500",
+      "island_width_ms": "3/500",
+      "minimum_detectable_phase_count": 2816
+    },
+    "geometric_only": {
+      "at_2815": {
+        "detectable_strict": false,
+        "guaranteed_overlap_ms": "0",
+        "physical_claim": "ABSTAIN_UNCALIBRATED",
+        "worst_case_contrast": "-1/500"
+      },
+      "at_2816": {
+        "detectable_strict": false,
+        "guaranteed_overlap_ms": "0",
+        "physical_claim": "ABSTAIN_UNCALIBRATED",
+        "worst_case_contrast": "-1/500"
+      },
+      "at_668": {
+        "detectable_strict": false,
+        "guaranteed_overlap_ms": "0",
+        "physical_claim": "ABSTAIN_UNCALIBRATED",
+        "worst_case_contrast": "-1/500"
+      },
+      "infinite_grid_overlap_ms": "1/2000",
+      "island_width_ms": "3/1000",
+      "minimum_detectable_phase_count": null
+    },
+    "narrow": {
+      "at_2815": {
+        "detectable_strict": false,
+        "guaranteed_overlap_ms": "0",
+        "physical_claim": "ABSTAIN_UNCALIBRATED",
+        "worst_case_contrast": "-1/500"
+      },
+      "at_2816": {
+        "detectable_strict": false,
+        "guaranteed_overlap_ms": "0",
+        "physical_claim": "ABSTAIN_UNCALIBRATED",
+        "worst_case_contrast": "-1/500"
+      },
+      "at_668": {
+        "detectable_strict": false,
+        "guaranteed_overlap_ms": "0",
+        "physical_claim": "ABSTAIN_UNCALIBRATED",
+        "worst_case_contrast": "-1/500"
+      },
+      "infinite_grid_overlap_ms": "0",
+      "island_width_ms": "1/2000",
+      "minimum_detectable_phase_count": null
+    }
+  },
+  "e002_371_physical_validation": "NOT_ESTABLISHED",
+  "evidence_tier": "SYNTHETIC_WIDTH_RESTRICTED_OPTICAL_MODEL",
+  "experiment": "E002-481",
+  "independent_brute_overlap_n2815": "266/211125",
+  "independent_brute_overlap_n2816": "5323/4224000",
+  "infinite_grid_strict_minimum_island_width_ms": "113/25000",
+  "new_human_sequences": 0,
+  "physical_claim": "ABSTAIN_UNCALIBRATED",
+  "physical_shutter_acquisitions": 0,
+  "pointwise_guaranteed_pulse_core_ms": "0"
+}

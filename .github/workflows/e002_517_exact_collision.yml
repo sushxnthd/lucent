@@ -1,0 +1,48 @@
+name: E002-517 exact coded-optical collision falsification
+on:
+  push:
+    branches: [research/observability-human-boundary]
+    paths:
+      - '.github/workflows/e002_517_exact_collision.yml'
+      - 'research/observability/E002_517_FROZEN.md'
+      - 'research/observability/e002_517_exact_collision.py'
+      - 'research/observability/test_e002_517_exact_collision.py'
+      - 'research/observability/e002_514_coded_optical.py'
+  pull_request:
+    paths:
+      - '.github/workflows/e002_517_exact_collision.yml'
+      - 'research/observability/e002_517_exact_collision.py'
+      - 'research/observability/test_e002_517_exact_collision.py'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: lucent-e002-517-exact-collision
+  cancel-in-progress: false
+jobs:
+  exact-collision:
+    if: github.repository == 'sushxnthd/lucent'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Frozen exact collision and independent direct-sum controls
+        run: python -m unittest discover -s research/observability -p 'test_e002_517_exact_collision.py' -v
+      - name: Reproduce aggregate without exposing any human data
+        run: |
+          python research/observability/e002_517_exact_collision.py > "$RUNNER_TEMP/e002_517.json"
+          python - "$RUNNER_TEMP/e002_517.json" <<'PY'
+          import json,sys
+          r=json.load(open(sys.argv[1]))
+          assert r['primary_prediction']=='PASS'
+          assert r['collision_pairs_total']==27
+          assert r['two_world_10ms_witness']['conservative_gap_upper_ms']==299
+          assert r['product']=='ABSTAIN_UNCALIBRATED' and r['release']=='BLOCKED'
+          assert not r['physical_camera_verified'] and r['human_labels']==0
+          print('EXACT_SYNTHETIC_COLLISION_VERIFIED; PHYSICAL_AND_HUMAN_RELEASE_BLOCKED')
+          PY
