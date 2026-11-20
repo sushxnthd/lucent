@@ -19,7 +19,8 @@ function harness() {
   const context={document,window,URL,Blob,Math,JSON,Number,performance:{now:()=>now},setTimeout:(fn,delay)=>{const id=++seq;tasks.set(id,{at:now+delay,fn});return id},clearTimeout:id=>tasks.delete(id)};
   vm.runInNewContext(script,context,{timeout:1000});
   function advance(ms){const until=now+ms;let limit=0;while(true){const pending=[...tasks].sort((a,b)=>a[1].at-b[1].at)[0];if(!pending||pending[1].at>until)break;assert.ok(++limit<100,'timer loop');now=pending[1].at;tasks.delete(pending[0]);pending[1].fn()}now=until}
-  return {e:id=>elements.get('#'+id),advance,blur:()=>listeners.blur?.(),hide:()=>{hidden=true;listeners.visibilitychange?.()},get downloads(){return downloads}};
+  function lateStimulus(ms){const pending=[...tasks].sort((a,b)=>a[1].at-b[1].at)[0];assert.ok(pending,'expected pending timer');now=pending[1].at+ms;tasks.delete(pending[0]);pending[1].fn()}
+  return {e:id=>elements.get('#'+id),advance,lateStimulus,blur:()=>listeners.blur?.(),hide:()=>{hidden=true;listeners.visibilitychange?.()},get downloads(){return downloads}};
 }
 function finish(h){h.e('start').click();for(let i=0;i<5;i++){h.advance(4100);assert.equal(h.e('target').disabled,false);h.e('target').click();if(i<4)h.advance(900)}}
 {
@@ -75,3 +76,25 @@ console.log('PASS: completion/export/reset, early-tap blur, visibility interrupt
  assert.match(h.e('status').textContent,/Press Start/);
 }
 console.log('PASS: reset cancels timers, self-report bounds, partial-session export abstention');
+
+{
+ const h=harness();h.e('start').click();h.lateStimulus(101);
+ assert.match(h.e('status').textContent,/timer delayed; session invalidated/);
+ assert.equal(h.e('target').disabled,true);
+ assert.equal(h.e('export').disabled,true);
+ h.e('export').click();assert.equal(h.downloads,0);
+ h.advance(10000);assert.equal(h.e('export').disabled,true);
+}
+{
+ const h=harness();h.e('start').click();h.lateStimulus(100);
+ assert.equal(h.e('target').disabled,false,'at tolerance boundary stimulus remains usable');
+ h.e('target').click();assert.match(h.e('status').textContent,/Recorded/);
+}
+{
+ const h=harness();h.e('start').click();h.advance(4100);h.e('target').click();h.advance(850);
+ h.lateStimulus(500);
+ assert.match(h.e('status').textContent,/session invalidated/);
+ assert.equal(h.e('export').disabled,true,'partial results must not export after timer throttling');
+ h.e('start').click();assert.match(h.e('status').textContent,/Trial 1 of 5/);
+}
+console.log('PASS: delayed callback abstention, tolerance boundary, partial-session invalidation and restart');
